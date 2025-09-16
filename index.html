@@ -63,6 +63,9 @@
     </div>
   </header>
 
+  <div class="plus-field" aria-hidden="true"></div>
+  <div class="site-shell">
+
   <!-- Main -->
   <main id="main" class="site-main" role="main">
 
@@ -195,9 +198,6 @@
   </div>
 </section>
 
-    <!-- Add sections for featured case studies, etc. -->
-    <!-- <section class="features">...</section> -->
-  </main>
 
   <!-- Footer -->
   <footer class="site-footer" role="contentinfo">
@@ -229,7 +229,7 @@
                        scale="3" xChannelSelector="R" yChannelSelector="G"/>
   </filter>
 </svg>
-
+</div>
 
   <script>
     // Reveal hero + feature cards when they enter the viewport
@@ -277,6 +277,44 @@
       window.addEventListener('touchmove',   setOrb, {passive:true});
     })();
   </script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const field = document.querySelector('.plus-field');
+    if (!field) return;
   
+    const phone = matchMedia('(max-width: 640px)').matches;
+    const COUNT = phone ? 12 : 24;   // tweak if you want denser/sparser
+  
+    const rand = (a,b)=>Math.random()*(b-a)+a;
+    const bias = p => Math.pow(Math.random(), p);  // >1 => bias near 0
+  
+    for (let i=0; i<COUNT; i++){
+      const el = document.createElement('span');
+      el.className = 'plus';
+      el.textContent = '+';
+  
+      // Bias positions so they emanate from bottom-right
+      const rx = bias(1.6), ry = bias(1.6);
+      el.style.right  = (rx * 60).toFixed(2) + 'vw';  // spread ≈ 60% viewport
+      el.style.bottom = (ry * 60).toFixed(2) + 'vh';
+  
+      // Variety per glyph
+      el.style.setProperty('--size',  Math.round(rand(18, 46)) + 'px');
+      el.style.setProperty('--alpha', rand(0.40, 0.75).toFixed(2));
+      el.style.setProperty('--rot',   rand(-6, 6).toFixed(1) + 'deg');
+  
+      // Desync the animations a bit
+      el.style.setProperty('--driftDur',   rand(10, 16).toFixed(2) + 's');
+      el.style.setProperty('--shineDur',   rand(3.0, 4.8).toFixed(2) + 's');
+      el.style.setProperty('--twinkleDur', rand(5.0, 8.0).toFixed(2) + 's');
+      el.style.animationDelay = `${rand(0,6).toFixed(2)}s, ${rand(0,5).toFixed(2)}s`;
+  
+      field.appendChild(el);
+    }
+  });
+  </script>
+    
+
 </body>
 </html>
