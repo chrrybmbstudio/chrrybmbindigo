@@ -285,6 +285,47 @@ a:hover{ text-decoration:underline }
   background-size:180% 180%, 100% 100%;
   animation:bg-pan 12s ease-in-out infinite alternate;
   
+  /* put inside .hero */
+.radiant-orb{
+  position: absolute; inset: 0;
+  pointer-events: none;
+  z-index: 1;                    /* below text, above bg spans as needed */
+  /* center falls back if no JS/pointer */
+  --orb-x: 50%;
+  --orb-y: 35%;
+
+  /* subtle glow */
+  background:
+    radial-gradient(160px circle at var(--orb-x) var(--orb-y),
+      rgba(68,64,255,.45),
+      rgba(68,64,255,0) 60%);
+  filter: blur(28px);
+  transform: translateZ(0);
+  will-change: background, filter;
+
+  animation: orb-breathe 9s ease-in-out infinite alternate;
+  mix-blend-mode: screen;         /* nice on light bg; drop if too bright */
+}
+
+@keyframes orb-breathe{
+  from { filter: blur(24px); opacity: .85; }
+  to   { filter: blur(32px); opacity: .65; }
+}
+
+/* If user prefers reduced motion, keep a static soft glow */
+@media (prefers-reduced-motion: reduce){
+  .radiant-orb{ animation: none; }
+}
+
+/* Mobile/touch fallback: ensure it’s visible even without movement */
+@media (pointer: coarse){
+  .radiant-orb{
+    --orb-x: 50%;
+    --orb-y: 38%;
+    opacity: .8;
+  }
+}
+
   
 }
 
@@ -968,46 +1009,6 @@ animation: beamsSpin 28s linear infinite;
     padding:0
   }
   
-/* put inside .hero */
-.radiant-orb{
-  position: absolute; inset: 0;
-  pointer-events: none;
-  z-index: 1;                    /* below text, above bg spans as needed */
-  /* center falls back if no JS/pointer */
-  --orb-x: 50%;
-  --orb-y: 35%;
-
-  /* subtle glow */
-  background:
-    radial-gradient(160px circle at var(--orb-x) var(--orb-y),
-      rgba(68,64,255,.45),
-      rgba(68,64,255,0) 60%);
-  filter: blur(28px);
-  transform: translateZ(0);
-  will-change: background, filter;
-
-  animation: orb-breathe 9s ease-in-out infinite alternate;
-  mix-blend-mode: screen;         /* nice on light bg; drop if too bright */
-}
-
-@keyframes orb-breathe{
-  from { filter: blur(24px); opacity: .85; }
-  to   { filter: blur(32px); opacity: .65; }
-}
-
-/* If user prefers reduced motion, keep a static soft glow */
-@media (prefers-reduced-motion: reduce){
-  .radiant-orb{ animation: none; }
-}
-
-/* Mobile/touch fallback: ensure it’s visible even without movement */
-@media (pointer: coarse){
-  .radiant-orb{
-    --orb-x: 50%;
-    --orb-y: 38%;
-    opacity: .8;
-  }
-}
 
 .radiant-veil{
     position: absolute;
