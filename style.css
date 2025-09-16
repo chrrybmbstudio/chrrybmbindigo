@@ -1021,7 +1021,6 @@ animation: beamsSpin 28s linear infinite;
   width: 100%;
   max-width: 150px;
   margin: 0 auto;
-  margin-top: 10px;
 } 
 
   .heather-svg{
@@ -1036,12 +1035,9 @@ animation: beamsSpin 28s linear infinite;
   margin: 30px !important;
 }
 .kicker{ 
-  font-size: 24px;
+  font-size: 18px;
   font-weight: 900 !important;
   font-family: "Jacquarda Bastarda 9", serif;
-  color:#2c3144;
-  padding-bottom: 20px;
-  margin: 20px 0 20px 0;
  }
 
  .brand__logo-img{
