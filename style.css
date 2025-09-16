@@ -953,7 +953,7 @@ animation: beamsSpin 28s linear infinite;
     gap: 12px;
   }
   .btn-iris{ 
-  width: 100%;
+  width: 80%;
   max-width: 420px;
   margin: 0 auto;
 } 
@@ -963,14 +963,34 @@ animation: beamsSpin 28s linear infinite;
     width: min(72vw, 520px);
   }
 
-  .brand{ transform: translateX(50px);
+  .brand{
+    transform: translateX(50px);
 }
+
+.hero__content h1{
+  font-size: clamp(32px, 3vw, 48px);
+  letter-spacing:-.03em;
+  margin:0 0 10px;
+  padding-bottom: 20px auto;
+  color:#1e1f2a;
+  position: relative;
+  z-index: 3;
+}
+.kicker{ 
+  font-size: 24px;
+  font-weight: 900;
+  width: 100%;
+  font-family: "Jacquarda Bastarda 9", serif;
+  color:#2c3144;
+  padding-bottom: 30px;
+  margin: 20px 0 20px 0;
+ }
 
 }
 
 
 /* 900–1300px only */
-@media (min-width: 900px) and (max-width: 1300px){
+@media (min-width: 901px) and (max-width: 1300px){
   /* tighten container edges just for this band */
   .site-header .container{
     padding-inline-start: 10px;           /* left */
