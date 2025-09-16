@@ -826,6 +826,102 @@ animation: beamsSpin 28s linear infinite;
 }
 
 
+.site-shell{ position: relative; z-index: 1; }   /* content above */
+.plus-field{ position: fixed; inset: 0; pointer-events:none; z-index: 0; }
+
+
+/* Load your font if not already present */
+@import url("https://fonts.googleapis.com/css2?family=Jacquarda+Bastarda+9&display=swap");
+
+/* Keep site content above the decorative layer */
+.site-shell { position: relative; z-index: 1; }
+
+/* Transparent, click-through background layer behind everything */
+.plus-field {
+  position: fixed; inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Brand colors */
+:root{
+  --magenta: #f800ff;
+  --indigo:  #4440ff;
+}
+
+/* Base “+” */
+.plus-field .plus{
+  position: absolute;
+  right: 0; bottom: 0;                /* final position set inline by JS */
+  font-family: "Jacquarda Bastarda 9", serif;
+  font-weight: 400; line-height: 1;
+  font-size: var(--size, 28px);
+  opacity: var(--alpha, .65);
+  transform: rotate(var(--rot, 0deg)) translateZ(0);
+
+  /* FILL: indigo ⇄ magenta gradient (slow, subtle drift) */
+  background: linear-gradient(135deg, var(--magenta), var(--indigo));
+  background-size: 200% 200%;
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  /* Soft ambient glow around glyph edges */
+  text-shadow:
+    0 0 0.8px rgba(248,0,255,.28),
+    0 0 6px   rgba(68,64,255,.22);
+
+  /* Animations: slow fill drift + gentle twinkle */
+  animation:
+    fill-drift var(--driftDur, 12s) ease-in-out infinite alternate,
+    twinkle    var(--twinkleDur, 6s) ease-in-out infinite;
+  will-change: background-position, opacity, filter;
+}
+
+/* OUTER SHINE: a moving highlight band that travels L→R */
+.plus-field .plus::after{
+  content: '+';
+  position: absolute; inset: 0;
+  font: inherit;                                /* same size & font */
+  /* the “shine” is a narrow white band that moves across the glyph */
+  background: linear-gradient(90deg,
+  transparent 0%,
+  rgba(255,255,255,.9) 7%,
+  transparent 14%,
+  rgba(255,255,255,.55) 18%,
+  transparent 26%
+);
+
+  background-size: 200% 100%;
+  background-position: -50% 0;
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  /* Edge glow to make the shine read outside the glyph */
+  text-shadow:
+    0 0 8px rgba(255,255,255,.45),
+    0 0 14px rgba(68,64,255,.35),
+    0 0 24px rgba(68,64,255,.28);
+
+  animation: outer-shine var(--shineDur, 3.6s) linear infinite;
+  will-change: background-position, filter;
+}
+
+/* Keyframes */
+@keyframes fill-drift   { from { background-position: 0% 50%; } to { background-position: 100% 50%; } }
+@keyframes outer-shine  { from { background-position: -50% 0; } to { background-position: 150% 0; } }
+@keyframes twinkle {
+  0%,100% { opacity: var(--alpha, .65); filter: drop-shadow(0 0 1px rgba(68,64,255,.16)); }
+  50%     { opacity: calc(var(--alpha, .65) + .12); filter: drop-shadow(0 0 1.6px rgba(68,64,255,.28)); }
+}
+
+/* Respect user motion prefs */
+@media (prefers-reduced-motion: reduce){
+  .plus-field .plus { animation: fill-drift 18s linear infinite; }
+  .plus-field .plus::after { animation: outer-shine 6s linear infinite; }
+}
+
+
+
 /* features */
 
 /* ---------- Card system (glass + iridescent rim) ---------- */
