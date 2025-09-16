@@ -138,9 +138,9 @@ a:hover{ text-decoration:underline }
   align-items: center;
   justify-content: center;
   gap: .5ch;
-  padding: .70rem 1.05rem;
+  padding: .30rem 1.05rem;
   margin: 0;
-  border-radius: 99px;
+  border-radius: 55px;
   border: 0;
   font-weight: 800;
   letter-spacing: .02em;
@@ -971,13 +971,8 @@ animation: beamsSpin 28s linear infinite;
 
   .radiant-orb {
     position: absolute;
-    /* POSITION: nudge where you want the orb to sit */
     right: min(90%, 400px);
     bottom: 77% !important;               /* move up/down along Heather */
-    width: 14vmin; height: 15vmin;
-    border-radius: 100%;
-    pointer-events: none;
-    z-index: 3;
   }
 
 .radiant-veil{
@@ -1004,15 +999,14 @@ animation: beamsSpin 28s linear infinite;
 .hero__content h1{
   font-size: 60px !important;
   letter-spacing:-.09em !important;
-  margin: 20px 0 10px !important;
+  margin: 30px !important;
 }
 .kicker{ 
   font-size: 24px;
   font-weight: 900 !important;
-  width: 100%;
   font-family: "Jacquarda Bastarda 9", serif;
   color:#2c3144;
-  padding-bottom: 30px;
+  padding-bottom: 20px;
   margin: 20px 0 20px 0;
  }
 
