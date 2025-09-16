@@ -1,0 +1,395 @@
+
+
+.gradient-background{
+  background: linear-gradient(300deg, #4440ff70, #ffe9ff);
+  background-size: 180% 180%;
+  animation: gradient-animation 11s ease infinite;
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  min-height: 60vh;
+}
+@keyframes gradient-animation{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+
+
+
+.herotxt{
+  color:#1e1f2a; letter-spacing:-.02em;
+  text-shadow:
+    1px 0   #f800ff44,
+   -1px 0   #4440ff44;
+}
+
+
+.h5txt{
+  color: #4440ff;
+  font-size: 20px;
+}
+
+.feature-icon {
+    width: 4rem;
+    height: 4rem;
+    border-radius: .75rem;
+    
+  }
+  
+  .icon-square {
+    background-color: #4440ff;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 20px;
+    
+  }
+  
+  .buttereye {
+    margin: ;
+    padding: ;
+  }
+  
+  .graphics {
+    vertical-align: ;
+  }
+  
+  .container {
+    font-family: "Saira", sans-serif;
+    
+  }
+  
+  .headerbg {
+    background-color: #ffe9ff;
+  }
+  
+  .herobg {
+    background-color: #ffe9ff;
+  }
+  
+  .featurebg {
+    background-color: #ffe9ff;
+  }
+  
+  .circlechrry {
+    padding: auto;
+    margin: 0px 0px 30px 0px;
+  }
+  
+  .card {
+    font-size: 12px;
+    border-color: #FFFFFF;
+    
+  }
+  
+  .portfolio {
+    margin: auto;
+  }
+  
+  .cardtitle {
+    font-size: 16px;
+  }
+  
+  .album {
+    background-color: #FFFFF;
+  }
+  
+  .lead {
+    font-size: 16px;
+    margin: 10px;
+  }
+  
+  .webdesignpage {
+    margin: auto;
+  
+  }
+  
+  .igbtn {
+    display: inline-block;
+
+
+  }
+  
+  .btn {
+    padding: 8px;
+    font-size: 10px;
+    background-color: #3000dd;
+    color: #ffe9ff;
+    height: auto;
+    width: auto;
+    border-radius: 10px;
+  
+  }
+  
+  
+  
+  .butters {
+    height: 222px;
+    border-radius: 50%;
+  }
+  
+  .navitron {
+    display: flex;
+    font-size: 13px;
+  }
+  
+  .coconut {
+    margin-left: 38rem; 
+    margin-right: 38rem; 
+    width: 100%;  
+    background-color: ; 
+    padding: 1rem; 
+    box-sizing: border-box; 
+    border: 2px solid #000; 
+  }
+  
+  .myPdf {
+    width: 100px;
+    height: 800px;
+  
+  }
+  
+  .dpdf {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .pinkyc {
+    border-radius: 20px;
+    background-color:#FFCCDB30;
+  }
+  
+  .text-body {
+    font-size: 30px;
+  }
+  
+  .rezzy {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .smalllinks {
+    font-size: 12px;
+  }
+  
+  .resources {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .footie {
+    margin: 0px;
+    padding: 0px;
+    font-size: 10px;
+  }
+
+
+  .typewriter h1, h6 {
+    overflow: hidden; /* Ensures the content is not revealed until the animation */
+    white-space: nowrap; /* Keeps the content on a single line */
+    margin: 0 auto; /* Gives that scrolling effect as the typing happens */
+    letter-spacing: .15em; /* Adjust as needed */
+    animation: 
+      typing 3.5s steps(222, end),
+      blink-caret .3s step-end infinite;
+  }
+  
+  
+  /* The typing effect */
+  @keyframes typing {
+    from { width: 5% }
+    to { width: 100% }
+  }
+  
+  /* The typewriter cursor effect */
+  @keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: orange; }
+  }
+  
+  /* scroll box */
+  
+  table { 
+    border-collapse: collapse; 
+    border-spacing: 5; 
+    width: 100%; 
+    border: 0px solid #ddd; 
+  } 
+  
+  th, 
+  td { 
+    text-align: left; 
+    padding: 8px; 
+  } 
+  
+  /* width */         
+  ::-webkit-scrollbar { 
+    width: 10px; 
+  } 
+  
+  /* Track */ 
+  ::-webkit-scrollbar-track { 
+    background: #FFF8FA; 
+  } 
+  
+  /* Handle */ 
+  ::-webkit-scrollbar-thumb { 
+    background: #4440ff70; 
+  } 
+  
+  /* Handle on hover */ 
+  ::-webkit-scrollbar-thumb:hover { 
+    background: ##4440ff; 
+  } 
+  
+  .scroll { 
+    display: block; 
+    border: 0px solid ##4440ff; 
+    padding: 5px; 
+    margin-top: 5px; 
+    width: 100%; 
+    height: 400px; 
+    overflow-y: scroll; 
+  } 
+  
+  .pinkybox {
+    font-size: 12px;
+  }
+  
+  .bodystyle {
+    font-size: 12px;
+  }
+  
+  #footer {
+    position: sticky;
+    font-size: 10px;
+    padding: 10px 10px 0px 10px;
+    bottom: 0;
+    width: 100%;
+    height: 40px;
+    color: #000;
+  }
+  
+  
+  
+  /* Design Elements Pg */
+  
+  .elebox {
+    display: flex;
+    justify-content: flex-start;
+    justify-items: flex-start;
+    position: relative;
+    background-color: #F4B3C560;
+    margin-top: 3rem;
+    margin-bottom: 7rem;
+    margin-right: 7rem;
+    margin-left: 7rem;
+    padding: ;
+    height: 555px;
+    width: auto;
+    border-radius: 70px;
+  
+  }
+  
+  body {
+    width: 100vw;
+    height: 100vh;
+    background-image: url();
+    background-size: cover;
+  }
+  
+  .eleheading {
+    display: flex;
+    justify-content: center;
+    margin-top: 4rem;
+  }
+  
+  .chrrypink {
+    display: inline-flex;
+    gap: 30px;
+    margin-right: 20px;
+    font-size: 8px;
+    background-color: #F196AD;
+    align-items: flex-end;
+    width: 60px;
+    height: 60px;
+    border-radius: 20%;
+  }
+  
+  .chrrypink2 {
+    display: inline-flex;
+    gap: 30px;
+    font-size: 8px;
+    background-color: #ECE4EA;
+    align-items: flex-end;
+    width: 60px;
+    height: 60px;
+    border-radius: 20%;
+  }
+  
+  .courierfacts {
+    font-size: 14px;
+  }
+  
+  .elebutters {
+    width: auto;
+    margin-bottom: 50px;
+  }
+  
+  .PrimCol {
+    display: block;
+    margin-bottom: 20px;
+  }
+
+  .saira-<uniquifier> {
+    font-family: "Saira", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: <weight>;
+    font-style: normal;
+    font-variation-settings:
+      "wdth" 100;
+  }
+  
+  .dm-sans-<uniquifier> {
+    font-family: "DM Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 100;
+    font-style: normal;
+  }
+  
+  
+  /* Courier Properties */
+  
+  .courier-prime-regular {
+    font-family: "Courier Prime", monospace;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  .courier-prime-bold {
+    font-family: "Courier Prime", monospace;
+    font-weight: 700;
+    font-style: normal;
+  }
+  
+  .courier-prime-regular-italic {
+    font-family: "Courier Prime", monospace;
+    font-weight: 400;
+    font-style: italic;
+  }
+  
+  .courier-prime-bold-italic {
+    font-family: "Courier Prime", monospace;
+    font-weight: 700;
+    font-style: italic;
+  }
+  
+  .umhello {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 50px;
+    font-size: 30px;
+  }
+
+
+  

@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Heather Hero Experiments</title>
+  
+  <!--
+    HOW TO USE
+    1) Drop this whole file into your test folder as index.html (or copy the <section> into your template).
+    2) Replace ./assets/heater1.png with your actual Heather path.
+    3) Toggle between VARIANT 1/2/3 by adding one of these to <section class="hero ...">:
+       - variant-burst
+       - variant-rays
+       - variant-magnify
+    4) Tweak the CSS variables under :root for quick restyling.
+  -->
+
+  <style>
+    :root {
+      /* Palette: sharp + modern (no cheesy gradients) */
+      --bg: #0b0c10;           /* near-black */
+      --ink: #e7e9ee;          /* off-white */
+      --accent: #4440ff;       /* your brand red */
+      --accent-2: #ffe9ff;     /* your teal */
+
+      /* Glow system */
+      --glow-core: 255, 255, 255;   /* center burst, rgb */
+      --glow-edge: 68, 64, 255;      /* edge tint, rgb (brand red) */
+      --glow-radius: 1000px;        /* size of halo */
+      --glow-opacity: 0.16;         /* overall softness */
+
+      /* Rays system (variant 2) */
+      --rays-rotate: -18deg;   /* spin the ray fan */
+      --rays-opacity: 0.13;    /* subtle by default */
+
+      /* Typography */
+      --title-size: clamp(2.8rem, 6vw, 5rem);
+      --kicker-size: clamp(1rem, 2vw, 1.25rem);
+
+      /* Layout tweaks */
+      --container: min(1200px, 92vw);
+      --gutter: clamp(16px, 2.4vw, 32px);
+
+      /* Image scale & placement */
+      --heather-scale: 1.0;     /* global baseline */
+      --heather-shift-x: 20px;  /* nudge right */
+      --heather-floor-bloom: 0.18; /* intensity for ground glow */
+
+      /* Magnifier (variant 3) */
+      --lens-size: 260px;       /* diameter */
+      --lens-zoom: 1.8;         /* zoom factor */
+      --lens-border: 2px;       /* border thickness */
+    }
+
+    /* Base reset */
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0; background: var(--bg); color: var(--ink);
+      font: 400 16px/1.4 system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial;
+    }
+
+    .container { width: var(--container); margin: 0 auto; padding: 0 var(--gutter); }
+
+    /* HERO LAYOUT */
+    .hero {
+      position: relative; isolation: isolate; /* enable mix-blend layers */
+      overflow: clip; /* modern clipping to keep effects tidy */
+      padding: 8vh 0 0; /* top breathing room, bottom flush handled by floor */
+      min-height: 88svh; /* tall, responsive */
+      display: grid;
+      place-items: end center;
+    }
+
+    .hero__inner {
+      width: var(--container);
+      display: grid;
+      grid-template-columns: 1.1fr 1fr; /* text : media */
+      align-items: end; /* sit on the same baseline */
+      gap: clamp(16px, 4vw, 48px);
+      padding: 0 var(--gutter);
+    }
+
+    /* TEXT */
+    .hero__content {
+      align-self: center;
+    }
+    .hero__content h1 {
+      font-size: var(--title-size);
+      letter-spacing: -0.02em;
+      margin: 0 0 0.35em 0;
+      line-height: 0.95;
+    }
+    .kicker {
+      font-size: var(--kicker-size);
+      opacity: 0.8;
+      max-width: 42ch;
+    }
+
+    /* MEDIA WRAP */
+    .hero__media {
+      position: relative; height: 68svh; min-height: 420px; /* responsive height */
+      display: grid; place-items: end right;
+    }
+
+    /* ORB: common wrapper for Heather image + effects */
+    .orb {
+      position: relative;
+      width: min(46vw, 620px);
+      height: 100%;
+      translate: var(--heather-shift-x) 0; /* intentional right scaling/shift */
+      display: grid; place-items: end center;
+    }
+
+    .orb__img, .orb__img--source {
+      position: relative; z-index: 2;
+      width: 100%; height: auto; object-fit: contain;
+      transform-origin: bottom center; transform: scale(var(--heather-scale));
+      user-select: none; -webkit-user-drag: none;
+    }
+
+    /* === FLOOR TIE-IN (works for all variants) ===
+       A soft elliptical glow to avoid a hard 1998-looking drop shadow,
+       and to “seat” Heather flush with the bottom edge. */
+    .orb::after {
+      content: "";
+      position: absolute; inset: auto 6% 0 6%; height: 8%; z-index: 1;
+      filter: blur(28px);
+      background: radial-gradient(100% 120% at 50% 0%, rgba(255,255,255,calc(var(--heather-floor-bloom)*0.6)) 10%, rgba(68,64,255,calc(var(--heather-floor-bloom)*0.8)) 45%, rgba(0,0,0,0) 66%);
+      opacity: 0.9;
+    }
+
+    /* =============================
+       VARIANT 1 — HALO BURST GLOW
+       ============================= */
+    .variant-burst .orb::before {
+      content: ""; position: absolute; inset: -12% -8% -4% -8%; z-index: 0;
+      background:
+        radial-gradient(circle at 50% 58%, rgba(var(--glow-core), 0.42), rgba(var(--glow-core), 0) 40%),
+        radial-gradient(circle at 50% 60%, rgba(var(--glow-edge), var(--glow-opacity)) 0%, rgba(var(--glow-edge), 0) 60%);
+      filter: blur(18px) saturate(110%);
+      mix-blend-mode: screen; /* crisp additive glow over dark bg */
+      pointer-events: none;
+    }
+
+    /* Optional crisp rimlight using multi drop-shadows — stays modern if subtle */
+    .variant-burst .orb__img {
+      filter: drop-shadow(0 0 14px rgba(255,255,255,0.14))
+              drop-shadow(0 12px 24px rgba(68,64,255,0.14));
+    }
+
+    /* =============================
+       VARIANT 2 — HARD-EDGED RAYS
+       Conic-mask for geometric rays; precise & sharp, not gaudy.
+       ============================= */
+    .variant-rays .orb::before {
+      content: ""; position: absolute; inset: -18% -10% -6% -10%; z-index: 0;
+      --_g: conic-gradient(from 0deg, rgba(255,255,255,0.32) 0 6deg, transparent 6deg 18deg);
+      background: var(--_g);
+      background-size: 100% 100%;
+      filter: blur(10px) contrast(105%);
+      opacity: var(--rays-opacity);
+      transform: rotate(var(--rays-rotate));
+      mix-blend-mode: screen;
+    }
+    .variant-rays .orb__img {
+      filter: drop-shadow(0 0 6px rgba(255,255,255,0.08))
+              drop-shadow(0 10px 18px rgba(68,64,255,0.16));
+    }
+
+    /* =============================
+       VARIANT 3 — MAGNIFY LENS (clean & robust)
+       A circular lens that reveals a hi-res duplicate at higher scale.
+       Works with mouse or touch. Respects reduced-motion.
+       ============================= */
+    .variant-magnify .orb {
+      --lens-outline: color-mix(in oklab, var(--ink) 92%, transparent);
+    }
+    .variant-magnify .lens {
+      position: absolute; z-index: 3; width: var(--lens-size); height: var(--lens-size);
+      border-radius: 50%; pointer-events: none; opacity: 0; transform: scale(0.92);
+      border: var(--lens-border) solid var(--lens-outline);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.04) inset;
+      clip-path: circle(50%);
+      transition: opacity 160ms ease, transform 200ms ease;
+      background: radial-gradient(80% 80% at 50% 50%, rgba(255,255,255,0.06), rgba(255,255,255,0.0)),
+                  rgba(0,0,0,0.12);
+      backdrop-filter: blur(2px) saturate(110%);
+    }
+    .variant-magnify .lens__img {
+      position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain;
+      /* The big trick: we use a transformed clone of Heather behind the lens */
+    }
+    .no-prefers-reduced-motion .variant-magnify .lens { transition: opacity 140ms ease, transform 220ms cubic-bezier(.2,.7,.2,1); }
+
+    /* Accessibility: tidy on narrow screens */
+    @media (max-width: 880px) {
+      .hero__inner { grid-template-columns: 1fr; align-items: end; }
+      .hero__media { height: 56svh; }
+      .orb { width: min(86vw, 560px); }
+      :root { --heather-shift-x: 0px; }
+      .hero { padding-top: 6vh; min-height: auto; }
+    }
+
+    /* Respect reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      :root { scroll-behavior: auto; }
+      .lens { transition: none !important; }
+      body { --motion-ok: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!--
+    Choose ONE variant class on <section>:
+      variant-burst | variant-rays | variant-magnify
+    Example below starts with variant-burst.
+  -->
+  <section class="hero variant-burst" id="hero">
+    <div class="hero__inner">
+      <!-- TEXT FIRST -->
+      <div class="hero__content">
+        <h1>Hi, I'm <span style="letter-spacing:-0.01em;border-bottom:2px solid var(--accent);padding-bottom:4px">Denisa</span>.</h1>
+        <p class="kicker">This is chrrybmb creative studio.</p>
+      </div>
+
+      <!-- HEATHER IMAGE SECOND -->
+      <div class="hero__media">
+        <div class="orb" id="orb">
+          <img class="orb__img orb__img--source" src="./assets/heater1.png" alt="Heather, skeletal mermaid figurine" />
+          <!-- For magnify variant we’ll mirror the source inside the .lens via JS -->
+          <div class="lens" id="lens" aria-hidden="true"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Utility: feature flags
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!prefersReducedMotion) document.documentElement.classList.add('no-prefers-reduced-motion');
+
+    // ===== VARIANT 3: Magnifying lens interaction =====
+    (function initMagnify() {
+      const hero = document.getElementById('hero');
+      if (!hero || !hero.classList.contains('variant-magnify')) return;
+
+      const orb = document.getElementById('orb');
+      const lens = document.getElementById('lens');
+      const src = orb.querySelector('.orb__img--source');
+
+      // Create a hi-res clone inside lens
+      const lensImg = document.createElement('img');
+      lensImg.className = 'lens__img';
+      lensImg.src = src.currentSrc || src.src;
+      lens.appendChild(lensImg);
+
+      const lensSize = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--lens-size')) || 260;
+      const lensZoom = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--lens-zoom')) || 1.8;
+
+      const activate = () => { lens.style.opacity = 1; lens.style.transform = 'scale(1)'; };
+      const deactivate = () => { lens.style.opacity = 0; lens.style.transform = 'scale(0.92)'; };
+
+      function move(e) {
+        const rect = orb.getBoundingClientRect();
+        const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+        const y = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
+
+        // Clamp inside orb bounds
+        const cx = Math.max(lensSize/2, Math.min(x, rect.width - lensSize/2));
+        const cy = Math.max(lensSize/2, Math.min(y, rect.height - lensSize/2));
+        lens.style.left = (cx - lensSize/2) + 'px';
+        lens.style.top  = (cy - lensSize/2) + 'px';
+
+        // Position the clone so that the point under the cursor is centered
+        const ix = (cx / rect.width) * 100; // percent
+        const iy = (cy / rect.height) * 100;
+        lensImg.style.transform = `translate(${(50-ix)*lensZoom}%, ${(50-iy)*lensZoom}%) scale(${lensZoom})`;
+      }
+
+      orb.addEventListener('pointerenter', activate);
+      orb.addEventListener('pointerleave', deactivate);
+      orb.addEventListener('pointermove', move);
+      // Touch support
+      orb.addEventListener('touchstart', (e) => { activate(); move(e); }, {passive:true});
+      orb.addEventListener('touchmove', move, {passive:true});
+      orb.addEventListener('touchend', deactivate);
+    })();
+
+    // Optional: quick variant switcher in the console
+    //   setVariant('variant-rays'); setVariant('variant-burst'); setVariant('variant-magnify');
+    window.setVariant = function(name){
+      const el = document.getElementById('hero');
+      el.classList.remove('variant-burst','variant-rays','variant-magnify');
+      el.classList.add(name);
+      console.log('Hero variant ->', name);
+    }
+  </script>
+</body>
+</html>
