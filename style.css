@@ -107,6 +107,9 @@ a:hover{ text-decoration:underline }
 .nav__list a{ color:#2c3144; font-weight:600 }
 .nav__list a:hover{ color:#4440ff; text-decoration:none }
 
+
+
+
 /* Buttons */
 .btn{
   display:inline-block;
@@ -952,10 +955,35 @@ animation: beamsSpin 28s linear infinite;
     flex-direction: column;
     gap: 12px;
   }
+
+  .features {
+    margin: 50px;
+  }
+
+  .radiant-orb {
+    position: absolute;
+    /* POSITION: nudge where you want the orb to sit */
+    right: min(90%, 400px);
+    bottom: 77% !important;               /* move up/down along Heather */
+    width: 14vmin; height: 15vmin;
+    border-radius: 100%;
+    pointer-events: none;
+    z-index: 3;
+  }
+
+.radiant-veil{
+    position: absolute;
+    bottom: 88% !important;
+    width: 15vmin; height: 15vmin;
+    pointer-events:none; z-index:3;
+  }
+
+  
   .btn-iris{ 
-  width: 80%;
-  max-width: 420px;
+  width: 100%;
+  max-width: 150px;
   margin: 0 auto;
+  margin-top: 10px;
 } 
 
   .heather-svg{
@@ -963,28 +991,33 @@ animation: beamsSpin 28s linear infinite;
     width: min(72vw, 520px);
   }
 
-  .brand{
-    transform: translateX(50px);
-}
 
 .hero__content h1{
-  font-size: clamp(32px, 3vw, 48px);
-  letter-spacing:-.03em;
+  font-size: 100px !important;
+  letter-spacing:-.09em !important;
   margin:0 0 10px;
   padding-bottom: 20px auto;
-  color:#1e1f2a;
+  color:#2a1e1e;
   position: relative;
   z-index: 3;
 }
 .kicker{ 
   font-size: 24px;
-  font-weight: 900;
+  font-weight: 900 !important;
   width: 100%;
   font-family: "Jacquarda Bastarda 9", serif;
   color:#2c3144;
   padding-bottom: 30px;
   margin: 20px 0 20px 0;
  }
+
+ .brand__logo-img{
+  display:block;
+  width: clamp(120px, 38vw, 180px);
+  height: auto;
+}
+
+
 
 }
 
