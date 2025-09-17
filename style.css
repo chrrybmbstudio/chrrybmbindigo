@@ -77,7 +77,7 @@ a:hover{ text-decoration:underline }
  }
 
  .navcontainer {
-  max-width: 1300px;
+  max-width: 1100px;
   margin: auto;
  }
 
@@ -515,7 +515,13 @@ a:hover{ text-decoration:underline }
 }
 
 /* Footer (minimal) */
-.site-footer{ border-top:1px solid rgba(0,0,0,.06); padding:24px 0; background:#fff }
+.site-footer {
+  border-top:1px solid rgba(0,0,0,.06);
+  margin: 50px 0 0 0;
+  padding:24px 0;
+  background:#fff
+}
+
 .footer__inner{ display:flex; justify-content:space-between; align-items:center; gap:12px }
 .footer__inner p{ margin:0; color:#5a6076 }
 .social{ list-style:none; display:flex; gap:16px; margin:0; padding:0 }
@@ -914,11 +920,57 @@ animation: beamsSpin 28s linear infinite;
   50%     { opacity: calc(var(--alpha, .65) + .12); filter: drop-shadow(0 0 1.6px rgba(68,64,255,.28)); }
 }
 
-/* Respect user motion prefs */
+/* resume pg */
 @media (prefers-reduced-motion: reduce){
   .plus-field .plus { animation: fill-drift 18s linear infinite; }
   .plus-field .plus::after { animation: outer-shine 6s linear infinite; }
 }
+
+/* The outer “sheet” (gets your iris rim via .card-iris on the parent) */
+.doc-frame{
+  position: relative;
+  width: min(100%, 555px);
+  aspect-ratio: 8.5 / 11;                     /* keep it page-shaped */
+  height: min( calc(100svh - 140px), 1200px ); /* no inner scroll */
+  margin-inline: auto;
+  background: #fff;                            /* flush white surface */
+  box-shadow:
+    0 14px 40px rgba(68,64,255,.07),
+    0 2px 10px rgba(0,0,0,.05);
+  overflow: hidden;                             /* clips the viewer chrome */
+}
+
+/* Fill the frame; bleed a touch so any dark edge sits outside the clip */
+.doc-surface{
+  display:block;
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  transform: translate( -1px, 0px);            /* hide 1–2px viewer border */
+  border: 0; outline: 0;
+  background: #fff;                             /* some viewers are transparent */
+}
+
+/* Inner overlay that paints over any remaining dark hairline */
+.doc-edge-mask{
+  position: absolute; inset: 0; pointer-events: none;
+  border-radius: inherit;
+  /* draw a thin white inset ring on top of the PDF */
+  box-shadow: inset 0 0 0 2px #fff;
+  z-index: 2;
+}
+
+/* Keep your card look */
+.resume-card{
+  --card-r: clamp(18px, 1.4vw, 24px);
+  padding: clamp(16px, 2.8vw, 22px);
+  width: 100%;
+  max-width: 666px;
+  margin-inline: auto;
+}
+.resume-actions{ display:flex; gap:10px; margin-top:10px; }
+
+/* Fallback paragraph style (only shows if object fails) */
+.resume-fallback{ margin: 0; color:#2c3144; }
 
 
 
