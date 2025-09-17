@@ -15,12 +15,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Jacquarda+Bastarda+9&display=swap" rel="stylesheet">
 
-  <!-- Page‑scoped styles come AFTER style.css to win in the cascade -->
+  <!-- Page-scoped styles come AFTER style.css to win in the cascade -->
   <style>
-    /*
-      PAGE SCOPE: everything is nested under .page-resume so it won't fight global styles
-      from ./style.css. You can copy this block to other parent pages and just change the scope class.
-    */
     .page-resume{ --indigo:#4440ff; --pink:#ffe9ff; --ink:#0e0f1a; --cardR: clamp(18px,1.6vw,26px); }
 
     .page-resume{ background:
@@ -33,7 +29,7 @@
     /* ---- HERO ---- */
     .page-resume .resume-hero{position:relative; padding: clamp(20px,6vw,68px) 20px 8px; text-align:center;}
     .page-resume .resume-hero .hero-inner{max-width:min(1100px,92vw); margin-inline:auto; position:relative; z-index:0;}
-    .page-resume .resume-hero .hero-inner::before{ /* dreamy blob behind title */
+    .page-resume .resume-hero .hero-inner::before{
       content:""; position:absolute; inset:-12% -14% -18% -14%; z-index:-1; pointer-events:none;
       background:
         radial-gradient(72% 100% at 30% 40%, rgba(68,64,255,.28), transparent 60%),
@@ -48,48 +44,42 @@
     .page-resume .pdf-embed{width:100%;height:100%;display:block;border:0}
     .page-resume .pdf-fallback{padding:18px;text-align:center}
 
-
     /* Title with edge shimmer + fisheye warp band */
     .page-resume .name-edge{ --text:#0e0f1a; font-family:"Funnel Display", system-ui, sans-serif; font-weight:600; font-size:clamp(42px,8vw,96px); letter-spacing:-.02em; line-height:.92; margin:0 0 6px; text-transform:lowercase; position:relative; display:inline-block; color:var(--text); filter:url(#softWobble); }
     .page-resume .name-edge::after{
-  content:attr(data-text);
-  position:absolute; inset:0; z-index:-1; pointer-events:none;
-  background: conic-gradient(from 0deg, var(--indigo), var(--pink) 40%, #8aaaff, var(--indigo));
-  -webkit-background-clip:text; background-clip:text; color:transparent;
-  transform: scale(1.045) rotate(0turn);
-  filter: blur(8px) saturate(130%);
-  opacity:.8;
-  mix-blend-mode: plus-lighter;
-  animation: roll 16s linear infinite; /* rotate instead of animating a var() */
-}
-@keyframes roll { to { transform: scale(1.045) rotate(1turn); } }
+      content:attr(data-text);
+      position:absolute; inset:0; z-index:-1; pointer-events:none;
+      background: conic-gradient(from 0deg, var(--indigo), var(--pink) 40%, #8aaaff, var(--indigo));
+      -webkit-background-clip:text; background-clip:text; color:transparent;
+      transform: scale(1.045) rotate(0turn);
+      filter: blur(8px) saturate(130%);
+      opacity:.8;
+      mix-blend-mode: plus-lighter;
+      animation: roll 16s linear infinite;
+    }
+    @keyframes roll { to { transform: scale(1.045) rotate(1turn); } }
 
     .page-resume .name-edge .text{position:relative; z-index:0}
     .page-resume .name-edge .warp{
-  position:absolute; inset:0; z-index:1; display:inline-block;
-  color:var(--text); -webkit-text-fill-color: currentColor;
-  filter:url(#lensWarp);
-  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 35%, #000 65%, transparent 100%);
-  -webkit-mask-size: 200% 100%; -webkit-mask-position:-50% 0; -webkit-mask-repeat:no-repeat;
-  mask-image: linear-gradient(90deg, transparent 0%, #000 35%, #000 65%, transparent 100%);
-  mask-size:200% 100%; mask-position:-50% 0; mask-repeat:no-repeat;
-  will-change: filter, -webkit-mask-position, mask-position;
-  transform: translateZ(0);
-  animation: sweep 7s cubic-bezier(.45,.05,.36,1) infinite alternate; 
-}
-
-.page-resume .name-edge .warp::after{
-  content: attr(data-text);
-  position:absolute; inset:0; pointer-events:none;
-  -webkit-mask: inherit; mask: inherit;                 /* reuse the moving band */
-  mix-blend-mode: screen; opacity:.35;
-  text-shadow:
-    0 0 0 #7ff0ff,  /* cyan */
-    0 0 0 #ff6adf;  /* magenta */
-  transform: translateX(.6px);                           /* hairline offset */
-}
-
-
+      position:absolute; inset:0; z-index:1; display:inline-block;
+      color:var(--text); -webkit-text-fill-color: currentColor;
+      filter:url(#lensWarp);
+      -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 35%, #000 65%, transparent 100%);
+      -webkit-mask-size: 200% 100%; -webkit-mask-position:-50% 0; -webkit-mask-repeat:no-repeat;
+      mask-image: linear-gradient(90deg, transparent 0%, #000 35%, #000 65%, transparent 100%);
+      mask-size:200% 100%; mask-position:-50% 0; mask-repeat:no-repeat;
+      will-change: filter, -webkit-mask-position, mask-position;
+      transform: translateZ(0);
+      animation: sweep 7s cubic-bezier(.45,.05,.36,1) infinite alternate;
+    }
+    .page-resume .name-edge .warp::after{
+      content: attr(data-text);
+      position:absolute; inset:0; pointer-events:none;
+      -webkit-mask: inherit; mask: inherit;
+      mix-blend-mode: screen; opacity:.35;
+      text-shadow: 0 0 0 #7ff0ff, 0 0 0 #ff6adf;
+      transform: translateX(.6px);
+    }
     @keyframes sweep{ from{ -webkit-mask-position:-50% 0; mask-position:-50% 0 } to{ -webkit-mask-position:150% 0; mask-position:150% 0 } }
 
     .page-resume .resume-sub{margin:5px 0 30px; font: 400 clamp(16px,2.4vw,20px)/1.2 "Jacquarda Bastarda 9", serif; opacity:.8; text-transform:none; text-align:center;}
@@ -104,7 +94,6 @@
     .page-resume .pdf-scroller::-webkit-scrollbar-thumb{ background: linear-gradient(180deg, var(--indigo), #8aa3ff) }
     .page-resume .pdf-scroller::after{ content:""; position:absolute; left:0; top:0; width:4px; height:var(--prog,0%); background: linear-gradient(180deg, var(--indigo), var(--pink)); border-radius:0 6px 6px 0 }
     .page-resume .pdf-page{ display:block; width:100%; height:auto; background:#fff; margin:0 auto; box-shadow:0 1px 0 rgba(0,0,0,.05) }
-    
 
     .page-resume .resume-actions{display:flex; gap:10px; padding:12px; justify-content:center; flex-wrap:wrap}
     .page-resume .btn-iris{appearance:none; border:0; cursor:pointer; font:600 14px/1 "DM Sans"; padding:12px 14px; border-radius:999px; color:#fff; background: linear-gradient(90deg, var(--indigo), #8aa3ff); box-shadow: 0 10px 24px rgba(68,64,255,.25); transition: transform .15s ease, box-shadow .2s ease}
@@ -190,12 +179,19 @@
   
     const scroller = document.getElementById('pdfScroller');
     // cache-bust to beat GH Pages caching while you iterate
-    const url = scroller.dataset.pdf + (scroller.dataset.pdf.includes('?') ? '&' : '?') + 'v=3';
+    const url = scroller.dataset.pdf + (scroller.dataset.pdf.includes('?') ? '&' : '?') + 'v=4';
   
     let zoom = 0.92;
     const MIN = 0.75, MAX = 2.0, STEP = 0.15;
     const DPR = Math.min(window.devicePixelRatio || 1.25, 2.0);
     let doc = null;
+
+    // --- race-proof state (prevents duplicate pages) ---
+    let renderToken = 0;       // increments every render start
+    let isRendering = false;   // true while we're painting pages
+    let needsRerender = false; // set when a resize comes in mid-render
+    let lastWidth = 0;         // cache to only re-render on width changes
+    let rafId = 0;
   
     function setProgress(){
       const p = (scroller.scrollTop / (scroller.scrollHeight - scroller.clientHeight)) * 100;
@@ -220,6 +216,7 @@
       }
     }
   
+    // --- guarded render ---
     async function render(){
       if(!doc){
         await loadDoc();
@@ -230,10 +227,20 @@
       if (document.fonts && document.fonts.ready) { try { await document.fonts.ready; } catch(_){} }
   
       const w = getScrollerWidth();
-      if (w < 200){ requestAnimationFrame(render); return; }
-  
+      if (w < 200){
+        cancelAnimationFrame(rafId);
+        rafId = requestAnimationFrame(render);
+        return;
+      }
+
+      const myToken = ++renderToken;
+      isRendering = true;
       scroller.innerHTML = '';
+  
       for(let i=1;i<=doc.numPages;i++){
+        // bail if a newer render started
+        if (myToken !== renderToken) { isRendering = false; return; }
+
         const page = await doc.getPage(i);
         const base = page.getViewport({ scale: 1 });
         const scale = (w / base.width) * zoom;
@@ -248,12 +255,30 @@
         canvas.style.height = Math.floor(v.height) + 'px';
   
         await page.render({ canvasContext: ctx, viewport: v, transform: [DPR,0,0,DPR,0,0] }).promise;
+
+        // prevent stale appends
+        if (myToken !== renderToken) { isRendering = false; return; }
         scroller.appendChild(canvas);
       }
+      isRendering = false;
       setProgress();
+
+      // if a resize landed mid-paint, do one clean pass
+      if (needsRerender) { needsRerender = false; render(); }
     }
   
-    const ro = new ResizeObserver(() => render());
+    // --- width-only observer (ignore height growth during paint) ---
+    const ro = new ResizeObserver((entries) => {
+      const cr = entries[0] && entries[0].contentRect;
+      if (!cr) return;
+      const w = Math.round(cr.width);
+      if (!w || w === lastWidth) return;   // ignore identical/zero widths
+      lastWidth = w;
+
+      if (isRendering) { needsRerender = true; return; } // finish current, then rerender once
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(render);
+    });
     ro.observe(scroller);
   
     // Controls
@@ -284,37 +309,6 @@
   
     // Kick off after full load to avoid 0px observer races on mobile Safari
     window.addEventListener('load', () => render(), { once:true });
-    if (document.readyState === 'complete') render();
-  
-    // --- graceful fallback paths ---
-    function injectObjectEmbed(pdfUrl){
-      scroller.innerHTML = '';
-      const obj = document.createElement('object');
-      obj.className = 'pdf-embed';
-      obj.type = 'application/pdf';
-      obj.data = pdfUrl + '#view=FitH&toolbar=0&navpanes=0&statusbar=0';
-      obj.setAttribute('aria-label', 'Resume PDF');
-  
-      // if object fails, show open/download
-      const timer = setTimeout(() => {
-        try {
-          // If the object didn't load a subdocument, fallback UI:
-          if (!obj.contentDocument) showButtons(pdfUrl);
-        } catch(_){ showButtons(pdfUrl); }
-      }, 1200);
-  
-      obj.addEventListener('load', () => clearTimeout(timer));
-      scroller.appendChild(obj);
-    }
-  
-    function showButtons(pdfUrl){
-      scroller.innerHTML = `
-        <div class="pdf-fallback">
-          <p class="loading">Can’t display inline here.</p>
-          <a class="btn-iris" href="${pdfUrl}" target="_blank" rel="noopener">Open PDF</a>
-          <a class="btn-iris btn-iris--ghost" href="${pdfUrl}" download>Download</a>
-        </div>`;
-    }
   </script>
   
 
