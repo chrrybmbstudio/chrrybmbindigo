@@ -2,259 +2,368 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#ffffff" />
-
-  <title>chrrybmb — Denisa Jomo</title>
-  <meta name="description" content="Creative leadership for brand & web. Senior graphic designer fluent in the Adobe suite." />
-  <link rel="canonical" href="https://your-domain-or-gh-pages-url.example/" />
-
-  <!-- Favicon / icons (swap paths when ready) -->
-  <link rel="icon" href="./assets/eyefavi.png" />
-  <link rel="apple-touch-icon" href="./assets/eyefavi.png" />
-
-  <!-- Open Graph / Twitter (update when live) -->
-  <meta property="og:title" content="chrrybmb — Denisa Jomo" />
-  <meta property="og:description" content="Creative management, brand & web." />
-  <meta property="og:image" content="./assets/og-image.jpg" />
-  <meta property="og:type" content="website" />
-  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>resume — denisa jomo</title>
 
   <!-- Fonts -->
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Jacquarda+Bastarda+9&display=swap" rel="stylesheet">
-
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Jacquarda+Bastarda+9&display=swap" rel="stylesheet">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --indigo:#4440ff;          /* primary */
+      --pink:#ffe9ff;            /* secondary */
+      --ink:#0e0f1a;             
+      --cardR: clamp(18px, 1.6vw, 26px);
+      --shadow: 0 20px 60px rgba(68,64,255,.08), 0 4px 14px rgba(0,0,0,.06);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; background:
+        radial-gradient(60% 60% at var(--orb-x,72%) var(--orb-y,68%), rgba(68,64,255,.13), transparent 60%),
+        linear-gradient(180deg, #ffffff, #faf9ff);
+      color:var(--ink);
+      font:16px/1.5 "DM Sans", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+    }
 
-  <!-- styles -->
-  <link rel="stylesheet" href="./style.css" />
+    /* --- Heading: use your original class name-edge (lowercase vibe) --- */
+    .resume-hero{position:relative; padding: clamp(20px,6vw,68px) 20px 8px; text-align:center;}
+    .resume-hero .hero-inner{max-width:min(1100px,92vw); margin-inline:auto; position:relative; z-index:0;}
+    .resume-hero .hero-inner::before{ /* dreamy blur blob behind the title for contrast on white */
+      content:""; position:absolute; inset:-12% -14% -18% -14%; z-index:-1; pointer-events:none;
+      background:
+        radial-gradient(72% 100% at 30% 40%, rgba(68,64,255,.28), transparent 60%),
+        radial-gradient(64% 80% at 70% 60%, rgba(255,233,255,.38), transparent 60%);
+      filter: blur(28px) saturate(120%);
+      opacity:.9;
+      animation: floatBlob 24s ease-in-out infinite alternate;
+    }
+    .plus-field{position:absolute; inset:0; pointer-events:none; overflow:hidden}
+    .name-edge{ /* base text stays solid; edge glimmers */
+      --text: #0e0f1a; /* solid ink */
+      font-family: "Funnel Display", system-ui, sans-serif;
+      font-weight: 600;
+      font-size: clamp(42px, 8vw, 96px);
+      letter-spacing: -0.02em; line-height:.92; margin:0 0 6px 0; text-transform: lowercase;
+      position: relative; display:inline-block; color:var(--text);
+      filter:url(#softWobble);
+    }
+    /* optional animated edge shimmer; comment out if you prefer your site version */
+    .name-edge::after{ /* iridescent halo that peeks at the edges only */
+      content: attr(data-text);
+      position:absolute; inset:0; z-index:-1; pointer-events:none;
+      background: conic-gradient(from var(--a,0deg), var(--indigo), var(--pink) 40%, #8aaaff, var(--indigo));
+      -webkit-background-clip:text; background-clip:text; color:transparent;
+      transform: scale(1.045); /* slightly larger so only the edge shows around glyphs */
+      filter: blur(8px) saturate(130%);
+      opacity:.8;
+      mix-blend-mode: plus-lighter; /* glowy; falls back to screen below */
+      animation: spin 14s linear infinite;
+    }
+    @supports not (mix-blend-mode: plus-lighter){
+      .name-edge::after{ mix-blend-mode: screen; }
+    }
+    @supports not (mix-blend-mode: plus-lighter){
+      .name-edge::after{ mix-blend-mode: screen; }
+    }
+
+    .resume-sub{margin-top:10px; font: 400 clamp(16px,2.4vw,20px)/1.2 "Jacquarda Bastarda 9", serif; opacity:.8; text-transform:none; text-align:center;}
+
+    /* --- Card with animated iris border --- */
+    .resume-wrap{display:grid; place-items:center; padding: 18px 16px 44px}
+    .card-iris{position:relative; width:min(92vw, 640px); border-radius:var(--cardR); box-shadow:var(--shadow); background:#fff}
+    .card-iris::before{content:""; position:absolute; inset:-1px; border-radius:inherit; padding:1px; background:
+      conic-gradient(from var(--b,0deg), var(--indigo), var(--pink) 40%, #a8a3ff, var(--indigo));
+      --mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask: var(--mask); -webkit-mask-composite: xor; mask-composite: exclude;
+      animation: spin 14s linear infinite; pointer-events:none;
+    }
+
+    /* --- PDF scroller (pdf.js renders pages here) --- */
+    .pdf-scroller{
+      --h: clamp(64svh, 78svh, 86svh); /* a touch smaller by default */
+      height: var(--h);
+      overflow:auto; overflow: overlay; /* overlay keeps thumb off content on webkit */
+      border-radius: inherit;
+      background: #fff;
+      scroll-behavior: smooth;
+      position:relative;
+    }
+
+    /* custom scrollbar */
+    .pdf-scroller{scrollbar-color: var(--indigo) rgba(68,64,255,.08); scrollbar-width: thin}
+    .pdf-scroller::-webkit-scrollbar{width:10px}
+    .pdf-scroller::-webkit-scrollbar-track{background: rgba(68,64,255,.06)}
+    .pdf-scroller::-webkit-scrollbar-thumb{background: linear-gradient(180deg, var(--indigo), #8aa3ff)}
+    .pdf-scroller::-webkit-scrollbar-thumb:hover{background: linear-gradient(180deg, #5753ff, #9cb3ff)}
+
+    /* canvases = pages */
+    .pdf-page{display:block; width:max(100%, min(var(--pageW,100%), 100%)); height:auto; background:#fff; margin:0 auto; box-shadow: 0 1px 0 rgba(0,0,0,.05)}
+
+    .loading{margin:0; padding: 24px; text-align:center; color:#54587a}
+
+    /* progress sliver on the left edge */
+    .pdf-scroller::after{content:""; position:absolute; left:0; top:0; width:4px; height:var(--prog,0%); background: linear-gradient(180deg, var(--indigo), var(--pink)); border-radius: 0 6px 6px 0}
+
+    /* actions */
+    .resume-actions{display:flex; gap:10px; padding:12px; justify-content:center; flex-wrap:wrap}
+    .btn-iris{appearance:none; border:0; cursor:pointer; font:600 14px/1 "DM Sans"; padding:12px 14px; border-radius: 999px; color:#fff; background: linear-gradient(90deg, var(--indigo), #8aa3ff); box-shadow: 0 10px 24px rgba(68,64,255,.25); transition: transform .15s ease, box-shadow .2s ease}
+    .btn-iris:hover{transform: translateY(-1px); box-shadow: 0 14px 30px rgba(68,64,255,.28)}
+    .btn-iris--ghost{background: #f5f5ff; color:#1b1e35}
+
+    @keyframes spin{to{--a:360deg; --b:360deg}}
+    @keyframes sweep{ from{ -webkit-mask-position:-50% 0; mask-position:-50% 0; } to{ -webkit-mask-position:150% 0; mask-position:150% 0; } }}
+
+    @media (max-width: 480px){
+      .card-iris{width:min(94vw, 600px)}
+      .resume-actions{gap:8px}
+      .btn-iris{padding:11px 12px; font-size:13px}
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .name-edge::after, .card-iris::before{animation:none}
+      .name-edge .warp{display:none}
+      .pdf-scroller{scroll-behavior:auto}
+    }
+      .pdf-scroller{scroll-behavior:auto}
+    }
+      .pdf-scroller{scroll-behavior:auto}
+    }
+
+    /* keep defs off-screen but present */
+    svg.defs{position:absolute; width:0; height:0}
+
+    /* plus glyphs vibe */
+    .plus{position:absolute; display:inline-block; font:700 16px/1 "DM Sans"; color:rgba(255,255,255,var(--alpha,0.6));
+      transform: rotate(var(--rot,0deg));
+      filter: drop-shadow(0 6px 14px rgba(68,64,255,.22));
+      animation: fill-drift var(--driftDur,12s) ease-in-out infinite alternate;
+    }
+    .plus::after{
+      content:""; position:absolute; inset:-10%; border-radius:2px; opacity:.7;
+      background: radial-gradient(40% 40% at 50% 50%, rgba(255,255,255,.6), transparent);
+      animation: outer-shine var(--shineDur,4s) ease-in-out infinite alternate;
+    }
+    @keyframes fill-drift{to{transform: translate3d(0,-20px,0) rotate(var(--rot,0deg))}}
+    @keyframes outer-shine{to{opacity:.2}}
+  .name-edge::before{ /* left-to-right morph sweep clipped to the glyph edges */
+      content: attr(data-text);
+      position:absolute; inset:0; pointer-events:none;
+      background: conic-gradient(from var(--a,0deg), var(--indigo), var(--pink) 40%, #8aaaff, var(--indigo));
+      -webkit-background-clip:text; background-clip:text; color:transparent;
+      transform: scale(1.045); /* aligns with ::after glow width */
+      filter: blur(8px) saturate(140%);
+      mix-blend-mode: plus-lighter;
+      /* animated mask band that sweeps left→right */
+      -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 35%, #000 65%, transparent 100%);
+      -webkit-mask-size: 200% 100%;
+      -webkit-mask-position: -50% 0;
+      mask-image: linear-gradient(90deg, transparent 0%, #000 35%, #000 65%, transparent 100%);
+      mask-size: 200% 100%;
+      mask-position: -50% 0;
+      animation: sweep 6.5s ease-in-out infinite;
+    }
+    @keyframes floatBlob{ 
+      0% { transform: translateY(0) rotate(0deg) scale(1); }
+      100% { transform: translateY(-6px) rotate(6deg) scale(1.02); }
+    }
+  .name-edge .text{position:relative; z-index:0}
+    .name-edge .warp{position:absolute; inset:0; z-index:1; color:var(--text); mix-blend-mode:normal; filter:url(#tvWarp);
+      /* sweep mask */
+      -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 35%, #000 65%, transparent 100%);
+      -webkit-mask-size: 200% 100%;
+      -webkit-mask-position: -50% 0;
+      mask-image: linear-gradient(90deg, transparent 0%, #000 35%, #000 65%, transparent 100%);
+      mask-size: 200% 100%;
+      mask-position: -50% 0;
+      animation: sweep 6s cubic-bezier(.65,.05,.36,1) infinite;
+    }
+    @keyframes sweep{ from{ -webkit-mask-position:-50% 0; mask-position:-50% 0; } to{ -webkit-mask-position:150% 0; mask-position:150% 0; } }
+  </style>
 </head>
-
 <body>
 
-  <!-- Header / Nav -->
-  <header class="site-header" role="banner">
-    <div class="navcontainer header__inner">
-      <a class="brand" href="/chrrybmbindigo/" aria-label="chrrybmb home">
-        <img class="brand__logo-img"
-             src="./assets/indigo_chrry_indypinky.svg"
-             alt="chrrybmb logo"
-             width="120" height="48" decoding="async" fetchpriority="high">
-      </a>
-      
-      <nav class="nav" aria-label="Primary">
-        <ul id="navMenu" class="nav__list">
-          <li><a href="./index.html">Home</a></li>
-          <li><a href="./work.html">Work</a></li>
-          <li><a href="./about.html">About</a></li>
-          <li><a href="./contact.html">Contact</a></li>
-        </ul>
-      </nav>
+  <header class="resume-hero">
+    <div class="plus-field" aria-hidden="true"></div>
+    <div class="hero-inner">
+      <h1 class="name-edge" data-text="resume"><span class="text">resume</span><span class="warp" aria-hidden="true">resume</span></h1>
+      <div class="resume-sub">yogi‑nerdy • majestic pixel • creative leadership</div>
     </div>
+    
   </header>
 
-  <div class="plus-field" aria-hidden="true"></div>
-  <div class="site-shell">
+  <main class="resume-wrap">
+    <!-- Replace the data-pdf path to your actual file. Keep names EXACT. -->
+    <section class="card-iris">
+      <div id="pdfScroller" class="pdf-scroller" data-pdf="./assets/denisa_moraru_resume_2025_indigo.pdf">
+        <p class="loading">Loading resume…</p>
+      </div>
+      <div class="resume-actions" role="toolbar" aria-label="Zoom and download controls">
+        <button id="zoomOut" class="btn-iris btn-iris--ghost" type="button" aria-label="Zoom out">−</button>
+        <button id="fitBtn" class="btn-iris btn-iris--ghost" type="button" aria-label="Fit to width">Fit</button>
+        <button id="oneBtn" class="btn-iris btn-iris--ghost" type="button" aria-label="Actual size">100%</button>
+        <button id="zoomIn" class="btn-iris btn-iris--ghost" type="button" aria-label="Zoom in">+</button>
+        <a id="dlBtn" class="btn-iris" href="./assets/denisa_moraru_resume_2025_indigo.pdf" download>Download PDF</a>
+      </div>
+    </section>
+  </main>
 
-  <!-- Main -->
-  <main id="main" class="site-main" role="main">
+  <!-- wobble filter reused from your site -->
+  <svg class="defs" xmlns="http://www.w3.org/2000/svg">
+    <filter id="softWobble" x="-50%" y="-50%" width="200%" height="200%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.008" numOctaves="1" seed="11" result="noise">
+        <animate attributeName="baseFrequency" dur="14s" values="0.008;0.010;0.008" repeatCount="indefinite" />
+      </feTurbulence>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <!-- TV-style warp used only inside the sweeping band -->
+    <filter id="tvWarp" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence type="turbulence" baseFrequency="0.006" numOctaves="2" seed="7" result="noise">
+        <animate attributeName="seed" dur="1.2s" values="1;9;3;7;1" repeatCount="indefinite" />
+        <animate attributeName="baseFrequency" dur="1.2s" values="0.006;0.012;0.008;0.006" repeatCount="indefinite" />
+      </feTurbulence>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="12" xChannelSelector="R" yChannelSelector="G">
+        <animate attributeName="scale" dur="1.2s" values="0;14;10;14;0" repeatCount="indefinite" />
+      </feDisplacementMap>
+    </filter>
+  </svg>
 
-<!-- HERO -->
-<section class="hero" aria-label="Intro">
-  <div class="container">
+  <!-- pdf.js (module build). Uses a CDN so it works on GitHub Pages. -->
+  <script type="module">
+    import * as pdfjsLib from 'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.8.69/build/pdf.mjs';
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.8.69/build/pdf.worker.mjs';
 
-          <h1 class="name-edge" data-text="Resume">Resume</h1></div>
+    const scroller = document.getElementById('pdfScroller');
+    const url = scroller.dataset.pdf; // KEEP FILENAME EXACT — case/underscores must match
 
-   <filter id="lensWobble-hero" x="-60%" y="-60%" width="220%" height="220%">
-    <!-- stronger, dynamic noise -->
-    <feTurbulence type="fractalNoise" baseFrequency="0.005 0.011" numOctaves="2" seed="13" result="noise">
-      <animate attributeName="baseFrequency" dur="11s"
-               values="0.004 0.010;0.007 0.015;0.004 0.010" repeatCount="indefinite"/>
-    </feTurbulence>
-    <!-- dramatic displacement; animated for ‘breathing’ wobble -->
-    <feDisplacementMap in="SourceGraphic" in2="noise" scale="18" xChannelSelector="R" yChannelSelector="G">
-      <animate attributeName="scale" dur="8s" values="8;18;12;18;8" repeatCount="indefinite"/>
-    </feDisplacementMap>
-  </filter>
-  
- </svg>
-</section>
-</div>
+    // zoom state
+    let zoom = 0.92;            // a touch smaller default
+    const MIN = 0.75, MAX = 2.0, STEP = 0.15;
 
+    function setProgress(){
+      const p = (scroller.scrollTop / (scroller.scrollHeight - scroller.clientHeight)) * 100;
+      scroller.style.setProperty('--prog', (isFinite(p)?p:0) + '%');
+    }
+    scroller.addEventListener('scroll', setProgress, {passive:true});
 
-  
-<section class="resume-section" aria-label="Resume">
-  <div class="card-iris resume-card" data-animate>
-    <div class="doc-frame">
-      <object
-        id="resumeObj"
-        class="doc-surface"
-        data="./assets/denisa_moraru_resume_2025_indigo.pdf#toolbar=0&navpanes=0&statusbar=0&view=FitH&zoom=page-fit"
-        type="application/pdf"
-        aria-label="Embedded resume PDF">
-      </object>
+    const DPR = Math.min(window.devicePixelRatio || 1.25, 2.0);
 
-    <div class="resume-actions" role="toolbar" aria-label="Resume actions">
-      <button type="button" class="btn-iris btn-iris--ghost" id="zoomOut" aria-label="Zoom out">−</button>
-      <button type="button" class="btn-iris btn-iris--ghost" id="zoomIn"  aria-label="Zoom in">+</button>
-      <a class="btn-iris" href="./assets/denisa_moraru_resume_2025_indigo.pdf" download>Download</a>
-    </div>
-  </div>
-</section>
+    let doc = null;
+    async function loadDoc(){
+      try{ doc = await pdfjsLib.getDocument(url).promise; }
+      catch(err){ console.error('PDF load failed', err); throw err }
+    }
 
+    async function render(){
+      if(!doc) await loadDoc();
+      scroller.innerHTML = '';
+      const w = scroller.clientWidth; // page width basis
 
-  <!-- Footer -->
-  <footer class="site-footer" role="contentinfo">
-    <div class="container footer__inner">
-      <p>© <span id="year"></span> chrrybmb.com / denisajomo.com</p>
-      <ul class="social">
-        <li><a href="https://denisajomo.com">Email</a></li>
-        <li><a href="https://www.linkedin.com/in/your-handle/">LinkedIn</a></li>
-        <li><a href="https://github.com/your-username">GitHub</a></li>
-      </ul>
-    </div>
-  </footer>
+      for(let i=1;i<=doc.numPages;i++){
+        const page = await doc.getPage(i);
+        const viewport = page.getViewport({ scale: 1 });
+        const scale = (w / viewport.width) * zoom; // zoomed fit
+        const v = page.getViewport({ scale });
 
-  <!-- Tiny helper: current year -->
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
+        const canvas = document.createElement('canvas');
+        canvas.className = 'pdf-page';
+        const ctx = canvas.getContext('2d');
+        canvas.width = Math.floor(v.width * DPR);
+        canvas.height = Math.floor(v.height * DPR);
+        canvas.style.width = Math.floor(v.width) + 'px';
+        canvas.style.height = Math.floor(v.height) + 'px';
 
-  <!-- Soft wobble filter (once per page) -->
-<svg width="0" height="0" style="position:absolute">
-  <filter id="softWobble" x="-50%" y="-50%" width="200%" height="200%">
-    <feTurbulence type="fractalNoise" baseFrequency="0.008" numOctaves="1" seed="11" result="noise">
-      <animate attributeName="baseFrequency"
-               dur="14s"
-               values="0.008;0.010;0.008"
-               repeatCount="indefinite" />
-    </feTurbulence>
-    <feDisplacementMap in="SourceGraphic" in2="noise"
-                       scale="3" xChannelSelector="R" yChannelSelector="G"/>
-  </filter>
-</svg>
-</div>
+        await page.render({ canvasContext: ctx, viewport: v, transform: [DPR,0,0,DPR,0,0] }).promise;
+        scroller.appendChild(canvas);
+      }
+      setProgress();
+    }
 
-  <script>
-    // Reveal hero + feature cards when they enter the viewport
-    document.addEventListener('DOMContentLoaded', () => {
-      const cards = document.querySelectorAll('.card-iris[data-animate]');
-      const show = el => el.classList.add('is-in');
-  
-      // If IntersectionObserver isn't supported, just show them
-      if (!('IntersectionObserver' in window)) { cards.forEach(show); return; }
-  
-      const io = new IntersectionObserver((entries) => {
-        entries.forEach(e => { if (e.isIntersecting) { show(e.target); io.unobserve(e.target); }});
-      }, { rootMargin: '0px 0px -10% 0px', threshold: 0.1 });
-  
-      cards.forEach(c => io.observe(c));
+    const ro = new ResizeObserver(() => render());
+    ro.observe(scroller);
+
+    // controls
+    const zoomIn = document.getElementById('zoomIn');
+    const zoomOut = document.getElementById('zoomOut');
+    const fitBtn = document.getElementById('fitBtn');
+    const oneBtn = document.getElementById('oneBtn');
+
+    function applyZoom(z){
+      const next = Math.max(MIN, Math.min(MAX, z));
+      if(next === zoom) return;
+      zoom = next; render();
+    }
+
+    zoomIn.addEventListener('click', ()=> applyZoom(zoom + STEP));
+    zoomOut.addEventListener('click', ()=> applyZoom(zoom - STEP));
+    fitBtn.addEventListener('click', ()=> applyZoom(0.98));
+    oneBtn.addEventListener('click', ()=> applyZoom(1.0));
+
+    // keyboard shortcuts: Cmd/Ctrl +/- and 0
+    addEventListener('keydown', (e)=>{
+      const cmd = e.ctrlKey || e.metaKey;
+      if(!cmd) return;
+      if(e.key === '+'){ e.preventDefault(); applyZoom(zoom + STEP); }
+      if(e.key === '-'){ e.preventDefault(); applyZoom(zoom - STEP); }
+      if(e.key === '0'){ e.preventDefault(); applyZoom(1.0); }
     });
+
+    // trackpad pinch (Ctrl/⌘ + wheel)
+    scroller.addEventListener('wheel', (e)=>{
+      if(!e.ctrlKey) return; // pinch-zoom gesture sends ctrlKey on many browsers
+      e.preventDefault();
+      const dir = Math.sign(-e.deltaY); // up = zoom in
+      applyZoom(zoom + dir*STEP);
+    }, {passive:false});
+
+    // initial render
+    render();
   </script>
-  
-
-  <nav class="nav" aria-label="Primary">
-    <ul id="navMenu" class="nav__list">
-      <!-- links... -->
-    </ul>
-    <span class="nav__bar" aria-hidden="true"></span>
-  </nav>
-
 
   <script>
-    const hdr = document.querySelector('.site-header');
-    addEventListener('scroll', () => hdr.classList.toggle('is-scrolled', scrollY > 4));
-  </script>
-  
-
-  <script>
+    // soft pointer-follow orb for background vibe
     (function(){
       const root = document.documentElement;
       function setOrb(e){
         const t = e.touches ? e.touches[0] : e;
-        const x = (t.clientX / window.innerWidth) * 100;
-        const y = (t.clientY / window.innerHeight) * 100;
+        const x = (t.clientX / innerWidth) * 100;
+        const y = (t.clientY / innerHeight) * 100;
         root.style.setProperty('--orb-x', x + '%');
         root.style.setProperty('--orb-y', y + '%');
       }
-      window.addEventListener('pointermove', setOrb, {passive:true});
-      window.addEventListener('touchmove',   setOrb, {passive:true});
+      addEventListener('pointermove', setOrb, {passive:true});
+      addEventListener('touchmove', setOrb, {passive:true});
     })();
-  </script>
 
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const field = document.querySelector('.plus-field');
-    if (!field) return;
-  
-    const phone = matchMedia('(max-width: 640px)').matches;
-    const COUNT = phone ? 12 : 24;   // tweak if you want denser/sparser
-  
-    const rand = (a,b)=>Math.random()*(b-a)+a;
-    const bias = p => Math.pow(Math.random(), p);  // >1 => bias near 0
-  
-    for (let i=0; i<COUNT; i++){
-      const el = document.createElement('span');
-      el.className = 'plus';
-      el.textContent = '+';
-  
-      // Bias positions so they emanate from bottom-right
-      const rx = bias(1.6), ry = bias(1.6);
-      el.style.right  = (rx * 60).toFixed(2) + 'vw';  // spread ≈ 60% viewport
-      el.style.bottom = (ry * 60).toFixed(2) + 'vh';
-  
-      // Variety per glyph
-      el.style.setProperty('--size',  Math.round(rand(18, 46)) + 'px');
-      el.style.setProperty('--alpha', rand(0.40, 0.75).toFixed(2));
-      el.style.setProperty('--rot',   rand(-6, 6).toFixed(1) + 'deg');
-  
-      // Desync the animations a bit
-      el.style.setProperty('--driftDur',   rand(10, 16).toFixed(2) + 's');
-      el.style.setProperty('--shineDur',   rand(3.0, 4.8).toFixed(2) + 's');
-      el.style.setProperty('--twinkleDur', rand(5.0, 8.0).toFixed(2) + 's');
-      el.style.animationDelay = `${rand(0,6).toFixed(2)}s, ${rand(0,5).toFixed(2)}s`;
-  
-      field.appendChild(el);
-    }
-  });
-  </script>
-
-<script>
-  (() => {
-    const obj = document.getElementById('resumeObj');
-    if (!obj) return;
-  
-    const base = './assets/denisa_moraru_resume_2025_indigo.pdf'
-               + '#toolbar=0&navpanes=0&statusbar=0&view=FitH&zoom=';
-  
-    let zoom = 100;                 // start at 100%
-    const MIN = 75, MAX = 200;      // gentle bounds
-  
-    function applyZoom(){ obj.data = base + zoom; }
-  
-    document.getElementById('zoomIn') .addEventListener('click', () => {
-      zoom = Math.min(MAX, zoom + 25); applyZoom();
+    // scatter some plusses into the hero background
+    document.addEventListener('DOMContentLoaded', () => {
+      const field = document.querySelector('.plus-field');
+      if (!field) return;
+      const phone = matchMedia('(max-width: 640px)').matches;
+      const COUNT = phone ? 12 : 24;
+      const rand = (a,b)=>Math.random()*(b-a)+a;
+      const bias = p => Math.pow(Math.random(), p);
+      for (let i=0; i<COUNT; i++){
+        const el = document.createElement('span');
+        el.className = 'plus';
+        el.textContent = '+';
+        const rx = bias(1.6), ry = bias(1.6);
+        el.style.right  = (rx * 60).toFixed(2) + 'vw';
+        el.style.bottom = (ry * 60).toFixed(2) + 'vh';
+        el.style.setProperty('--size',  Math.round(rand(18, 46)) + 'px');
+        el.style.fontSize = 'var(--size)';
+        el.style.setProperty('--alpha', rand(0.40, 0.75).toFixed(2));
+        el.style.setProperty('--rot',   rand(-6, 6).toFixed(1) + 'deg');
+        el.style.setProperty('--driftDur',   rand(10, 16).toFixed(2) + 's');
+        el.style.setProperty('--shineDur',   rand(3.0, 4.8).toFixed(2) + 's');
+        field.appendChild(el);
+      }
     });
-    document.getElementById('zoomOut').addEventListener('click', () => {
-      zoom = Math.max(MIN, zoom - 25); applyZoom();
-    });
-  
-    // initialize exact fragment
-    applyZoom();
-  })();
   </script>
-  
-    
-
 </body>
 </html>
