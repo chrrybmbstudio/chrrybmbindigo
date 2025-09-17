@@ -45,22 +45,39 @@
 
     .page-resume .plus-field{position:absolute; inset:0; pointer-events:none; overflow:hidden}
 
+    .page-resume .pdf-embed{width:100%;height:100%;display:block;border:0}
+    .page-resume .pdf-fallback{padding:18px;text-align:center}
+
+
     /* Title with edge shimmer + fisheye warp band */
     .page-resume .name-edge{ --text:#0e0f1a; font-family:"Funnel Display", system-ui, sans-serif; font-weight:600; font-size:clamp(42px,8vw,96px); letter-spacing:-.02em; line-height:.92; margin:0 0 6px; text-transform:lowercase; position:relative; display:inline-block; color:var(--text); filter:url(#softWobble); }
-    .page-resume .name-edge::after{ content:attr(data-text); position:absolute; inset:0; z-index:-1; pointer-events:none; background:conic-gradient(from var(--a,0deg), var(--indigo), var(--pink) 40%, #8aaaff, var(--indigo)); -webkit-background-clip:text; background-clip:text; color:transparent; transform:scale(1.045); filter:blur(8px) saturate(130%); opacity:.8; mix-blend-mode:plus-lighter; animation: spin 14s linear infinite; }
-    @supports not (mix-blend-mode: plus-lighter){ .page-resume .name-edge::after{ mix-blend-mode:screen } }
-    @keyframes spin{ to{ --a:360deg } }
+    .page-resume .name-edge::after{
+  content:attr(data-text);
+  position:absolute; inset:0; z-index:-1; pointer-events:none;
+  background: conic-gradient(from 0deg, var(--indigo), var(--pink) 40%, #8aaaff, var(--indigo));
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+  transform: scale(1.045) rotate(0turn);
+  filter: blur(8px) saturate(130%);
+  opacity:.8;
+  mix-blend-mode: plus-lighter;
+  animation: roll 16s linear infinite; /* rotate instead of animating a var() */
+}
+@keyframes roll { to { transform: scale(1.045) rotate(1turn); } }
 
     .page-resume .name-edge .text{position:relative; z-index:0}
-    .page-resume .name-edge .warp{position:absolute; inset:0; z-index:1; color:var(--text); display:inline-block; filter:url(#lensWarp);
-      /* iOS/WebKit masking + perf */
-      -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 35%, #000 65%, transparent 100%);
-      -webkit-mask-size: 200% 100%; -webkit-mask-position:-50% 0; -webkit-mask-repeat:no-repeat;
-      mask-image: linear-gradient(90deg, transparent 0%, #000 35%, #000 65%, transparent 100%);
-      mask-size:200% 100%; mask-position:-50% 0; mask-repeat:no-repeat;
-      will-change: filter, -webkit-mask-position, mask-position; transform: translateZ(0);
-      animation: sweep 7s cubic-bezier(.45,.05,.36,1) infinite;
-    }
+    .page-resume .name-edge .warp{
+  position:absolute; inset:0; z-index:1; display:inline-block;
+  color:var(--text); -webkit-text-fill-color: currentColor;
+  filter:url(#lensWarp);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 35%, #000 65%, transparent 100%);
+  -webkit-mask-size: 200% 100%; -webkit-mask-position:-50% 0; -webkit-mask-repeat:no-repeat;
+  mask-image: linear-gradient(90deg, transparent 0%, #000 35%, #000 65%, transparent 100%);
+  mask-size:200% 100%; mask-position:-50% 0; mask-repeat:no-repeat;
+  will-change: filter, -webkit-mask-position, mask-position;
+  transform: translateZ(0);
+  animation: sweep 7s cubic-bezier(.45,.05,.36,1) infinite;
+}
+
     @keyframes sweep{ from{ -webkit-mask-position:-50% 0; mask-position:-50% 0 } to{ -webkit-mask-position:150% 0; mask-position:150% 0 } }
 
     .page-resume .resume-sub{margin-top:10px; font: 400 clamp(16px,2.4vw,20px)/1.2 "Jacquarda Bastarda 9", serif; opacity:.8; text-transform:none; text-align:center;}
@@ -155,37 +172,138 @@
   <!-- pdf.js (module build) -->
   <script type="module">
     import * as pdfjsLib from 'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.8.69/build/pdf.mjs';
-    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.8.69/build/pdf.worker.mjs';
-
+    pdfjsLib.GlobalWorkerOptions.workerSrc =
+      'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.8.69/build/pdf.worker.mjs';
+  
     const scroller = document.getElementById('pdfScroller');
-    const url = scroller.dataset.pdf;
-    let zoom = 0.92; const MIN = 0.75, MAX = 2.0, STEP = 0.15;
+    // cache-bust to beat GH Pages caching while you iterate
+    const url = scroller.dataset.pdf + (scroller.dataset.pdf.includes('?') ? '&' : '?') + 'v=3';
+  
+    let zoom = 0.92;
+    const MIN = 0.75, MAX = 2.0, STEP = 0.15;
     const DPR = Math.min(window.devicePixelRatio || 1.25, 2.0);
-
-    function setProgress(){ const p = (scroller.scrollTop / (scroller.scrollHeight - scroller.clientHeight)) * 100; scroller.style.setProperty('--prog', (isFinite(p)?p:0) + '%'); }
-    scroller.addEventListener('scroll', setProgress, {passive:true});
-
     let doc = null;
-    async function loadDoc(){ doc = await pdfjsLib.getDocument(url).promise; }
-    async function render(){ if(!doc) await loadDoc(); scroller.innerHTML = ''; const w = scroller.clientWidth; for(let i=1;i<=doc.numPages;i++){ const page = await doc.getPage(i); const viewport = page.getViewport({ scale: 1 }); const scale = (w / viewport.width) * zoom; const v = page.getViewport({ scale }); const canvas = document.createElement('canvas'); canvas.className = 'pdf-page'; const ctx = canvas.getContext('2d'); canvas.width = Math.floor(v.width * DPR); canvas.height = Math.floor(v.height * DPR); canvas.style.width = Math.floor(v.width) + 'px'; canvas.style.height = Math.floor(v.height) + 'px'; await page.render({ canvasContext: ctx, viewport: v, transform: [DPR,0,0,DPR,0,0] }).promise; scroller.appendChild(canvas);} setProgress(); }
-
-    const ro = new ResizeObserver(() => render()); ro.observe(scroller);
-
-    const zoomIn = document.getElementById('zoomIn');
-    const zoomOut = document.getElementById('zoomOut');
-    const fitBtn = document.getElementById('fitBtn');
-    const oneBtn = document.getElementById('oneBtn');
-    function applyZoom(z){ const next = Math.max(MIN, Math.min(MAX, z)); if(next === zoom) return; zoom = next; render(); }
-    zoomIn.addEventListener('click', ()=> applyZoom(zoom + STEP));
-    zoomOut.addEventListener('click', ()=> applyZoom(zoom - STEP));
-    fitBtn.addEventListener('click', ()=> applyZoom(0.98));
-    oneBtn.addEventListener('click', ()=> applyZoom(1.0));
-
-    addEventListener('keydown', (e)=>{ const cmd = e.ctrlKey || e.metaKey; if(!cmd) return; if(e.key === '+'){ e.preventDefault(); applyZoom(zoom + STEP); } if(e.key === '-'){ e.preventDefault(); applyZoom(zoom - STEP); } if(e.key === '0'){ e.preventDefault(); applyZoom(1.0); } });
-    scroller.addEventListener('wheel', (e)=>{ if(!e.ctrlKey) return; e.preventDefault(); const dir = Math.sign(-e.deltaY); applyZoom(zoom + dir*STEP); }, {passive:false});
-
-    render();
+  
+    function setProgress(){
+      const p = (scroller.scrollTop / (scroller.scrollHeight - scroller.clientHeight)) * 100;
+      scroller.style.setProperty('--prog', (isFinite(p)?p:0) + '%');
+    }
+    scroller.addEventListener('scroll', setProgress, {passive:true});
+  
+    function getScrollerWidth(){
+      return Math.max(
+        scroller.clientWidth || 0,
+        Math.floor(scroller.getBoundingClientRect().width) || 0,
+        320
+      );
+    }
+  
+    async function loadDoc(){
+      try{
+        doc = await pdfjsLib.getDocument(url).promise;
+      } catch (err){
+        console.error('pdf.js failed, swapping to <object> embed.', err);
+        injectObjectEmbed(url);
+      }
+    }
+  
+    async function render(){
+      if(!doc){
+        await loadDoc();
+        if(!doc) return; // we already swapped to <object>
+      }
+  
+      // wait for fonts/layout so we don't render at 0px width
+      if (document.fonts && document.fonts.ready) { try { await document.fonts.ready; } catch(_){} }
+  
+      const w = getScrollerWidth();
+      if (w < 200){ requestAnimationFrame(render); return; }
+  
+      scroller.innerHTML = '';
+      for(let i=1;i<=doc.numPages;i++){
+        const page = await doc.getPage(i);
+        const base = page.getViewport({ scale: 1 });
+        const scale = (w / base.width) * zoom;
+        const v = page.getViewport({ scale });
+  
+        const canvas = document.createElement('canvas');
+        canvas.className = 'pdf-page';
+        const ctx = canvas.getContext('2d', { alpha: false });
+        canvas.width  = Math.floor(v.width  * DPR);
+        canvas.height = Math.floor(v.height * DPR);
+        canvas.style.width  = Math.floor(v.width)  + 'px';
+        canvas.style.height = Math.floor(v.height) + 'px';
+  
+        await page.render({ canvasContext: ctx, viewport: v, transform: [DPR,0,0,DPR,0,0] }).promise;
+        scroller.appendChild(canvas);
+      }
+      setProgress();
+    }
+  
+    const ro = new ResizeObserver(() => render());
+    ro.observe(scroller);
+  
+    // Controls
+    function applyZoom(z){
+      const next = Math.max(MIN, Math.min(MAX, z));
+      if(next === zoom) return;
+      zoom = next; render();
+    }
+    document.getElementById('zoomIn').addEventListener('click', ()=> applyZoom(zoom + STEP));
+    document.getElementById('zoomOut').addEventListener('click', ()=> applyZoom(zoom - STEP));
+    document.getElementById('fitBtn').addEventListener('click', ()=> applyZoom(0.98));
+    document.getElementById('oneBtn').addEventListener('click', ()=> applyZoom(1.0));
+  
+    addEventListener('keydown', (e)=>{
+      const cmd = e.ctrlKey || e.metaKey;
+      if(!cmd) return;
+      if(e.key === '+'){ e.preventDefault(); applyZoom(zoom + STEP); }
+      if(e.key === '-'){ e.preventDefault(); applyZoom(zoom - STEP); }
+      if(e.key === '0'){ e.preventDefault(); applyZoom(1.0); }
+    });
+  
+    scroller.addEventListener('wheel', (e)=>{
+      if(!e.ctrlKey) return;
+      e.preventDefault();
+      const dir = Math.sign(-e.deltaY);
+      applyZoom(zoom + dir*STEP);
+    }, {passive:false});
+  
+    // Kick off after full load to avoid 0px observer races on mobile Safari
+    window.addEventListener('load', () => render(), { once:true });
+    if (document.readyState === 'complete') render();
+  
+    // --- graceful fallback paths ---
+    function injectObjectEmbed(pdfUrl){
+      scroller.innerHTML = '';
+      const obj = document.createElement('object');
+      obj.className = 'pdf-embed';
+      obj.type = 'application/pdf';
+      obj.data = pdfUrl + '#view=FitH&toolbar=0&navpanes=0&statusbar=0';
+      obj.setAttribute('aria-label', 'Resume PDF');
+  
+      // if object fails, show open/download
+      const timer = setTimeout(() => {
+        try {
+          // If the object didn't load a subdocument, fallback UI:
+          if (!obj.contentDocument) showButtons(pdfUrl);
+        } catch(_){ showButtons(pdfUrl); }
+      }, 1200);
+  
+      obj.addEventListener('load', () => clearTimeout(timer));
+      scroller.appendChild(obj);
+    }
+  
+    function showButtons(pdfUrl){
+      scroller.innerHTML = `
+        <div class="pdf-fallback">
+          <p class="loading">Can’t display inline here.</p>
+          <a class="btn-iris" href="${pdfUrl}" target="_blank" rel="noopener">Open PDF</a>
+          <a class="btn-iris btn-iris--ghost" href="${pdfUrl}" download>Download</a>
+        </div>`;
+    }
   </script>
+  
 
   <script>
     // soft pointer-follow orb for background vibe
