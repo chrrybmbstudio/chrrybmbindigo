@@ -15,10 +15,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Jacquarda+Bastarda+9&display=swap" rel="stylesheet" />
 
-  <!-- Page-scoped styles after style.css -->
   <style>
     .page-about{
       --indigo:#4440ff; --pink:#ffe9ff; --ink:#0e0f1a; --cardR: clamp(18px,1.6vw,26px);
+      --lr: 120px; /* lens radius (JS updates this on mobile) */
       background:
         radial-gradient(60% 60% at var(--orb-x,72%) var(--orb-y,68%), rgba(68,64,255,.13), transparent 60%),
         linear-gradient(180deg, #ffffff, #faf9ff);
@@ -27,9 +27,9 @@
     }
 
     /* --- HERO --- */
-    .page-about .about-hero{position:relative; padding: clamp(20px,6vw,68px) 20px 8px; text-align:center;}
-    .page-about .about-hero .hero-inner{max-width:min(1100px,92vw); margin-inline:auto; position:relative; z-index:0;}
-    .page-about .about-hero .hero-inner::before{
+    .about-hero{position:relative; padding: clamp(20px,6vw,68px) 20px 8px; text-align:center;}
+    .about-hero .hero-inner{max-width:min(1100px,92vw); margin-inline:auto; position:relative; z-index:1;}
+    .about-hero .hero-inner::before{
       content:""; position:absolute; inset:-12% -14% -18% -14%; z-index:-1; pointer-events:none;
       background:
         radial-gradient(72% 100% at 30% 40%, rgba(68,64,255,.28), transparent 60%),
@@ -37,10 +37,10 @@
       filter: blur(28px) saturate(120%); opacity:.9; animation: floatBlob 24s ease-in-out infinite alternate;
     }
     @keyframes floatBlob{ 0%{transform:translateY(0) rotate(0) scale(1)} 100%{transform:translateY(-6px) rotate(6deg) scale(1.02)} }
-    .page-about .plus-field{position:absolute; inset:0; pointer-events:none; overflow:hidden}
+    .plus-field{position:absolute; inset:0; pointer-events:none; overflow:hidden}
 
-    /* --- H1 (warp + prism) --- */
-    .page-about .name-edge{
+    /* --- H1 warp + prism (same vibe as other pages) --- */
+    .name-edge{
       --text:#0e0f1a;
       font-family:"Funnel Display", system-ui, sans-serif;
       font-weight:600; font-size:clamp(42px,8vw,76px);
@@ -48,7 +48,7 @@
       text-transform:lowercase; position:relative; display:inline-block;
       color:var(--text); filter:url(#softWobble); isolation:isolate;
     }
-    .page-about .name-edge::after{
+    .name-edge::after{
       content:attr(data-text);
       position:absolute; inset:0; z-index:-1; pointer-events:none;
       background: conic-gradient(from 0deg, var(--indigo), var(--pink) 40%, #8aaaff, var(--indigo));
@@ -56,9 +56,9 @@
       transform: scale(1.04); filter: blur(6px) saturate(125%);
       opacity:.75; mix-blend-mode: plus-lighter;
     }
-    .page-about .name-edge .text{position:relative; z-index:0}
-    .page-about .name-edge .warp,
-    .page-about .name-edge .prism{
+    .name-edge .text{position:relative; z-index:0}
+    .name-edge .warp,
+    .name-edge .prism{
       position:absolute; inset:0; display:inline-block;
       -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 35%, #000 65%, transparent 100%);
       -webkit-mask-size: 220% 100%; -webkit-mask-position:-60% 0; -webkit-mask-repeat:no-repeat;
@@ -66,8 +66,8 @@
       mask-size:220% 100%; mask-position:-60% 0; mask-repeat:no-repeat;
       will-change: -webkit-mask-position, mask-position;
     }
-    .page-about .name-edge .warp{ z-index:1; color:var(--text); -webkit-text-fill-color:currentColor; filter:url(#lensWarp); }
-    .page-about .name-edge .prism{
+    .name-edge .warp{ z-index:1; color:var(--text); -webkit-text-fill-color:currentColor; filter:url(#lensWarp); }
+    .name-edge .prism{
       z-index:2; mix-blend-mode:screen; opacity:.55; filter: blur(.6px) saturate(120%);
       background: linear-gradient(90deg, #7ff0ff 0%, #ff6adf 50%, #7ff0ff 100%);
       -webkit-background-clip:text; background-clip:text; color:transparent;
@@ -75,67 +75,81 @@
     }
     @keyframes sweepBand{ from{ -webkit-mask-position:-60% 0; mask-position:-60% 0 } to{ -webkit-mask-position:160% 0; mask-position:160% 0 } }
     @media (min-width:641px){
-      .page-about .name-edge .warp,
-      .page-about .name-edge .prism{ animation: sweepBand 7s cubic-bezier(.45,.05,.36,1) infinite alternate; }
+      .name-edge .warp, .name-edge .prism{ animation: sweepBand 7s cubic-bezier(.45,.05,.36,1) infinite alternate; }
     }
     @media (max-width:640px){
-      .page-about .name-edge .warp,
-      .page-about .name-edge .prism{ animation: sweepBand 3.2s cubic-bezier(.5,.1,.2,1) 1 both; }
+      .name-edge .warp, .name-edge .prism{ animation: sweepBand 3.2s cubic-bezier(.5,.1,.2,1) 1 both; }
     }
     @media (prefers-reduced-motion: reduce){
-      .page-about .name-edge::after{animation:none}
-      .page-about .name-edge .warp,
-      .page-about .name-edge .prism{animation:none !important}
+      .name-edge::after{animation:none}
+      .name-edge .warp, .name-edge .prism{animation:none !important}
     }
 
-    .page-about .about-sub{
-      margin:8px 0 28px;
-      font:400 clamp(16px,2.4vw,20px)/1.2 "Jacquarda Bastarda 9", serif;
-      opacity:.85; text-align:center;
-    }
+    .about-sub{margin:8px 0 28px; font:400 clamp(16px,2.4vw,20px)/1.2 "Jacquarda Bastarda 9", serif; opacity:.85; text-align:center;}
 
-    /* --- BG artwork: big Heather PNG bottom-right --- */
+    /* --- BG ART: SVG with prism edge glow + lens overlays --- */
     .bg-art{
       position:fixed; right:0; bottom:0; width:min(70vw, 820px); height:min(85vh, 900px);
       pointer-events:none; z-index:0; overflow:visible;
     }
-    .bg-art img{
-      position:absolute; right:0; bottom:0; width:100%; height:auto; display:block;
-      opacity:.26; /* adjust overall visibility of PNG here */
-      filter: saturate(110%) contrast(102%);
-      transform: translate3d(0,0,0);
-      will-change: transform;
-    }
+    .bg-art .art-svg{position:absolute; right:0; bottom:0; width:100%; height:100%}
+    .bg-art .art-svg image.base{opacity:.26; filter:saturate(110%) contrast(102%);}
+    .bg-art .art-svg image.glow{opacity:.75} /* strength of the prism halo */
 
-    /* Blurred/tinted copy revealed through a circular mask that follows the pointer */
+    /* lens overlays (masked to a circle that follows pointer) */
+    .bg-art .img-mag,
     .bg-art .img-blur{
-      opacity:.32; /* blurred layer can be a hair brighter if you like */
-      filter: blur(12px) saturate(120%);
-      -webkit-mask-image: radial-gradient(circle var(--lr, 120px) at var(--lx, 85%) var(--ly, 85%), #000 0%, #000 60%, transparent 78%);
-              mask-image: radial-gradient(circle var(--lr, 120px) at var(--lx, 85%) var(--ly, 85%), #000 0%, #000 60%, transparent 78%);
+      position:absolute; right:0; bottom:0; width:100%; height:auto; display:block; pointer-events:none;
+      -webkit-mask-image: radial-gradient(circle var(--lr) at var(--lx, 85%) var(--ly, 85%), #000 0%, #000 60%, transparent 78%);
+              mask-image: radial-gradient(circle var(--lr) at var(--lx, 85%) var(--ly, 85%), #000 0%, #000 60%, transparent 78%);
+    }
+    .bg-art .img-mag{
+      transform: translateZ(0) scale(1.08);         /* magnify */
+      transform-origin: var(--lx, 85%) var(--ly, 85%);
+      filter: saturate(115%) contrast(103%);
+      opacity:.95;
+    }
+    .bg-art .img-blur{
+      filter: blur(12px) saturate(120%); opacity:.28;
     }
     .bg-art .tint{
       position:absolute; inset:auto 0 0 0; width:100%; height:100%;
-      background: radial-gradient(circle var(--lr, 120px) at var(--lx, 85%) var(--ly, 85%), rgba(68,64,255,.22) 0%, rgba(68,64,255,.18) 55%, transparent 80%);
+      background: radial-gradient(circle var(--lr) at var(--lx, 85%) var(--ly, 85%), rgba(68,64,255,.22) 0%, rgba(68,64,255,.16) 55%, transparent 80%);
       pointer-events:none;
     }
-    .lens-ring{
-      position:absolute; left:var(--lx, 80%); top:var(--ly, 80%); width:calc(var(--lr,120px)*2); height:calc(var(--lr,120px)*2);
-      transform: translate(-50%,-50%); border-radius:50%;
-      pointer-events:none; z-index:1;
-      box-shadow:
-        0 0 0 1px rgba(255,255,255,.5) inset,
-        0 0 0 2px rgba(68,64,255,.35) inset,
-        0 12px 30px rgba(68,64,255,.15);
-      backdrop-filter: blur(0.5px) saturate(120%);
-      -webkit-backdrop-filter: blur(0.5px) saturate(120%);
+
+    /* borderless iridescent aura */
+    .lens-aura{
+      position:absolute; left:var(--lx, 80%); top:var(--ly, 80%);
+      width:calc(var(--lr)*2); height:calc(var(--lr)*2);
+      transform: translate(-50%,-50%); border-radius:50%; pointer-events:none; z-index:2;
+      /* soft layered glow */
+      filter: blur(0.5px) saturate(120%);
+    }
+    .lens-aura::before,
+    .lens-aura::after{
+      content:""; position:absolute; inset:-18%; border-radius:50%; pointer-events:none;
+    }
+    /* outer soft white glow */
+    .lens-aura::before{
+      background: radial-gradient(closest-side, rgba(255,255,255,.22), rgba(255,255,255,.08) 55%, transparent 70%);
+      mix-blend-mode: screen;
+      filter: blur(10px);
+    }
+    /* iridescent ringy vibe */
+    .lens-aura::after{
+      background:
+        radial-gradient(closest-side, rgba(255,255,255,.18), transparent 65%),
+        conic-gradient(from 0deg, rgba(127,240,255,.38), rgba(255,106,223,.35), rgba(127,240,255,.38));
+      mix-blend-mode: screen;
+      opacity:.55; filter: blur(6px);
     }
 
     /* --- Center card (iris border) --- */
-    .page-about .wrap{display:grid; place-items:center; padding: 18px 16px 120px; position:relative; z-index:1;}
-    .page-about .card-iris{position:relative; width:min(92vw, 720px); border-radius:var(--cardR);
+    .wrap{display:grid; place-items:center; padding: 18px 16px 120px; position:relative; z-index:1;}
+    .card-iris{position:relative; width:min(92vw, 720px); border-radius:var(--cardR);
       box-shadow:0 20px 60px rgba(68,64,255,.08), 0 4px 14px rgba(0,0,0,.06); background:#fff; }
-    .page-about .card-iris::before{
+    .card-iris::before{
       content:""; position:absolute; inset:-1px; border-radius:inherit; padding:1px;
       background:conic-gradient(from var(--b,0deg), var(--indigo), var(--pink) 40%, #a8a3ff, var(--indigo));
       --mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
@@ -144,11 +158,7 @@
     }
     @keyframes spin{to{--b:360deg}}
 
-    .page-about .about-card{
-      position:relative; padding: clamp(18px,4vw,28px) clamp(16px,4.5vw,36px);
-      display:grid; gap:18px;
-    }
-
+    .about-card{position:relative; padding: clamp(18px,4vw,28px) clamp(16px,4.5vw,36px); display:grid; gap:18px}
     .about-copy h3{font:600 18px/1 "DM Sans", system-ui, sans-serif; margin:2px 0 6px}
     .about-copy p{margin:0; color:#2a2f45}
     .about-copy ul{margin:0; padding-left:18px}
@@ -169,14 +179,14 @@
     .glass-footer a{font:600 14px/1 "DM Sans"; color:#1b1e35; text-decoration:none}
     .glass-footer .dot{width:6px; height:6px; border-radius:50%; background:linear-gradient(90deg,var(--indigo),#8aa3ff)}
 
-    /* sprinkle plus styles (reuse) */
+    /* sprinkle plus (indigo + lower opacity) */
     @media (prefers-reduced-motion: reduce){
       .plus{ animation: fill-drift 18s linear infinite; }
       .plus::after{ animation: outer-shine 6s linear infinite; }
     }
     .plus{
       position:absolute; display:inline-block; font:700 16px/1 "DM Sans";
-      color:rgba(68,64,255, var(--alpha,0.35)); /* indigo + lower opacity */
+      color:rgba(68,64,255, var(--alpha,0.35));
       transform: rotate(var(--rot,0deg));
       filter: drop-shadow(0 6px 14px rgba(68,64,255,.14));
       animation: fill-drift var(--driftDur,12s) ease-in-out infinite alternate;
@@ -191,13 +201,13 @@
     @keyframes outer-shine{to{opacity:.15}}
 
     @media (max-width:480px){
-      .page-about .card-iris{width:min(94vw, 680px)}
+      .card-iris{width:min(94vw, 680px)}
     }
   </style>
 </head>
 <body class="page-about">
 
-  <!-- SVG defs FIRST for iOS Safari -->
+  <!-- SVG defs FIRST -->
   <svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden">
     <filter id="softWobble" x="-50%" y="-50%" width="200%" height="200%">
       <feTurbulence type="fractalNoise" baseFrequency="0.008" numOctaves="1" seed="11" result="noise">
@@ -229,12 +239,50 @@
     </div>
   </header>
 
-  <!-- Background artwork with lens (only affects the PNG) -->
+  <!-- Background artwork w/ prism edge + lens -->
   <aside class="bg-art" aria-hidden="true">
-    <img class="img-base" src="./assets/heater1.png" alt="" />
+    <!-- SVG: base image + prism edge glow overlay -->
+    <svg class="art-svg" viewBox="0 0 800 900" preserveAspectRatio="xMidYMax meet" role="img" aria-label="">
+      <defs>
+        <!-- Prism edge glow built from the PNG alpha -->
+        <filter id="prismEdgeGlow" x="-20%" y="-20%" width="140%" height="140%">
+          <!-- edge ring from alpha -->
+          <feMorphology in="SourceAlpha" operator="dilate" radius="2" result="edgeExpand"/>
+          <feMorphology in="SourceAlpha" operator="erode"  radius="2" result="edgeContract"/>
+          <feComposite in="edgeExpand" in2="edgeContract" operator="out" result="edgeRing"/>
+          <!-- organic wobble -->
+          <feTurbulence type="fractalNoise" baseFrequency=".0008" numOctaves="2" seed="7" result="noise"/>
+          <feDisplacementMap in="edgeRing" in2="noise" scale="7" xChannelSelector="R" yChannelSelector="G" result="ringWobble"/>
+          <!-- soft/wide blurs -->
+          <feGaussianBlur in="ringWobble" stdDeviation="4.4" result="ringSoft"/>
+          <feGaussianBlur in="ringWobble" stdDeviation="9"   result="ringWide"/>
+          <!-- color layers -->
+          <feFlood flood-color="#ffffff" flood-opacity="0.9" result="whiteFlood"/>
+          <feComposite in="whiteFlood" in2="ringSoft" operator="in" result="whiteGlow"/>
+          <feFlood flood-color="#f800ff" flood-opacity="0.9" result="magFlood"/>
+          <feComposite in="magFlood" in2="ringSoft" operator="in" result="magGlow"/>
+          <feFlood flood-color="#4440ff" flood-opacity="0.5" result="indigoFlood"/>
+          <feComposite in="indigoFlood" in2="ringWide" operator="in" result="indigoGlow"/>
+          <!-- merge & screen over -->
+          <feMerge result="glow">
+            <feMergeNode in="indigoGlow"/>
+            <feMergeNode in="magGlow"/>
+            <feMergeNode in="whiteGlow"/>
+          </feMerge>
+          <feBlend in="SourceGraphic" in2="glow" mode="screen" result="lit"/>
+          <feComposite in="lit" in2="SourceGraphic" operator="over"/>
+        </filter>
+      </defs>
+
+      <image class="base" href="./assets/heater1.png" x="0" y="0" width="800" height="900" />
+      <image class="glow" href="./assets/heater1.png" x="0" y="0" width="800" height="900" filter="url(#prismEdgeGlow)"/>
+    </svg>
+
+    <!-- Lens overlays (mask + tint + aura) -->
+    <img class="img-mag"  src="./assets/heater1.png" alt="" />
     <img class="img-blur" src="./assets/heater1.png" alt="" />
     <span class="tint"></span>
-    <span class="lens-ring"></span>
+    <span class="lens-aura"></span>
   </aside>
 
   <!-- Hero -->
@@ -280,12 +328,27 @@
     <span>© <span id="year"></span> chrrybmb.com / denisajomo.com</span>
   </footer>
 
-  <!-- Tiny helpers -->
+  <!-- Filters shared by H1 -->
+  <svg width="0" height="0" style="position:absolute">
+    <filter id="softWobble" x="-50%" y="-50%" width="200%" height="200%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.008" numOctaves="1" seed="11" result="noise">
+        <animate attributeName="baseFrequency" dur="14s" values="0.008;0.010;0.008" repeatCount="indefinite" />
+      </feTurbulence>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="lensWarp" x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.0025 0.002" numOctaves="1" seed="5" result="turb"/>
+      <feGaussianBlur in="turb" stdDeviation="14" result="soft"/>
+      <feDisplacementMap in="SourceGraphic" in2="soft" scale="12" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </svg>
+
+  <!-- JS -->
   <script>
     // year
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // background orb (same site-wide vibe)
+    // background orb
     (function(){
       const root = document.documentElement;
       function setOrb(e){
@@ -299,7 +362,7 @@
       addEventListener('touchmove', setOrb, {passive:true});
     })();
 
-    // sprinkle plusses (indigo + lower opacity)
+    // sprinkle plusses (indigo + low opacity)
     document.addEventListener('DOMContentLoaded', () => {
       const field = document.querySelector('.plus-field'); if (!field) return;
       const phone = matchMedia('(max-width: 640px)').matches;
@@ -314,7 +377,7 @@
         el.style.right  = (rx * 60).toFixed(2) + 'vw';
         el.style.bottom = (ry * 60).toFixed(2) + 'vh';
         el.style.fontSize = Math.round(rand(18,42)) + 'px';
-        el.style.setProperty('--alpha', rand(0.20, 0.45).toFixed(2));  // opacity range
+        el.style.setProperty('--alpha', rand(0.20, 0.45).toFixed(2));
         el.style.setProperty('--rot',   rand(-6, 6).toFixed(1) + 'deg');
         el.style.setProperty('--driftDur',   rand(10, 16).toFixed(2) + 's');
         el.style.setProperty('--shineDur',   rand(3.0, 4.8).toFixed(2) + 's');
@@ -322,35 +385,27 @@
       }
     });
 
-    // pointer lens (blurs/tints ONLY the PNG)
+    // pointer lens → updates --lx / --ly (in px within the art box)
     (function(){
       const art = document.querySelector('.bg-art');
       if(!art) return;
       const doc = document.documentElement;
 
-      // lens size (radius) responsive
       const mobile = matchMedia('(max-width: 640px)').matches;
-      const radius = mobile ? 90 : 120;  // px
-      doc.style.setProperty('--lr', radius + 'px');
-
-      const ring = art.querySelector('.lens-ring');
+      doc.style.setProperty('--lr', (mobile ? 90 : 120) + 'px');
 
       function moveLens(e){
         const t = e.touches ? e.touches[0] : e;
         const rect = art.getBoundingClientRect();
-        // clamp inside the art box
         let x = Math.max(0, Math.min(rect.width,  t.clientX - rect.left));
         let y = Math.max(0, Math.min(rect.height, t.clientY - rect.top));
-        // set vars (px)
         doc.style.setProperty('--lx', x.toFixed(1) + 'px');
         doc.style.setProperty('--ly', y.toFixed(1) + 'px');
       }
+      addEventListener('pointermove', moveLens, {passive:true});
+      addEventListener('touchmove',   moveLens, {passive:true});
 
-      // follow pointer; on touch, also move on touchmove
-      window.addEventListener('pointermove', moveLens, {passive:true});
-      window.addEventListener('touchmove',   moveLens, {passive:true});
-
-      // start lens near the image’s center so you see it immediately
+      // initialize near visible area so the lens is “on” immediately
       const init = () => {
         const r = art.getBoundingClientRect();
         doc.style.setProperty('--lx', (r.width*0.75).toFixed(1) + 'px');
@@ -360,11 +415,16 @@
       if (document.readyState === 'complete') init();
     })();
 
-    // header scrolled class (matches your site)
+    // header scrolled class
     (function(){
       const hdr = document.querySelector('.site-header');
       addEventListener('scroll', () => hdr.classList.toggle('is-scrolled', scrollY > 4));
     })();
   </script>
+
+  <!-- tiny styles the global file expects for plusses -->
+  <style>
+    .plus{position:absolute; display:inline-block; font:700 16px/1 "DM Sans";}
+  </style>
 </body>
 </html>
