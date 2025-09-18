@@ -25,7 +25,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Jacquarda+Bastarda+9&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@500;700;800&display=swap" rel="stylesheet">
 
   <!-- Site CSS -->
   <link rel="stylesheet" href="./style.css" />
@@ -34,14 +34,13 @@
   <style>
     :root{
       --indigo:#4440ff; --pink:#ffe9ff; --ink:#0e0f1a;
-      --plus-alpha:.45;
-      --plus-shadow: rgba(68,64,255,.20);
+      --plus-alpha:.45; --plus-shadow: rgba(68,64,255,.20);
+      --wave-opacity:.72; --wave-speed:36s; --wave-halo-blur:54px;
+      --lr:140px; /* lens radius */
 
-      /* wave + lens defaults (site.js animates these) */
-      --wave-opacity:.72;
-      --wave-speed: 36s;
-      --wave-halo-blur: 54px;
-      --lr: 140px; /* lens radius */
+      /* pixel-mini vibe */
+      --px-font:"Funnel Display", system-ui, sans-serif;
+      --px-track:.12em;
     }
 
     body{
@@ -52,71 +51,42 @@
       -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
     }
 
-/* IRIDESCENT WAVE (full-page) — anti-seam overscan + GPU hinting */
-.iridescent-wave{
-  position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow:hidden;
-  /* make the layer its own paint/compositing context */
-  will-change: transform;
-  transform: translateZ(0);
-  backface-visibility: hidden;
-  contain: paint;
-}
-.iridescent-wave::before{
-  content:""; position:absolute;
-  /* overscan further so the blurred edge never reaches the viewport */
-  left:-25vw; right:-25vw; top:-200vh; bottom:-200vh;
-  background: conic-gradient(from var(--wave-rot,0deg) at var(--orb-x,50%) var(--orb-y,20%),
-    rgba(127,240,255,.25), rgba(255,106,223,.20), rgba(127,240,255,.25));
-  background-repeat:no-repeat;
-  filter: blur(var(--wave-halo-blur)) saturate(150%);
-  mix-blend-mode: color-dodge; opacity: var(--wave-opacity);
-  animation: waveSpin 22s linear infinite;
-  /* avoid sub-pixel raster seams while animating */
-  will-change: transform;
-  transform: translate3d(0,0,0);
-}
-.iridescent-wave::after{
-  content:""; position:absolute;
-  /* even larger vertical overscan for the rippling band */
-  left:-25vw; right:-25vw; top:-240vh; bottom:-240vh;
-  background:
-    radial-gradient(80% 60% at 50% 30%, rgba(255,255,255,.55), rgba(255,255,255,0) 60%),
-    linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.55) 35%, rgba(255,255,255,0) 70%);
-  background-repeat:no-repeat;
-  filter: blur(18px); mix-blend-mode: soft-light; opacity:.35;
-  animation: rippleDown var(--wave-speed) cubic-bezier(.42,0,.58,1) infinite;
-  will-change: transform;
-  transform: translate3d(0,0,0);
-}
-/* keep your existing keyframes */
-@keyframes waveSpin{ to { transform: rotate(1turn) } }
-@keyframes rippleDown{ 0%{transform:translate3d(0,-35%,0)} 100%{transform:translate3d(0,35%,0)} }
-
+    /* IRIDESCENT WAVE (full-page) — anti-seam overscan + GPU hinting */
+    .iridescent-wave{ position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow:hidden; will-change: transform; transform: translateZ(0); backface-visibility: hidden; contain: paint; }
+    .iridescent-wave::before{
+      content:""; position:absolute; left:-25vw; right:-25vw; top:-200vh; bottom:-200vh;
+      background: conic-gradient(from var(--wave-rot,0deg) at var(--orb-x,50%) var(--orb-y,20%),
+        rgba(127,240,255,.25), rgba(255,106,223,.20), rgba(127,240,255,.25));
+      background-repeat:no-repeat; filter: blur(var(--wave-halo-blur)) saturate(150%);
+      mix-blend-mode: color-dodge; opacity: var(--wave-opacity);
+      animation: waveSpin 22s linear infinite; will-change: transform; transform: translate3d(0,0,0);
+    }
+    .iridescent-wave::after{
+      content:""; position:absolute; left:-25vw; right:-25vw; top:-240vh; bottom:-240vh;
+      background:
+        radial-gradient(80% 60% at 50% 30%, rgba(255,255,255,.55), rgba(255,255,255,0) 60%),
+        linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.55) 35%, rgba(255,255,255,0) 70%);
+      background-repeat:no-repeat; filter: blur(18px); mix-blend-mode: soft-light; opacity:.35;
+      animation: rippleDown var(--wave-speed) cubic-bezier(.42,0,.58,1) infinite; will-change: transform; transform: translate3d(0,0,0);
+    }
+    @keyframes waveSpin{ to { transform: rotate(1turn) } }
+    @keyframes rippleDown{ 0%{transform:translate3d(0,-35%,0)} 100%{transform:translate3d(0,35%,0)} }
 
     /* FULL-VIEW LENS (no clipping anywhere) */
-    .bg-art{
-      position: fixed; inset: 0; z-index: 1; pointer-events: none; overflow: visible;
-    }
+    .bg-art{ position: fixed; inset: 0; z-index: 1; pointer-events: none; overflow: visible; }
     .lens-glass{
-      position:absolute;
-      left: var(--lx, 72%); top: var(--ly, 68%);
-      width: calc(var(--lr)*2); height: calc(var(--lr)*2);
-      transform: translate(-50%,-50%);
-      border-radius: 50%;
-      backdrop-filter: blur(12px) saturate(125%) contrast(105%);
-      -webkit-backdrop-filter: blur(12px) saturate(125%) contrast(105%);
+      position:absolute; left: var(--lx, 72%); top: var(--ly, 68%);
+      width: calc(var(--lr)*2); height: calc(var(--lr)*2); transform: translate(-50%,-50%); border-radius: 50%;
+      backdrop-filter: blur(12px) saturate(125%) contrast(105%); -webkit-backdrop-filter: blur(12px) saturate(125%) contrast(105%);
       -webkit-mask-image: radial-gradient(circle var(--lr) at 50% 50%, #000 60%, rgba(0,0,0,.7) 76%, transparent 90%);
               mask-image: radial-gradient(circle var(--lr) at 50% 50%, #000 60%, rgba(0,0,0,.7) 76%, transparent 90%);
       background: radial-gradient(closest-side, rgba(68,64,255,.18), transparent 70%);
     }
     .lens-aura{
-      position:absolute; left:var(--lx, 72%); top:var(--ly, 68%);
-      width:calc(var(--lr)*2.1); height:calc(var(--lr)*2.1);
-      transform: translate(-50%,-50%); border-radius:50%;
-      pointer-events:none; filter: blur(0.6px) saturate(120%);
+      position:absolute; left:var(--lx, 72%); top:var(--ly, 68%); width:calc(var(--lr)*2.1); height:calc(var(--lr)*2.1);
+      transform: translate(-50%,-50%); border-radius:50%; pointer-events:none; filter: blur(0.6px) saturate(120%);
     }
-    .lens-aura::before,
-    .lens-aura::after{ content:""; position:absolute; inset:-18%; border-radius:50%; pointer-events:none; }
+    .lens-aura::before, .lens-aura::after{ content:""; position:absolute; inset:-18%; border-radius:50%; pointer-events:none; }
     .lens-aura::before{ background: radial-gradient(closest-side, rgba(255,255,255,.22), rgba(255,255,255,.08) 55%, transparent 70%); mix-blend-mode: screen; filter: blur(12px); }
     .lens-aura::after{
       background:
@@ -125,72 +95,169 @@
       mix-blend-mode: screen; opacity:.55; filter: blur(7px);
     }
 
-    /* sprinkles (only if .plus-field exists) */
-    .plus{
-      position:absolute; display:inline-block; font:700 16px/1 "DM Sans";
-      color: rgba(68,64,255,var(--alpha, var(--plus-alpha)));
-      transform: rotate(var(--rot,0deg));
-      filter: drop-shadow(0 6px 14px var(--plus-shadow));
-      animation: fill-drift var(--driftDur,12s) ease-in-out infinite alternate;
-      pointer-events:none;
-    }
-    .plus::after{
-      content:""; position:absolute; inset:-10%; border-radius:2px; opacity:.55;
-      background: radial-gradient(40% 40% at 50% 50%, rgba(255,255,255,.55), transparent);
-      animation: outer-shine var(--shineDur,4s) ease-in-out infinite alternate;
-    }
-    @keyframes fill-drift{to{transform: translate3d(0,-18px,0) rotate(var(--rot,0deg))}}
-    @keyframes outer-shine{to{opacity:.2}}
-
-    /* Feature card interactivity (tilt + iridescent sheen) */
-    .feature-card{
-      position:relative;
-      overflow:hidden;
-      transform-style: preserve-3d;
-      transition: transform .18s ease, box-shadow .2s ease;
-      will-change: transform;
-    }
-    .feature-card.is-hot{
-      transform: perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateZ(6px);
-      box-shadow: 0 22px 60px rgba(68,64,255,.16);
-    }
-    /* color-dodge sheen that follows the pointer */
-    .feature-card::after{
-      content:""; position:absolute; inset:-25%;
-      background:
-        radial-gradient(260px 260px at var(--mx,50%) var(--my,50%),
-          rgba(127,240,255,.38), rgba(255,106,223,.26) 35%, transparent 60%);
-      mix-blend-mode: color-dodge;
-      filter: blur(22px) saturate(140%);
-      opacity:0; transition: opacity .2s ease;
-      pointer-events:none;
-    }
-    .feature-card.is-hot::after{ opacity:1; }
-
     /* Glass footer */
     .glass-footer{
-      position:fixed; left:0; right:0; bottom:0; z-index:20;
-      display:flex; align-items:center; justify-content:center; gap:14px;
-      padding:10px 14px; margin:10px; border-radius:16px;
-      background: rgba(255,255,255,.35);
-      backdrop-filter: blur(10px) saturate(135%) contrast(105%);
-      -webkit-backdrop-filter: blur(10px) saturate(135%) contrast(105%);
+      position:fixed; left:0; right:0; bottom:0; z-index:20; display:flex; align-items:center; justify-content:center; gap:14px;
+      padding:10px 14px; margin:10px; border-radius:16px; background: rgba(255,255,255,.35);
+      backdrop-filter: blur(10px) saturate(135%) contrast(105%); -webkit-backdrop-filter: blur(10px) saturate(135%) contrast(105%);
       box-shadow: 0 10px 30px rgba(68,64,255,.12);
       -webkit-mask-image: radial-gradient(120% 120% at 50% 0%, #000 40%, rgba(0,0,0,.85) 72%, transparent 100%);
               mask-image: radial-gradient(120% 120% at 50% 0%, #000 40%, rgba(0,0,0,.85) 72%, transparent 100%);
     }
     .glass-footer a{font:600 14px/1 "DM Sans"; color:#1b1e35; text-decoration:none}
     .glass-footer .dot{width:6px; height:6px; border-radius:50%; background:linear-gradient(90deg,var(--indigo),#8aa3ff)}
-
     @media (prefers-reduced-motion: reduce){
       .iridescent-wave::before, .iridescent-wave::after{ animation:none !important }
+    }
+
+    /* ===== Home Density Adapter (clean) ===== */
+    body.density-xs  { --ui: .86; }
+    body.density-xxs { --ui: .66; }
+
+    /* === HERO (no bottom space) === */
+    .hero{
+      margin: calc(var(--ui) * clamp(12px,3vw,28px)) auto;
+      border-radius: calc(var(--ui) * clamp(16px, 2.4vw, 28px));
+      padding: 0; /* zero all padding */
+      width: min(1100px, 88vw);
+      box-shadow: 0 18px 50px rgba(68,64,255,.10), 0 2px 10px rgba(0,0,0,.04);
+      background:
+        radial-gradient(120% 80% at 120% -10%, rgba(68,64,255,.18) 0 50%, transparent 66%),
+        linear-gradient(300deg, rgba(68,64,255,.44), #ffe9ff);
+      background-size:180% 180%, 100% 100%;
+      animation:bg-pan 12s ease-in-out infinite alternate;
+      overflow:hidden; isolation:isolate;
+    }
+    @keyframes bg-pan{ 0%{ background-position: 0% 50%, 50% 50% } 100%{ background-position: 100% 50%, 50% 50% } }
+
+    .hero-card{
+      padding: calc(var(--ui) * clamp(20px, 4vw, 26px));
+      padding-bottom: 0; /* image flush */
+      border-radius: calc(var(--ui) * clamp(18px, 1.4vw, 28px));
+    }
+    .hero__grid{ display:grid; grid-template-columns:1fr; gap: calc(var(--ui) * min(32px, 3.5vw)); align-items:end; }
+    
+    @media (min-width:900px) {
+      .hero__grid{
+        grid-template-columns: 1.1fr .9fr }
+
+      }
+
+      @media (max-width:900px){
+  .hero__content { text-align:center; } /* you already have this */
+
+  /* center the button row on mobile/tablet */
+  .hero__cta{
+    justify-content: center;
+    align-items: center;
+    width: 100%;           /* helps when wrapping */
+    margin-left: auto;     /* ensure the flex row itself is centered */
+    margin-right: auto;
+  }
+
+  /* optional: keep each button compact and not full-width */
+  .hero__cta .btn-pixel{
+    flex: 0 0 auto;        /* don't stretch */
+  }
+}
+
+
+    /* Headline & kicker scale */
+    .name-edge{
+      margin:0 0 calc(var(--ui) * 8px);
+      font-weight:600; text-transform:lowercase; letter-spacing: var(--track, -0.06em);
+      line-height:.77; color:#000; font-size: calc(var(--ui) * 4rem);
+    }
+    .hero__content h1{ font-size: calc(var(--ui) * clamp(32px, 3vw, 48px)); margin:0 0 calc(var(--ui) * 8px); }
+    .kicker{ font-family:"Jacquarda Bastarda 9", serif; font-size:max(12px, calc(var(--ui) * 16px)); margin: calc(var(--ui) * 8px) 0 calc(var(--ui) * 10px); color:#2c3144; }
+
+    /* HERO media (Heather SVG) */
+    .hero__media{ display:flex; justify-content:flex-end; align-items:flex-end; margin-bottom:0; padding-bottom:0; }
+    .heather-svg{ display:block; width: min(calc(32vw * var(--ui)), calc(666px * var(--ui))); height:auto; filter: drop-shadow(0 16px 40px rgba(68,64,255,.10)); }
+    @media (max-width:900px){
+      .hero__media{ justify-content:center }
+      .heather-svg{ width: min(calc(72vw * var(--ui)), calc(520px * var(--ui))) }
+      .hero__content{ text-align:center }
+      .hero__content h1{ font-size: calc(var(--ui) * 60px); letter-spacing: calc(var(--ui) * -0.09em); margin: calc(var(--ui) * 22px) 0 calc(var(--ui) * 4px); }
+    }
+
+    /* ===== Pixel-mini buttons (Funnel Display, ALL CAPS) ===== */
+    .btn-pixel{
+      --px: 10.5px;              /* easy knob */
+      display:inline-flex; align-items:center; justify-content:center; gap:.4ch;
+      padding: 8px 12px; border-radius: 10px;
+      font: 800 var(--px)/1 var(--px-font);
+      text-transform: uppercase; letter-spacing: var(--px-track);
+      background: linear-gradient(180deg, #ffffff, #f6f6ff);
+      border: 1px solid #1f22ff; color:#1a1a2b;
+      box-shadow:
+        0 0 0 1px rgba(68,64,255,.08) inset,
+        0 6px 18px rgba(68,64,255,.12);
+      transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
+      text-decoration:none; cursor:pointer;
+    }
+    .btn-pixel:hover{ transform: translateY(-0.5px); box-shadow:
+        0 0 0 1px rgba(68,64,255,.10) inset,
+        0 10px 22px rgba(68,64,255,.18); }
+    .btn-pixel:active{ transform: translateY(0); filter: saturate(105%); }
+    .btn-pixel--ghost{
+      background: transparent; color:#2a2f45; border:1px solid #5a57ff;
+      box-shadow:none;
+    }
+    /* keep spacing consistent where used */
+    .hero__cta{ display:flex; gap: calc(var(--ui) * 12px); margin: 0 0 calc(var(--ui) * 8px); flex-wrap:wrap; }
+
+    /* ===== Features (cards smaller content + a bit more padding) ===== */
+    .features{ padding: calc(var(--ui) * clamp(22px, 5vw, 44px)) 0; }
+    .features__grid{ display:grid; grid-template-columns:1fr; gap: 16px; }
+    @media (min-width:780px){ .features__grid{ grid-template-columns: repeat(3, 1fr); } }
+
+    .card-iris{
+      position: relative; border-radius: calc(var(--ui) * 18px);
+      padding: 16px 18px;  /* a touch more inner padding */
+      background: linear-gradient(180deg, rgba(255,255,255,.62), rgba(255,255,255,.42));
+      backdrop-filter: blur(10px) saturate(115%); -webkit-backdrop-filter: blur(10px) saturate(115%);
+      box-shadow: 0 10px 40px rgba(68,64,255,.08), 0 1px 0 rgba(255,255,255,.6) inset;
+      overflow:hidden; isolation:isolate; transform-origin: 50% 60%;
+      transition: transform .18s ease, box-shadow .2s ease;
+    }
+    /* Iridescent border ring */
+    .card-iris::before{
+      content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none;
+      padding:1px; background: linear-gradient(135deg, rgba(248,0,255,.45), rgba(68,64,255,.45));
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor; mask-composite: exclude; opacity:.85;
+    }
+    /* Soft prism sweep on hover */
+    .card-iris::after{
+      content:""; position:absolute; inset:-2px; border-radius:inherit; pointer-events:none; padding:1px;
+      background: linear-gradient(90deg, rgba(248,0,255,0) 0%, rgba(248,0,255,.45) 44%, rgba(255,255,255,.95) 50%, rgba(68,64,255,.45) 56%, rgba(248,0,255,0) 100%);
+      background-size:260% 100%; background-position:-160% 0;
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor; mask-composite: exclude;
+      filter: blur(6px) saturate(115%); opacity:0; transition: background-position .9s linear, opacity .2s ease;
+    }
+    .card-iris.is-hot::after{ opacity:1; background-position:160% 0; }
+
+    /* subtle tilt on hover (desktop) */
+    .feature-card{ display:flex; flex-direction:column; gap: 10px; min-height: 170px; }
+    .feature-card h3, .feature-card .pxlh{ margin:0; font-size: calc(var(--ui) * 16px); line-height:1.1; letter-spacing:.02em; }
+    .feature-card p{ margin: 0 0 auto; color:#2c3144; font-size: max(12px, calc(var(--ui)* 13.5px)); line-height:1.42; }
+
+    /* CTA inside cards uses pixel-mini */
+    .feature-card .btn-pixel{ margin-top: 8px; }
+
+    /* Mobile breathing room */
+    @media (max-width: 680px){
+      .features__grid{ grid-template-columns: 1fr; gap: 18px; padding-inline: clamp(14px, 5vw, 24px); }
+      .feature-card{ width: min(100%, 560px); margin-inline:auto; }
     }
   </style>
 </head>
 
-<body>
-  <!-- Header / Nav -->
+<body class="density-xs">
 
+  <!-- Header / Nav -->
   <header class="site-header" role="banner">
     <div class="navcontainer header__inner">
       <a class="brand" href="/chrrybmbindigo/" aria-label="chrrybmb home">
@@ -217,9 +284,6 @@
     <span class="lens-aura"></span>
   </div>
 
-  <!-- sprinkle field 
-  <div class="plus-field" aria-hidden="true"></div> -->
-
   <div class="site-shell">
     <main id="main" class="site-main" role="main">
       <!-- HERO -->
@@ -234,8 +298,8 @@
                 <h1 class="name-edge" data-text="DENISA J. MORARU">DENISA J. MORARU</h1>
                 <p class="kicker">This is chrrybmb creative studio.</p>
                 <div class="hero__cta">
-                  <a class="btn-iris" href="./work.html">See my work</a>
-                  <a class="btn-iris btn-iris--ghost" href="./resume.html">Resume</a>
+                  <a class="btn-pixel" href="./work.html">SEE MY WORK</a>
+                  <a class="btn-pixel btn-pixel--ghost" href="./resume.html">RESUME</a>
                 </div>
               </div>
 
@@ -262,10 +326,7 @@
                       <feComposite in="lit" in2="SourceGraphic" operator="over"/>
                     </filter>
                   </defs>
-                  <image href="./assets/heater1.png"
-                         x="0" y="0" width="800" height="900"
-                         preserveAspectRatio="xMidYMax meet"
-                         filter="url(#prismEdgeGlowHero)"/>
+                  <image href="./assets/heater1.png" x="0" y="0" width="800" height="900" preserveAspectRatio="xMidYMax meet" filter="url(#prismEdgeGlowHero)"/>
                 </svg>
 
                 <!-- local glow layers -->
@@ -280,20 +341,20 @@
       <!-- FEATURES -->
       <section class="features" aria-label="Featured work">
         <div class="container features__grid">
-          <article class="card-iris feature-card" data-animate>
+          <article class="card-iris feature-card" data-tilt>
             <span class="pxlh">Web UX</span>
             <p>Information architecture, flows, and responsive front-end systems.</p>
-            <a class="btn-iris btn-iris--ghost" href="./work.html#ux">Explore</a>
+            <a class="btn-pixel btn-pixel--ghost" href="./work.html#ux">EXPLORE</a>
           </article>
-          <article class="card-iris feature-card" data-animate>
+          <article class="card-iris feature-card" data-tilt>
             <span class="pxlh">Brand Systems</span>
             <p>Identity, typography, usage rules, and scalable component libraries.</p>
-            <a class="btn-iris btn-iris--ghost" href="./work.html#brand">Explore</a>
+            <a class="btn-pixel btn-pixel--ghost" href="./work.html#brand">EXPLORE</a>
           </article>
-          <article class="card-iris feature-card" data-animate>
+          <article class="card-iris feature-card" data-tilt>
             <span class="pxlh">Art Direction</span>
             <p>Campaign concepts, motion, and visuals with that prism-y glow.</p>
-            <a class="btn-iris btn-iris--ghost" href="./work.html#ad">Explore</a>
+            <a class="btn-pixel btn-pixel--ghost" href="./work.html#ad">EXPLORE</a>
           </article>
         </div>
       </section>
@@ -305,7 +366,6 @@
     <span class="dot" aria-hidden="true"></span>
     <span>© <span id="year"></span> chrrybmb.com / denisajomo.com</span>
   </footer>
-  </div>
 
   <!-- Shared wobble filter (if style.css uses it) -->
   <svg width="0" height="0" style="position:absolute">
@@ -316,11 +376,54 @@
       <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G"/>
     </filter>
   </svg>
- 
 
+  <!-- Tiny tilt/sheeny interaction (subtle, noticeable) -->
+  <script>
+    (function(){
+      const cards = document.querySelectorAll('.card-iris.feature-card[data-tilt]');
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!cards.length || prefersReduced) return;
+
+      const clamp = (n, min, max) => Math.max(min, Math.min(n, max));
+
+      cards.forEach(card => {
+        let raf = null;
+
+        function handleMove(e){
+          const r = card.getBoundingClientRect();
+          const x = (e.clientX - r.left) / r.width;   // 0..1
+          const y = (e.clientY - r.top)  / r.height;  // 0..1
+
+          const rx = clamp((0.5 - y) * 6, -6, 6);     // tilt X
+          const ry = clamp((x - 0.5) * 8, -8, 8);     // tilt Y
+
+          card.style.setProperty('--rx', rx.toFixed(2) + 'deg');
+          card.style.setProperty('--ry', ry.toFixed(2) + 'deg');
+          card.style.setProperty('--mx', (x*100).toFixed(1) + '%');
+          card.style.setProperty('--my', (y*100).toFixed(1) + '%');
+
+          if (!raf){
+            card.classList.add('is-hot');
+            raf = requestAnimationFrame(() => { card.style.transform = `perspective(900px) rotateX(var(--rx)) rotateY(var(--ry)) translateZ(6px)`; raf = null; });
+          }
+        }
+
+        function reset(){
+          card.classList.remove('is-hot');
+          card.style.removeProperty('--rx'); card.style.removeProperty('--ry'); card.style.removeProperty('--mx'); card.style.removeProperty('--my');
+          card.style.transform = '';
+        }
+
+        card.addEventListener('mousemove', handleMove);
+        card.addEventListener('mouseleave', reset);
+        card.addEventListener('blur', reset, true);
+        card.addEventListener('touchstart', ()=>card.classList.add('is-hot'), {passive:true});
+        card.addEventListener('touchend', ()=>card.classList.remove('is-hot'), {passive:true});
+      });
+    })();
+  </script>
 
   <!-- Single shared script -->
   <script type="module" src="./site.js" defer></script>
-
 </body>
 </html>
