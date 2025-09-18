@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>about — denisa jomo</title>
 
-  <!-- Base site CSS -->
   <link rel="stylesheet" href="./style.css" />
 
   <!-- Fonts -->
@@ -19,35 +18,24 @@
     .page-about{
       --indigo:#4440ff; --pink:#ffe9ff; --ink:#0e0f1a; --cardR: clamp(18px,1.6vw,26px);
       --lr: 120px;
-
-      /* wave + lens + bg */
       --wave-opacity:.76; --wave-speed:36s; --wave-halo-blur:54px;
-      --heather-alpha:.06;
-
-      /* frosty veil knobs */
-      --frost-alpha:.26;         /* 0–1 */
-      --frost-blur: 8px;         /* px */
-
+      --frost-alpha:.26; --frost-blur:8px;
       color:var(--ink);
       -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
       background:
         radial-gradient(60% 60% at var(--orb-x,72%) var(--orb-y,68%), rgba(68,64,255,.13), transparent 60%),
         linear-gradient(180deg, #ffffff, #faf9ff);
+      /* keep the site-wide mini scale */
+      --ui:.66;
     }
 
-    /* IRIDESCENT WAVE (full-page) + seam fix */
-    .iridescent-wave{
-      position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow:hidden;
-      will-change: transform; transform: translate3d(0,0,0); backface-visibility: hidden; contain: paint;
-    }
+    /* wave */
+    .iridescent-wave{position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden; will-change:transform; transform:translate3d(0,0,0)}
     .iridescent-wave::before{
       content:""; position:absolute; inset:-22%;
-      background: conic-gradient(from var(--wave-rot,0deg) at var(--orb-x,50%) var(--orb-y,20%),
-        rgba(127,240,255,.25), rgba(255,106,223,.20), rgba(127,240,255,.25));
-      filter: blur(var(--wave-halo-blur)) saturate(150%);
-      mix-blend-mode: color-dodge; opacity: var(--wave-opacity);
+      background: conic-gradient(from var(--wave-rot,0deg) at var(--orb-x,50%) var(--orb-y,20%), rgba(127,240,255,.25), rgba(255,106,223,.20), rgba(127,240,255,.25));
+      filter: blur(var(--wave-halo-blur)) saturate(150%); mix-blend-mode: color-dodge; opacity: var(--wave-opacity);
       animation: waveSpin 22s linear infinite;
-      will-change: transform; transform: translate3d(0,0,0) scale(1.001);
     }
     .iridescent-wave::after{
       content:""; position:absolute; left:-14%; right:-14%; top:-220%; bottom:-220%;
@@ -56,23 +44,15 @@
         linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.55) 35%, rgba(255,255,255,0) 70%);
       filter: blur(18px); mix-blend-mode: soft-light; opacity:.35;
       animation: rippleDown var(--wave-speed) cubic-bezier(.42,0,.58,1) infinite;
-      will-change: transform; transform: translate3d(0,0,0) scale(1.002);
     }
-    .iridescent-wave.boost{ --wave-opacity:.62; --wave-speed: 18s; }
-    @keyframes waveSpin{ to { transform: rotate(1turn) } }
-    @keyframes rippleDown{ 0%{transform:translate3d(0,-35%,0)} 100%{transform:translate3d(0,35%,0)} }
+    @keyframes waveSpin{to{transform:rotate(1turn)}} @keyframes rippleDown{0%{transform:translate3d(0,-35%,0)}100%{transform:translate3d(0,35%,0)}}
 
-    /* FROSTY OVERLAY (sits above bg + wave, below lens) */
-    .frost-veil{
-      position:fixed; inset:0; z-index:1; pointer-events:none;
-      background: rgba(255,255,255,var(--frost-alpha));
-      backdrop-filter: blur(var(--frost-blur)) saturate(120%) contrast(102%);
-      -webkit-backdrop-filter: blur(var(--frost-blur)) saturate(120%) contrast(102%);
-      will-change: transform; transform: translateZ(0);
-    }
+    /* frosty veil */
+    .frost-veil{position:fixed; inset:0; z-index:1; pointer-events:none; background:rgba(255,255,255,var(--frost-alpha));
+      backdrop-filter: blur(var(--frost-blur)) saturate(120%) contrast(102%); -webkit-backdrop-filter: blur(var(--frost-blur)) saturate(120%) contrast(102%);}
 
-    /* HERO */
-    .about-hero{position:relative; padding: clamp(20px,6vw,68px) 20px 8px; text-align:center; z-index:5;}
+    /* hero */
+    .about-hero{position:relative; padding: calc(var(--ui) * clamp(20px,6vw,68px)) 20px 8px; text-align:center; z-index:5;}
     .about-hero .hero-inner{max-width:min(1100px,92vw); margin-inline:auto; position:relative; z-index:5;}
     .about-hero .hero-inner::before{
       content:""; position:absolute; inset:-12% -14% -18% -14%; z-index:-1; pointer-events:none;
@@ -81,101 +61,81 @@
         radial-gradient(64% 80% at 70% 60%, rgba(255,233,255,.38), transparent 60%);
       filter: blur(28px) saturate(120%); opacity:.9; animation: floatBlob 24s ease-in-out infinite alternate;
     }
-    @keyframes floatBlob{ 0%{transform:translateY(0) rotate(0) scale(1)} 100%{transform:translateY(-6px) rotate(6deg) scale(1.02)} }
+    @keyframes floatBlob{0%{transform:translateY(0) rotate(0) scale(1)}100%{transform:translateY(-6px) rotate(6deg) scale(1.02)}}
 
-    /* H1 prism */
+    /* H1 — back to your density sizing */
     .name-edge{
       --text:#0e0f1a;
       font-family:"Funnel Display", system-ui, sans-serif;
-      font-weight:600; font-size:clamp(42px,8vw,76px);
+      font-weight:600;
+      font-size: calc(var(--ui) * clamp(42px,8vw,76px));
       letter-spacing:-.02em; line-height:.92; margin:0 0 6px;
-      text-transform:lowercase; position:relative; display:inline-block;
-      color:var(--text); filter:url(#softWobble); isolation:isolate;
+      text-transform:lowercase; position:relative; display:inline-block; color:var(--text);
+      filter:url(#softWobble); isolation:isolate;
     }
     .name-edge::after{
-      content:attr(data-text);
-      position:absolute; inset:0; z-index:-1; pointer-events:none;
+      content:attr(data-text); position:absolute; inset:0; z-index:-1; pointer-events:none;
       background: conic-gradient(from 0deg, var(--indigo), var(--pink) 40%, #8aaaff, var(--indigo));
-      -webkit-background-clip:text; background-clip:text; color:transparent;
-      transform: scale(1.04); filter: blur(6px) saturate(125%); opacity:.75; mix-blend-mode: plus-lighter;
+      -webkit-background-clip:text; background-clip:text; color:transparent; transform: scale(1.04);
+      filter: blur(6px) saturate(125%); opacity:.75; mix-blend-mode: plus-lighter;
     }
     .name-edge .warp,.name-edge .prism{
       position:absolute; inset:0; display:inline-block;
       -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 35%, #000 65%, transparent 100%);
-      -webkit-mask-size: 220% 100%; -webkit-mask-position:-60% 0; -webkit-mask-repeat:no-repeat;
-      mask-image: linear-gradient(90deg, transparent 0%, #000 35%, #000 65%, transparent 100%);
-      mask-size:220% 100%; mask-position:-60% 0; mask-repeat:no-repeat;
+              mask-image: linear-gradient(90deg, transparent 0%, #000 35%, #000 65%, transparent 100%);
+      -webkit-mask-size:220% 100%; mask-size:220% 100%;
+      -webkit-mask-position:-60% 0; mask-position:-60% 0; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat;
       will-change: -webkit-mask-position, mask-position;
     }
-    .name-edge .warp{ z-index:1; color:var(--text); -webkit-text-fill-color:currentColor; filter:url(#lensWarp); }
-    .name-edge .prism{
-      z-index:2; mix-blend-mode:screen; opacity:.55; filter: blur(.6px) saturate(120%);
-      background: linear-gradient(90deg, #7ff0ff 0%, #ff6adf 50%, #7ff0ff 100%);
-      -webkit-background-clip:text; background-clip:text; color:transparent; transform: translateX(.4px);
-    }
-    @keyframes sweepBand{ from{ -webkit-mask-position:-60% 0; mask-position:-60% 0 } to{ -webkit-mask-position:160% 0; mask-position:160% 0 } }
+    .name-edge .warp{z-index:1; color:var(--text); -webkit-text-fill-color:currentColor; filter:url(#lensWarp);}
+    .name-edge .prism{z-index:2; mix-blend-mode:screen; opacity:.55; filter: blur(.6px) saturate(120%);
+      background: linear-gradient(90deg, #7ff0ff 0%, #ff6adf 50%, #7ff0ff 100%); -webkit-background-clip:text; background-clip:text; color:transparent; transform: translateX(.4px);}
+    @keyframes sweepBand{from{ -webkit-mask-position:-60% 0; mask-position:-60% 0 } to{ -webkit-mask-position:160% 0; mask-position:160% 0 }}
     @media (min-width:641px){ .name-edge .warp, .name-edge .prism{ animation: sweepBand 7s cubic-bezier(.45,.05,.36,1) infinite alternate; } }
     @media (max-width:640px){ .name-edge .warp, .name-edge .prism{ animation: sweepBand 3.2s cubic-bezier(.5,.1,.2,1) 1 both; } }
     @media (prefers-reduced-motion: reduce){
-      .name-edge::after{animation:none}
-      .name-edge .warp, .name-edge .prism{animation:none !important}
-      .iridescent-wave::before, .iridescent-wave::after{animation:none !important}
+      .name-edge::after{animation:none} .name-edge .warp,.name-edge .prism{animation:none !important}
+      .iridescent-wave::before,.iridescent-wave::after{animation:none !important}
     }
 
-    .about-sub{margin:8px 0 28px; font:400 clamp(16px,2.4vw,20px)/1.2 "Jacquarda Bastarda 9", serif; opacity:.85; text-align:center;}
+    .about-sub{margin:6px 0 22px; font:400 calc(var(--ui) * clamp(16px,2.4vw,20px))/1.2 "Jacquarda Bastarda 9", serif; opacity:.85; text-align:center;}
 
-    /* BG ART (Heather) */
-    .bg-art{
-      position:fixed; right:-8vw; bottom:-6vh; width:min(82vw, 980px);
-      pointer-events:none; z-index:0; overflow:visible; /* sits below frost veil */
-    }
+    /* background art scale (you liked this) */
+    .page-about{ --bg:.58; --bg-right: calc(-8vw * var(--bg)); --bg-bottom: calc(-6vh * var(--bg)); --bg-w: min(calc(82vw * var(--bg)), calc(980px * var(--bg))); }
+    .bg-art{ position:fixed; right:var(--bg-right); bottom:var(--bg-bottom); width:var(--bg-w); pointer-events:none; z-index:0; overflow:visible; }
     .bg-art .art-svg{position:absolute; right:0; bottom:0; width:100%; height:auto}
-    .bg-art .art-svg image.base{opacity:var(--heather-alpha); filter:saturate(110%) contrast(102%);}
-    .bg-art .art-svg image.glow{opacity:.75}
-
-    /* LENS (full-viewport, above frost) */
-    .img-mag, .img-blur, .tint, .lens-aura{
-      position:fixed; inset:0; pointer-events:none; z-index:2; will-change: transform;
+    .bg-art .art-svg image.base{opacity:.08; filter:saturate(110%) contrast(102%);}
+    .bg-art .art-svg image.glow{opacity:.6}
+    .img-mag,.img-blur,.tint,.lens-aura{position:fixed; inset:0; pointer-events:none; z-index:2;}
+    .img-mag,.img-blur{
+      background-image:url('./assets/heater1.png'); background-repeat:no-repeat;
+      background-position:right var(--bg-right) bottom var(--bg-bottom); background-size:var(--bg-w) auto;
+      -webkit-mask-image: radial-gradient(circle var(--lr) at var(--lx,78%) var(--ly,76%), #000 0%, #000 62%, rgba(0,0,0,.75) 78%, transparent 92%);
+              mask-image: radial-gradient(circle var(--lr) at var(--lx,78%) var(--ly,76%), #000 0%, #000 62%, rgba(0,0,0,.75) 78%, transparent 92%);
     }
-    .img-mag, .img-blur{
-      background-image: url('./assets/heater1.png');
-      background-repeat:no-repeat;
-      background-position: right -8vw bottom -6vh;
-      background-size: min(82vw, 980px) auto;
-      -webkit-mask-image: radial-gradient(circle var(--lr) at var(--lx, 80%) var(--ly, 75%), #000 0%, #000 62%, rgba(0,0,0,.75) 78%, transparent 92%);
-              mask-image: radial-gradient(circle var(--lr) at var(--lx, 80%) var(--ly, 75%), #000 0%, #000 62%, rgba(0,0,0,.75) 78%, transparent 92%);
-    }
-    .img-mag{ filter: saturate(115%) contrast(103%); opacity:.9; }
-    .img-blur{ filter: blur(12px) saturate(120%); opacity:.24; }
+    .img-mag{filter:saturate(115%) contrast(103%); opacity:.88}
+    .img-blur{filter:blur(12px) saturate(120%); opacity:.22}
     .tint{
-      -webkit-mask-image: radial-gradient(circle calc(var(--lr)*1.05) at var(--lx, 80%) var(--ly, 75%), #000 0%, #000 60%, transparent 82%);
-              mask-image: radial-gradient(circle calc(var(--lr)*1.05) at var(--lx, 80%) var(--ly, 75%), #000 0%, #000 60%, transparent 82%);
-      background: radial-gradient(closest-side, rgba(68,64,255,.22), rgba(68,64,255,.16) 55%, transparent 80%);
-      z-index:3;
+      -webkit-mask-image: radial-gradient(circle calc(var(--lr)*1.05) at var(--lx,78%) var(--ly,76%), #000 0%, #000 60%, transparent 82%);
+              mask-image: radial-gradient(circle calc(var(--lr)*1.05) at var(--lx,78%) var(--ly,76%), #000 0%, #000 60%, transparent 82%);
+      background: radial-gradient(closest-side, rgba(68,64,255,.22), rgba(68,64,255,.16) 55%, transparent 80%); z-index:3;
     }
-    .lens-aura{
-      left:var(--lx, 80%); top:var(--ly, 75%); width:calc(var(--lr)*2.1); height:calc(var(--lr)*2.1);
-      transform: translate(-50%,-50%); border-radius:50%; filter: blur(0.6px) saturate(120%); z-index:4;
-    }
-    .lens-aura::before, .lens-aura::after{ content:""; position:absolute; inset:-18%; border-radius:50%; }
-    .lens-aura::before{ background: radial-gradient(closest-side, rgba(255,255,255,.22), rgba(255,255,255,.08) 55%, transparent 70%); mix-blend-mode: screen; filter: blur(12px); }
-    .lens-aura::after{
-      background:
-        radial-gradient(closest-side, rgba(255,255,255,.18), transparent 65%),
-        conic-gradient(from 0deg, rgba(127,240,255,.38), rgba(255,106,223,.35), rgba(127,240,255,.38));
-      mix-blend-mode: screen; opacity:.55; filter: blur(7px);
-    }
+    .lens-aura{left:var(--lx,78%); top:var(--ly,76%); width:calc(var(--lr)*2.1); height:calc(var(--lr)*2.1); transform:translate(-50%,-50%); border-radius:50%; filter:blur(.6px) saturate(120%); z-index:4;}
+    .lens-aura::before,.lens-aura::after{content:""; position:absolute; inset:-18%; border-radius:50%}
+    .lens-aura::before{background: radial-gradient(closest-side, rgba(255,255,255,.22), rgba(255,255,255,.08) 55%, transparent 70%); mix-blend-mode:screen; filter:blur(12px)}
+    .lens-aura::after{background: radial-gradient(closest-side, rgba(255,255,255,.18), transparent 65%), conic-gradient(from 0deg, rgba(127,240,255,.38), rgba(255,106,223,.35), rgba(127,240,255,.38)); mix-blend-mode:screen; opacity:.55; filter:blur(7px)}
 
-    /* CARD */
-    .wrap{display:grid; place-items:center; padding: 18px 16px 120px; position:relative; z-index:5;}
+    /* card — mini */
+    .wrap{display:grid; place-items:center; padding: calc(var(--ui) * 14px) calc(var(--ui) * 12px) calc(var(--ui) * 96px); position:relative; z-index:5;}
     .card-iris{
-      position: relative; width: min(92vw, 720px); border-radius: var(--cardR);
-      background: rgba(255,255,255, var(--glass-alpha, .6));
-      backdrop-filter: blur(var(--glass-blur, 12px)) saturate(135%) contrast(103%);
-      -webkit-backdrop-filter: blur(var(--glass-blur, 18px)) saturate(135%) contrast(103%);
+      position:relative;
+      width: min(92vw, 520px);         /* narrower */
+      border-radius: calc(var(--ui) * var(--cardR));
+      background: rgba(255,255,255,.64);
+      backdrop-filter: blur(12px) saturate(135%) contrast(103%); -webkit-backdrop-filter: blur(12px) saturate(135%) contrast(103%);
       background-clip: padding-box; border: 1px solid rgba(255,255,255,.38);
-      box-shadow: 0 18px 54px rgba(68,64,255,.10), 0 3px 12px rgba(0,0,0,.06);
-      isolation: isolate; will-change: backdrop-filter, transform;
+      box-shadow: 0 14px 42px rgba(68,64,255,.10), 0 3px 10px rgba(0,0,0,.06);
+      isolation:isolate; overflow:hidden;
     }
     .card-iris::before{
       content:""; position:absolute; inset:-1px; border-radius:inherit; padding:1px;
@@ -186,222 +146,81 @@
     }
     @keyframes spin{to{--b:360deg}}
 
-    .about-card{position:relative; padding: clamp(18px,4vw,28px) clamp(16px,4.5vw,36px); display:grid; gap:18px}
-    .about-copy p{margin:0; color:#2a2f45}
-    .about-copy ul{margin:0; padding-left:18px}
-    .about-copy li{margin:4px 0}
+    .about-card{position:relative; padding: calc(var(--ui) * clamp(12px,3.2vw,20px)) calc(var(--ui) * clamp(14px,4vw,24px)); display:grid; gap: calc(var(--ui) * 12px);}
+    .about-copy p{margin:0; color:#2a2f45; font-size: clamp(13.5px, 1.5vw, 14.5px); line-height:1.42;}
+    .about-copy ul{margin:0; padding-left:16px}
+    .about-copy li{margin:3px 0; font-size: clamp(13.5px, 1.5vw, 14.5px); line-height:1.42;}
 
-    .pxlh{ font-family:"Jacquarda Bastarda 9", serif; font-size:1.2em; font-weight:600; line-height:40px; }
-
-    /* brand buttons on card */
-    .about-cta{ display:flex; flex-wrap:wrap; gap:10px; margin-top:10px; }
-    .about-cta .btn-iris{ --halo:3px; --halo-blur:6px; }
-
-    /* tilt sheen (same as feature-card) */
-    .card-iris.feature-card{
-      transform-style: preserve-3d;
-      transition: transform .18s ease, box-shadow .2s ease;
-      overflow:hidden;
+    /* Jacquarda section heads (weight 500 as you set) */
+    .pxlh{
+      font-family:"Jacquarda Bastarda 9", serif;
+      font-weight: 500;
+      font-size: clamp(17px, 2vw, 20px);
+      line-height: 1.15; letter-spacing:.25px; color:#17182a;
     }
-    .card-iris.feature-card.is-hot{
-      transform: perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateZ(6px);
-      box-shadow: 0 22px 60px rgba(68,64,255,.16);
+
+    /* pixel-mini buttons (same across site) */
+    :root{ --px-font: "Funnel Display", system-ui, sans-serif; }
+    .btn-pixel{
+      --px: 10.5px; --px-track: .16em;
+      display:inline-flex; align-items:center; justify-content:center; gap:.5ch;
+      padding: 8px 12px; border-radius: 10px;
+      font: 800 var(--px)/1 var(--px-font);
+      text-transform: uppercase; letter-spacing: var(--px-track);
+      background: linear-gradient(180deg, #ffffff, #f6f6ff);
+      border: 1px solid #1f22ff; color:#17182a;
+      box-shadow: 0 0 0 1px rgba(68,64,255,.08) inset, 0 6px 18px rgba(68,64,255,.12);
+      transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
+      text-decoration:none; cursor:pointer; user-select:none;
     }
+    .btn-pixel:hover{ transform: translateY(-0.5px); box-shadow: 0 0 0 1px rgba(68,64,255,.10) inset, 0 10px 22px rgba(68,64,255,.18); }
+    .btn-pixel:active{ transform: translateY(0); filter: saturate(105%); }
+    .btn-pixel--ghost{ background: transparent; color:#2a2f45; border:1px solid #5a57ff; box-shadow:none; }
+    .btn-pixel:focus-visible{ outline:2px solid #5a57ff; outline-offset:2px; }
+    .about-cta{ display:flex; flex-wrap:wrap; gap:8px 10px; margin-top:8px; justify-content:center; }
+
+    /* tilt sheen */
+    .card-iris.feature-card{ transform-style:preserve-3d; transition: transform .18s ease, box-shadow .2s ease; }
+    .card-iris.feature-card.is-hot{ transform: perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateZ(6px); box-shadow: 0 22px 60px rgba(68,64,255,.16); }
     .card-iris.feature-card::after{
       content:""; position:absolute; inset:-25%;
-      background:
-        radial-gradient(260px 260px at var(--mx,50%) var(--my,50%),
-          rgba(127,240,255,.32), rgba(255,106,223,.22) 35%, transparent 60%);
-      mix-blend-mode: color-dodge; filter: blur(22px) saturate(140%);
-      opacity:0; transition: opacity .2s ease; pointer-events:none;
+      background: radial-gradient(260px 260px at var(--mx,50%) var(--my,50%), rgba(127,240,255,.32), rgba(255,106,223,.22) 35%, transparent 60%);
+      mix-blend-mode: color-dodge; filter: blur(22px) saturate(140%); opacity:0; transition: opacity .2s ease; pointer-events:none;
     }
     .card-iris.feature-card.is-hot::after{ opacity:1; }
 
-    /* Glass footer */
+    /* footer */
     .glass-footer{
-      position:fixed; left:0; right:0; bottom:0; z-index:20;
-      display:flex; align-items:center; justify-content:center; gap:14px;
-      padding:10px 14px; margin:10px; border-radius:16px;
-      background: rgba(255,255,255,.35);
-      backdrop-filter: blur(10px) saturate(135%) contrast(105%);
-      -webkit-backdrop-filter: blur(10px) saturate(135%) contrast(105%);
+      position:fixed; left:0; right:0; bottom:0; z-index:20; display:flex; align-items:center; justify-content:center; gap:12px;
+      padding:8px 12px; margin:8px; border-radius:16px; background: rgba(255,255,255,.35);
+      backdrop-filter: blur(10px) saturate(135%) contrast(105%); -webkit-backdrop-filter: blur(10px) saturate(135%) contrast(105%);
       box-shadow: 0 10px 30px rgba(68,64,255,.12);
-      -webkit-mask-image: radial-gradient(120% 120% at 50% 0%, #000 40%, rgba(0,0,0,.85) 72%, transparent 100%);
-              mask-image: radial-gradient(120% 120% at 50% 0%, #000 40%, rgba(0,0,0,.85) 72%, transparent 100%);
+      -webkit-mask-image: radial-gradient(120% 120% at 50% 0%, #000 40%, rgba(0,0,0,.85) 72%, transparent 100%); mask-image: radial-gradient(120% 120% at 50% 0%, #000 40%, rgba(0,0,0,.85) 72%, transparent 100%);
     }
-    .glass-footer a{font:600 14px/1 "DM Sans"; color:#1b1e35; text-decoration:none}
-    .glass-footer .dot{width:6px; height:6px; border-radius:50%; background:linear-gradient(90deg,var(--indigo),#8aa3ff)}
+    .glass-footer a, .glass-footer span{font:600 13px/1 "DM Sans"; color:#1b1e35; text-decoration:none}
+    .glass-footer .dot{width:5px; height:5px; border-radius:50%; background:linear-gradient(90deg,var(--indigo),#8aa3ff)}
 
-    /* responsive alignments */
+    /* responsive */
     @media (max-width:1024px){
-      .bg-art{ width:min(110vw,1400px); right:-6vw; bottom:-2vh; }
-      .img-mag, .img-blur{ background-size:min(110vw,1400px) auto; background-position:right -6vw bottom -2vh; }
-      .card-iris{ width:min(78vw,560px); }
-      .about-hero{ padding-top:clamp(16px,6vw,48px); padding-bottom:clamp(8px,4vw,24px); }
+      .page-about{ --bg-right: calc(-6vw * var(--bg)); --bg-bottom: calc(-2vh * var(--bg)); --bg-w: min(calc(110vw * var(--bg)), calc(1400px * var(--bg))); }
+      .card-iris{ width:min(80vw, 520px); }
     }
     @media (max-width:640px){
-      .bg-art{ width:140vw; right:-10vw; bottom:-4vh; }
-      .img-mag, .img-blur{ background-size:140vw auto; background-position:right -10vw bottom -4vh; }
-      .card-iris{ width:min(76vw,660px); }
-      .wrap{ padding-bottom:90px; }
-      .page-about{ --lr:110px; }
+      .page-about{ --bg-right: calc(-4vw * var(--bg)); --bg-bottom: calc(-2vh * var(--bg)); --bg-w: calc(125vw * var(--bg)); }
+      .wrap{ padding-bottom: max(72px, calc(var(--ui) * 90px)); }
+      .card-iris{
+        width: min(92vw, 520px);
+        max-height: 74svh;                 /* firmer cap -> less floppy */
+        overflow:auto; -webkit-overflow-scrolling:touch; overscroll-behavior:contain;
+      }
+      .about-card{ gap:10px; }
+      .btn-pixel{ --px:10px; padding:8px 10px; }
     }
   </style>
-
-<style>
-  /* === Compact ABOUT: ultra-small UI vibe === */
-  .page-about{ 
-    --ui:.66;
-
-    /* keep the lens radius proportional */
-    --lr: calc(120px * var(--ui));
-  }
-
-  /* hero spacing + type */
-  .page-about .about-hero{
-    padding: calc(var(--ui) * clamp(20px,6vw,68px)) 20px 8px;
-  }
-  .page-about .name-edge{
-    font-size: calc(var(--ui) * clamp(42px,8vw,76px));
-  }
-  .page-about .about-sub{
-    font-size: calc(var(--ui) * clamp(16px,2.4vw,20px));
-    margin: 6px 0 20px;
-  }
-
-  /* layout + card frame */
-  .page-about .wrap{
-    padding: calc(var(--ui) * 18px) calc(var(--ui) * 16px) calc(var(--ui) * 120px);
-  }
-  .page-about .card-iris{
-    width: min(92vw, calc(var(--ui) * 720px));
-    border-radius: calc(var(--ui) * var(--cardR));
-    box-shadow: 0 14px 42px rgba(68,64,255,.10), 0 3px 10px rgba(0,0,0,.06);
-  }
-
-  /* inner card spacing + copy rhythm */
-  .page-about .about-card{
-    padding: calc(var(--ui) * clamp(18px,4vw,28px)) calc(var(--ui) * clamp(16px,4.5vw,36px));
-    gap: calc(var(--ui) * 16px);
-  }
-  .page-about .about-copy p{ line-height: 1.42; }
-  .page-about .about-copy li{ margin: calc(var(--ui) * 4px) 0; }
-
-  /* section headings inside the card */
-  .page-about .pxlh{
-    font-size: calc(var(--ui) * 1.2em);
-    line-height: calc(var(--ui) * 40px);
-  }
-
-  /* CTA buttons (keeps ≥36px tap area via max()) */
-  .page-about .about-cta{ 
-    gap: calc(var(--ui) * 10px);
-    margin-top: calc(var(--ui) * 10px);
-  }
-  .page-about .btn-iris{
-    font: 600 max(12px, calc(var(--ui) * 14px))/1 "DM Sans";
-    padding: max(9px, calc(var(--ui) * 12px)) max(10px, calc(var(--ui) * 14px));
-    box-shadow: 0 8px 18px rgba(68,64,255,.18);
-  }
-
-  /* glass footer */
-  .page-about .glass-footer{
-    gap: calc(var(--ui) * 14px);
-    padding: max(8px, calc(var(--ui) * 10px)) max(10px, calc(var(--ui) * 14px));
-    margin: max(8px, calc(var(--ui) * 10px));
-  }
-  .page-about .glass-footer a,
-  .page-about .glass-footer span{
-    font: 600 max(12px, calc(var(--ui) * 14px))/1 "DM Sans";
-  }
-  .page-about .glass-footer .dot{ 
-    width: max(5px, calc(var(--ui) * 6px)); 
-    height: max(5px, calc(var(--ui) * 6px)); 
-  }
-
-  /* responsive tweaks keep working but inherit smaller sizing */
-  @media (max-width:1024px){
-    .page-about .card-iris{ width: min(78vw, calc(var(--ui) * 560px)); }
-    .page-about .about-hero{ 
-      padding-top: calc(var(--ui) * clamp(16px,6vw,48px)); 
-      padding-bottom: calc(var(--ui) * clamp(8px,4vw,24px)); 
-    }
-  }
-  @media (max-width:640px){
-    .page-about .card-iris{ width: min(76vw, calc(var(--ui) * 660px)); }
-    .page-about .wrap{ padding-bottom: max(72px, calc(var(--ui) * 90px)); }
-  }
-</style>
-
-
-<style>
-  /* === Shrink background PNG across SVG + lens layers ===
-     Turn --bg down/up to taste (0.66 = 66% of original) */
-  .page-about{
-    --bg: .66;                     /* overall art scale */
-    --bg-right: calc(-8vw * var(--bg));
-    --bg-bottom: calc(-6vh * var(--bg));
-    --bg-w: min(calc(82vw * var(--bg)), calc(980px * var(--bg)));
-  }
-
-  /* SVG <image> block (scales via its container width) */
-  .page-about .bg-art{
-    right: var(--bg-right);
-    bottom: var(--bg-bottom);
-    width: var(--bg-w);
-  }
-
-  /* Lens layers that use the same PNG as a CSS background */
-  .page-about .img-mag,
-  .page-about .img-blur{
-    background-position: right var(--bg-right) bottom var(--bg-bottom);
-    background-size: var(--bg-w) auto;
-  }
-
-  /* --- Responsive overrides (keep it smaller at breakpoints) --- */
-  @media (max-width:1024px){
-    .page-about{
-      --bg-right: calc(-6vw * var(--bg));
-      --bg-bottom: calc(-2vh * var(--bg));
-      --bg-w: min(calc(110vw * var(--bg)), calc(1400px * var(--bg)));
-    }
-    .page-about .bg-art{
-      right: var(--bg-right);
-      bottom: var(--bg-bottom);
-      width: var(--bg-w);
-    }
-    .page-about .img-mag,
-    .page-about .img-blur{
-      background-position: right var(--bg-right) bottom var(--bg-bottom);
-      background-size: var(--bg-w) auto;
-    }
-  }
-
-  @media (max-width:640px){
-    .page-about{
-      --bg-right: calc(-10vw * var(--bg));
-      --bg-bottom: calc(-4vh * var(--bg));
-      --bg-w: calc(140vw * var(--bg));
-    }
-    .page-about .bg-art{
-      right: var(--bg-right);
-      bottom: var(--bg-bottom);
-      width: var(--bg-w);
-    }
-    .page-about .img-mag,
-    .page-about .img-blur{
-      background-position: right var(--bg-right) bottom var(--bg-bottom);
-      background-size: var(--bg-w) auto;
-    }
-  }
-</style>
-
-
-  
 </head>
-<body class="page-about">
+<body class="page-about density-xs">
 
-  <!-- SVG defs FIRST -->
+  <!-- SVG defs -->
   <svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden">
     <filter id="softWobble" x="-50%" y="-50%" width="200%" height="200%">
       <feTurbulence type="fractalNoise" baseFrequency="0.008" numOctaves="1" seed="11" result="noise">
@@ -420,7 +239,8 @@
   <header class="site-header" role="banner">
     <div class="navcontainer header__inner">
       <a class="brand" href="/chrrybmbindigo/" aria-label="chrrybmb home">
-        <img class="brand__logo-img" src="./assets/indigo_chrry_indypinky.svg" alt="chrrybmb logo" width="120" height="48" decoding="async" fetchpriority="high">
+        <img class="brand__logo-img" src="./assets/indigo_chrry_indypinky.svg" alt="chrrybmb logo"
+             width="80" height="48" decoding="async" fetchpriority="high">
       </a>
       <nav class="nav" aria-label="Primary">
         <ul id="navMenu" class="nav__list">
@@ -436,10 +256,10 @@
   <!-- Iridescent wave -->
   <div class="iridescent-wave" aria-hidden="true"></div>
 
-  <!-- Frosty overlay (softens everything behind, lens sits above) -->
+  <!-- Frosty overlay -->
   <div class="frost-veil" aria-hidden="true"></div>
 
-  <!-- Background artwork w/ prism edge -->
+  <!-- Background artwork -->
   <aside class="bg-art" aria-hidden="true">
     <svg class="art-svg" viewBox="0 0 800 900" preserveAspectRatio="xMidYMax meet" role="img" aria-label="">
       <defs>
@@ -467,7 +287,7 @@
     </svg>
   </aside>
 
-  <!-- Full-viewport lens layers (cut through the frost) -->
+  <!-- Lens layers -->
   <span class="img-mag"  aria-hidden="true"></span>
   <span class="img-blur" aria-hidden="true"></span>
   <span class="tint"     aria-hidden="true"></span>
@@ -506,10 +326,10 @@
           <p>Senior brand & web design, marketing creative, and part-time at the studio. Open to roles where design and web meet growth.</p>
         </div>
 
-        <!-- Brand buttons -->
+        <!-- Pixel-mini buttons -->
         <div class="about-cta">
-          <a class="btn-iris" href="./resume.html">Resume</a>
-          <a class="btn-iris btn-iris--ghost" href="./contact.html">Contact</a>
+          <a class="btn-pixel" href="./resume.html">Resume</a>
+          <a class="btn-pixel btn-pixel--ghost" href="./contact.html">Contact</a>
         </div>
       </div>
     </section>
@@ -521,7 +341,7 @@
     <span>© <span id="year"></span> chrrybmb.com / denisajomo.com</span>
   </footer>
 
-  <!-- Shared wobble filter (for name-edge) -->
+  <!-- wobble filter -->
   <svg width="0" height="0" style="position:absolute">
     <filter id="softWobble" x="-50%" y="-50%" width="200%" height="200%">
       <feTurbulence type="fractalNoise" baseFrequency="0.008" numOctaves="1" seed="11" result="noise">
@@ -531,7 +351,7 @@
     </filter>
   </svg>
 
-  <!-- site-wide JS (orb + wave + lens + tilt) -->
   <script type="module" src="./site.js" defer></script>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
