@@ -855,6 +855,8 @@ animation: beamsSpin 28s linear infinite;
   --indigo:  #4440ff;
 }
 
+
+
 /* Base “+” */
 .plus-field .plus{
   position: absolute;
@@ -1013,7 +1015,9 @@ animation: beamsSpin 28s linear infinite;
 .hero__media{ position: relative; z-index: 1; }
 
 /* ---------- Features grid ---------- */
-.features{ padding: clamp(36px, 6vw, 80px) 0; }
+.features{ padding: clamp(36px, 6vw, 0px) 0;
+}
+
 .features__grid{
   display:grid;
   grid-template-columns: 1fr;
@@ -1094,9 +1098,6 @@ animation: beamsSpin 28s linear infinite;
     gap: 12px;
   }
 
-  .features {
-    margin: 0 30px;
-  }
 
   .nav__list{
     list-style:none;
