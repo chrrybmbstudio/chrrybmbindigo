@@ -247,6 +247,157 @@
       .page-about{ --lr:110px; }
     }
   </style>
+
+<style>
+  /* === Compact ABOUT: ultra-small UI vibe === */
+  .page-about{ 
+    --ui:.66;
+
+    /* keep the lens radius proportional */
+    --lr: calc(120px * var(--ui));
+  }
+
+  /* hero spacing + type */
+  .page-about .about-hero{
+    padding: calc(var(--ui) * clamp(20px,6vw,68px)) 20px 8px;
+  }
+  .page-about .name-edge{
+    font-size: calc(var(--ui) * clamp(42px,8vw,76px));
+  }
+  .page-about .about-sub{
+    font-size: calc(var(--ui) * clamp(16px,2.4vw,20px));
+    margin: 6px 0 20px;
+  }
+
+  /* layout + card frame */
+  .page-about .wrap{
+    padding: calc(var(--ui) * 18px) calc(var(--ui) * 16px) calc(var(--ui) * 120px);
+  }
+  .page-about .card-iris{
+    width: min(92vw, calc(var(--ui) * 720px));
+    border-radius: calc(var(--ui) * var(--cardR));
+    box-shadow: 0 14px 42px rgba(68,64,255,.10), 0 3px 10px rgba(0,0,0,.06);
+  }
+
+  /* inner card spacing + copy rhythm */
+  .page-about .about-card{
+    padding: calc(var(--ui) * clamp(18px,4vw,28px)) calc(var(--ui) * clamp(16px,4.5vw,36px));
+    gap: calc(var(--ui) * 16px);
+  }
+  .page-about .about-copy p{ line-height: 1.42; }
+  .page-about .about-copy li{ margin: calc(var(--ui) * 4px) 0; }
+
+  /* section headings inside the card */
+  .page-about .pxlh{
+    font-size: calc(var(--ui) * 1.2em);
+    line-height: calc(var(--ui) * 40px);
+  }
+
+  /* CTA buttons (keeps ≥36px tap area via max()) */
+  .page-about .about-cta{ 
+    gap: calc(var(--ui) * 10px);
+    margin-top: calc(var(--ui) * 10px);
+  }
+  .page-about .btn-iris{
+    font: 600 max(12px, calc(var(--ui) * 14px))/1 "DM Sans";
+    padding: max(9px, calc(var(--ui) * 12px)) max(10px, calc(var(--ui) * 14px));
+    box-shadow: 0 8px 18px rgba(68,64,255,.18);
+  }
+
+  /* glass footer */
+  .page-about .glass-footer{
+    gap: calc(var(--ui) * 14px);
+    padding: max(8px, calc(var(--ui) * 10px)) max(10px, calc(var(--ui) * 14px));
+    margin: max(8px, calc(var(--ui) * 10px));
+  }
+  .page-about .glass-footer a,
+  .page-about .glass-footer span{
+    font: 600 max(12px, calc(var(--ui) * 14px))/1 "DM Sans";
+  }
+  .page-about .glass-footer .dot{ 
+    width: max(5px, calc(var(--ui) * 6px)); 
+    height: max(5px, calc(var(--ui) * 6px)); 
+  }
+
+  /* responsive tweaks keep working but inherit smaller sizing */
+  @media (max-width:1024px){
+    .page-about .card-iris{ width: min(78vw, calc(var(--ui) * 560px)); }
+    .page-about .about-hero{ 
+      padding-top: calc(var(--ui) * clamp(16px,6vw,48px)); 
+      padding-bottom: calc(var(--ui) * clamp(8px,4vw,24px)); 
+    }
+  }
+  @media (max-width:640px){
+    .page-about .card-iris{ width: min(76vw, calc(var(--ui) * 660px)); }
+    .page-about .wrap{ padding-bottom: max(72px, calc(var(--ui) * 90px)); }
+  }
+</style>
+
+
+<style>
+  /* === Shrink background PNG across SVG + lens layers ===
+     Turn --bg down/up to taste (0.66 = 66% of original) */
+  .page-about{
+    --bg: .66;                     /* overall art scale */
+    --bg-right: calc(-8vw * var(--bg));
+    --bg-bottom: calc(-6vh * var(--bg));
+    --bg-w: min(calc(82vw * var(--bg)), calc(980px * var(--bg)));
+  }
+
+  /* SVG <image> block (scales via its container width) */
+  .page-about .bg-art{
+    right: var(--bg-right);
+    bottom: var(--bg-bottom);
+    width: var(--bg-w);
+  }
+
+  /* Lens layers that use the same PNG as a CSS background */
+  .page-about .img-mag,
+  .page-about .img-blur{
+    background-position: right var(--bg-right) bottom var(--bg-bottom);
+    background-size: var(--bg-w) auto;
+  }
+
+  /* --- Responsive overrides (keep it smaller at breakpoints) --- */
+  @media (max-width:1024px){
+    .page-about{
+      --bg-right: calc(-6vw * var(--bg));
+      --bg-bottom: calc(-2vh * var(--bg));
+      --bg-w: min(calc(110vw * var(--bg)), calc(1400px * var(--bg)));
+    }
+    .page-about .bg-art{
+      right: var(--bg-right);
+      bottom: var(--bg-bottom);
+      width: var(--bg-w);
+    }
+    .page-about .img-mag,
+    .page-about .img-blur{
+      background-position: right var(--bg-right) bottom var(--bg-bottom);
+      background-size: var(--bg-w) auto;
+    }
+  }
+
+  @media (max-width:640px){
+    .page-about{
+      --bg-right: calc(-10vw * var(--bg));
+      --bg-bottom: calc(-4vh * var(--bg));
+      --bg-w: calc(140vw * var(--bg));
+    }
+    .page-about .bg-art{
+      right: var(--bg-right);
+      bottom: var(--bg-bottom);
+      width: var(--bg-w);
+    }
+    .page-about .img-mag,
+    .page-about .img-blur{
+      background-position: right var(--bg-right) bottom var(--bg-bottom);
+      background-size: var(--bg-w) auto;
+    }
+  }
+</style>
+
+
+  
 </head>
 <body class="page-about">
 
