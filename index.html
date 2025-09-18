@@ -52,32 +52,46 @@
       -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
     }
 
-    /* IRIDESCENT WAVE (full-page layer) */
-    .iridescent-wave{
-      position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow:hidden;
-    }
-    .iridescent-wave::before{
-      content:""; position:absolute; inset:-20%;
-      background: conic-gradient(from var(--wave-rot,0deg) at var(--orb-x,50%) var(--orb-y,20%),
-        rgba(127,240,255,.25), rgba(255,106,223,.20), rgba(127,240,255,.25));
-      filter: blur(var(--wave-halo-blur)) saturate(150%);
-      mix-blend-mode: color-dodge;
-      opacity: var(--wave-opacity);
-      animation: waveSpin 22s linear infinite;
-    }
-    .iridescent-wave::after{
-      content:""; position:absolute; left:-10%; right:-10%; top:-120%; bottom:-120%;
-      background:
-        radial-gradient(80% 60% at 50% 30%, rgba(255,255,255,.55), rgba(255,255,255,0) 60%),
-        linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.55) 35%, rgba(255,255,255,0) 70%);
-      filter: blur(18px);
-      mix-blend-mode: soft-light;
-      opacity:.35;
-      animation: rippleDown var(--wave-speed) cubic-bezier(.42,0,.58,1) infinite;
-    }
-    .iridescent-wave.boost{ --wave-opacity:.62; --wave-speed: 18s; }
-    @keyframes waveSpin{ to { transform: rotate(1turn) } }
-    @keyframes rippleDown{ 0% { transform: translateY(-35%) } 100% { transform: translateY(35%) } }
+/* IRIDESCENT WAVE (full-page) — anti-seam overscan + GPU hinting */
+.iridescent-wave{
+  position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow:hidden;
+  /* make the layer its own paint/compositing context */
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  contain: paint;
+}
+.iridescent-wave::before{
+  content:""; position:absolute;
+  /* overscan further so the blurred edge never reaches the viewport */
+  left:-25vw; right:-25vw; top:-200vh; bottom:-200vh;
+  background: conic-gradient(from var(--wave-rot,0deg) at var(--orb-x,50%) var(--orb-y,20%),
+    rgba(127,240,255,.25), rgba(255,106,223,.20), rgba(127,240,255,.25));
+  background-repeat:no-repeat;
+  filter: blur(var(--wave-halo-blur)) saturate(150%);
+  mix-blend-mode: color-dodge; opacity: var(--wave-opacity);
+  animation: waveSpin 22s linear infinite;
+  /* avoid sub-pixel raster seams while animating */
+  will-change: transform;
+  transform: translate3d(0,0,0);
+}
+.iridescent-wave::after{
+  content:""; position:absolute;
+  /* even larger vertical overscan for the rippling band */
+  left:-25vw; right:-25vw; top:-240vh; bottom:-240vh;
+  background:
+    radial-gradient(80% 60% at 50% 30%, rgba(255,255,255,.55), rgba(255,255,255,0) 60%),
+    linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.55) 35%, rgba(255,255,255,0) 70%);
+  background-repeat:no-repeat;
+  filter: blur(18px); mix-blend-mode: soft-light; opacity:.35;
+  animation: rippleDown var(--wave-speed) cubic-bezier(.42,0,.58,1) infinite;
+  will-change: transform;
+  transform: translate3d(0,0,0);
+}
+/* keep your existing keyframes */
+@keyframes waveSpin{ to { transform: rotate(1turn) } }
+@keyframes rippleDown{ 0%{transform:translate3d(0,-35%,0)} 100%{transform:translate3d(0,35%,0)} }
+
 
     /* FULL-VIEW LENS (no clipping anywhere) */
     .bg-art{
@@ -176,11 +190,12 @@
 
 <body>
   <!-- Header / Nav -->
+
   <header class="site-header" role="banner">
     <div class="navcontainer header__inner">
       <a class="brand" href="/chrrybmbindigo/" aria-label="chrrybmb home">
         <img class="brand__logo-img" src="./assets/indigo_chrry_indypinky.svg" alt="chrrybmb logo"
-             width="120" height="48" decoding="async" fetchpriority="high">
+             width="80" height="48" decoding="async" fetchpriority="high">
       </a>
       <nav class="nav" aria-label="Primary">
         <ul id="navMenu" class="nav__list">
@@ -266,17 +281,17 @@
       <section class="features" aria-label="Featured work">
         <div class="container features__grid">
           <article class="card-iris feature-card" data-animate>
-            <h3 class="shimmer-text">Web UX</h3>
+            <span class="pxlh">Web UX</span>
             <p>Information architecture, flows, and responsive front-end systems.</p>
             <a class="btn-iris btn-iris--ghost" href="./work.html#ux">Explore</a>
           </article>
           <article class="card-iris feature-card" data-animate>
-            <h3 class="shimmer-text">Brand Systems</h3>
+            <span class="pxlh">Brand Systems</span>
             <p>Identity, typography, usage rules, and scalable component libraries.</p>
             <a class="btn-iris btn-iris--ghost" href="./work.html#brand">Explore</a>
           </article>
           <article class="card-iris feature-card" data-animate>
-            <h3 class="shimmer-text">Art Direction</h3>
+            <span class="pxlh">Art Direction</span>
             <p>Campaign concepts, motion, and visuals with that prism-y glow.</p>
             <a class="btn-iris btn-iris--ghost" href="./work.html#ad">Explore</a>
           </article>
@@ -290,6 +305,7 @@
     <span class="dot" aria-hidden="true"></span>
     <span>© <span id="year"></span> chrrybmb.com / denisajomo.com</span>
   </footer>
+  </div>
 
   <!-- Shared wobble filter (if style.css uses it) -->
   <svg width="0" height="0" style="position:absolute">
@@ -300,8 +316,11 @@
       <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G"/>
     </filter>
   </svg>
+ 
+
 
   <!-- Single shared script -->
   <script type="module" src="./site.js" defer></script>
+
 </body>
 </html>
