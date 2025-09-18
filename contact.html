@@ -108,7 +108,7 @@
     @keyframes spin{to{--b:360deg}}
 
     .page-contact .contact-card{
-      position:relative; padding: clamp(18px,4vw,28px) clamp(16px,4.5vw,36px);
+      position:relative; padding: clamp(18px,4vw,28px) clamp(2px,4.5vw,6px);
       display:grid; gap:18px;
       transform-style: preserve-3d;
     }
@@ -164,8 +164,60 @@
       .page-contact .btn-iris{padding:11px 12px; font-size:13px}
     }
   </style>
+
+<style>
+  /* === Compact mode: ~88% density for this page === */
+  .page-contact{ --ui: .66 } /* tweak to .85 or .90 to taste */
+
+  /* Headline + subhead */
+  .page-contact .name-edge{
+    font-size: calc(var(--ui) * clamp(42px, 8vw, 76px));
+  }
+  .page-contact .contact-sub{
+    font-size: calc(var(--ui) * clamp(16px, 2.4vw, 20px));
+    margin: 6px 0 22px;
+  }
+
+  /* Card + layout */
+  .page-contact .wrap{ padding: 14px 12px 96px; }
+  .page-contact .card-iris{ width: min(92vw, 560px); border-radius: calc(var(--ui) * var(--cardR)); }
+  .page-contact .contact-card{
+    gap: 14px;
+    padding: clamp(14px, 3.6vw, 22px) clamp(2px, 3.6vw, 6px);
+  }
+
+  /* Rows / text */
+  .page-contact .row{ gap: 10px }
+  .page-contact .handle{ font: 600 14px/1.2 "DM Sans", system-ui, sans-serif }
+  .page-contact .muted{ font-size: 13px }
+
+  /* Icons */
+  .page-contact .icon{ width:16px; height:16px; vertical-align:-2px }
+
+  /* Buttons */
+  .page-contact .actions{ gap: 8px; margin-top: 2px }
+  .page-contact .btn-iris{
+    font: 600 13px/1 "DM Sans";
+    padding: 10px 12px;
+    box-shadow: 0 8px 18px rgba(68,64,255,.22);
+  }
+
+  /* Footer */
+  .glass-footer{ gap: 12px; padding: 8px 12px; margin: 8px; }
+  .glass-footer a, .glass-footer span{ font: 600 13px/1 "DM Sans" }
+  .glass-footer .dot{ width:5px; height:5px }
+
+  /* Small-phone polish (keeps tap targets sane) */
+  @media (max-width:480px){
+    .page-contact .card-iris{ width: min(94vw, 560px) }
+    .page-contact .btn-iris{ padding: 10px 12px; font-size: 13px }
+  }
+</style>
+
 </head>
-<body class="page-contact">
+
+  <body class="page-contact density-xs">
+
 
   <!-- SVG defs FIRST (iOS needs filters available before use) -->
   <svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden">
