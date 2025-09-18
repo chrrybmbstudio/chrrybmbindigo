@@ -69,6 +69,8 @@ a:hover{ text-decoration:underline }
   font-style: normal;
 }
 
+.pxlh{ font-family:"Jacquarda Bastarda 9", serif; font-size:1.2em; font-weight:600; line-height:40px; }
+
 
 .container{ 
   max-width: 999px;
@@ -93,10 +95,11 @@ a:hover{ text-decoration:underline }
   justify-content:space-between;
   align-items: center;
   gap: 12px;
-  padding: 12px 0;
+  padding: 10px 0;
 }
 
 .nav__list{
+  font-size: 12px;
   list-style:none;
   display:flex;
   gap: 22px;
@@ -271,7 +274,7 @@ a:hover{ text-decoration:underline }
     box-shadow:
       0 18px 50px rgba(68,64,255,.10),
       0 2px 10px rgba(0,0,0,.04);
-    width: min(1300px, 88vw);
+    width: min(1100px, 88vw);
     height: min(777px, 33vw) auto;
     
     margin: clamp(12px,3vw,28px) auto; 
@@ -1043,6 +1046,10 @@ animation: beamsSpin 28s linear infinite;
 .feature-card .btn-iris{
   align-self: flex-start;
 }
+/* Global UI scale (85%) */
+:root { --ui-scale: .85; }
+
+
 
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce){
