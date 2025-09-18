@@ -22,19 +22,20 @@
       --wave-opacity:.76;          /* iridescent wave strength */
       --wave-speed: 36s;           /* top→bottom pass duration */
       --wave-halo-blur: 54px;      /* softness of wave glow */
-      --heather-alpha:.1 !important;         /* base BG image opacity */
+      --heather-alpha:.1;          /* base BG image opacity (0–1) */
+      color:var(--ink);
+      -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+
+      /* base gradient + pointer orb */
       background:
         radial-gradient(60% 60% at var(--orb-x,72%) var(--orb-y,68%), rgba(68,64,255,.13), transparent 60%),
         linear-gradient(180deg, #ffffff, #faf9ff);
-      color:var(--ink);
-      -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
     }
 
     /* --- IRIDESCENT WAVE (replaces plusses) --- */
     .iridescent-wave{
       position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow:hidden;
     }
-    /* colorful wash that orbits the pointer and shimmers */
     .iridescent-wave::before{
       content:""; position:absolute; inset:-20%;
       background: conic-gradient(
@@ -48,7 +49,6 @@
       opacity: var(--wave-opacity);
       animation: waveSpin 22s linear infinite;
     }
-    /* soft vertical ripple that travels top→bottom repeatedly */
     .iridescent-wave::after{
       content:""; position:absolute; left:-10%; right:-10%; top:-120%; bottom:-120%;
       background:
@@ -61,10 +61,7 @@
     }
     .iridescent-wave.boost{ --wave-opacity:.62; --wave-speed: 18s; }
     @keyframes waveSpin{ to { transform: rotate(1turn) } }
-    @keyframes rippleDown{
-      0%   { transform: translateY(-35%); }
-      100% { transform: translateY(35%);  }
-    }
+    @keyframes rippleDown{ 0%{transform:translateY(-35%)} 100%{transform:translateY(35%)} }
 
     /* --- HERO --- */
     .about-hero{position:relative; padding: clamp(20px,6vw,68px) 20px 8px; text-align:center; z-index:2;}
@@ -113,12 +110,8 @@
       transform: translateX(.4px);
     }
     @keyframes sweepBand{ from{ -webkit-mask-position:-60% 0; mask-position:-60% 0 } to{ -webkit-mask-position:160% 0; mask-position:160% 0 } }
-    @media (min-width:641px){
-      .name-edge .warp, .name-edge .prism{ animation: sweepBand 7s cubic-bezier(.45,.05,.36,1) infinite alternate; }
-    }
-    @media (max-width:640px){
-      .name-edge .warp, .name-edge .prism{ animation: sweepBand 3.2s cubic-bezier(.5,.1,.2,1) 1 both; }
-    }
+    @media (min-width:641px){ .name-edge .warp, .name-edge .prism{ animation: sweepBand 7s cubic-bezier(.45,.05,.36,1) infinite alternate; } }
+    @media (max-width:640px){ .name-edge .warp, .name-edge .prism{ animation: sweepBand 3.2s cubic-bezier(.5,.1,.2,1) 1 both; } }
     @media (prefers-reduced-motion: reduce){
       .name-edge::after{animation:none}
       .name-edge .warp, .name-edge .prism{animation:none !important}
@@ -127,55 +120,51 @@
 
     .about-sub{margin:8px 0 28px; font:400 clamp(16px,2.4vw,20px)/1.2 "Jacquarda Bastarda 9", serif; opacity:.85; text-align:center;}
 
-    /* --- BG ART (Heather) with expanded “no-clip” space --- */
+    /* --- BG ART (Heather) --- */
     .bg-art{
       position:fixed;
-      right:-8vw;               /* bleed outwards so lens won’t hit edges */
-      bottom:-6vh;
+      right:-8vw; bottom:-6vh;
       width:min(82vw, 980px);
-      height:min(100vh, 1080px);
+      height:auto;
       pointer-events:none;
-      z-index:1;                /* above wave, below content */
+      z-index:1; /* above wave, below content */
       overflow:visible;
     }
-    .bg-art .art-svg{position:absolute; right:0; bottom:0; width:100%; height:100%}
+    .bg-art .art-svg{position:absolute; right:0; bottom:0; width:100%; height:auto}
     .bg-art .art-svg image.base{opacity:var(--heather-alpha); filter:saturate(110%) contrast(102%);}
     .bg-art .art-svg image.glow{opacity:.75} /* prism halo amount */
 
-    /* lens overlays (masked to a circle that follows pointer) */
-    .bg-art .img-mag,
-    .bg-art .img-blur{
-      position:absolute; right:0; bottom:0; width:110%; height:auto; display:block; pointer-events:none;
-      /* softer edge + larger circle, centered by CSS vars */
-      -webkit-mask-image: radial-gradient(circle var(--lr) at var(--lx, 85%) var(--ly, 85%), #000 0%, #000 62%, rgba(0,0,0,.75) 78%, transparent 92%);
-              mask-image: radial-gradient(circle var(--lr) at var(--lx, 85%) var(--ly, 85%), #000 0%, #000 62%, rgba(0,0,0,.75) 78%, transparent 92%);
+    /* --- FULL-VIEWPORT LENS OVERLAYS (no clipping) --- */
+    .img-mag, .img-blur, .tint, .lens-aura{
+      position:fixed; inset:0; pointer-events:none; z-index:2;
     }
-    .bg-art .img-mag{
-      transform: translateZ(0) scale(1.12);         /* a touch more magnify */
-      transform-origin: var(--lx, 85%) var(--ly, 85%);
-      filter: saturate(115%) contrast(103%);
-      opacity:.95;
+    /* align overlays to the same bottom-right anchor + offsets as .bg-art */
+    .img-mag, .img-blur{
+      background-image: url('./assets/heater1.png');
+      background-repeat:no-repeat;
+      background-position: right -8vw bottom -6vh;
+      background-size: min(82vw, 980px) auto;
+      -webkit-mask-image: radial-gradient(circle var(--lr) at var(--lx, 80%) var(--ly, 75%), #000 0%, #000 62%, rgba(0,0,0,.75) 78%, transparent 92%);
+              mask-image: radial-gradient(circle var(--lr) at var(--lx, 80%) var(--ly, 75%), #000 0%, #000 62%, rgba(0,0,0,.75) 78%, transparent 92%);
     }
-    .bg-art .img-blur{
-      filter: blur(12px) saturate(120%); opacity:.28;
-    }
-    .bg-art .tint{
-      position:absolute; inset:auto -5% -5% -5%; width:110%; height:110%;
-      background: radial-gradient(circle calc(var(--lr)*1.05) at var(--lx, 85%) var(--ly, 85%), rgba(68,64,255,.22) 0%, rgba(68,64,255,.16) 55%, transparent 80%);
-      pointer-events:none;
+    .img-mag{ filter: saturate(115%) contrast(103%); opacity:.95; }
+    .img-blur{ filter: blur(12px) saturate(120%); opacity:.28; }
+
+    .tint{
+      -webkit-mask-image: radial-gradient(circle calc(var(--lr)*1.05) at var(--lx, 80%) var(--ly, 75%), #000 0%, #000 60%, transparent 82%);
+              mask-image: radial-gradient(circle calc(var(--lr)*1.05) at var(--lx, 80%) var(--ly, 75%), #000 0%, #000 60%, transparent 82%);
+      background:
+        radial-gradient(closest-side, rgba(68,64,255,.22), rgba(68,64,255,.16) 55%, transparent 80%);
+      z-index:3;
     }
 
-    /* borderless iridescent aura */
     .lens-aura{
-      position:absolute; left:var(--lx, 80%); top:var(--ly, 80%);
+      left:var(--lx, 80%); top:var(--ly, 75%);
       width:calc(var(--lr)*2.1); height:calc(var(--lr)*2.1);
-      transform: translate(-50%,-50%); border-radius:50%; pointer-events:none; z-index:2;
-      filter: blur(0.6px) saturate(120%);
+      transform: translate(-50%,-50%); border-radius:50%;
+      filter: blur(0.6px) saturate(120%); z-index:4;
     }
-    .lens-aura::before,
-    .lens-aura::after{
-      content:""; position:absolute; inset:-18%; border-radius:50%; pointer-events:none;
-    }
+    .lens-aura::before, .lens-aura::after{ content:""; position:absolute; inset:-18%; border-radius:50%; }
     .lens-aura::before{
       background: radial-gradient(closest-side, rgba(255,255,255,.22), rgba(255,255,255,.08) 55%, transparent 70%);
       mix-blend-mode: screen; filter: blur(12px);
@@ -188,11 +177,9 @@
     }
 
     /* --- Center card (frosted) --- */
-    .wrap{display:grid; place-items:center; padding: 18px 16px 120px; position:relative; z-index:2;}
+    .wrap{display:grid; place-items:center; padding: 18px 16px 120px; position:relative; z-index:5;}
     .card-iris{
-      position: relative;
-      width: min(92vw, 720px);
-      border-radius: var(--cardR);
+      position: relative; width: min(92vw, 720px); border-radius: var(--cardR);
       background: rgba(255,255,255, var(--glass-alpha, .6));
       backdrop-filter: blur(var(--glass-blur, 12px)) saturate(135%) contrast(103%);
       -webkit-backdrop-filter: blur(var(--glass-blur, 18px)) saturate(135%) contrast(103%);
@@ -232,24 +219,19 @@
     .glass-footer a{font:600 14px/1 "DM Sans"; color:#1b1e35; text-decoration:none}
     .glass-footer .dot{width:6px; height:6px; border-radius:50%; background:linear-gradient(90deg,var(--indigo),#8aa3ff)}
 
-    /* --- ABOUT responsive tweaks --- */
+    /* --- Responsive: keep overlays aligned with bg-art offsets/size --- */
     @media (max-width: 1024px){
-      .page-about .bg-art{
-        width: min(110vw, 1400px);
-        right: -6vw; bottom: -2vh;
-      }
-      .page-about .card-iris{ width: min(78vw, 560px); }
-      .page-about .about-hero{
-        padding-top: clamp(16px, 6vw, 48px);
-        padding-bottom: clamp(8px, 4vw, 24px);
-      }
+      .bg-art{ width: min(110vw, 1400px); right:-6vw; bottom:-2vh; }
+      .img-mag, .img-blur{ background-size: min(110vw, 1400px) auto; background-position: right -6vw bottom -2vh; }
+      .card-iris{ width: min(78vw, 560px); }
+      .about-hero{ padding-top: clamp(16px,6vw,48px); padding-bottom: clamp(8px,4vw,24px); }
     }
     @media (max-width: 640px){
-      .page-about .bg-art{
-        width: 140vw; right: -10vw; bottom: -4vh;
-      }
-      .page-about .card-iris{ width: min(66vw, 360px); }
-      .page-about .wrap{ padding-bottom: 90px; }
+      .bg-art{ width: 140vw; right:-10vw; bottom:-4vh; }
+      .img-mag, .img-blur{ background-size: 140vw auto; background-position: right -10vw bottom -4vh; }
+      .card-iris{ width: min(66vw, 360px); }
+      .wrap{ padding-bottom: 90px; }
+      .page-about{ --lr: 110px; }
     }
   </style>
 </head>
@@ -290,7 +272,7 @@
   <!-- Iridescent wave layer -->
   <div class="iridescent-wave" aria-hidden="true"></div>
 
-  <!-- Background artwork w/ prism edge + lens -->
+  <!-- Background artwork w/ prism edge -->
   <aside class="bg-art" aria-hidden="true">
     <svg class="art-svg" viewBox="0 0 800 900" preserveAspectRatio="xMidYMax meet" role="img" aria-label="">
       <defs>
@@ -301,16 +283,14 @@
           <feTurbulence type="fractalNoise" baseFrequency=".0008" numOctaves="2" seed="7" result="noise"/>
           <feDisplacementMap in="edgeRing" in2="noise" scale="7" xChannelSelector="R" yChannelSelector="G" result="ringWobble"/>
           <feGaussianBlur in="ringWobble" stdDeviation="4.4" result="ringSoft"/>
-          <feGaussianBlur in "ringWobble" stdDeviation="9"   result="ringWide"/>
+          <feGaussianBlur in="ringWobble" stdDeviation="9"   result="ringWide"/>
           <feFlood flood-color="#ffffff" flood-opacity="0.9" result="whiteFlood"/>
           <feComposite in="whiteFlood" in2="ringSoft" operator="in" result="whiteGlow"/>
           <feFlood flood-color="#f800ff" flood-opacity="0.9" result="magFlood"/>
           <feComposite in="magFlood" in2="ringSoft" operator="in" result="magGlow"/>
           <feFlood flood-color="#4440ff" flood-opacity="0.5" result="indigoFlood"/>
           <feComposite in="indigoFlood" in2="ringWide" operator="in" result="indigoGlow"/>
-          <feMerge result="glow">
-            <feMergeNode in="indigoGlow"/><feMergeNode in="magGlow"/><feMergeNode in="whiteGlow"/>
-          </feMerge>
+          <feMerge result="glow"><feMergeNode in="indigoGlow"/><feMergeNode in="magGlow"/><feMergeNode in="whiteGlow"/></feMerge>
           <feBlend in="SourceGraphic" in2="glow" mode="screen" result="lit"/>
           <feComposite in="lit" in2="SourceGraphic" operator="over"/>
         </filter>
@@ -318,13 +298,13 @@
       <image class="base" href="./assets/heater1.png" x="0" y="0" width="800" height="900" />
       <image class="glow" href="./assets/heater1.png" x="0" y="0" width="800" height="900" filter="url(#prismEdgeGlow)"/>
     </svg>
-
-    <!-- Lens overlays -->
-    <img class="img-mag"  src="./assets/heater1.png" alt="" />
-    <img class="img-blur" src="./assets/heater1.png" alt="" />
-    <span class="tint"></span>
-    <span class="lens-aura"></span>
   </aside>
+
+  <!-- Full-viewport lens layers -->
+  <span class="img-mag"  aria-hidden="true"></span>
+  <span class="img-blur" aria-hidden="true"></span>
+  <span class="tint"     aria-hidden="true"></span>
+  <span class="lens-aura" aria-hidden="true"></span>
 
   <!-- Hero -->
   <section class="about-hero" aria-label="Intro">
@@ -367,82 +347,71 @@
     <span class="dot" aria-hidden="true"></span>
     <span>© <span id="year"></span> chrrybmb.com / denisajomo.com</span>
   </footer>
+
+  <!-- JS -->
+  <script>
+    // year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // background orb vars (also drive the wave center)
+    (function(){
+      const root = document.documentElement;
+      function setOrb(e){
+        const t = e.touches ? e.touches[0] : e;
+        const x = (t.clientX / innerWidth) * 100;
+        const y = (t.clientY / innerHeight) * 100;
+        root.style.setProperty('--orb-x', x + '%');
+        root.style.setProperty('--orb-y', y + '%');
+      }
+      addEventListener('pointermove', setOrb, {passive:true});
+      addEventListener('touchmove', setOrb, {passive:true});
+    })();
+
+    // FULL-VIEWPORT pointer lens → updates --lx / --ly in viewport px
+    (function(){
+      const doc = document.documentElement;
+
+      // slightly larger lens by default; smaller on phones via CSS
+      function moveLens(e){
+        const t = e.touches ? e.touches[0] : e;
+        doc.style.setProperty('--lx', t.clientX.toFixed(1) + 'px');
+        doc.style.setProperty('--ly', t.clientY.toFixed(1) + 'px');
+      }
+      addEventListener('pointermove', moveLens, {passive:true});
+      addEventListener('touchmove',   moveLens, {passive:true});
+
+      // init somewhere pretty
+      addEventListener('load', ()=>{
+        doc.style.setProperty('--lx', (innerWidth * 0.78).toFixed(1) + 'px');
+        doc.style.setProperty('--ly', (innerHeight* 0.72).toFixed(1) + 'px');
+      }, {once:true});
+    })();
+
+    // header scrolled class
+    (function(){
+      const hdr = document.querySelector('.site-header');
+      addEventListener('scroll', () => hdr.classList.toggle('is-scrolled', scrollY > 4));
+    })();
+
+    // wave interactivity: nudge speed/opacity on movement + slow hue orbit
+    (function(){
+      const wave = document.querySelector('.iridescent-wave');
+      if(!wave) return;
+      let boostTimer = 0, rot = 0;
+      function boost(){
+        wave.classList.add('boost');
+        clearTimeout(boostTimer);
+        boostTimer = setTimeout(()=> wave.classList.remove('boost'), 900);
+      }
+      function tick(){
+        rot = (rot + 0.35) % 360;
+        document.documentElement.style.setProperty('--wave-rot', rot + 'deg');
+        requestAnimationFrame(tick);
+      }
+      addEventListener('pointermove', boost, {passive:true});
+      addEventListener('touchmove',   boost, {passive:true});
+      tick();
+    })();
+  </script>
 </body>
-
-<!-- Filters shared by H1 already included above -->
-
-<!-- JS -->
-<script>
-  // year
-  document.getElementById('year').textContent = new Date().getFullYear();
-
-  // background orb vars (also drive the wave center)
-  (function(){
-    const root = document.documentElement;
-    function setOrb(e){
-      const t = e.touches ? e.touches[0] : e;
-      const x = (t.clientX / innerWidth) * 100;
-      const y = (t.clientY / innerHeight) * 100;
-      root.style.setProperty('--orb-x', x + '%');
-      root.style.setProperty('--orb-y', y + '%');
-    }
-    addEventListener('pointermove', setOrb, {passive:true});
-    addEventListener('touchmove', setOrb, {passive:true});
-  })();
-
-  // pointer lens → updates --lx / --ly (in px within the art box)
-  (function(){
-    const art = document.querySelector('.bg-art');
-    if(!art) return;
-    const doc = document.documentElement;
-
-    const mobile = matchMedia('(max-width: 640px)').matches;
-    doc.style.setProperty('--lr', (mobile ? 110 : 140) + 'px'); // slightly larger lens
-
-    function moveLens(e){
-      const t = e.touches ? e.touches[0] : e;
-      const rect = art.getBoundingClientRect();
-      let x = Math.max(0, Math.min(rect.width,  t.clientX - rect.left));
-      let y = Math.max(0, Math.min(rect.height, t.clientY - rect.top));
-      doc.style.setProperty('--lx', x.toFixed(1) + 'px');
-      doc.style.setProperty('--ly', y.toFixed(1) + 'px');
-    }
-    addEventListener('pointermove', moveLens, {passive:true});
-    addEventListener('touchmove',   moveLens, {passive:true});
-
-    const init = () => {
-      const r = art.getBoundingClientRect();
-      doc.style.setProperty('--lx', (r.width*0.72).toFixed(1) + 'px');
-      doc.style.setProperty('--ly', (r.height*0.68).toFixed(1) + 'px');
-    };
-    addEventListener('load', init, {once:true});
-    if (document.readyState === 'complete') init();
-  })();
-
-  // header scrolled class
-  (function(){
-    const hdr = document.querySelector('.site-header');
-    addEventListener('scroll', () => hdr.classList.toggle('is-scrolled', scrollY > 4));
-  })();
-
-  // wave interactivity: nudge speed/opacity on movement + keep a subtle rotation
-  (function(){
-    const wave = document.querySelector('.iridescent-wave');
-    if(!wave) return;
-    let boostTimer = 0, rot = 0;
-    function boost(){
-      wave.classList.add('boost');
-      clearTimeout(boostTimer);
-      boostTimer = setTimeout(()=> wave.classList.remove('boost'), 900);
-    }
-    function tick(){
-      rot = (rot + 0.35) % 360; // slow continuous hue orbit
-      document.documentElement.style.setProperty('--wave-rot', rot + 'deg');
-      requestAnimationFrame(tick);
-    }
-    addEventListener('pointermove', boost, {passive:true});
-    addEventListener('touchmove',   boost, {passive:true});
-    tick();
-  })();
-</script>
 </html>
