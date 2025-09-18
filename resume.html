@@ -155,8 +155,50 @@
       .page-resume .pdf-scroller{scroll-behavior:auto}
     }
   </style>
+
+<style>
+  /* === Compact resume: small-UI vibe, mobile-safe === */
+  .page-resume{ --ui:.66 } /* tweak: .82 smaller, .90 larger */
+
+  /* hero spacing + type */
+  .page-resume .resume-hero{
+    padding: calc(var(--ui) * clamp(20px,6vw,68px)) 20px 8px;
+  }
+  .page-resume .name-edge{
+    font-size: calc(var(--ui) * clamp(42px,8vw,76px));
+  }
+  .page-resume .resume-sub{
+    font-size: calc(var(--ui) * clamp(16px,2.4vw,20px));
+    margin: 4px 0 22px;
+  }
+
+  /* card frame + scroller */
+  .page-resume .card-iris{
+    width: min(62vw, 460px);
+    border-radius: calc(var(--ui) * var(--cardR));
+    box-shadow: 0 16px 46px rgba(68,64,255,.08), 0 3px 12px rgba(0,0,0,.06);
+  }
+  .page-resume .pdf-scroller{
+    --h: clamp(58svh,72svh,82svh); /* a touch shorter to match the smaller frame */
+  }
+
+  /* buttons / toolbar */
+  .page-resume .resume-actions{ gap: 8px; padding: 10px; }
+  .page-resume .btn-iris{
+    font: 600 13px/1 "DM Sans";
+    padding: 10px 12px;
+    box-shadow: 0 8px 18px rgba(68,64,255,.22);
+  }
+
+  /* tiny polish on phones */
+  @media (max-width:480px){
+    .page-resume .card-iris{ width:min(94vw,560px) }
+    .page-resume .btn-iris{ font-size:13px; padding:10px 12px }
+  }
+</style>
+
 </head>
-<body class="page-resume">
+<body class="page-resume density-xs">
 
   <!-- SVG defs FIRST for iOS Safari so filters are available before use -->
   <svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden">
