@@ -193,7 +193,6 @@
           <li><a href="./index.html">Home</a></li>
           <li><a href="./work.html">Work</a></li>
           <li><a href="./about.html">About</a></li>
-          <li><a href="./resume.html">Resume</a></li>
           <li><a aria-current="page" href="./contact.html">Contact</a></li>
         </ul>
       </nav>
@@ -209,7 +208,7 @@
         <span class="warp"  aria-hidden="true">contact</span>
         <span class="prism" aria-hidden="true">contact</span>
       </h1>
-      <div class="contact-sub">smart, edgy, intentional — let’s build brand & web that moves</div>
+      <div class="contact-sub">let’s build brand & web that moves</div>
     </div>
   </section>
 
@@ -290,28 +289,7 @@
       addEventListener('touchmove', setOrb, {passive:true});
     })();
 
-    // sprinkle plusses in hero
-    document.addEventListener('DOMContentLoaded', () => {
-      const field = document.querySelector('.plus-field'); if (!field) return;
-      const phone = matchMedia('(max-width: 640px)').matches;
-      const COUNT = phone ? 12 : 24;
-      const rand = (a,b)=>Math.random()*(b-a)+a;
-      const bias = p => Math.pow(Math.random(), p);
-      for (let i=0; i<COUNT; i++){
-        const el = document.createElement('span');
-        el.className = 'plus';
-        el.textContent = '+';
-        const rx = bias(1.6), ry = bias(1.6);
-        el.style.right  = (rx * 60).toFixed(2) + 'vw';
-        el.style.bottom = (ry * 60).toFixed(2) + 'vh';
-        el.style.fontSize = Math.round(rand(18,46)) + 'px';
-        el.style.setProperty('--alpha', rand(0.40, 0.75).toFixed(2));
-        el.style.setProperty('--rot',   rand(-6, 6).toFixed(1) + 'deg');
-        el.style.setProperty('--driftDur',   rand(10, 16).toFixed(2) + 's');
-        el.style.setProperty('--shineDur',   rand(3.0, 4.8).toFixed(2) + 's');
-        field.appendChild(el);
-      }
-    });
+
 
     // copy email
     document.getElementById('copyBtn')?.addEventListener('click', async (e)=>{
