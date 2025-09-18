@@ -341,5 +341,32 @@
         </div>`;
     }
   </script>
+
+<script>
+  // Mouse / touch orb → updates CSS vars --orb-x / --orb-y (in % of viewport)
+  (function () {
+    const target = document.documentElement; // or swap to a scoped element (see notes)
+    // sensible defaults so the bg looks nice before first move
+    target.style.setProperty('--orb-x', '72%');
+    target.style.setProperty('--orb-y', '68%');
+
+    let raf = 0;
+    function onPoint(e) {
+      const t = e.touches ? e.touches[0] : e;
+      const x = (t.clientX / window.innerWidth) * 100;
+      const y = (t.clientY / window.innerHeight) * 100;
+      if (raf) cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        target.style.setProperty('--orb-x', x.toFixed(2) + '%');
+        target.style.setProperty('--orb-y', y.toFixed(2) + '%');
+      });
+    }
+
+    // pointer for desktop, touch for mobile
+    window.addEventListener('pointermove', onPoint, { passive: true });
+    window.addEventListener('touchmove',   onPoint, { passive: true });
+  })();
+</script>
+
 </body>
 </html>
