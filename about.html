@@ -222,6 +222,53 @@
     @media (max-width:480px){
       .card-iris{width:min(94vw, 680px)}
     }
+
+    /* --- ABOUT responsive tweaks --- */
+
+/* Tablet: make Heather big + tighten the card */
+@media (max-width: 1024px){
+  /* If your Heather is an <img> or <svg> with this class */
+  .page-about .bg-heather{
+    /* get bolder + push a hair off screen to feel intentional */
+    width: min(110vw, 1400px);
+    right: -6vw;
+    bottom: -2vh;
+    opacity: var(--heather-alpha, .85); /* keep it tweakable */
+  }
+
+  /* Narrow the glass card */
+  .page-about .card-iris{
+    width: min(78vw, 560px);
+  }
+
+  /* Give the hero a touch more breathing room if needed */
+  .page-about .about-hero{
+    padding-top: clamp(16px, 6vw, 48px);
+    padding-bottom: clamp(8px, 4vw, 24px);
+  }
+}
+
+/* Mobile: go extra-large Heather + a slim card */
+@media (max-width: 640px){
+  .page-about .bg-heather{
+    width: 140vw;       /* dramatic & dreamy */
+    right: -10vw;       /* let it tuck off the edge */
+    bottom: -4vh;
+    opacity: var(--heather-alpha, .82);
+  }
+
+  .page-about .card-iris{
+    width: min(88vw, 460px); /* nice and narrow */
+  }
+
+  /* Optional: pull the card up a bit to reveal more bg */
+  .page-about .wrap{
+    padding-bottom: 90px; /* keep footer clear */
+  }
+}
+
+
+    
   </style>
 </head>
 <body class="page-about">
