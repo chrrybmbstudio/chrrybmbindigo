@@ -69,7 +69,7 @@ a:hover{ text-decoration:underline }
   font-style: normal;
 }
 
-.pxlh{ font-family:"Jacquarda Bastarda 9", serif; font-size:1.2em; font-weight:600; line-height:40px; }
+.pxlh{ font-family:"Jacquarda Bastarda 9", serif; font-size:1.2em; font-weight:600;xs}
 
 
 .container{ 
@@ -1048,6 +1048,24 @@ animation: beamsSpin 28s linear infinite;
 }
 /* Global UI scale (85%) */
 :root { --ui-scale: .85; }
+
+/* Breathe room for feature cards on phones */
+@media (max-width: 680px){
+  /* ensure the grid stacks */
+  .features .features__grid{
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(14px, 4vw, 22px);
+    /* side padding so cards don't touch edges */
+    padding-inline: clamp(14px, 5vw, 24px);
+  }
+
+  /* keep each card a bit narrower than the viewport */
+  .features .feature-card{
+    width: min(100%, 560px);
+    margin-inline: auto;          /* centers the narrower card */
+  }
+}
 
 
 
