@@ -15,11 +15,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Jacquarda+Bastarda+9&display=swap" rel="stylesheet">
 
-  <!-- Page-scoped styles come AFTER style.css to win in the cascade -->
+  <!-- Page-scoped styles (wins over style.css) -->
   <style>
-    .page-resume{ --indigo:#4440ff; --pink:#ffe9ff; --ink:#0e0f1a; --cardR: clamp(18px,1.6vw,26px); }
-
+    /* ---------- Page palette / basics ---------- */
     .page-resume{
+      --indigo:#4440ff; --pink:#ffe9ff; --ink:#0e0f1a; --cardR: clamp(18px,1.6vw,26px);
       background:
         radial-gradient(60% 60% at var(--orb-x,72%) var(--orb-y,68%), rgba(68,64,255,.13), transparent 60%),
         linear-gradient(180deg, #ffffff, #faf9ff);
@@ -27,180 +27,154 @@
       -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
     }
 
-    /* ---- HERO ---- */
-    .page-resume .resume-hero{position:relative; padding: clamp(20px,6vw,68px) 20px 8px; text-align:center;}
-    .page-resume .resume-hero .hero-inner{max-width:min(1100px,92vw); margin-inline:auto; position:relative; z-index:0;}
-    .page-resume .resume-hero .hero-inner::before{ /* dreamy blob behind title */
+    /* ---------- Hero ---------- */
+    .resume-hero{ position:relative; padding: clamp(20px,6vw,56px) 20px 8px; text-align:center; }
+    .resume-hero .hero-inner{ max-width:min(1100px,92vw); margin-inline:auto; position:relative; z-index:0; }
+    .resume-hero .hero-inner::before{
       content:""; position:absolute; inset:-12% -14% -18% -14%; z-index:-1; pointer-events:none;
       background:
         radial-gradient(72% 100% at 30% 40%, rgba(68,64,255,.28), transparent 60%),
         radial-gradient(64% 80% at 70% 60%, rgba(255,233,255,.38), transparent 60%);
-      filter: blur(28px) saturate(120%);
-      opacity:.9; animation: floatBlob 24s ease-in-out infinite alternate;
+      filter: blur(28px) saturate(120%); opacity:.9; animation: floatBlob 24s ease-in-out infinite alternate;
     }
     @keyframes floatBlob{ 0%{ transform:translateY(0) rotate(0) scale(1)} 100%{ transform:translateY(-6px) rotate(6deg) scale(1.02)} }
 
-    /* optional empty layer now; JS removed per request */
-    .page-resume .plus-field{position:absolute; inset:0; pointer-events:none; overflow:hidden}
-
-    .page-resume .pdf-embed{width:100%;height:100%;display:block;border:0}
-    .page-resume .pdf-fallback{padding:18px;text-align:center}
-
-    /* === H1: solid text + static halo + sweep-band fisheye + prism fringe === */
-    .page-resume .name-edge{
+    /* Title treatment (matches brand) */
+    .name-edge{
       --text:#0e0f1a;
       font-family:"Funnel Display", system-ui, sans-serif;
-      font-weight:600;
-      font-size:clamp(42px,8vw,76px);
+      font-weight:600; font-size:clamp(42px,8vw,72px);
       letter-spacing:-.02em; line-height:.92; margin:0 0 6px;
       text-transform:lowercase; position:relative; display:inline-block;
-      color:var(--text);
-      filter:url(#softWobble);
-      isolation:isolate; /* make blend modes consistent across browsers */
+      color:var(--text); filter:url(#softWobble); isolation:isolate;
     }
-    /* static iridescent halo */
-    .page-resume .name-edge::after{
+    .name-edge::after{
       content:attr(data-text);
       position:absolute; inset:0; z-index:-1; pointer-events:none;
       background: conic-gradient(from 0deg, var(--indigo), var(--pink) 40%, #8aaaff, var(--indigo));
       -webkit-background-clip:text; background-clip:text; color:transparent;
-      transform: scale(1.04);
-      filter: blur(6px) saturate(125%);
-      opacity:.75; mix-blend-mode: plus-lighter;
+      transform: scale(1.04); filter: blur(6px) saturate(125%); opacity:.75; mix-blend-mode: plus-lighter;
     }
-
-    .page-resume .name-edge .text{ position:relative; z-index:0 }
-
-    /* fisheye warp band (mask sweeps; filter is static = performant) */
-    .page-resume .name-edge .warp{
-      position:absolute; inset:0; z-index:1; display:inline-block;
-      color:var(--text); -webkit-text-fill-color: currentColor;
-      filter:url(#lensWarp);
+    .name-edge .warp,.name-edge .prism{
+      position:absolute; inset:0; display:inline-block;
       -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 35%, #000 65%, transparent 100%);
-      -webkit-mask-size: 220% 100%; -webkit-mask-position:-60% 0; -webkit-mask-repeat:no-repeat;
-      mask-image: linear-gradient(90deg, transparent 0%, #000 35%, #000 65%, transparent 100%);
-      mask-size:220% 100%; mask-position:-60% 0; mask-repeat:no-repeat;
+              mask-image: linear-gradient(90deg, transparent 0%, #000 35%, #000 65%, transparent 100%);
+      -webkit-mask-size: 220% 100%; mask-size: 220% 100%;
+      -webkit-mask-position: -60% 0; mask-position: -60% 0; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat;
     }
-
-    /* prism fringe inside the band */
-    .page-resume .name-edge .prism{
-      position:absolute; inset:0; z-index:2; display:inline-block; pointer-events:none;
-      mix-blend-mode: screen; opacity:.55; filter: blur(.6px) saturate(120%);
+    .name-edge .warp{ z-index:1; color:var(--text); -webkit-text-fill-color:currentColor; filter:url(#lensWarp); }
+    .name-edge .prism{
+      z-index:2; mix-blend-mode:screen; opacity:.55; filter: blur(.6px) saturate(120%);
       background: linear-gradient(90deg, #7ff0ff 0%, #ff6adf 50%, #7ff0ff 100%);
-      -webkit-background-clip:text; background-clip:text; color:transparent;
-      -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 35%, #000 65%, transparent 100%);
-      -webkit-mask-size: 220% 100%; -webkit-mask-position:-60% 0; -webkit-mask-repeat:no-repeat;
-      mask-image: linear-gradient(90deg, transparent 0%, #000 35%, #000 65%, transparent 100%);
-      mask-size:220% 100%; mask-position:-60% 0; mask-repeat:no-repeat;
-      transform: translateX(.4px); /* teeny offset = chromatic feel */
+      -webkit-background-clip:text; background-clip:text; color:transparent; transform: translateX(.4px);
     }
+    @keyframes sweepBand{ from{ -webkit-mask-position:-60% 0; mask-position:-60% 0 } to{ -webkit-mask-position:160% 0; mask-position:160% 0 } }
+    @media (min-width:641px){ .name-edge .warp, .name-edge .prism{ animation: sweepBand 7s cubic-bezier(.45,.05,.36,1) infinite alternate; } }
+    @media (max-width:640px){ .name-edge .warp, .name-edge .prism{ animation: sweepBand 3.2s cubic-bezier(.5,.1,.2,1) 1 both; } }
+    @media (prefers-reduced-motion: reduce){ .name-edge .warp, .name-edge .prism{ animation:none !important } }
 
-    /* sweep keyframes */
-    @keyframes sweepBand {
-      from { -webkit-mask-position:-60% 0; mask-position:-60% 0; }
-      to   { -webkit-mask-position:160% 0; mask-position:160% 0; }
-    }
+    .resume-sub{ margin:6px 0 26px; font:400 clamp(16px,2.4vw,20px)/1.2 "Jacquarda Bastarda 9", serif; opacity:.82; }
 
-    /* Desktop: gentle, continuous */
-    @media (min-width: 641px){
-      .page-resume .name-edge .warp,
-      .page-resume .name-edge .prism{
-        animation: sweepBand 7s cubic-bezier(.45,.05,.36,1) infinite alternate;
-      }
+    /* ---------- Card + PDF ---------- */
+    .resume-wrap{ max-width: 980px; margin: 0 auto calc(18px + 14svh); padding-inline: 12px; }
+    .card-iris{
+      position:relative; width:min(92vw, 640px); margin: 0 auto;
+      border-radius: var(--cardR); background:#fff;
+      box-shadow:0 18px 54px rgba(68,64,255,.10), 0 3px 12px rgba(0,0,0,.06);
+      isolation:isolate;
     }
-    /* Mobile: one tasteful sweep on load */
-    @media (max-width: 640px){
-      .page-resume .name-edge .warp,
-      .page-resume .name-edge .prism{
-        animation: sweepBand 3.2s cubic-bezier(.5,.1,.2,1) 1 both;
-      }
+    .card-iris::before{
+      content:""; position:absolute; inset:-1px; border-radius:inherit; padding:1px;
+      background:conic-gradient(from var(--b,0deg), var(--indigo), var(--pink) 40%, #a8a3ff, var(--indigo));
+      --mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask: var(--mask); -webkit-mask-composite:xor; mask-composite:exclude;
+      animation: spin 14s linear infinite; pointer-events:none;
     }
-    /* Respect reduced motion */
-    @media (prefers-reduced-motion: reduce){
-      .page-resume .name-edge .warp,
-      .page-resume .name-edge .prism{ animation:none !important }
-    }
-
-    .page-resume .resume-sub{
-      margin:5px 0 30px;
-      font: 400 clamp(16px,2.4vw,20px)/1.2 "Jacquarda Bastarda 9", serif;
-      opacity:.8; text-transform:none; text-align:center;
-    }
-
-    /* ---- CARD + PDF ---- */
-    .page-resume .card-iris{position:relative; width:min(92vw, 640px); border-radius:var(--cardR); box-shadow:0 20px 60px rgba(68,64,255,.08), 0 4px 14px rgba(0,0,0,.06); background:#fff; margin-inline:auto}
-    .page-resume .card-iris::before{content:""; position:absolute; inset:-1px; border-radius:inherit; padding:1px; background:conic-gradient(from var(--b,0deg), var(--indigo), var(--pink) 40%, #a8a3ff, var(--indigo)); --mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask: var(--mask); -webkit-mask-composite:xor; mask-composite:exclude; animation: spin 14s linear infinite; pointer-events:none}
     @keyframes spin{to{--b:360deg}}
-    .page-resume .pdf-scroller{ --h:clamp(64svh,78svh,86svh); height:var(--h); overflow:auto; border-radius:inherit; background:#fff; scroll-behavior:smooth; position:relative }
-    .page-resume .pdf-scroller{ scrollbar-color: var(--indigo) rgba(68,64,255,.08); scrollbar-width: thin }
-    .page-resume .pdf-scroller::-webkit-scrollbar{ width:10px }
-    .page-resume .pdf-scroller::-webkit-scrollbar-track{ background: rgba(68,64,255,.06) }
-    .page-resume .pdf-scroller::-webkit-scrollbar-thumb{ background: linear-gradient(180deg, var(--indigo), #8aa3ff) }
-    .page-resume .pdf-scroller::after{ content:""; position:absolute; left:0; top:0; width:4px; height:var(--prog,0%); background: linear-gradient(180deg, var(--indigo), var(--pink)); border-radius:0 6px 6px 0 }
-    .page-resume .pdf-page{ display:block; width:100%; height:auto; background:#fff; margin:0 auto; box-shadow:0 1px 0 rgba(0,0,0,.05) }
 
-    .page-resume .resume-actions{display:flex; gap:10px; padding:12px; justify-content:center; flex-wrap:wrap}
-    .page-resume .btn-iris{appearance:none; border:0; cursor:pointer; font:600 14px/1 "DM Sans"; padding:12px 14px; border-radius:999px; color:#fff; background: linear-gradient(90deg, var(--indigo), #8aa3ff); box-shadow: 0 10px 24px rgba(68,64,255,.25); transition: transform .15s ease, box-shadow .2s ease}
-    .page-resume .btn-iris:hover{transform: translateY(-1px); box-shadow: 0 14px 30px rgba(68,64,255,.28)}
-    .page-resume .btn-iris--ghost{background:#f5f5ff; color:#1b1e35}
+    /* Slightly smaller viewport for the PDF + room for footer */
+    .pdf-scroller{
+      --h: clamp(56svh, 68svh, 78svh);
+      height: var(--h);
+      overflow:auto; border-radius:inherit; background:#fff; scroll-behavior:smooth; position:relative;
+    }
+    .pdf-scroller{ scrollbar-color: var(--indigo) rgba(68,64,255,.08); scrollbar-width: thin }
+    .pdf-scroller::-webkit-scrollbar{ width:10px }
+    .pdf-scroller::-webkit-scrollbar-track{ background: rgba(68,64,255,.06) }
+    .pdf-scroller::-webkit-scrollbar-thumb{ background: linear-gradient(180deg, var(--indigo), #8aa3ff) }
+    .pdf-scroller::after{ content:""; position:absolute; left:0; top:0; width:4px; height:var(--prog,0%); background: linear-gradient(180deg, var(--indigo), var(--pink)); border-radius:0 6px 6px 0 }
 
-    @media (max-width: 480px){
-      .page-resume .card-iris{width:min(94vw, 600px)}
-      .page-resume .resume-actions{gap:8px}
-      .page-resume .btn-iris{padding:11px 12px; font-size:13px}
+    .pdf-page{ display:block; width:100%; height:auto; background:#fff; margin:0 auto; box-shadow:0 1px 0 rgba(0,0,0,.05) }
+
+    /* ---------- Pixel-mini buttons (brand-consistent) ---------- */
+    :root{ --px-font: "Funnel Display", system-ui, sans-serif; }
+    .btn-pixel{
+      --px: 10.5px; --px-track: .16em;
+      display:inline-flex; align-items:center; justify-content:center; gap:.5ch;
+      padding: 8px 12px; border-radius: 10px;
+      font: 800 var(--px)/1 var(--px-font); text-transform: uppercase; letter-spacing: var(--px-track);
+      background: linear-gradient(180deg, #ffffff, #f6f6ff);
+      border: 1px solid #1f22ff; color:#17182a;
+      box-shadow: 0 0 0 1px rgba(68,64,255,.08) inset, 0 6px 18px rgba(68,64,255,.12);
+      transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
+      text-decoration:none; cursor:pointer; user-select:none;
+    }
+    .btn-pixel:hover{ transform: translateY(-0.5px); box-shadow: 0 0 0 1px rgba(68,64,255,.10) inset, 0 10px 22px rgba(68,64,255,.18); }
+    .btn-pixel:active{ transform: translateY(0); filter: saturate(105%); }
+    .btn-pixel--ghost{ background: transparent; color:#2a2f45; border:1px solid #5a57ff; box-shadow:none; }
+    .btn-pixel:focus-visible{ outline:2px solid #5a57ff; outline-offset:2px; }
+
+    /* Toolbar layout with intention */
+    .resume-actions{
+      display:flex; align-items:center; justify-content:center; flex-wrap:wrap;
+      gap: 8px 10px; padding: 10px 12px 12px;
+      border-top: 1px solid rgba(0,0,0,.04);
+      background: linear-gradient(180deg,#fff,rgba(255,255,255,.9));
+      border-radius: 0 0 var(--cardR) var(--cardR);
+    }
+    .tool-group{
+      display:inline-flex; gap:8px; padding: 6px; border-radius: 12px;
+      background: rgba(68,64,255,.04);
+      box-shadow: inset 0 0 0 1px rgba(68,64,255,.06);
+    }
+    .tool-spacer{ width:14px; height:1px; opacity:0; }  /* keeps visual rhythm if group wraps */
+
+    /* Glass footer (already global, kept here for specificity if needed) */
+    .glass-footer{
+      position:fixed; left:0; right:0; bottom:0; z-index:20; display:flex; align-items:center; justify-content:center; gap:14px;
+      padding:10px 14px; margin:10px; border-radius:16px; background: rgba(255,255,255,.35);
+      backdrop-filter: blur(10px) saturate(135%) contrast(105%); -webkit-backdrop-filter: blur(10px) saturate(135%) contrast(105%);
+      box-shadow: 0 10px 30px rgba(68,64,255,.12);
+      -webkit-mask-image: radial-gradient(120% 120% at 50% 0%, #000 40%, rgba(0,0,0,.85) 72%, transparent 100%);
+              mask-image: radial-gradient(120% 120% at 50% 0%, #000 40%, rgba(0,0,0,.85) 72%, transparent 100%);
+    }
+    .glass-footer a{font:600 14px/1 "DM Sans"; color:#1b1e35; text-decoration:none}
+    .glass-footer .dot{width:6px; height:6px; border-radius:50%; background:linear-gradient(90deg,var(--indigo),#8aa3ff)}
+
+    /* Compact density (same vibe as home) */
+    .page-resume.density-xs{ --ui:.66 }
+    .page-resume .name-edge{ font-size: calc(var(--ui) * clamp(42px,8vw,72px)); }
+    .page-resume .resume-sub{ font-size: calc(var(--ui) * clamp(16px,2.4vw,20px)); }
+    .page-resume .card-iris{ width: min(62vw, 520px); }
+    .page-resume .pdf-scroller{ --h: clamp(54svh, 64svh, 76svh); }
+
+    /* Mobile polish */
+    @media (max-width: 520px){
+      .page-resume .card-iris{ width:min(94vw,560px); }
+      .btn-pixel{ --px: 10px; padding: 8px 10px; }
+      .tool-group{ padding:5px; gap:6px; }
+      .resume-wrap{ margin-bottom: calc(16px + 18svh); }
     }
 
     @media (prefers-reduced-motion: reduce){
-      .page-resume .name-edge::after, .page-resume .card-iris::before{animation:none}
-      .page-resume .pdf-scroller{scroll-behavior:auto}
+      .name-edge::after, .card-iris::before{ animation:none }
+      .pdf-scroller{ scroll-behavior:auto }
     }
   </style>
-
-<style>
-  /* === Compact resume: small-UI vibe, mobile-safe === */
-  .page-resume{ --ui:.66 } /* tweak: .82 smaller, .90 larger */
-
-  /* hero spacing + type */
-  .page-resume .resume-hero{
-    padding: calc(var(--ui) * clamp(20px,6vw,68px)) 20px 8px;
-  }
-  .page-resume .name-edge{
-    font-size: calc(var(--ui) * clamp(42px,8vw,76px));
-  }
-  .page-resume .resume-sub{
-    font-size: calc(var(--ui) * clamp(16px,2.4vw,20px));
-    margin: 4px 0 22px;
-  }
-
-  /* card frame + scroller */
-  .page-resume .card-iris{
-    width: min(62vw, 460px);
-    border-radius: calc(var(--ui) * var(--cardR));
-    box-shadow: 0 16px 46px rgba(68,64,255,.08), 0 3px 12px rgba(0,0,0,.06);
-  }
-  .page-resume .pdf-scroller{
-    --h: clamp(58svh,72svh,82svh); /* a touch shorter to match the smaller frame */
-  }
-
-  /* buttons / toolbar */
-  .page-resume .resume-actions{ gap: 8px; padding: 10px; }
-  .page-resume .btn-iris{
-    font: 600 13px/1 "DM Sans";
-    padding: 10px 12px;
-    box-shadow: 0 8px 18px rgba(68,64,255,.22);
-  }
-
-  /* tiny polish on phones */
-  @media (max-width:480px){
-    .page-resume .card-iris{ width:min(94vw,560px) }
-    .page-resume .btn-iris{ font-size:13px; padding:10px 12px }
-  }
-</style>
-
 </head>
-<body class="page-resume density-xs">
 
-  <!-- SVG defs FIRST for iOS Safari so filters are available before use -->
+<body class="page-resume density-xs">
+  <!-- SVG defs FIRST -->
   <svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden">
     <filter id="softWobble" x="-50%" y="-50%" width="200%" height="200%">
       <feTurbulence type="fractalNoise" baseFrequency="0.008" numOctaves="1" seed="11" result="noise">
@@ -208,7 +182,6 @@
       </feTurbulence>
       <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G"/>
     </filter>
-    <!-- slightly stronger fisheye for clarity on mobile -->
     <filter id="lensWarp" x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" color-interpolation-filters="sRGB">
       <feTurbulence type="fractalNoise" baseFrequency="0.0025 0.002" numOctaves="1" seed="5" result="turb"/>
       <feGaussianBlur in="turb" stdDeviation="14" result="soft"/>
@@ -233,9 +206,8 @@
     </div>
   </header>
 
-  <!-- Page content -->
+  <!-- Hero -->
   <section class="resume-hero" aria-label="Intro">
-    <div class="plus-field" aria-hidden="true"></div>
     <div class="hero-inner">
       <h1 class="name-edge" data-text="resume">
         <span class="text">resume</span>
@@ -246,32 +218,50 @@
     </div>
   </section>
 
+  <!-- Card + PDF -->
   <main class="resume-wrap" role="main">
     <section class="card-iris">
       <div id="pdfScroller" class="pdf-scroller" data-pdf="./assets/denisa_moraru_resume_2025_indigo.pdf">
-        <p class="loading">Loading resume…</p>
+        <p class="loading" style="padding:12px;text-align:center">Loading resume…</p>
       </div>
+
+      <!-- Intentional toolbar layout -->
       <div class="resume-actions" role="toolbar" aria-label="Zoom and download controls">
-        <button id="zoomOut" class="btn-iris btn-iris--ghost" type="button" aria-label="Zoom out">−</button>
-        <button id="fitBtn" class="btn-iris btn-iris--ghost" type="button" aria-label="Fit to width">Fit</button>
-        <button id="oneBtn" class="btn-iris btn-iris--ghost" type="button" aria-label="Actual size">100%</button>
-        <button id="zoomIn" class="btn-iris btn-iris--ghost" type="button" aria-label="Zoom in">+</button>
-        <a id="dlBtn" class="btn-iris" href="./assets/denisa_moraru_resume_2025_indigo.pdf" download>Download PDF</a>
+        <span class="tool-group" aria-hidden="true">
+          <button id="zoomOut" class="btn-pixel btn-pixel--ghost" type="button" aria-label="Zoom out">−</button>
+          <button id="zoomIn"  class="btn-pixel btn-pixel--ghost" type="button" aria-label="Zoom in">+</button>
+        </span>
+
+        <span class="tool-group" aria-hidden="true">
+          <button id="fitBtn" class="btn-pixel btn-pixel--ghost" type="button" aria-label="Fit to width">Fit</button>
+          <button id="oneBtn" class="btn-pixel btn-pixel--ghost" type="button" aria-label="Actual size">100%</button>
+        </span>
+
+        <span class="tool-spacer" aria-hidden="true"></span>
+
+        <a id="dlBtn" class="btn-pixel" href="./assets/denisa_moraru_resume_2025_indigo.pdf" download>Download PDF</a>
       </div>
     </section>
   </main>
 
-  <!-- pdf.js (module build) with race-proof render + width-only observer -->
+  <!-- Glass footer -->
+  <footer class="glass-footer" role="contentinfo">
+    <span class="dot" aria-hidden="true"></span>
+    <span>© <span id="year"></span> chrrybmb.com / denisajomo.com</span>
+  </footer>
+
+  <!-- pdf.js (module build) with render + width-only observer -->
   <script type="module">
     import * as pdfjsLib from 'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.8.69/build/pdf.mjs';
     pdfjsLib.GlobalWorkerOptions.workerSrc =
       'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.8.69/build/pdf.worker.mjs';
 
     const scroller = document.getElementById('pdfScroller');
-    const url = scroller.dataset.pdf + (scroller.dataset.pdf.includes('?') ? '&' : '?') + 'v=4';
+    const url = scroller.dataset.pdf + (scroller.dataset.pdf.includes('?') ? '&' : '?') + 'v=5';
 
-    let zoom = 0.92;
-    const MIN = 0.75, MAX = 2.0, STEP = 0.15;
+    /* Start slightly smaller for breathing room */
+    let zoom = 0.88;
+    const MIN = 0.70, MAX = 2.0, STEP = 0.15;
     const DPR = Math.min(window.devicePixelRatio || 1.25, 2.0);
     let doc = null;
 
@@ -357,10 +347,8 @@
     document.getElementById('fitBtn').addEventListener('click', ()=> applyZoom(0.98));
     document.getElementById('oneBtn').addEventListener('click', ()=> applyZoom(1.0));
 
-    // start after load (avoids 0px races on mobile Safari)
     window.addEventListener('load', () => render(), { once:true });
 
-    // graceful fallback to <object> if pdf.js fails
     function injectObjectEmbed(pdfUrl){
       scroller.innerHTML = '';
       const obj = document.createElement('object');
@@ -376,39 +364,34 @@
     }
     function showButtons(pdfUrl){
       scroller.innerHTML = `
-        <div class="pdf-fallback">
+        <div class="pdf-fallback" style="padding:18px;text-align:center">
           <p class="loading">Can’t display inline here.</p>
-          <a class="btn-iris" href="${pdfUrl}" target="_blank" rel="noopener">Open PDF</a>
-          <a class="btn-iris btn-iris--ghost" href="${pdfUrl}" download>Download</a>
+          <a class="btn-pixel" href="${pdfUrl}" target="_blank" rel="noopener">Open PDF</a>
+          <a class="btn-pixel btn-pixel--ghost" href="${pdfUrl}" download>Download</a>
         </div>`;
     }
   </script>
 
-<script>
-  // Mouse / touch orb → updates CSS vars --orb-x / --orb-y (in % of viewport)
-  (function () {
-    const target = document.documentElement; // or swap to a scoped element (see notes)
-    // sensible defaults so the bg looks nice before first move
-    target.style.setProperty('--orb-x', '72%');
-    target.style.setProperty('--orb-y', '68%');
-
-    let raf = 0;
-    function onPoint(e) {
-      const t = e.touches ? e.touches[0] : e;
-      const x = (t.clientX / window.innerWidth) * 100;
-      const y = (t.clientY / window.innerHeight) * 100;
-      if (raf) cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => {
-        target.style.setProperty('--orb-x', x.toFixed(2) + '%');
-        target.style.setProperty('--orb-y', y.toFixed(2) + '%');
-      });
-    }
-
-    // pointer for desktop, touch for mobile
-    window.addEventListener('pointermove', onPoint, { passive: true });
-    window.addEventListener('touchmove',   onPoint, { passive: true });
-  })();
-</script>
-
+  <script>
+    // Orb background follow
+    (function () {
+      const target = document.documentElement;
+      target.style.setProperty('--orb-x', '72%');
+      target.style.setProperty('--orb-y', '68%');
+      let raf = 0;
+      function onPoint(e) {
+        const t = e.touches ? e.touches[0] : e;
+        const x = (t.clientX / window.innerWidth) * 100;
+        const y = (t.clientY / window.innerHeight) * 100;
+        if (raf) cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(() => {
+          target.style.setProperty('--orb-x', x.toFixed(2) + '%');
+          target.style.setProperty('--orb-y', y.toFixed(2) + '%');
+        });
+      }
+      window.addEventListener('pointermove', onPoint, { passive: true });
+      window.addEventListener('touchmove',   onPoint, { passive: true });
+    })();
+  </script>
 </body>
 </html>
