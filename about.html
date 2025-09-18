@@ -18,11 +18,16 @@
   <style>
     .page-about{
       --indigo:#4440ff; --pink:#ffe9ff; --ink:#0e0f1a; --cardR: clamp(18px,1.6vw,26px);
-      --lr: 120px;                 /* lens radius (site.js nudges on mobile) */
-      --wave-opacity:.76;          /* iridescent wave strength */
-      --wave-speed: 36s;           /* top→bottom pass duration */
-      --wave-halo-blur: 54px;      /* softness of wave glow */
-      --heather-alpha:.06;         /* ↓ PNG opacity (0–1) */
+      --lr: 120px;
+
+      /* wave + lens + bg */
+      --wave-opacity:.76; --wave-speed:36s; --wave-halo-blur:54px;
+      --heather-alpha:.06;
+
+      /* frosty veil knobs */
+      --frost-alpha:.26;         /* 0–1 */
+      --frost-blur: 8px;         /* px */
+
       color:var(--ink);
       -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
       background:
@@ -30,36 +35,45 @@
         linear-gradient(180deg, #ffffff, #faf9ff);
     }
 
-    /* --- IRIDESCENT WAVE (full-page) + seam fix --- */
+    /* IRIDESCENT WAVE (full-page) + seam fix */
     .iridescent-wave{
       position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow:hidden;
       will-change: transform; transform: translate3d(0,0,0); backface-visibility: hidden; contain: paint;
     }
     .iridescent-wave::before{
-      content:""; position:absolute; inset:-20%;
+      content:""; position:absolute; inset:-22%;
       background: conic-gradient(from var(--wave-rot,0deg) at var(--orb-x,50%) var(--orb-y,20%),
         rgba(127,240,255,.25), rgba(255,106,223,.20), rgba(127,240,255,.25));
       filter: blur(var(--wave-halo-blur)) saturate(150%);
       mix-blend-mode: color-dodge; opacity: var(--wave-opacity);
       animation: waveSpin 22s linear infinite;
-      will-change: transform; transform: translate3d(0,0,0);
+      will-change: transform; transform: translate3d(0,0,0) scale(1.001);
     }
     .iridescent-wave::after{
-      content:""; position:absolute; left:-12%; right:-12%; top:-180%; bottom:-180%;
+      content:""; position:absolute; left:-14%; right:-14%; top:-220%; bottom:-220%;
       background:
         radial-gradient(80% 60% at 50% 30%, rgba(255,255,255,.55), rgba(255,255,255,0) 60%),
         linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.55) 35%, rgba(255,255,255,0) 70%);
       filter: blur(18px); mix-blend-mode: soft-light; opacity:.35;
       animation: rippleDown var(--wave-speed) cubic-bezier(.42,0,.58,1) infinite;
-      will-change: transform; transform: translate3d(0,0,0);
+      will-change: transform; transform: translate3d(0,0,0) scale(1.002);
     }
     .iridescent-wave.boost{ --wave-opacity:.62; --wave-speed: 18s; }
     @keyframes waveSpin{ to { transform: rotate(1turn) } }
     @keyframes rippleDown{ 0%{transform:translate3d(0,-35%,0)} 100%{transform:translate3d(0,35%,0)} }
 
-    /* --- HERO --- */
-    .about-hero{position:relative; padding: clamp(20px,6vw,68px) 20px 8px; text-align:center; z-index:2;}
-    .about-hero .hero-inner{max-width:min(1100px,92vw); margin-inline:auto; position:relative; z-index:2;}
+    /* FROSTY OVERLAY (sits above bg + wave, below lens) */
+    .frost-veil{
+      position:fixed; inset:0; z-index:1; pointer-events:none;
+      background: rgba(255,255,255,var(--frost-alpha));
+      backdrop-filter: blur(var(--frost-blur)) saturate(120%) contrast(102%);
+      -webkit-backdrop-filter: blur(var(--frost-blur)) saturate(120%) contrast(102%);
+      will-change: transform; transform: translateZ(0);
+    }
+
+    /* HERO */
+    .about-hero{position:relative; padding: clamp(20px,6vw,68px) 20px 8px; text-align:center; z-index:5;}
+    .about-hero .hero-inner{max-width:min(1100px,92vw); margin-inline:auto; position:relative; z-index:5;}
     .about-hero .hero-inner::before{
       content:""; position:absolute; inset:-12% -14% -18% -14%; z-index:-1; pointer-events:none;
       background:
@@ -69,7 +83,7 @@
     }
     @keyframes floatBlob{ 0%{transform:translateY(0) rotate(0) scale(1)} 100%{transform:translateY(-6px) rotate(6deg) scale(1.02)} }
 
-    /* --- H1 warp + prism --- */
+    /* H1 prism */
     .name-edge{
       --text:#0e0f1a;
       font-family:"Funnel Display", system-ui, sans-serif;
@@ -110,16 +124,16 @@
 
     .about-sub{margin:8px 0 28px; font:400 clamp(16px,2.4vw,20px)/1.2 "Jacquarda Bastarda 9", serif; opacity:.85; text-align:center;}
 
-    /* --- BG ART (Heather) bottom-right with prism glow --- */
+    /* BG ART (Heather) */
     .bg-art{
       position:fixed; right:-8vw; bottom:-6vh; width:min(82vw, 980px);
-      pointer-events:none; z-index:1; overflow:visible;
+      pointer-events:none; z-index:0; overflow:visible; /* sits below frost veil */
     }
     .bg-art .art-svg{position:absolute; right:0; bottom:0; width:100%; height:auto}
     .bg-art .art-svg image.base{opacity:var(--heather-alpha); filter:saturate(110%) contrast(102%);}
     .bg-art .art-svg image.glow{opacity:.75}
 
-    /* --- Full-viewport lens overlays (no clipping) --- */
+    /* LENS (full-viewport, above frost) */
     .img-mag, .img-blur, .tint, .lens-aura{
       position:fixed; inset:0; pointer-events:none; z-index:2; will-change: transform;
     }
@@ -133,7 +147,6 @@
     }
     .img-mag{ filter: saturate(115%) contrast(103%); opacity:.9; }
     .img-blur{ filter: blur(12px) saturate(120%); opacity:.24; }
-
     .tint{
       -webkit-mask-image: radial-gradient(circle calc(var(--lr)*1.05) at var(--lx, 80%) var(--ly, 75%), #000 0%, #000 60%, transparent 82%);
               mask-image: radial-gradient(circle calc(var(--lr)*1.05) at var(--lx, 80%) var(--ly, 75%), #000 0%, #000 60%, transparent 82%);
@@ -153,7 +166,7 @@
       mix-blend-mode: screen; opacity:.55; filter: blur(7px);
     }
 
-    /* --- Center card (frosted) --- */
+    /* CARD */
     .wrap{display:grid; place-items:center; padding: 18px 16px 120px; position:relative; z-index:5;}
     .card-iris{
       position: relative; width: min(92vw, 720px); border-radius: var(--cardR);
@@ -173,20 +186,18 @@
     }
     @keyframes spin{to{--b:360deg}}
 
-    /* headings in Jacquarda */
-    .about-copy h3{
-      font-family: "Jacquarda Bastarda 9", serif;
-      font-weight: 400;
-      font-size: clamp(18px, 2.2vw, 22px);
-      line-height: 1.05;
-      margin: 2px 0 6px;
-      letter-spacing: 0;
-    }
+    .about-card{position:relative; padding: clamp(18px,4vw,28px) clamp(16px,4.5vw,36px); display:grid; gap:18px}
     .about-copy p{margin:0; color:#2a2f45}
     .about-copy ul{margin:0; padding-left:18px}
     .about-copy li{margin:4px 0}
 
-    /* Card interactivity (reuse feature-card vibe) */
+    .pxlh{ font-family:"Jacquarda Bastarda 9", serif; font-size:1.2em; font-weight:600; line-height:40px; }
+
+    /* brand buttons on card */
+    .about-cta{ display:flex; flex-wrap:wrap; gap:10px; margin-top:10px; }
+    .about-cta .btn-iris{ --halo:3px; --halo-blur:6px; }
+
+    /* tilt sheen (same as feature-card) */
     .card-iris.feature-card{
       transform-style: preserve-3d;
       transition: transform .18s ease, box-shadow .2s ease;
@@ -221,26 +232,19 @@
     .glass-footer a{font:600 14px/1 "DM Sans"; color:#1b1e35; text-decoration:none}
     .glass-footer .dot{width:6px; height:6px; border-radius:50%; background:linear-gradient(90deg,var(--indigo),#8aa3ff)}
 
-    /* Responsive: keep overlays aligned with bg-art offsets/size */
-    @media (max-width: 1024px){
-      .bg-art{ width: min(110vw, 1400px); right:-6vw; bottom:-2vh; }
-      .img-mag, .img-blur{ background-size: min(110vw, 1400px) auto; background-position: right -6vw bottom -2vh; }
-      .card-iris{ width: min(78vw, 560px); }
-      .about-hero{ padding-top: clamp(16px,6vw,48px); padding-bottom: clamp(8px,4vw,24px); }
+    /* responsive alignments */
+    @media (max-width:1024px){
+      .bg-art{ width:min(110vw,1400px); right:-6vw; bottom:-2vh; }
+      .img-mag, .img-blur{ background-size:min(110vw,1400px) auto; background-position:right -6vw bottom -2vh; }
+      .card-iris{ width:min(78vw,560px); }
+      .about-hero{ padding-top:clamp(16px,6vw,48px); padding-bottom:clamp(8px,4vw,24px); }
     }
-    @media (max-width: 640px){
-      .bg-art{ width: 140vw; right:-10vw; bottom:-4vh; }
-      .img-mag, .img-blur{ background-size: 140vw auto; background-position: right -10vw bottom -4vh; }
-      .card-iris{ width: min(66vw, 360px); }
-      .wrap{ padding-bottom: 90px; }
-      .page-about{ --lr: 110px; }
-    }
-
-    .pxlh {
-      font-family: "Jacquarda Bastarda 9";
-      font-size: 1.2em;
-      font-weight: 600;
-      line-height: 40px;
+    @media (max-width:640px){
+      .bg-art{ width:140vw; right:-10vw; bottom:-4vh; }
+      .img-mag, .img-blur{ background-size:140vw auto; background-position:right -10vw bottom -4vh; }
+      .card-iris{ width:min(66vw,360px); }
+      .wrap{ padding-bottom:90px; }
+      .page-about{ --lr:110px; }
     }
   </style>
 </head>
@@ -278,8 +282,11 @@
     </div>
   </header>
 
-  <!-- Iridescent wave layer -->
+  <!-- Iridescent wave -->
   <div class="iridescent-wave" aria-hidden="true"></div>
+
+  <!-- Frosty overlay (softens everything behind, lens sits above) -->
+  <div class="frost-veil" aria-hidden="true"></div>
 
   <!-- Background artwork w/ prism edge -->
   <aside class="bg-art" aria-hidden="true">
@@ -309,7 +316,7 @@
     </svg>
   </aside>
 
-  <!-- Full-viewport lens layers -->
+  <!-- Full-viewport lens layers (cut through the frost) -->
   <span class="img-mag"  aria-hidden="true"></span>
   <span class="img-blur" aria-hidden="true"></span>
   <span class="tint"     aria-hidden="true"></span>
@@ -347,6 +354,12 @@
           <span class="pxlh">currently</span>
           <p>Senior brand & web design, marketing creative, and part-time at the studio. Open to roles where design and web meet growth.</p>
         </div>
+
+        <!-- Brand buttons -->
+        <div class="about-cta">
+          <a class="btn-iris" href="./resume.html">Resume</a>
+          <a class="btn-iris btn-iris--ghost" href="./contact.html">Contact</a>
+        </div>
       </div>
     </section>
   </main>
@@ -367,7 +380,7 @@
     </filter>
   </svg>
 
-  <!-- Use the shared script (orb + wave + lens + tilt) -->
+  <!-- site-wide JS (orb + wave + lens + tilt) -->
   <script type="module" src="./site.js" defer></script>
 </body>
 </html>
