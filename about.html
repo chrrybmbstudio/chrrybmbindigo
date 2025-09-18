@@ -149,11 +149,11 @@
     .wrap{display:grid; place-items:center; padding: 18px 16px 120px; position:relative; z-index:1;}
     /* Frosted glass card with strong blur */
 .card-iris{
-  position: relative;
+    position: relative;
   width: min(92vw, 720px);
   border-radius: var(--cardR);
   /* translucent white so the blur shows through */
-  background: rgba(255,255,255, var(--glass-alpha, .2));
+  background: rgba(255,255,255, var(--glass-alpha, .6));
   /* the blur (and a little vibe) */
   backdrop-filter: blur(var(--glass-blur, 12px)) saturate(135%) contrast(103%);
   -webkit-backdrop-filter: blur(var(--glass-blur, 18px)) saturate(135%) contrast(103%);
