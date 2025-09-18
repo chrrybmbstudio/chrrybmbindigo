@@ -96,7 +96,25 @@
 
     /* --- Center card (iris border) --- */
     .page-contact .wrap{display:grid; place-items:center; padding: 18px 16px 120px;}
-    .page-contact .card-iris{position:relative; width:min(92vw, 680px); border-radius:var(--cardR);
+    .page-contact .card-iris  {
+        position: relative;
+  width: min(92vw, 720px);
+  border-radius: var(--cardR);
+  /* translucent white so the blur shows through */
+  background: rgba(255,255,255, var(--glass-alpha, .2));
+  /* the blur (and a little vibe) */
+  backdrop-filter: blur(var(--glass-blur, 12px)) saturate(135%) contrast(103%);
+  -webkit-backdrop-filter: blur(var(--glass-blur, 18px)) saturate(135%) contrast(103%);
+  /* keep the inner background from bleeding under the iris border */
+  background-clip: padding-box;
+  /* subtle frame to sell the glass look */
+  border: 1px solid rgba(255,255,255,.38);
+  /* your existing shadow can stay or be softened a touch */
+  box-shadow: 0 18px 54px rgba(68,64,255,.10), 0 3px 12px rgba(0,0,0,.06);
+  /* tiny perf/stacking hints */
+  isolation: isolate;
+  will-change: backdrop-filter;
+}
       box-shadow:0 20px 60px rgba(68,64,255,.08), 0 4px 14px rgba(0,0,0,.06); background:#fff; }
     .page-contact .card-iris::before{
       content:""; position:absolute; inset:-1px; border-radius:inherit; padding:1px;
