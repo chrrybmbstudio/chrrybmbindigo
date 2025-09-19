@@ -27,6 +27,28 @@
       --ui:.66; /* compact vibe */
     }
 
+    /* --- tiny reveal system tokens (pairs with site.js) --- */
+    [data-animate]{
+      opacity:0;
+      transform: translateY(var(--rise, 10px)) scale(var(--scale, 1));
+      filter: blur(var(--blur, 0px));
+      transition:
+        opacity .6s ease,
+        transform .6s ease,
+        filter .6s ease;
+      transition-delay: var(--stagger, 0ms);
+      will-change: opacity, transform, filter;
+    }
+    .is-in[data-animate]{
+      opacity:1; transform: translateY(0) scale(1); filter: none;
+    }
+    /* quick presets */
+    .fade-up { --rise: 10px }
+    .zoom-in { --scale: .96; --blur: 2px }
+    @media (prefers-reduced-motion: reduce){
+      [data-animate]{ opacity:1; transform:none; filter:none; transition:none }
+    }
+
     /* --- HERO --- */
     .contact-hero{position:relative; padding: clamp(20px,6vw,56px) 20px 8px; text-align:center;}
     .contact-hero .hero-inner{max-width:min(1100px,92vw); margin-inline:auto; position:relative; z-index:0;}
@@ -181,7 +203,7 @@
   </svg>
 
   <!-- Header / Nav -->
-  <header class="site-header" role="banner">
+  <header class="site-header" role="banner" data-animate class="fade-in">
     <div class="navcontainer header__inner">
       <a class="brand" href="/chrrybmbindigo/" aria-label="chrrybmb home">
         <img class="brand__logo-img" src="./assets/indigo_chrry_indypinky.svg" alt="chrrybmb logo"
@@ -200,7 +222,7 @@
 
   <!-- Hero -->
   <section class="contact-hero" aria-label="Intro">
-    <div class="hero-inner">
+    <div class="hero-inner fade-up" data-animate>
       <h1 class="name-edge" data-text="contact">
         <span class="text">contact</span>
         <span class="warp"  aria-hidden="true">contact</span>
@@ -212,7 +234,7 @@
 
   <!-- Center card -->
   <main class="wrap" role="main">
-    <section class="card-iris" data-tilt>
+    <section class="card-iris zoom-in" data-tilt data-animate style="--stagger:140ms">
       <div class="contact-card">
         <div class="row">
           <span class="icon" aria-hidden="true">
@@ -259,29 +281,12 @@
   </main>
 
   <!-- Glass footer -->
-  <footer class="glass-footer" role="contentinfo">
+  <footer class="glass-footer fade-up" data-animate style="--stagger:220ms" role="contentinfo">
     <span class="dot" aria-hidden="true"></span>
     <span>© <span id="year"></span> chrrybmb.com / denisajomo.com</span>
   </footer>
 
   <script>
-    // year
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // background orb follow
-    (function(){
-      const root = document.documentElement;
-      function setOrb(e){
-        const t = e.touches ? e.touches[0] : e;
-        const x = (t.clientX / innerWidth) * 100;
-        const y = (t.clientY / innerHeight) * 100;
-        root.style.setProperty('--orb-x', x + '%');
-        root.style.setProperty('--orb-y', y + '%');
-      }
-      addEventListener('pointermove', setOrb, {passive:true});
-      addEventListener('touchmove', setOrb, {passive:true});
-    })();
-
     // copy email feedback
     document.getElementById('copyBtn')?.addEventListener('click', async (e)=>{
       try{
@@ -319,5 +324,8 @@
       });
     })();
   </script>
+
+  <!-- Shared global interactions -->
+  <script type="module" src="./site.js" defer></script>
 </body>
 </html>
