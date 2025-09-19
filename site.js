@@ -210,6 +210,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 })();
 
+// 10) ux checklist accordion
 (function(){
   const acc = document.querySelector('.ux-acc');
   if(!acc) return;
