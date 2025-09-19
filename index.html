@@ -45,6 +45,11 @@
       /* NEW: fluid page gutters + space for fixed footer */
       --page-pad: clamp(16px, 5vw, 28px);
       --footer-space: 96px; /* breathing room so cards never hide under footer */
+
+      /* === Reveal system knobs === */
+      --reveal-dur: .72s;
+      --reveal-ease: cubic-bezier(.16,.84,.44,1);
+      --reveal-ydist: clamp(10px, 2.4vw, 18px);
     }
 
     body{
@@ -219,16 +224,14 @@
     }
     .hero__cta{ display:flex; gap: calc(var(--ui) * 12px); margin: 0 0 calc(var(--ui) * 8px); flex-wrap:wrap; }
 
-    /* ===== Features (cards smaller content + a bit more padding) ===== */
+    /* ===== Features ===== */
     .features{
       padding: calc(var(--ui) * clamp(22px, 5vw, 44px)) 0;
-      /* EXTRA bottom space so the last row never kisses the footer */
       margin-bottom: calc(var(--footer-space) / 2);
     }
 
     .features__grid{
       display:grid;
-      /* Fully fluid columns; smoothly adapt at ANY width */
       grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
       gap: 16px;
       padding-inline: var(--page-pad);
@@ -264,52 +267,37 @@
     .feature-card h3, .feature-card .pxlh{ margin:0; font-size: calc(var(--ui) * 16px); line-height:1.1; letter-spacing:.02em; }
     .feature-card p{ margin: 0 0 auto; color:#2c3144; font-size: max(12px, calc(var(--ui)* 13.5px)); line-height:1.42; }
 
-       /* === Mini cards: tighter height with balanced spacing === */
-:root{
-  --card-pad-y: 12px;      /* was 16px */
-  --card-pad-x: 14px;      /* was 18px */
-  --card-gap:    8px;      /* was 10px */
-  --card-btn-gap:6px;      /* space above the button */
-}
+    /* === Mini cards — tightened (from your last turn) === */
+    :root{ --card-pad-y: 12px; --card-pad-x: 14px; --card-gap: 8px; --card-btn-gap:6px; }
+    .card-iris{ padding: var(--card-pad-y) var(--card-pad-x); }
+    .feature-card{ gap: var(--card-gap); min-height: unset; }
+    .feature-card .pxlh, .feature-card h3{ line-height: 1.08; }
+    .feature-card p{ margin: 6px 0 0; line-height: 1.36; }
+    .feature-card .btn-pixel{ margin-top: var(--card-btn-gap); }
+    @media (max-width: 520px){
+      :root{ --card-pad-y:10px; --card-pad-x:12px; --card-gap:7px; --card-btn-gap:5px; }
+    }
 
-.card-iris{
-  padding: var(--card-pad-y) var(--card-pad-x);
-}
-
-.feature-card{
-  gap: var(--card-gap);
-  /* if you previously set a min-height somewhere, kill it: */
-  min-height: unset;
-}
-
-/* tighten copy rhythm so card can be shorter */
-.feature-card .pxlh,
-.feature-card h3{
-  /* keep size but reduce the vertical rhythm a touch */
-  line-height: 1.08;
-}
-
-
-.feature-card p{
-  margin: 6px 0 0;         /* was: 0 0 auto */
-  line-height: 1.36;      
-}
-
-/* mini CTA spacing */
-.feature-card .btn-pixel{
-  margin-top: var(--card-btn-gap); /* was ~8px */
-}
-
-/* (optional) go even smaller on really narrow screens */
-@media (max-width: 520px){
-  :root{
-    --card-pad-y: 10px;
-    --card-pad-x: 12px;
-    --card-gap:    7px;
-    --card-btn-gap:5px;
-  }
-}
-
+    /* === Reveal presets === */
+    [data-animate]{
+      opacity: 0;
+      transform: translate3d(0, var(--reveal-ydist), 0) scale(.985);
+      will-change: transform, opacity;
+    }
+    [data-animate="fade-in"]{ transform: translate3d(0,0,0) scale(.98); }
+    [data-animate="zoom-in"]{ transform: scale(.96); }
+    [data-animate].is-in{
+      opacity: 1;
+      transform: none;
+      transition:
+        opacity var(--reveal-dur) var(--reveal-ease),
+        transform var(--reveal-dur) var(--reveal-ease);
+      transition-delay: var(--stagger, 0ms);
+      filter: none;
+    }
+    @media (prefers-reduced-motion: reduce){
+      [data-animate]{ opacity:1 !important; transform:none !important; }
+    }
   </style>
 
 </head>
@@ -317,7 +305,7 @@
 <body class="density-xs">
 
   <!-- Header / Nav -->
-  <header class="site-header" role="banner">
+  <header class="site-header" role="banner" data-animate="fade-in" style="--stagger:60ms">
     <div class="navcontainer header__inner">
       <a class="brand" href="/chrrybmbindigo/" aria-label="chrrybmb home">
         <img class="brand__logo-img" src="./assets/indigo_chrry_indypinky.svg" alt="chrrybmb logo"
@@ -346,24 +334,24 @@
   <div class="site-shell">
     <main id="main" class="site-main" role="main">
       <!-- HERO -->
-      <section class="hero" aria-label="Intro">
+      <section class="hero" aria-label="Intro" data-animate="zoom-in" style="--stagger:100ms">
         <div class="container">
-          <article class="hero-card" data-animate>
+          <article class="hero-card" data-animate="fade-up" style="--stagger:160ms">
             <div class="hero__grid">
               <span class="pixel-veil"   aria-hidden="true"></span>
               <span class="pixel-chrome" aria-hidden="true"></span>
 
-              <div class="hero__content">
+              <div class="hero__content" data-animate="fade-up" style="--stagger:200ms">
                 <h1 class="name-edge" data-text="DENISA J. MORARU">DENISA J. MORARU</h1>
                 <p class="kicker">This is chrrybmb creative studio.</p>
-                <div class="hero__cta">
+                <div class="hero__cta" data-animate="fade-up" style="--stagger:260ms">
                   <a class="btn-pixel" href="./work.html">SEE MY WORK</a>
                   <a class="btn-pixel btn-pixel--ghost" href="./resume.html">RESUME</a>
                 </div>
               </div>
 
-              <div class="hero__media">
-                <!-- Heather PNG back in hero with prism edge glow -->
+              <div class="hero__media" data-animate="fade-up" style="--stagger:240ms">
+                <!-- Heather PNG with prism edge glow -->
                 <svg class="heather-svg" viewBox="0 0 800 900" preserveAspectRatio="xMidYMax meet" role="img" aria-label="Heather">
                   <defs>
                     <filter id="prismEdgeGlowHero" x="-20%" y="-20%" width="140%" height="140%">
@@ -400,17 +388,17 @@
       <!-- FEATURES -->
       <section class="features" aria-label="Featured work">
         <div class="container features__grid">
-          <article class="card-iris feature-card" data-tilt>
+          <article class="card-iris feature-card" data-animate="fade-up">
             <span class="pxlh">Web UX</span>
             <p>Information architecture, flows, and responsive front-end systems.</p>
             <a class="btn-pixel btn-pixel--ghost" href="./work.html#ux">EXPLORE</a>
           </article>
-          <article class="card-iris feature-card" data-tilt>
+          <article class="card-iris feature-card" data-animate="fade-up">
             <span class="pxlh">Brand Systems</span>
             <p>Identity, typography, usage rules, and scalable component libraries.</p>
             <a class="btn-pixel btn-pixel--ghost" href="./brand-systems.html">EXPLORE</a>
           </article>
-          <article class="card-iris feature-card" data-tilt>
+          <article class="card-iris feature-card" data-animate="fade-up">
             <span class="pxlh">Art Direction</span>
             <p>Campaign concepts, motion, and visuals with that prism-y glow.</p>
             <a class="btn-pixel btn-pixel--ghost" href="./work.html#ad">EXPLORE</a>
@@ -421,7 +409,7 @@
   </div>
 
   <!-- Glass footer -->
-  <footer class="glass-footer" role="contentinfo">
+  <footer class="glass-footer" role="contentinfo" data-animate="fade-in" style="--stagger:120ms">
     <span class="dot" aria-hidden="true"></span>
     <span>© <span id="year"></span> chrrybmb.com / denisajomo.com</span>
   </footer>
@@ -478,6 +466,48 @@
         card.addEventListener('blur', reset, true);
         card.addEventListener('touchstart', ()=>card.classList.add('is-hot'), {passive:true});
         card.addEventListener('touchend', ()=>card.classList.remove('is-hot'), {passive:true});
+      });
+    })();
+  </script>
+
+  <!-- ✨ Global reveal-on-load/scroll (reusable on every page) -->
+  <script>
+    (function(){
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const els = Array.from(document.querySelectorAll('[data-animate]'));
+      if (!els.length) return;
+
+      if (prefersReduced){
+        els.forEach(el => el.classList.add('is-in'));
+        return;
+      }
+
+      // Stagger within DOM order; allow custom --stagger on any element
+      let autoDelay = 0;
+      const step = 70; // ms
+      els.forEach(el => {
+        if (!el.style.getPropertyValue('--stagger')){
+          el.style.setProperty('--stagger', `${autoDelay}ms`);
+          autoDelay += step;
+        }
+      });
+
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting){
+            entry.target.classList.add('is-in');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { root: null, rootMargin: '0px 0px -10% 0px', threshold: 0.22 });
+
+      els.forEach(el => io.observe(el));
+
+      // Subtle “on load” nudge so above-the-fold items pop immediately
+      window.addEventListener('load', () => {
+        requestAnimationFrame(() => {
+          els.slice(0, 6).forEach(el => el.classList.add('is-in'));
+        });
       });
     })();
   </script>
