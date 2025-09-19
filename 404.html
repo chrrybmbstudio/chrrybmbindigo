@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>404 — lost in the prism</title>
+  <link rel="icon" type="image/svg+xml" href="/assets/eye.svg">
+  <link rel="stylesheet" href="/style.css" />
+  <meta name="theme-color" content="#4440ff">
+  <style>
+    .lost-wrap{min-height:100svh; display:grid; place-items:center; position:relative}
+    .lost-card{
+      text-align:center; padding:18px 20px; border-radius:18px;
+      background: linear-gradient(180deg, rgba(255,255,255,.62), rgba(255,255,255,.42));
+      backdrop-filter: blur(10px) saturate(115%); -webkit-backdrop-filter: blur(10px) saturate(115%);
+      box-shadow: 0 10px 40px rgba(68,64,255,.10);
+      width:min(680px, 92vw);
+    }
+    .lost-title{ font: 800 clamp(28px,6vw,54px)/.95 "Funnel Display", system-ui, sans-serif; letter-spacing:.12em; text-transform:uppercase }
+    .lost-sub{ font-family:"Jacquarda Bastarda 9", serif; font-size:clamp(16px,3.2vw,22px); margin:.4em 0 1em; color:#2c3144}
+    .lost-actions{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap }
+    .btn-pixel{ /* reuse your button class if already global */ }
+    .orb{ position:fixed; inset:0; pointer-events:none; background:radial-gradient(40% 30% at 70% 60%, rgba(68,64,255,.18), transparent 60%) }
+  </style>
+</head>
+<body class="density-xs">
+  <div class="iridescent-wave" aria-hidden="true"></div>
+  <div class="orb" aria-hidden="true"></div>
+  <main class="lost-wrap">
+    <section class="lost-card">
+      <h1 class="lost-title">404</h1>
+      <p class="lost-sub">lost in the iridescent waves</p>
+      <p>this page drifted into the pixel-sea. let’s take you back.</p>
+      <div class="lost-actions">
+        <a class="btn-pixel" href="/">home</a>
+        <a class="btn-pixel btn-pixel--ghost" href="/work.html">work</a>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
