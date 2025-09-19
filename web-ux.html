@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+
+  <title>chrrybmb - web ux</title>
+  <meta name="description" content="web user experience — modular, mini, accessible, glow-forward." />
+  <link rel="canonical" href="https://chrrybmb.com/web-ux.html" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="./assets/eye.svg" />
+  <link rel="apple-touch-icon" href="./assets/eye.svg" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="chrrybmb — web ux">
+  <meta property="og:description" content="mini on purpose: flows, access, speed, and calm visuals that scale.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://chrrybmb.com/web-ux.html">
+  <meta property="og:image" content="https://chrrybmb.com/assets/og-image.jpg">
+  <meta property="og:image:alt" content="iridescent glow with eye mark">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="chrrybmb">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="chrrybmb — web ux">
+  <meta name="twitter:description" content="flows, access, speed, and calm visuals that scale.">
+  <meta name="twitter:image" content="https://chrrybmb.com/assets/og-image.jpg">
+
+  <!-- Base site CSS -->
+  <link rel="stylesheet" href="./style.css" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Jacquarda+Bastarda+9&display=swap" rel="stylesheet">
+
+  <!-- Page-scoped styles (wins after style.css)  -->
+  <style>
+    .page-ux{
+      --indigo:#4440ff; --pink:#ffe9ff; --ink:#0e0f1a; --cardR: clamp(18px,1.6vw,26px);
+      --ui:.72; /* slightly roomier than contact */
+      background:
+        radial-gradient(60% 60% at var(--orb-x,72%) var(--orb-y,68%), rgba(68,64,255,.13), transparent 60%),
+        linear-gradient(180deg, #ffffff, #faf9ff);
+      color:var(--ink);
+      -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+    }
+
+    /* hero */
+    .ux-hero{position:relative; padding: clamp(24px,7vw,64px) 20px 0; text-align:center;}
+    .ux-hero .inner{max-width:min(1100px,92vw); margin-inline:auto; position:relative;}
+    .ux-hero .sub{ 
+        margin:6px 0 24px;
+        font:400 calc(var(--ui) * clamp(16px,2.4vw,20px))/1.2 "Jacquarda Bastarda 9", serif;
+        opacity:.85; text-align:center;}
+
+    /* section shell */
+    .section{padding: clamp(14px,5vw,8px) var(--page-pad, 16px)}
+    .container{ width: min(1100px, 100%); margin-inline:auto; }
+
+    /* grid cards */
+    .grid{ display:grid; grid-template-columns: repeat(auto-fit, minmax(min(260px,100%),1fr)); gap: 14px; }
+    .card-iris{ padding: 14px 16px; border-radius: var(--cardR); }
+    .card-iris h3{ margin:0 0 6px; font-size: clamp(14px, 1.8vw, 16px); letter-spacing:.02em }
+    .card-iris p{ margin:0; color:#2c3144; font-size: max(12px, 13.5px); line-height:1.42 }
+
+    /* lists */
+    .mini-list{ margin:6px 0 0; padding-left:1.1em }
+    .mini-list li{ margin:.25em 0; font-size: 13.5px }
+
+    /* callout */
+    .callout{ text-align:center; margin: 8px auto 0; max-width:min(900px, 92vw); color:#262a3f }
+
+    /* footer bar reuse from site */
+    .glass-footer{ position:fixed; left:0; right:0; bottom:0; z-index:20 }
+
+    /* accessibility note badge */
+    .badge{ display:inline-block; font:700 10px/1 "Funnel Display", system-ui, sans-serif; letter-spacing:.16em; text-transform:uppercase; padding:6px 8px; border-radius:10px; border:1px solid #5a57ff; background:linear-gradient(180deg,#fff,#f6f6ff); color:#17182a }
+
+    /* small reveal (optional hook for site.js observables) */
+    [data-animate]{ opacity:0; transform: translateY(8px); transition: opacity .6s ease, transform .6s ease; }
+    .is-in[data-animate]{ opacity:1; transform:none }
+    @media (prefers-reduced-motion: reduce){ [data-animate]{ opacity:1 !important; transform:none !important; transition:none !important } }
+
+        /* H1 (warp + prism) */
+        .name-edge{
+      --text:#0e0f1a;
+      font-family:"Funnel Display", system-ui, sans-serif;
+      font-weight:600; font-size:calc(var(--ui) * clamp(42px,8vw,66px));
+      letter-spacing:-.02em; line-height:.92; margin:0 0 6px;
+      text-transform:lowercase; position:relative; display:inline-block;
+      color:var(--text); filter:url(#softWobble); isolation:isolate;
+    }
+    .name-edge::after{
+      content:attr(data-text);
+      position:absolute; inset:0; z-index:-1; pointer-events:none;
+      background: conic-gradient(from 0deg, var(--indigo), var(--pink) 40%, #8aaaff, var(--indigo));
+      -webkit-background-clip:text; background-clip:text; color:transparent;
+      transform: scale(1.04); filter: blur(6px) saturate(125%); opacity:.75; mix-blend-mode: plus-lighter;
+    }
+    .name-edge .warp,.name-edge .prism{
+      position:absolute; inset:0; display:inline-block;
+      -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 35%, #000 65%, transparent 100%);
+              mask-image: linear-gradient(90deg, transparent 0%, #000 35%, #000 65%, transparent 100%);
+      -webkit-mask-size: 220% 100%; mask-size: 220% 100%;
+      -webkit-mask-position: -60% 0; mask-position: -60% 0; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat;
+      will-change: -webkit-mask-position, mask-position;
+    }
+    .name-edge .warp{ z-index:1; color:var(--text); -webkit-text-fill-color:currentColor; filter:url(#lensWarp); }
+    .name-edge .prism{
+      z-index:2; mix-blend-mode:screen; opacity:.55; filter: blur(.6px) saturate(120%);
+      background: linear-gradient(90deg, #7ff0ff 0%, #ff6adf 50%, #7ff0ff 100%);
+      -webkit-background-clip:text; background-clip:text; color:transparent;
+      transform: translateX(.4px);
+    }
+    @keyframes sweepBand{ from{ -webkit-mask-position:-60% 0; mask-position:-60% 0 } to{ -webkit-mask-position:160% 0; mask-position:160% 0 } }
+    @media (min-width:641px){ .name-edge .warp,.name-edge .prism{ animation: sweepBand 7s cubic-bezier(.45,.05,.36,1) infinite alternate; } }
+    @media (max-width:640px){ .name-edge .warp,.name-edge .prism{ animation: sweepBand 3.2s cubic-bezier(.5,.1,.2,1) 1 both; } }
+    @media (prefers-reduced-motion: reduce){ .name-edge .warp,.name-edge .prism{ animation:none !important } }
+
+    /* visually hidden helper */
+.visually-hidden{ position:absolute!important; height:1px;width:1px; overflow:hidden; clip:rect(1px,1px,1px,1px); white-space:nowrap; }
+
+/* accordion */
+.ux-acc__title{ margin:0 0 8px; font-size: clamp(14px,1.8vw,16px); letter-spacing:.02em }
+
+.ux-acc__item + .ux-acc__item{ margin-top:8px }
+
+.ux-acc__btn{
+  width:100%; display:flex; align-items:center; justify-content:space-between; gap:10px;
+  padding:10px 12px; border-radius:10px; cursor:pointer;
+  background: linear-gradient(180deg,#ffffff,#f6f6ff);
+  border:1px solid #5a57ff; color:#17182a;
+  font: 800 10.5px/1 "Funnel Display",system-ui,sans-serif;
+  text-transform: uppercase; letter-spacing:.16em;
+  box-shadow: 0 0 0 1px rgba(68,64,255,.06) inset;
+}
+.ux-acc__btn:hover{ box-shadow: 0 0 0 1px rgba(68,64,255,.12) inset, 0 6px 16px rgba(68,64,255,.10); }
+.ux-acc__btn:focus-visible{ outline:2px solid #5a57ff; outline-offset:2px }
+
+.ux-acc__btn i{
+  width:14px; height:14px; flex:0 0 14px; position:relative;
+}
+.ux-acc__btn i::before, .ux-acc__btn i::after{
+  content:""; position:absolute; inset:0; margin:auto; background:#1b1e35; border-radius:1px;
+}
+.ux-acc__btn i::before{ width:12px; height:2px }   /* minus */
+.ux-acc__btn i::after { width:2px; height:12px; transition: transform .18s ease } /* plus bar */
+.ux-acc__btn[aria-expanded="true"] i::after{ transform: scaleY(0) } /* turns plus into minus */
+
+.ux-acc__pane{
+  padding:10px 12px 2px; border-left:1px dashed rgba(68,64,255,.3); margin-left:6px;
+}
+.ux-acc__pane .mini-list{ padding-left:1em; margin-top:0 }
+
+
+  </style>
+</head>
+
+<body class="page-ux density-xs">
+  <!-- Header / Nav -->
+  <header class="site-header" role="banner" data-animate>
+    <div class="navcontainer header__inner">
+      <a class="brand" href="/chrrybmbindigo/" aria-label="chrrybmb home">
+        <img class="brand__logo-img" src="./assets/indigo_chrry_indypinky.svg" alt="chrrybmb logo" width="80" height="48" decoding="async" fetchpriority="high">
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <ul id="navMenu" class="nav__list">
+          <li><a href="./index.html">Home</a></li>
+          <li><a href="./about.html">About</a></li>
+          <li><a href="./contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="ux-hero" aria-label="Intro">
+    <div class="inner" data-animate>
+      <h1 class="name-edge" data-text="web ux">
+        <span class="text">web ux</span>
+        <span class="warp" aria-hidden="true">web ux</span>
+        <span class="prism" aria-hidden="true">web ux</span>
+      </h1>
+      <p class="sub ux-kicker">ui as instrument, empathy as method. mini on purpose: clear flows, accessible patterns, fast pages, calm motion.</p>
+    </div>
+  </section>
+
+  <!-- What I optimize -->
+  <section class="section" aria-label="What I optimize">
+    <div class="container grid">
+      <article class="card-iris" data-animate>
+        <span class="pxlh">flows & nav</span>
+        <p>information architecture, task paths, and wayfinding. the goal: fewer decisions, faster success.</p>
+        <ul class="mini-list">
+          <li>nav clarity & labels that read fast</li>
+          <li>on-ramps & exits (cta hierarchy)</li>
+          <li>empty/error states that help</li>
+        </ul>
+      </article>
+      <article class="card-iris" data-animate>
+        <span class="pxlh">access & ada</span>
+        <p>inclusive by default—contrast, keyboard, semantics, and readable type.</p>
+        <ul class="mini-list">
+          <li>wcag contrast, focus states, skip links</li>
+          <li>aria where it adds meaning</li>
+          <li>motion sensitivity & reduced-motion paths</li>
+        </ul>
+      </article>
+      <article class="card-iris" data-animate>
+        <span class="pxlh">speed & stability</span>
+        <p>performance as ux: ship smaller, paint sooner, jank-free motion.</p>
+        <ul class="mini-list">
+          <li>image strategy (sizes, formats, cdn)</li>
+          <li>css/js hygiene and lazy boundaries</li>
+          <li>core web vitals mindset</li>
+        </ul>
+      </article>
+      <article class="card-iris" data-animate>
+        <span class="pxlh">ontent & seo</span>
+        <p>semantic html, clear headings, purposeful metadata. findable ≠ spammy.</p>
+        <ul class="mini-list">
+          <li>h1–h6 discipline, alt text, schema</li>
+          <li>og/twitter cards, sitemap, robots</li>
+          <li>readable microcopy, no fluff</li>
+        </ul>
+      </article>
+      <article class="card-iris" data-animate>
+        <span class="pxlh">security & trust</span>
+        <p>https, headers, and sensible forms—safety shows in the details.</p>
+        <ul class="mini-list">
+          <li>https + hsts, sane iframes</li>
+          <li>spam friction, rate limits where needed</li>
+          <li>privacy-first analytics</li>
+        </ul>
+      </article>
+      <article class="card-iris" data-animate>
+        <span class="pxlh">patterns that scale</span>
+        <p>tokens → components → pages. tiny, consistent, remixable.</p>
+        <ul class="mini-list">
+          <li>buttons, cards, forms, modals</li>
+          <li>state, spacing, and motion rules</li>
+          <li>documentation that reads fast</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <!-- A short philosophy block -->
+  <section class="section" aria-label="Philosophy">
+    <div class="container">
+      <article class="card-iris" data-animate>
+        <span class="pxlh">philosophy</span>
+        <p>ux is everywhere—like towel temperature at a spa or the color that cues a memory. on the web, that translates to signals that feel inevitable: the next step is obvious, the page breathes, and the glow never fights the task.</p>
+        <p class="callout"><span class="badge">mini on purpose</span> — compact grids, pixel cues, and calm iridescence so focus stays on the job.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- Process snapshot -->
+  <section class="section" aria-label="Process">
+    <div class="container grid">
+      <article class="card-iris" data-animate>
+        <span class="pxlh">process, quick</span>
+        <p>discover → map flows → prototype → test → refine → document → ship.</p>
+        <ul class="mini-list">
+          <li>lightweight research (jobs to be done, heuristics)</li>
+          <li>click-path sketches, wireflows, microcopy</li>
+          <li>accessibility and performance checks at each step</li>
+        </ul>
+      </article>
+      <article class="card-iris" data-animate>
+        <span class="pxlh">tooling</span>
+        <p>tokens in css, components in html/js; analytics for truth, not vanity.</p>
+        <ul class="mini-list">
+          <li>semantic html, css vars, progressive enhancement</li>
+          <li>small js: just enough for delight, not debt</li>
+          <li>privacy-minded analytics and simple a/b when useful</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section" aria-label="CTA">
+    <div class="container" style="text-align:center" data-animate>
+      <a class="btn-pixel" href="./work.html#ux">see ux work</a>
+      <a class="btn-pixel btn-pixel--ghost" href="./contact.html" style="margin-left:8px">contact</a>
+    </div>
+  </section>
+
+  <section class="section" aria-label="ux checklist">
+    <div class="container">
+      <article class="card-iris" data-animate>
+        <h3 class="ux-acc__title pxlh">ux checklist</h3>
+  
+        <div class="ux-acc" role="region" aria-labelledby="ux-acc-label">
+          <span id="ux-acc-label" class="visually-hidden">expandable ux checklist</span>
+  
+          <!-- item -->
+          <div class="ux-acc__item">
+            <button class="ux-acc__btn" aria-expanded="false" aria-controls="ux-acc-pane-1" id="ux-acc-btn-1">
+              <span>flows & nav</span><i aria-hidden="true"></i>
+            </button>
+            <div class="ux-acc__pane" id="ux-acc-pane-1" role="region" aria-labelledby="ux-acc-btn-1" hidden>
+              <ul class="mini-list">
+                <li>clear IA & fast labels</li>
+                <li>obvious CTAs + exits</li>
+                <li>empty/error states that help</li>
+              </ul>
+            </div>
+          </div>
+  
+          <!-- item -->
+          <div class="ux-acc__item">
+            <button class="ux-acc__btn" aria-expanded="false" aria-controls="ux-acc-pane-2" id="ux-acc-btn-2">
+              <span>access & ada</span><i aria-hidden="true"></i>
+            </button>
+            <div class="ux-acc__pane" id="ux-acc-pane-2" role="region" aria-labelledby="ux-acc-btn-2" hidden>
+              <ul class="mini-list">
+                <li>wcag contrast, focus rings, skip link</li>
+                <li>semantic html + helpful aria (no noise)</li>
+                <li>respect prefers-reduced-motion</li>
+              </ul>
+            </div>
+          </div>
+  
+          <!-- item -->
+          <div class="ux-acc__item">
+            <button class="ux-acc__btn" aria-expanded="false" aria-controls="ux-acc-pane-3" id="ux-acc-btn-3">
+              <span>speed & stability</span><i aria-hidden="true"></i>
+            </button>
+            <div class="ux-acc__pane" id="ux-acc-pane-3" role="region" aria-labelledby="ux-acc-btn-3" hidden>
+              <ul class="mini-list">
+                <li>image strategy (srcset, sizes, format)</li>
+                <li>css/js hygiene, defer/lazy boundaries</li>
+                <li>jank-free motion; vitals mindset</li>
+              </ul>
+            </div>
+          </div>
+  
+          <!-- item -->
+          <div class="ux-acc__item">
+            <button class="ux-acc__btn" aria-expanded="false" aria-controls="ux-acc-pane-4" id="ux-acc-btn-4">
+              <span>content & seo</span><i aria-hidden="true"></i>
+            </button>
+            <div class="ux-acc__pane" id="ux-acc-pane-4" role="region" aria-labelledby="ux-acc-btn-4" hidden>
+              <ul class="mini-list">
+                <li>h1–h6 discipline, alt text, schema</li>
+                <li>meta/og/twitter, robots + sitemap</li>
+                <li>plain-language microcopy</li>
+              </ul>
+            </div>
+          </div>
+  
+          <!-- item -->
+          <div class="ux-acc__item">
+            <button class="ux-acc__btn" aria-expanded="false" aria-controls="ux-acc-pane-5" id="ux-acc-btn-5">
+              <span>security & trust</span><i aria-hidden="true"></i>
+            </button>
+            <div class="ux-acc__pane" id="ux-acc-pane-5" role="region" aria-labelledby="ux-acc-btn-5" hidden>
+              <ul class="mini-list">
+                <li>https + hsts, safe iframes</li>
+                <li>form friction (honeypot/rate limit)</li>
+                <li>privacy-first analytics</li>
+              </ul>
+            </div>
+          </div>
+  
+          <!-- item -->
+          <div class="ux-acc__item">
+            <button class="ux-acc__btn" aria-expanded="false" aria-controls="ux-acc-pane-6" id="ux-acc-btn-6">
+              <span>patterns that scale</span><i aria-hidden="true"></i>
+            </button>
+            <div class="ux-acc__pane" id="ux-acc-pane-6" role="region" aria-labelledby="ux-acc-btn-6" hidden>
+              <ul class="mini-list">
+                <li>tokens → components → pages</li>
+                <li>state/motion rules; docs that read fast</li>
+                <li>mini by default; remixable</li>
+              </ul>
+            </div>
+          </div>
+  
+        </div>
+      </article>
+    </div>
+  </section>
+  
+
+  <!-- Glass footer -->
+  <footer class="glass-footer" role="contentinfo">
+    <span class="dot" aria-hidden="true"></span>
+    <span>© <span id="year"></span> chrrybmb.com / denisajomo.com</span>
+  </footer>
+
+  <!-- Shared global interactions -->
+  <script type="module" src="./site.js" defer></script>
+</body>
+</html>
