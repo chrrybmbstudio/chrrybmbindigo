@@ -3,7 +3,30 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>contact — denisa jomo</title>
+
+  <title>chrrybmb - contact ⋆˙⟡</title>
+  <meta name="description" content="chrrybmb" />
+  <link rel="canonical" href="https://chrrybmb.com/" />
+  <!-- Favicon -->
+  <link rel="icon" href="./assets/eye.svg" />
+  <link rel="apple-touch-icon" href="./assets/eye.svg" />
+
+<!-- Open Graph -->
+<meta property="og:title" content="chrrybmb — denisa jomo">
+<meta property="og:description" content="creative leadership for brand & web.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://chrrybmb.com/">
+<meta property="og:image" content="https://chrrybmb.com/assets/og-image.jpg">
+<meta property="og:image:alt" content="chrrybmb iridescent glow with eye mark">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="chrrybmb">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="chrrybmb — denisa jomo">
+<meta name="twitter:description" content="creative leadership for brand & web.">
+<meta name="twitter:image" content="https://chrrybmb.com/assets/og-image.jpg">
 
   <!-- Base site CSS -->
   <link rel="stylesheet" href="./style.css" />
@@ -65,7 +88,7 @@
     .name-edge{
       --text:#0e0f1a;
       font-family:"Funnel Display", system-ui, sans-serif;
-      font-weight:600; font-size:calc(var(--ui) * clamp(42px,8vw,72px));
+      font-weight:600; font-size:calc(var(--ui) * clamp(42px,8vw,66px));
       letter-spacing:-.02em; line-height:.92; margin:0 0 6px;
       text-transform:lowercase; position:relative; display:inline-block;
       color:var(--text); filter:url(#softWobble); isolation:isolate;
@@ -162,21 +185,6 @@
     .icon{width:16px; height:16px; display:inline-block; vertical-align:-2px}
     .icon svg{width:100%; height:100%; shape-rendering:crispEdges}
 
-    /* --- Glass footer --- */
-    .glass-footer{
-      position:fixed; left:0; right:0; bottom:0; z-index:20;
-      display:flex; align-items:center; justify-content:center; gap:12px;
-      padding: 8px 12px; margin: 8px;
-      border-radius: 16px;
-      background: rgba(255,255,255,.35);
-      backdrop-filter: blur(10px) saturate(135%) contrast(105%);
-      -webkit-backdrop-filter: blur(10px) saturate(135%) contrast(105%);
-      box-shadow: 0 10px 30px rgba(68,64,255,.12);
-      -webkit-mask-image: radial-gradient(120% 120% at 50% 0%, #000 40%, rgba(0,0,0,.85) 72%, transparent 100%);
-              mask-image: radial-gradient(120% 120% at 50% 0%, #000 40%, rgba(0,0,0,.85) 72%, transparent 100%);
-    }
-    .glass-footer a, .glass-footer span{font:600 13px/1 "DM Sans"; color:#1b1e35; text-decoration:none}
-    .glass-footer .dot{width:5px; height:5px; border-radius:50%; background:linear-gradient(90deg,var(--indigo),#8aa3ff)}
 
     /* Phone polish */
     @media (max-width:480px){
@@ -212,7 +220,6 @@
       <nav class="nav" aria-label="Primary">
         <ul id="navMenu" class="nav__list">
           <li><a href="./index.html">Home</a></li>
-          <li><a href="./work.html">Work</a></li>
           <li><a href="./about.html">About</a></li>
           <li><a aria-current="page" href="./contact.html">Contact</a></li>
         </ul>
