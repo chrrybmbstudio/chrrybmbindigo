@@ -309,16 +309,15 @@
     }
     @media (prefers-reduced-motion: reduce){
       [data-animate]{ opacity:1 !important; transform:none !important; }
-      .marquee__track{ animation: none }
     }
 
-    .marquee[data-allow-motion] .marquee__track{
-  animation: marquee var(--speed,26s) linear infinite !important;
-}
-
-.marquee__track{
-  will-change: transform;
-  transform: translateZ(0);
+    /* mobile force-on */
+@media (max-width: 900px){
+  .marquee__track{
+    animation: marquee var(--speed,26s) linear infinite !important;
+    will-change: transform;
+    transform: translate3d(0,0,0);
+  }
 }
 
   </style>
@@ -356,12 +355,13 @@
   <div class="site-shell">
     <main id="main" class="site-main" role="main">
 
-      <div class="marquee" aria-label="tagline marquee">
+      <div class="marquee" data-allow-motion>
         <div class="marquee__track">
-          <span class="marquee__text">who looks inside awakes • who looks inside awakes • </span>
-          <span class="marquee__text" aria-hidden="true">who looks inside awakes • who looks inside awakes • </span>
+          <span class="marquee__text">who looks inside awakes • </span>
+          <span class="marquee__text" aria-hidden="true">who looks inside awakes • </span>
         </div>
       </div>
+      
       
       <!-- HERO -->
       <section class="hero" aria-label="Intro" data-animate="zoom-in" style="--stagger:100ms">
