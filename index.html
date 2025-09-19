@@ -309,7 +309,18 @@
     }
     @media (prefers-reduced-motion: reduce){
       [data-animate]{ opacity:1 !important; transform:none !important; }
+      .marquee__track{ animation: none }
     }
+
+    .marquee[data-allow-motion] .marquee__track{
+  animation: marquee var(--speed,26s) linear infinite !important;
+}
+
+.marquee__track{
+  will-change: transform;
+  transform: translateZ(0);
+}
+
   </style>
 
 </head>
