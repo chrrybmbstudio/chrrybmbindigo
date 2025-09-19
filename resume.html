@@ -176,6 +176,29 @@
       justify-content: center;
       margin-top: 40px;
     }
+
+        /* --- tiny reveal system tokens (pairs with site.js) --- */
+        [data-animate]{
+      opacity:0;
+      transform: translateY(var(--rise, 10px)) scale(var(--scale, 1));
+      filter: blur(var(--blur, 0px));
+      transition:
+        opacity .6s ease,
+        transform .6s ease,
+        filter .6s ease;
+      transition-delay: var(--stagger, 0ms);
+      will-change: opacity, transform, filter;
+    }
+    .is-in[data-animate]{
+      opacity:1; transform: translateY(0) scale(1); filter: none;
+    }
+    /* quick presets */
+    .fade-up { --rise: 10px }
+    .zoom-in { --scale: .96; --blur: 2px }
+    @media (prefers-reduced-motion: reduce){
+      [data-animate]{ opacity:1; transform:none; filter:none; transition:none }
+    }
+
   </style>
 </head>
 
@@ -196,7 +219,7 @@
   </svg>
 
   <!-- Header / Nav -->
-  <header class="site-header" role="banner">
+  <header class="site-header" role="banner" data-animate class="fade-up">
     <div class="navcontainer header__inner">
       <a class="brand" href="/chrrybmbindigo/" aria-label="chrrybmb home">
         <img class="brand__logo-img" src="./assets/indigo_chrry_indypinky.svg" alt="chrrybmb logo"
@@ -214,7 +237,7 @@
   </header>
 
   <!-- Hero -->
-  <section class="resume-hero" aria-label="Intro">
+  <section class="resume-hero" aria-label="Intro" data-animate class="fade-in">
     <div class="hero-inner">
       <h1 class="name-edge" data-text="resume">
         <span class="text">resume</span>
@@ -226,7 +249,7 @@
   </section>
 
   <!-- Card + PDF -->
-  <main class="resume-wrap" role="main">
+  <main class="resume-wrap" role="main" data-animate class="fade-up">
     <section class="card-iris">
       <div id="pdfScroller" class="pdf-scroller" data-pdf="./assets/denisa_moraru_resume_2025_indigo.pdf">
         <p class="loading" style="padding:12px;text-align:center">Loading resume…</p>
@@ -405,5 +428,8 @@
       window.addEventListener('touchmove',   onPoint, { passive: true });
     })();
   </script>
+
+<script type="module" src="./site.js" defer></script>
+
 </body>
 </html>
