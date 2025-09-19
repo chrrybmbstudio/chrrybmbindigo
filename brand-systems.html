@@ -59,18 +59,57 @@
     @media (prefers-reduced-motion: reduce){ .iridescent-wave::before, .iridescent-wave::after{ animation:none !important } }
 
     /* Lens aura layer */
-    .bg-art{ position: fixed; inset: 0; z-index: 1; pointer-events: none; overflow: visible; }
+    .bg-art{ position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: visible; }
     .lens-glass{
       position:absolute; left: var(--lx); top: var(--ly);
       width: calc(var(--lr)*2); height: calc(var(--lr)*2);
       transform: translate(-50%,-50%); border-radius: 50%;
-      backdrop-filter: blur(12px) saturate(125%) contrast(105%); -webkit-backdrop-filter: blur(12px) saturate(125%) contrast(105%);
+      backdrop-filter: blur(4px) saturate(125%) contrast(105%); -webkit-backdrop-filter: blur(4px) saturate(125%) contrast(105%);
       -webkit-mask-image: radial-gradient(circle var(--lr) at 50% 50%, #000 60%, rgba(0,0,0,.7) 76%, transparent 90%);
               mask-image: radial-gradient(circle var(--lr) at 50% 50%, #000 60%, rgba(0,0,0,.7) 76%, transparent 90%);
-      background: radial-gradient(closest-side, rgba(68,64,255,.18), transparent 70%);
-    }
+              background:
+    radial-gradient(closest-side,
+      rgba(68,64,255,.10),         /* was .18 — lighter tint in the center */
+      rgba(68,64,255,0) 68%);      /* push the fade farther out */
+  -webkit-mask-image:
+    radial-gradient(circle var(--lr,140px) at 50% 50%,
+      #000 58%, rgba(0,0,0,.65) 78%, transparent 92%);
+          mask-image:
+    radial-gradient(circle var(--lr,140px) at 50% 50%,
+      #000 58%, rgba(0,0,0,.65) 78%, transparent 92%);
+}
+
+.lens-zoom{
+  position:absolute;
+  left: var(--lx,72%); top: var(--ly,68%);
+  width: calc(var(--lr,140px)*2); height: calc(var(--lr,140px)*2);
+  transform: translate(-50%,-50%);
+  border-radius: 50%;
+  pointer-events:none;
+  /* reuse the page background but scaled up a bit */
+  background:
+    radial-gradient(60% 60% at var(--orb-x,72%) var(--orb-y,68%),
+      rgba(68,64,255,.13), transparent 20%),
+    linear-gradient(180deg, #ffffff20, #faf9ff30);
+  background-repeat: no-repeat, no-repeat;
+
+  /* “Zoom” by scaling the background slightly larger than the page */
+  background-size:
+    180% 180%, 180% 180%;                /* <— zoom factor */
+  background-position:
+    var(--orb-x,72%) var(--orb-y,68%),   /* keep aligned with the page orb */
+    center center;
+
+  /* clip to a tighter inner circle so it reads as a core */
+  -webkit-mask-image: radial-gradient(circle calc(var(--lr,140px)*.72) at 50% 50%, #000 60%, transparent 72%);
+          mask-image: radial-gradient(circle calc(var(--lr,140px)*.72) at 50% 50%, #000 60%, transparent 72%);
+  filter: saturate(120%) contrast(105%);   /* punchy center */
+  opacity: .95;                              /* mostly clear, still a touch of glass */
+  z-index: 0;                                /* sits under lens-glass glow */
+}
+
     .lens-aura{
-      position:absolute; left:var(--lx); top:var(--ly); width:calc(var(--lr)*2.1); height:calc(var(--lr)*2.1);
+      position:absolute; z-index: 0; left:var(--lx); top:var(--ly); width:calc(var(--lr)*2.1); height:calc(var(--lr)*2.1);
       transform: translate(-50%,-50%); border-radius:50%; pointer-events:none; filter: blur(0.6px) saturate(120%);
     }
     .lens-aura::before, .lens-aura::after{ content:""; position:absolute; inset:-18%; border-radius:50%; pointer-events:none; }
@@ -79,7 +118,7 @@
       background:
         radial-gradient(closest-side, rgba(255,255,255,.18), transparent 65%),
         conic-gradient(from 0deg, rgba(127,240,255,.38), rgba(255,106,223,.35), rgba(127,240,255,.38));
-      mix-blend-mode: screen; opacity:.55; filter: blur(7px);
+      mix-blend-mode: screen; opacity:.6; filter: blur(7px);
     }
 
     /* Fixed glass footer (shared) */
@@ -113,7 +152,7 @@
 
     /* ===== Hero ===== */
     .brand-hero{ position:relative; padding: calc(var(--ui) * clamp(20px,6vw,60px)) 20px 6px; text-align:center; }
-    .brand-hero .hero-inner{ max-width:min(1100px,92vw); margin-inline:auto; position:relative; z-index:2; }
+    .brand-hero .hero-inner{ max-width:min(1100px,92vw); margin-inline:auto; position:relative; z-index:5; }
     .brand-hero .name-edge{
       --text:#0e0f1a;
       font-family:"Funnel Display", system-ui, sans-serif;
@@ -242,6 +281,7 @@
 
   <!-- Lens layer -->
   <div class="bg-art" aria-hidden="true">
+    <span class="lens-zoom"></span> 
     <span class="lens-glass"></span>
     <span class="lens-aura"></span>
   </div>
