@@ -209,3 +209,32 @@ document.addEventListener('DOMContentLoaded', () => {
     else { setMotion(m); }
   });
 })();
+
+(function(){
+  const acc = document.querySelector('.ux-acc');
+  if(!acc) return;
+
+  acc.addEventListener('click', (e)=>{
+    const btn = e.target.closest('.ux-acc__btn');
+    if(!btn) return;
+    const pane = document.getElementById(btn.getAttribute('aria-controls'));
+    const open = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', String(!open));
+    pane.hidden = open;
+  });
+
+  // keyboard help (Enter/Space already click buttons, but this helps arrowing)
+  const buttons = acc.querySelectorAll('.ux-acc__btn');
+  acc.addEventListener('keydown', (e)=>{
+    const idx = Array.prototype.indexOf.call(buttons, document.activeElement);
+    if(idx < 0) return;
+    if(e.key === 'ArrowDown'){ e.preventDefault(); buttons[(idx+1)%buttons.length].focus(); }
+    if(e.key === 'ArrowUp'){ e.preventDefault(); buttons[(idx-1+buttons.length)%buttons.length].focus(); }
+    if(e.key === 'Home'){ e.preventDefault(); buttons[0].focus(); }
+    if(e.key === 'End'){ e.preventDefault(); buttons[buttons.length-1].focus(); }
+  });
+
+  // optional: open first by default
+  // const firstBtn = buttons[0]; const firstPane = document.getElementById(firstBtn.getAttribute('aria-controls'));
+  // firstBtn.setAttribute('aria-expanded','true'); firstPane.hidden = false;
+})();
