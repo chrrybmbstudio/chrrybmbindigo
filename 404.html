@@ -1,6 +1,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta id="theme-color" name="theme-color" content="#4440ff">
   <title>404 — lost in the prism</title>
 
   <!-- Root-absolute so it works at any missing path -->
@@ -29,6 +30,37 @@
     .lost-sub{ font-family:"Jacquarda Bastarda 9", serif; font-size:clamp(16px,3.2vw,22px); margin:.4em 0 1em; color:#2c3144}
     .lost-actions{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap }
     .orb{ position:fixed; inset:0; pointer-events:none; background:radial-gradient(40% 30% at 70% 60%, rgba(68,64,255,.18), transparent 60%) }
+
+    :root{
+  --indigo:#4440ff;
+  --pink:#ffe9ff;
+  --ice:#7ff0ff;
+}
+
+/* page background: animated prism gradient */
+body{
+  background:
+    radial-gradient(60% 60% at 72% 68%, rgba(68,64,255,.13), transparent 60%),
+    conic-gradient(from var(--spin,0deg) at 70% 30%, var(--ice), var(--pink) 45%, var(--indigo), var(--ice));
+  background-attachment: fixed, fixed;
+  animation: prismSpin 26s linear infinite;
+}
+
+@keyframes prismSpin{ to { --spin: 1turn } }
+
+/* optional: a soft overlay so text stays readable */
+body::before{
+  content:"";
+  position:fixed; inset:0; pointer-events:none;
+  background: linear-gradient(180deg, rgba(255,255,255,.66), rgba(255,255,255,.12));
+  mix-blend-mode: screen;
+}
+
+/* respect reduced motion */
+@media (prefers-reduced-motion: reduce){
+  body{ animation: none; }
+}
+
   </style>
 </head>
 
