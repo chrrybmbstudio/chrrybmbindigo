@@ -239,3 +239,88 @@ document.addEventListener('DOMContentLoaded', () => {
   // const firstBtn = buttons[0]; const firstPane = document.getElementById(firstBtn.getAttribute('aria-controls'));
   // firstBtn.setAttribute('aria-expanded','true'); firstPane.hidden = false;
 })();
+
+(function(){
+  const openBtn = document.getElementById('openSearch');
+  const dlg = document.getElementById('search');
+  const input = document.getElementById('searchInput');
+  const list = document.getElementById('searchResults');
+
+  // tiny site index — edit to your pages/anchors
+  const INDEX = [
+    { title: 'home',        url: '/index.html',         path: 'chrrybmb' },
+    { title: 'work — ux',   url: '/work.html#ux',       path: 'work' },
+    { title: 'brand systems', url: '/brand-systems.html', path: 'brand' },
+    { title: 'web ux',      url: '/web-ux.html',        path: 'ux' },
+    { title: 'about',       url: '/about.html',         path: 'about' },
+    { title: 'contact',     url: '/contact.html',       path: 'contact' },
+    { title: '404',         url: '/404.html',           path: 'system' }
+  ];
+
+  function open() {
+    dlg.hidden = false;
+    list.innerHTML = '';
+    input.value = '';
+    render(INDEX);
+    setTimeout(()=> input.focus(), 0);
+    document.body.style.overflow = 'hidden';
+  }
+  function close() {
+    dlg.hidden = true;
+    document.body.style.overflow = '';
+    openBtn?.focus();
+  }
+
+  function render(items, selectFirst=true){
+    list.innerHTML = items.map((it,i)=>`
+      <li role="option" ${selectFirst && i===0 ? 'aria-selected="true"' : ''} data-i="${i}">
+        <a href="${it.url}">${it.title}</a>
+        <span class="path">${it.path}</span>
+      </li>`).join('') || `<li aria-disabled="true"><span class="path">no results</span></li>`;
+  }
+
+  function filter(q){
+    q = q.trim().toLowerCase();
+    if(!q) return INDEX;
+    return INDEX.filter(it =>
+      it.title.toLowerCase().includes(q) ||
+      it.path.toLowerCase().includes(q) ||
+      it.url.toLowerCase().includes(q)
+    );
+  }
+
+  function select(delta){
+    const items = [...list.querySelectorAll('li[role="option"]')];
+    const cur = items.findIndex(li => li.getAttribute('aria-selected')==='true');
+    const next = Math.max(0, Math.min(items.length-1, cur + delta));
+    items.forEach((li,i)=> li.setAttribute('aria-selected', i===next ? 'true' : 'false'));
+    items[next]?.scrollIntoView({block:'nearest'});
+  }
+
+  // events
+  openBtn?.addEventListener('click', open);
+  dlg.addEventListener('click', e => { if(e.target.hasAttribute('data-close')) close(); });
+
+  input.addEventListener('input', (e)=>{
+    render(filter(e.target.value));
+  });
+
+  dlg.addEventListener('keydown', (e)=>{
+    if(e.key==='Escape'){ e.preventDefault(); close(); }
+    if(e.key==='ArrowDown'){ e.preventDefault(); select(1); }
+    if(e.key==='ArrowUp'){ e.preventDefault(); select(-1); }
+    if(e.key==='Enter'){
+      const sel = list.querySelector('li[aria-selected="true"] a');
+      if(sel){ window.location.href = sel.getAttribute('href'); }
+    }
+  });
+
+  // global shortcut ⌘K / Ctrl+K
+  addEventListener('keydown', (e)=>{
+    const k = e.key.toLowerCase();
+    if((e.metaKey || e.ctrlKey) && k==='k'){
+      e.preventDefault();
+      if(dlg.hidden) open(); else close();
+    }
+  });
+})();
