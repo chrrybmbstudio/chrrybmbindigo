@@ -502,48 +502,6 @@
     })();
   </script>
 
-  <!-- ✨ Global reveal-on-load/scroll (reusable on every page) -->
-  <script>
-    (function(){
-      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const els = Array.from(document.querySelectorAll('[data-animate]'));
-      if (!els.length) return;
-
-      if (prefersReduced){
-        els.forEach(el => el.classList.add('is-in'));
-        return;
-      }
-
-      // Stagger within DOM order; allow custom --stagger on any element
-      let autoDelay = 0;
-      const step = 70; // ms
-      els.forEach(el => {
-        if (!el.style.getPropertyValue('--stagger')){
-          el.style.setProperty('--stagger', `${autoDelay}ms`);
-          autoDelay += step;
-        }
-      });
-
-      const io = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting){
-            entry.target.classList.add('is-in');
-            io.unobserve(entry.target);
-          }
-        });
-      }, { root: null, rootMargin: '0px 0px -10% 0px', threshold: 0.22 });
-
-      els.forEach(el => io.observe(el));
-
-      // Subtle “on load” nudge so above-the-fold items pop immediately
-      window.addEventListener('load', () => {
-        requestAnimationFrame(() => {
-          els.slice(0, 6).forEach(el => el.classList.add('is-in'));
-        });
-      });
-    })();
-  </script>
-
   <!-- Single shared script -->
   <script type="module" src="./site.js" defer></script>
 </body>
