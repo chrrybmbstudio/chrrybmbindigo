@@ -3,182 +3,273 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>contact — denisa jomo</title>
+  <meta name="theme-color" content="#ffffff" />
+  <title>brand systems — denisa jomo</title>
 
   <!-- Base site CSS -->
   <link rel="stylesheet" href="./style.css" />
 
-  <!-- Fonts -->
+  <!-- Fonts (same set used across the site) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Jacquarda+Bastarda+9&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@500;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Jacquarda+Bastarda+9&display=swap" rel="stylesheet" />
 
-  <!-- Page-scoped styles (win the cascade after style.css) -->
   <style>
-    .page-contact{
+    /* ===== Page base ===== */
+    .page-brand{
       --indigo:#4440ff; --pink:#ffe9ff; --ink:#0e0f1a; --cardR: clamp(18px,1.6vw,26px);
+      --px-font:"Funnel Display", system-ui, sans-serif;
+      --px-track:.12em;
+      --ui:.66;                         /* compact density */
+      --safe-footer: max(12px, env(safe-area-inset-bottom)); /* breathing room for fixed footer */
+
       background:
         radial-gradient(60% 60% at var(--orb-x,72%) var(--orb-y,68%), rgba(68,64,255,.13), transparent 60%),
         linear-gradient(180deg, #ffffff, #faf9ff);
       color:var(--ink);
       -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
-      --ui:.66; /* compact vibe */
     }
 
-    /* --- HERO --- */
-    .contact-hero{position:relative; padding: clamp(20px,6vw,56px) 20px 8px; text-align:center;}
-    .contact-hero .hero-inner{max-width:min(1100px,92vw); margin-inline:auto; position:relative; z-index:0;}
-    .contact-hero .hero-inner::before{
-      content:""; position:absolute; inset:-12% -14% -18% -14%; z-index:-1; pointer-events:none;
+    /* Iridescent wave (shared look) */
+    .iridescent-wave{ position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow:hidden; will-change: transform; transform: translateZ(0); backface-visibility: hidden; contain: paint; }
+    .iridescent-wave::before{
+      content:""; position:absolute; left:-25vw; right:-25vw; top:-200vh; bottom:-200vh;
+      background: conic-gradient(from var(--wave-rot,0deg) at var(--orb-x,50%) var(--orb-y,20%),
+        rgba(127,240,255,.25), rgba(255,106,223,.20), rgba(127,240,255,.25));
+      filter: blur(54px) saturate(150%); mix-blend-mode: color-dodge; opacity:.72;
+      animation: waveSpin 22s linear infinite; will-change: transform;
+    }
+    .iridescent-wave::after{
+      content:""; position:absolute; left:-25vw; right:-25vw; top:-240vh; bottom:-240vh;
       background:
-        radial-gradient(72% 100% at 30% 40%, rgba(68,64,255,.28), transparent 60%),
-        radial-gradient(64% 80% at 70% 60%, rgba(255,233,255,.38), transparent 60%);
-      filter: blur(28px) saturate(120%); opacity:.9; animation: floatBlob 24s ease-in-out infinite alternate;
+        radial-gradient(80% 60% at 50% 30%, rgba(255,255,255,.55), rgba(255,255,255,0) 60%),
+        linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.55) 35%, rgba(255,255,255,0) 70%);
+      filter: blur(18px); mix-blend-mode: soft-light; opacity:.35;
+      animation: rippleDown 36s cubic-bezier(.42,0,.58,1) infinite; will-change: transform;
     }
-    @keyframes floatBlob{ 0%{transform:translateY(0) rotate(0) scale(1)} 100%{transform:translateY(-6px) rotate(6deg) scale(1.02)} }
+    @keyframes waveSpin{ to { transform: rotate(1turn) } }
+    @keyframes rippleDown{ 0%{transform:translate3d(0,-35%,0)} 100%{transform:translate3d(0,35%,0)} }
+    @media (prefers-reduced-motion: reduce){ .iridescent-wave::before, .iridescent-wave::after{ animation:none !important } }
 
-    /* H1 (warp + prism) */
-    .name-edge{
-      --text:#0e0f1a;
-      font-family:"Funnel Display", system-ui, sans-serif;
-      font-weight:600; font-size:calc(var(--ui) * clamp(42px,8vw,72px));
-      letter-spacing:-.02em; line-height:.92; margin:0 0 6px;
-      text-transform:lowercase; position:relative; display:inline-block;
-      color:var(--text); filter:url(#softWobble); isolation:isolate;
+    /* Lens aura layer */
+    .bg-art{ position: fixed; inset: 0; z-index: 1; pointer-events: none; overflow: visible; }
+    .lens-glass{
+      position:absolute; left: var(--lx, 72%); top: var(--ly, 68%);
+      width: calc(var(--lr,140px)*2); height: calc(var(--lr,140px)*2);
+      transform: translate(-50%,-50%); border-radius: 50%;
+      backdrop-filter: blur(12px) saturate(125%) contrast(105%); -webkit-backdrop-filter: blur(12px) saturate(125%) contrast(105%);
+      -webkit-mask-image: radial-gradient(circle var(--lr,140px) at 50% 50%, #000 60%, rgba(0,0,0,.7) 76%, transparent 90%);
+              mask-image: radial-gradient(circle var(--lr,140px) at 50% 50%, #000 60%, rgba(0,0,0,.7) 76%, transparent 90%);
+      background: radial-gradient(closest-side, rgba(68,64,255,.18), transparent 70%);
     }
-    .name-edge::after{
-      content:attr(data-text);
-      position:absolute; inset:0; z-index:-1; pointer-events:none;
-      background: conic-gradient(from 0deg, var(--indigo), var(--pink) 40%, #8aaaff, var(--indigo));
-      -webkit-background-clip:text; background-clip:text; color:transparent;
-      transform: scale(1.04); filter: blur(6px) saturate(125%); opacity:.75; mix-blend-mode: plus-lighter;
+    .lens-aura{
+      position:absolute; left:var(--lx, 72%); top:var(--ly, 68%); width:calc(var(--lr,140px)*2.1); height:calc(var(--lr,140px)*2.1);
+      transform: translate(-50%,-50%); border-radius:50%; pointer-events:none; filter: blur(0.6px) saturate(120%);
     }
-    .name-edge .warp,.name-edge .prism{
-      position:absolute; inset:0; display:inline-block;
-      -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 35%, #000 65%, transparent 100%);
-              mask-image: linear-gradient(90deg, transparent 0%, #000 35%, #000 65%, transparent 100%);
-      -webkit-mask-size: 220% 100%; mask-size: 220% 100%;
-      -webkit-mask-position: -60% 0; mask-position: -60% 0; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat;
-      will-change: -webkit-mask-position, mask-position;
-    }
-    .name-edge .warp{ z-index:1; color:var(--text); -webkit-text-fill-color:currentColor; filter:url(#lensWarp); }
-    .name-edge .prism{
-      z-index:2; mix-blend-mode:screen; opacity:.55; filter: blur(.6px) saturate(120%);
-      background: linear-gradient(90deg, #7ff0ff 0%, #ff6adf 50%, #7ff0ff 100%);
-      -webkit-background-clip:text; background-clip:text; color:transparent;
-      transform: translateX(.4px);
-    }
-    @keyframes sweepBand{ from{ -webkit-mask-position:-60% 0; mask-position:-60% 0 } to{ -webkit-mask-position:160% 0; mask-position:160% 0 } }
-    @media (min-width:641px){ .name-edge .warp,.name-edge .prism{ animation: sweepBand 7s cubic-bezier(.45,.05,.36,1) infinite alternate; } }
-    @media (max-width:640px){ .name-edge .warp,.name-edge .prism{ animation: sweepBand 3.2s cubic-bezier(.5,.1,.2,1) 1 both; } }
-    @media (prefers-reduced-motion: reduce){ .name-edge .warp,.name-edge .prism{ animation:none !important } }
-
-    .contact-sub{
-      margin:6px 0 24px;
-      font:400 calc(var(--ui) * clamp(16px,2.4vw,20px))/1.2 "Jacquarda Bastarda 9", serif;
-      opacity:.85; text-align:center;
+    .lens-aura::before, .lens-aura::after{ content:""; position:absolute; inset:-18%; border-radius:50%; pointer-events:none; }
+    .lens-aura::before{ background: radial-gradient(closest-side, rgba(255,255,255,.22), rgba(255,255,255,.08) 55%, transparent 70%); mix-blend-mode: screen; filter: blur(12px); }
+    .lens-aura::after{
+      background:
+        radial-gradient(closest-side, rgba(255,255,255,.18), transparent 65%),
+        conic-gradient(from 0deg, rgba(127,240,255,.38), rgba(255,106,223,.35), rgba(127,240,255,.38));
+      mix-blend-mode: screen; opacity:.55; filter: blur(7px);
     }
 
-    /* --- Center card (iris border) --- */
-    .wrap{display:grid; place-items:center; padding: 14px 12px 96px;}
-    .card-iris{position:relative; width:min(92vw, 560px); border-radius:var(--cardR);
-      box-shadow:0 18px 54px rgba(68,64,255,.10), 0 3px 12px rgba(0,0,0,.06); background:#fff; isolation:isolate; }
-    .card-iris::before{
-      content:""; position:absolute; inset:-1px; border-radius:inherit; padding:1px;
-      background:conic-gradient(from var(--b,0deg), var(--indigo), var(--pink) 40%, #a8a3ff, var(--indigo));
-      --mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-      -webkit-mask: var(--mask); -webkit-mask-composite:xor; mask-composite:exclude;
-      animation: spin 14s linear infinite; pointer-events:none;
-    }
-    @keyframes spin{to{--b:360deg}}
-
-    .contact-card{
-      position:relative; padding: clamp(14px, 3.6vw, 22px) clamp(2px, 3.6vw, 6px);
-      display:grid; gap:14px;
-      transform-style: preserve-3d;
-    }
-    /* gentle desktop tilt */
-    @media (hover:hover) and (pointer:fine){
-      .card-iris[data-tilt] .contact-card{ transition: transform .18s ease; }
-      .card-iris[data-tilt]:hover .contact-card{
-        transform: perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateZ(6px);
-      }
-    }
-
-    .row{display:flex; align-items:center; gap:10px; flex-wrap:wrap}
-    .handle{font:600 14px/1.2 "DM Sans",system-ui,sans-serif; color:#1b1e35}
-    .muted{opacity:.65; font-size:13px}
-
-    /* --- Pixel-mini buttons (brand-consistent) --- */
-    :root{ --px-font: "Funnel Display", system-ui, sans-serif; }
-    .btn-pixel{
-      --px: 10.5px; --px-track: .16em;
-      display:inline-flex; align-items:center; justify-content:center; gap:.5ch;
-      padding: 8px 12px; border-radius: 10px;
-      font: 800 var(--px)/1 var(--px-font); text-transform: uppercase; letter-spacing: var(--px-track);
-      background: linear-gradient(180deg, #ffffff, #f6f6ff);
-      border: 1px solid #1f22ff; color:#17182a;
-      box-shadow: 0 0 0 1px rgba(68,64,255,.08) inset, 0 6px 18px rgba(68,64,255,.12);
-      transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
-      text-decoration:none; cursor:pointer; user-select:none;
-    }
-    .btn-pixel:hover{ transform: translateY(-0.5px); box-shadow: 0 0 0 1px rgba(68,64,255,.10) inset, 0 10px 22px rgba(68,64,255,.18); }
-    .btn-pixel:active{ transform: translateY(0); filter: saturate(105%); }
-    .btn-pixel--ghost{ background: transparent; color:#2a2f45; border:1px solid #5a57ff; box-shadow:none; }
-    .btn-pixel:focus-visible{ outline:2px solid #5a57ff; outline-offset:2px; }
-
-    /* Button layout — intentional, centered */
-    .actions{
-      display:flex; flex-wrap:wrap; gap:8px 10px;
-      justify-content:center; align-items:center;
-      margin-top: 4px;
-    }
-
-    /* Icons */
-    .icon{width:16px; height:16px; display:inline-block; vertical-align:-2px}
-    .icon svg{width:100%; height:100%; shape-rendering:crispEdges}
-
-    /* --- Glass footer --- */
+    /* Fixed glass footer (shared) */
     .glass-footer{
-      position:fixed; left:0; right:0; bottom:0; z-index:20;
-      display:flex; align-items:center; justify-content:center; gap:12px;
-      padding: 8px 12px; margin: 8px;
-      border-radius: 16px;
-      background: rgba(255,255,255,.35);
-      backdrop-filter: blur(10px) saturate(135%) contrast(105%);
-      -webkit-backdrop-filter: blur(10px) saturate(135%) contrast(105%);
+      position:fixed; left:0; right:0; bottom:0; z-index:20; display:flex; align-items:center; justify-content:center; gap:14px;
+      padding:10px 14px; margin:10px; border-radius:16px; background: rgba(255,255,255,.35);
+      backdrop-filter: blur(10px) saturate(135%) contrast(105%); -webkit-backdrop-filter: blur(10px) saturate(135%) contrast(105%);
       box-shadow: 0 10px 30px rgba(68,64,255,.12);
       -webkit-mask-image: radial-gradient(120% 120% at 50% 0%, #000 40%, rgba(0,0,0,.85) 72%, transparent 100%);
               mask-image: radial-gradient(120% 120% at 50% 0%, #000 40%, rgba(0,0,0,.85) 72%, transparent 100%);
     }
-    .glass-footer a, .glass-footer span{font:600 13px/1 "DM Sans"; color:#1b1e35; text-decoration:none}
-    .glass-footer .dot{width:5px; height:5px; border-radius:50%; background:linear-gradient(90deg,var(--indigo),#8aa3ff)}
+    .glass-footer a{font:600 14px/1 "DM Sans"; color:#1b1e35; text-decoration:none}
+    .glass-footer .dot{width:6px; height:6px; border-radius:50%; background:linear-gradient(90deg,var(--indigo),#8aa3ff)}
 
-    /* Phone polish */
-    @media (max-width:480px){
-      .card-iris{width:min(94vw, 560px)}
-      .btn-pixel{ --px: 10px; padding: 8px 10px; }
+    /* ===== Pixel-mini buttons ===== */
+    .btn-pixel{
+      --px: 10.5px;
+      display:inline-flex; align-items:center; justify-content:center; gap:.4ch;
+      padding: 8px 12px; border-radius: 10px;
+      font: 800 var(--px)/1 var(--px-font);
+      text-transform: uppercase; letter-spacing: var(--px-track);
+      background: linear-gradient(180deg, #ffffff, #f6f6ff);
+      border: 1px solid #1f22ff; color:#1a1a2b;
+      box-shadow: 0 0 0 1px rgba(68,64,255,.08) inset, 0 6px 18px rgba(68,64,255,.12);
+      transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
+      text-decoration:none; cursor:pointer;
+    }
+    .btn-pixel:hover{ transform: translateY(-0.5px); box-shadow: 0 0 0 1px rgba(68,64,255,.10) inset, 0 10px 22px rgba(68,64,255,.18); }
+    .btn-pixel:active{ transform: translateY(0); filter: saturate(105%); }
+    .btn-pixel--ghost{ background: transparent; color:#2a2f45; border:1px solid #5a57ff; box-shadow:none; }
+
+    /* ===== Hero ===== */
+    .brand-hero{ position:relative; padding: calc(var(--ui) * clamp(20px,6vw,60px)) 20px 6px; text-align:center; }
+    .brand-hero .hero-inner{ max-width:min(1100px,92vw); margin-inline:auto; position:relative; z-index:2; }
+    .brand-hero .name-edge{
+      --text:#0e0f1a;
+      font-family:"Funnel Display", system-ui, sans-serif;
+      font-weight:600; font-size: calc(var(--ui) * clamp(32px, 6vw, 66px));
+      letter-spacing:-.02em; line-height:.92; margin:0 0 6px;
+      text-transform:lowercase; position:relative; display:inline-block; color:var(--text);
+      filter:url(#softWobble); isolation:isolate;
+    }
+    .brand-hero .name-edge::after{
+      content:attr(data-text); position:absolute; inset:0; z-index:-1; pointer-events:none;
+      background: conic-gradient(from 0deg, var(--indigo), var(--pink) 40%, #8aaaff, var(--indigo));
+      -webkit-background-clip:text; background-clip:text; color:transparent;
+      transform: scale(1.04); filter: blur(6px) saturate(125%); opacity:.75; mix-blend-mode: plus-lighter;
+    }
+    .brand-hero .sub{
+      margin:8px 0 18px;
+      font:400 clamp(15px,2.4vw,15px)/1.2 "Jacquarda Bastarda 9", serif;
+      opacity:.85;
+    }
+
+    /* ===== Sections grid ===== */
+    .brand-grid{
+      width:min(1100px, 92vw);
+      margin-inline:auto;
+      padding: clamp(8px, 3vw, 16px) clamp(8px, 3vw, 16px);
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
+      gap: clamp(12px, 2.6vw, 18px);
+      /* bottom padding so the fixed footer never overlaps */
+      padding-bottom: calc(80px + var(--safe-footer));
+    }
+
+    /* ===== Card base (mini) ===== */
+    .card-iris{
+      position:relative; border-radius: calc(var(--ui) * 18px);
+      background: linear-gradient(180deg, rgba(255,255,255,.62), rgba(255,255,255,.42));
+      backdrop-filter: blur(10px) saturate(115%); -webkit-backdrop-filter: blur(10px) saturate(115%);
+      box-shadow: 0 10px 40px rgba(68,64,255,.08), 0 1px 0 rgba(255,255,255,.6) inset;
+      overflow:hidden; isolation:isolate;
+      padding: 14px 16px;
+      display:flex; flex-direction:column; gap: 10px;
+      min-height: 0; /* no floppy stretch on narrow screens */
+    }
+    .card-iris::before{
+      content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none;
+      padding:1px; background: linear-gradient(135deg, rgba(248,0,255,.45), rgba(68,64,255,.45));
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor; mask-composite: exclude; opacity:.85;
+    }
+    .card-title{
+      font-family:"Funnel Display", system-ui, sans-serif; font-weight:700;
+      font-size: calc(var(--ui) * 18px); letter-spacing:.01em; margin:0;
+    }
+    .pxlh{
+      font-family:"Jacquarda Bastarda 9", serif;
+      font-weight:500; /* your note */
+      font-size: calc(var(--ui) * 1.2em);
+      line-height: calc(var(--ui) * 40px);
+      margin: 0;
+    }
+    .mini{ font-size: max(12px, calc(var(--ui) * 13.5px)); color:#2c3144; line-height:1.42; }
+
+    /* ===== Typography cards ===== */
+    .type-stack{
+      display:grid; gap: 6px;
+      grid-template-columns: 1fr; /* inside the card */
+    }
+    .type-row{
+      display:flex; align-items:baseline; justify-content:space-between; gap:10px;
+      border:1px dashed rgba(68,64,255,.18); border-radius:10px; padding:10px 12px;
+      background: rgba(255,255,255,.45);
+    }
+    .type-sample{
+      font-family:"Funnel Display", system-ui, sans-serif; font-weight:700;
+      font-size: clamp(22px, 4.2vw, 44px); letter-spacing:-0.02em; line-height:1;
+    }
+    .type-meta{ font: 600 12px/1 "DM Sans"; opacity:.7 }
+    .type-specimen{
+      display:grid; gap:6px; margin-top:6px;
+      font-family:"Funnel Display", system-ui, sans-serif;
+    }
+    .type-specimen .row{
+      font-size: clamp(14px, 2.6vw, 18px);
+      letter-spacing:.01em;
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    }
+    .accent-block{
+      border:1px dashed rgba(68,64,255,.18); border-radius:10px; padding:10px 12px;
+      background: rgba(255,255,255,.45);
+    }
+    .accent-title{
+      font-family:"Jacquarda Bastarda 9", serif;
+      font-weight:500;
+      font-size: clamp(18px, 4vw, 28px);
+      line-height:1.05;
+    }
+    .accent-meta{ font: 600 12px/1 "DM Sans"; opacity:.7 }
+
+    /* ===== Color system ===== */
+    .swatch-grid{
+      display:grid; gap:10px;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    }
+    .swatch{
+      display:grid; grid-template-rows:auto 1fr auto; gap:8px;
+      border-radius: 14px; padding:10px; background: rgba(255,255,255,.55);
+      border:1px dashed rgba(68,64,255,.18);
+    }
+    /* pixel-style color tile: square with a tiny pixel grid overlay */
+    .pixel-tile{
+      position:relative; width:100%; aspect-ratio:1/1; border-radius:8px;
+      box-shadow: 0 1px 0 rgba(0,0,0,.05) inset, 0 10px 30px rgba(68,64,255,.08);
+      image-rendering: pixelated;
+      overflow:hidden;
+    }
+    .pixel-tile::after{
+      /* 1px grid lines to imply pixel structure */
+      content:""; position:absolute; inset:0; pointer-events:none; opacity:.2;
+      background:
+        linear-gradient(to right, rgba(255,255,255,.35) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,.35) 1px, transparent 1px);
+      background-size: 10px 10px, 10px 10px;
+      mix-blend-mode: soft-light;
+    }
+    .tile-indigo{ background:#4440ff; }
+    .tile-pink{ background:#ffe9ff; }
+    .tile-iris{
+      background:
+        radial-gradient(80% 80% at 30% 35%, rgba(127,240,255,.85), rgba(127,240,255,.35) 35%, transparent 60%),
+        radial-gradient(80% 80% at 70% 65%, rgba(255,106,223,.8), rgba(255,106,223,.28) 35%, transparent 60%),
+        linear-gradient(180deg, #aebdff, #ffffff 60%);
+      filter: saturate(120%);
+    }
+    .codes{ font: 600 12px/1.35 "DM Sans"; color:#1b1e35 }
+    .codes .meta{ opacity:.6; }
+    .swatch .row{ display:flex; align-items:center; justify-content:space-between; gap:8px; }
+    .copy-btn{ padding:6px 8px; border-radius:8px; font:800 10px/1 var(--px-font); letter-spacing:.12em;
+      background:#fff; border:1px solid #1f22ff; cursor:pointer; }
+
+    /* CTA row */
+    .brand-cta{ display:flex; gap:10px; flex-wrap:wrap; margin-top:4px }
+
+    /* Footer never overlapping content */
+    .page-end-spacer{ height: calc(80px + var(--safe-footer)); }
+
+    /* Small things for mid breakpoints so it never “snaps” awkwardly */
+    @media (max-width: 900px){
+      .brand-grid{ width: min(94vw, 1100px); }
     }
   </style>
 </head>
 
-<body class="page-contact density-xs">
-  <!-- SVG defs FIRST (iOS needs filters available before use) -->
-  <svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden">
-    <filter id="softWobble" x="-50%" y="-50%" width="200%" height="200%">
-      <feTurbulence type="fractalNoise" baseFrequency="0.008" numOctaves="1" seed="11" result="noise">
-        <animate attributeName="baseFrequency" dur="14s" values="0.008;0.010;0.008" repeatCount="indefinite" />
-      </feTurbulence>
-      <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G"/>
-    </filter>
-    <filter id="lensWarp" x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" color-interpolation-filters="sRGB">
-      <feTurbulence type="fractalNoise" baseFrequency="0.0025 0.002" numOctaves="1" seed="5" result="turb"/>
-      <feGaussianBlur in="turb" stdDeviation="14" result="soft"/>
-      <feDisplacementMap in="SourceGraphic" in2="soft" scale="12" xChannelSelector="R" yChannelSelector="G"/>
-    </filter>
-  </svg>
+<body class="page-brand density-xs">
+  <!-- Wave -->
+  <div class="iridescent-wave" aria-hidden="true"></div>
+
+  <!-- Lens layer -->
+  <div class="bg-art" aria-hidden="true">
+    <span class="lens-glass"></span>
+    <span class="lens-aura"></span>
+  </div>
 
   <!-- Header / Nav -->
   <header class="site-header" role="banner">
@@ -192,71 +283,130 @@
           <li><a href="./index.html">Home</a></li>
           <li><a href="./work.html">Work</a></li>
           <li><a href="./about.html">About</a></li>
-          <li><a aria-current="page" href="./contact.html">Contact</a></li>
+          <li><a href="./contact.html">Contact</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
+  <!-- SVG defs (for soft wobble) -->
+  <svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden">
+    <filter id="softWobble" x="-50%" y="-50%" width="200%" height="200%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.008" numOctaves="1" seed="11" result="noise">
+        <animate attributeName="baseFrequency" dur="14s" values="0.008;0.010;0.008" repeatCount="indefinite" />
+      </feTurbulence>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </svg>
+
   <!-- Hero -->
-  <section class="contact-hero" aria-label="Intro">
+  <section class="brand-hero" aria-label="Intro">
     <div class="hero-inner">
-      <h1 class="name-edge" data-text="contact">
-        <span class="text">contact</span>
-        <span class="warp"  aria-hidden="true">contact</span>
-        <span class="prism" aria-hidden="true">contact</span>
+      <h1 class="name-edge" data-text="brand systems">
+        <span class="text">brand systems</span>
       </h1>
-      <div class="contact-sub">let’s build brand & web that moves</div>
+      <p class="sub">mini, pixel-smart, prism-lit</p>
+      <div class="brand-cta">
+        <a class="btn-pixel" href="./index.html">HOME</a>
+        <a class="btn-pixel btn-pixel--ghost" href="./work.html">WORK</a>
+      </div>
     </div>
   </section>
 
-  <!-- Center card -->
-  <main class="wrap" role="main">
-    <section class="card-iris" data-tilt>
-      <div class="contact-card">
-        <div class="row">
-          <span class="icon" aria-hidden="true">
-            <!-- pixel-esque envelope -->
-            <svg viewBox="0 0 16 16" fill="currentColor">
-              <rect x="1" y="3" width="14" height="10" rx="1" />
-              <path d="M2 4l6 5 6-5" fill="none" stroke="#fff" stroke-width="1.2" />
-            </svg>
-          </span>
-          <span class="handle">denisa j. moraru</span>
-          <span class="muted">/ Senior Brand & Web Designer</span>
-        </div>
+  <!-- Content grid -->
+  <main class="brand-grid" role="main">
 
-        <div class="row">
-          <span class="icon" aria-hidden="true">
-            <!-- pixel-esque link/doc -->
-            <svg viewBox="0 0 16 16" fill="currentColor">
-              <rect x="3" y="2" width="10" height="12" rx="2" />
-              <rect x="5" y="5" width="6" height="1" fill="#fff"/>
-              <rect x="5" y="8" width="6" height="1" fill="#fff"/>
-            </svg>
-          </span>
-          <a class="handle" href="./resume.html">view resume</a>
-          <span class="muted"> • <a href="./assets/denisa_moraru_resume_2025_indigo.pdf" download>download pdf</a></span>
-        </div>
+    <!-- Brand story (mini) -->
+    <article class="card-iris">
+      <h3 class="card-title">brand story</h3>
+      <p class="mini">
+        Chrrybmb pairs crisp UI with iridescent motion—1980s terminal energy meets modern glass. The system stays
+        <em>mini</em> and intentional: compact spacing, pixel-ish accents, and bold yet elegant type.
+      </p>
+    </article>
 
-        <div class="row">
-          <span class="icon" aria-hidden="true">
-            <!-- pixel-esque at/mail -->
-            <svg viewBox="0 0 16 16" fill="currentColor">
-              <circle cx="8" cy="8" r="7"/>
-              <circle cx="8" cy="8" r="3" fill="#fff"/>
-            </svg>
-          </span>
-          <a class="handle" href="mailto:denisa@chrrybmb.com">denisa@chrrybmb.com</a>
+    <!-- Typography: Funnel Display -->
+    <article class="card-iris">
+      <h3 class="card-title">typography · funnel display</h3>
+      <div class="type-stack">
+        <div class="type-row">
+          <div class="type-sample">Aa</div>
+          <div class="type-meta">Display · 700/800 · Tight/–0.02</div>
         </div>
-
-        <div class="actions">
-          <a class="btn-pixel" href="mailto:denisa@chrrybmb.com?subject=Hello%20Denisa&body=Hi%20Denisa%2C%20">Email me</a>
-          <button id="copyBtn" class="btn-pixel btn-pixel--ghost" type="button" aria-live="polite">Copy email</button>
+        <div class="type-specimen">
+          <div class="row">ABCDEFGHIJKLMNOPQRSTUVWXYZ</div>
+          <div class="row">abcdefghijklmnopqrstuvwxyz</div>
+          <div class="row">0123456789 !?&*@#</div>
         </div>
       </div>
-    </section>
+      <div class="accent-block" style="margin-top:8px">
+        <div class="accent-meta">Hierarchy (mini)</div>
+        <div class="row" style="display:grid;gap:4px;margin-top:6px">
+          <div style="font:800 clamp(22px,4.4vw,40px)/1 var(--px-font); letter-spacing:-.02em">H1 — Prism headline</div>
+          <div style="font:800 clamp(16px,3vw,22px)/1 var(--px-font); letter-spacing:.01em">H2 — Section title</div>
+          <div style="font:700 clamp(14px,2.4vw,18px)/1.15 var(--px-font)">H3 — Card title</div>
+        </div>
+      </div>
+    </article>
+
+    <!-- Typography: Jacquarda Bastarda 9 -->
+    <article class="card-iris">
+      <h3 class="card-title">typography · jacquarda (accent)</h3>
+      <p class="accent-title">the world is an iridescent prism</p>
+      <p class="mini">Used for kickers / lyrical asides to contrast the tech-clean Funnel Display.</p>
+      <div class="accent-block" style="margin-top:4px">
+        <div class="accent-meta">Specimen</div>
+        <div class="row" style="margin-top:6px; font-family:'Jacquarda Bastarda 9', serif">
+          A B C D E F G H I J K L M · a b c d e f g h i j k l m · 0 1 2 3 4 5
+        </div>
+      </div>
+    </article>
+
+    <!-- Color system -->
+    <article class="card-iris">
+      <h3 class="card-title">color system</h3>
+      <p class="mini">Core swatches with pixel tiles and quick copy.</p>
+
+      <div class="swatch-grid" style="margin-top:6px">
+        <!-- Indigo -->
+        <div class="swatch">
+          <div class="pixel-tile tile-indigo"></div>
+          <div class="codes">
+            <div class="row"><span>#4440FF</span><button class="copy-btn" data-copy="#4440FF">COPY</button></div>
+            <div class="meta">CMYK 73, 75, 0, 0 · RGB 68, 64, 255</div>
+          </div>
+        </div>
+        <!-- Pink -->
+        <div class="swatch">
+          <div class="pixel-tile tile-pink"></div>
+          <div class="codes">
+            <div class="row"><span>#FFE9FF</span><button class="copy-btn" data-copy="#FFE9FF">COPY</button></div>
+            <div class="meta">CMYK 0, 9, 0, 0 · RGB 255, 233, 255</div>
+          </div>
+        </div>
+        <!-- Iridescence effect -->
+        <div class="swatch">
+          <div class="pixel-tile tile-iris"></div>
+          <div class="codes">
+            <div class="row"><span>iridescence</span></div>
+            <div class="meta">conic/radial blend · screen/dodge mixes</div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- Components: Buttons -->
+    <article class="card-iris">
+      <h3 class="card-title">components · buttons</h3>
+      <p class="mini">Pixel-mini, uppercase Funnel Display. Primary and ghost.</p>
+      <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:4px">
+        <a class="btn-pixel" href="#">PRIMARY</a>
+        <a class="btn-pixel btn-pixel--ghost" href="#">GHOST</a>
+      </div>
+    </article>
   </main>
+
+  <div class="page-end-spacer" aria-hidden="true"></div>
 
   <!-- Glass footer -->
   <footer class="glass-footer" role="contentinfo">
@@ -264,60 +414,47 @@
     <span>© <span id="year"></span> chrrybmb.com / denisajomo.com</span>
   </footer>
 
+  <!-- Tiny helpers -->
   <script>
     // year
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // background orb follow
+    // background orb (site vibe)
     (function(){
       const root = document.documentElement;
       function setOrb(e){
         const t = e.touches ? e.touches[0] : e;
         const x = (t.clientX / innerWidth) * 100;
         const y = (t.clientY / innerHeight) * 100;
-        root.style.setProperty('--orb-x', x + '%');
-        root.style.setProperty('--orb-y', y + '%');
+        root.style.setProperty('--orb-x', x.toFixed(2) + '%');
+        root.style.setProperty('--orb-y', y.toFixed(2) + '%');
       }
       addEventListener('pointermove', setOrb, {passive:true});
       addEventListener('touchmove', setOrb, {passive:true});
     })();
 
-    // copy email feedback
-    document.getElementById('copyBtn')?.addEventListener('click', async (e)=>{
-      try{
-        await navigator.clipboard.writeText('denisa@chrrybmb.com');
-        const btn = e.currentTarget;
-        const prev = btn.textContent;
-        btn.textContent = 'Copied ✧';
-        setTimeout(()=> btn.textContent = prev, 1200);
-      }catch(_){}
-    });
-
-    // gentle tilt on desktop
-    (function(){
-      const card = document.querySelector('.card-iris[data-tilt]');
-      if(!card) return;
-      const fine = matchMedia('(hover:hover) and (pointer:fine)').matches;
-      if(!fine) return;
-      const inner = card.querySelector('.contact-card');
-      let rAF = null;
-      function onMove(ev){
-        const rect = card.getBoundingClientRect();
-        const x = (ev.clientX - rect.left) / rect.width;
-        const y = (ev.clientY - rect.top)  / rect.height;
-        const ry = (x - 0.5) * 10;  // rotateY
-        const rx = (0.5 - y) * 8;   // rotateX
-        if(rAF) cancelAnimationFrame(rAF);
-        rAF = requestAnimationFrame(()=>{
-          card.style.setProperty('--rx', rx.toFixed(2) + 'deg');
-          card.style.setProperty('--ry', ry.toFixed(2) + 'deg');
-        });
-      }
-      card.addEventListener('mousemove', onMove);
-      card.addEventListener('mouseleave', ()=> {
-        card.style.setProperty('--rx','0deg'); card.style.setProperty('--ry','0deg');
+    // copy hex buttons
+    document.querySelectorAll('.copy-btn').forEach(btn=>{
+      btn.addEventListener('click', async ()=>{
+        const v = btn.getAttribute('data-copy');
+        try{
+          await navigator.clipboard.writeText(v);
+          const prev = btn.textContent;
+          btn.textContent = 'COPIED';
+          setTimeout(()=> btn.textContent = prev, 900);
+        }catch(_){}
       });
-    })();
+    });
   </script>
+
+  <!-- Shared wobble filter (fallback for older pages) -->
+  <svg width="0" height="0" style="position:absolute">
+    <filter id="softWobble" x="-50%" y="-50%" width="200%" height="200%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.008" numOctaves="1" seed="11" result="noise">
+        <animate attributeName="baseFrequency" dur="14s" values="0.008;0.010;0.008" repeatCount="indefinite" />
+      </feTurbulence>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </svg>
 </body>
 </html>
