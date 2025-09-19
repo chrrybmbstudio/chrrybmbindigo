@@ -239,7 +239,7 @@
     .card-iris.is-hot::after{ opacity:1; background-position:160% 0; }
 
     /* subtle tilt on hover (desktop) */
-    .feature-card{ display:flex; flex-direction:column; gap: 10px; min-height: 99px; }
+    .feature-card{ display:flex; flex-direction:column; gap: 10px; min-height: 99px }
     .feature-card h3, .feature-card .pxlh{ margin:0; font-size: calc(var(--ui) * 16px); line-height:1.1; letter-spacing:.02em; }
     .feature-card p{ margin: 0 0 auto; color:#2c3144; font-size: max(12px, calc(var(--ui)* 13.5px)); line-height:1.42; }
 
@@ -251,7 +251,13 @@
       .features__grid{ grid-template-columns: 1fr; gap: 18px; padding-inline: clamp(14px, 5vw, 24px); }
       .feature-card{ width: min(100%, 560px); margin-inline:auto; }
     }
+
+    .mb {
+    margin-bottom: 80px;
+  }
   </style>
+
+
 </head>
 
 <body class="density-xs">
@@ -350,7 +356,7 @@
             <p>Identity, typography, usage rules, and scalable component libraries.</p>
             <a class="btn-pixel btn-pixel--ghost" href="./work.html#brand">EXPLORE</a>
           </article>
-          <article class="card-iris feature-card" data-tilt>
+          <article class="card-iris feature-card mb" data-tilt>
             <span class="pxlh">Art Direction</span>
             <p>Campaign concepts, motion, and visuals with that prism-y glow.</p>
             <a class="btn-pixel btn-pixel--ghost" href="./work.html#ad">EXPLORE</a>
