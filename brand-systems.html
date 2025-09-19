@@ -209,15 +209,16 @@
 
     /* ===== Sections grid ===== */
     .brand-grid{
-      width:min(1100px, 92vw);
-      margin-inline:auto;
-      padding: clamp(8px, 3vw, 16px) clamp(8px, 3vw, 16px);
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
-      gap: clamp(12px, 2.6vw, 18px);
-      /* bottom padding so the fixed footer never overlaps */
-      padding-bottom: calc(80px + var(--safe-footer));
-    }
+  box-sizing: border-box;                 /* include padding in the width */
+  width: 100%;                            /* fill viewport */
+  max-width: 1100px;                      /* cap on large screens */
+  margin-inline: auto;
+  padding: clamp(8px, 3vw, 16px);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
+  gap: clamp(12px, 2.6vw, 18px);
+  padding-bottom: calc(80px + var(--safe-footer));
+}
 
     /* ===== Card base (mini) ===== */
     .card-iris{
@@ -303,9 +304,6 @@
     /* Footer never overlapping content */
     .page-end-spacer{ height: calc(80px + var(--safe-footer)); }
 
-    @media (max-width: 900px){
-      .brand-grid{ width: min(94vw, 1100px); }
-    }
 
         /* --- tiny reveal system tokens (pairs with site.js) --- */
         [data-animate]{
