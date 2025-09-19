@@ -805,6 +805,24 @@ animation: beamsSpin 28s linear infinite;
   animation: beamsSpin 36s linear infinite reverse;
 }
 
+    /* === Reveal presets === */
+    [data-animate]{
+      opacity: 0;
+      transform: translate3d(0, var(--reveal-ydist), 0) scale(.985);
+      will-change: transform, opacity;
+    }
+    [data-animate="fade-in"]{ transform: translate3d(0,0,0) scale(.98); }
+    [data-animate="zoom-in"]{ transform: scale(.96); }
+    [data-animate].is-in{
+      opacity: 1;
+      transform: none;
+      transition:
+        opacity var(--reveal-dur) var(--reveal-ease),
+        transform var(--reveal-dur) var(--reveal-ease);
+      transition-delay: var(--stagger, 0ms);
+      filter: none;
+    }
+
 
 /* Animations */
 @keyframes orbPulse{
