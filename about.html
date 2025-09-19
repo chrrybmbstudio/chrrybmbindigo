@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 
-  <title>chrrybmb - about ⋆˙⟡</title>
+  <title>chrrybmb - contact ⋆˙⟡</title>
   <meta name="description" content="chrrybmb" />
   <link rel="canonical" href="https://chrrybmb.com/" />
   <!-- Favicon -->
@@ -28,32 +28,27 @@
 <meta name="twitter:description" content="creative leadership for brand & web.">
 <meta name="twitter:image" content="https://chrrybmb.com/assets/og-image.jpg">
 
+  <!-- Base site CSS -->
   <link rel="stylesheet" href="./style.css" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Jacquarda+Bastarda+9&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Jacquarda+Bastarda+9&display=swap" rel="stylesheet">
 
-  </head>
-
+  <!-- Page-scoped styles (win the cascade after style.css) -->
   <style>
-    .page-about{
+    .page-contact{
       --indigo:#4440ff; --pink:#ffe9ff; --ink:#0e0f1a; --cardR: clamp(18px,1.6vw,26px);
-      --lr: 120px;
-      --wave-opacity:.76; --wave-speed:36s; --wave-halo-blur:54px;
-      --frost-alpha:.26; --frost-blur:8px;
-      color:var(--ink);
-      -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
       background:
         radial-gradient(60% 60% at var(--orb-x,72%) var(--orb-y,68%), rgba(68,64,255,.13), transparent 60%),
         linear-gradient(180deg, #ffffff, #faf9ff);
-      /* keep the site-wide mini scale */
-      --ui:.66;
+      color:var(--ink);
+      -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+      --ui:.66; /* compact vibe */
     }
-
 
     /* --- tiny reveal system tokens (pairs with site.js) --- */
     [data-animate]{
@@ -77,115 +72,64 @@
       [data-animate]{ opacity:1; transform:none; filter:none; transition:none }
     }
 
-
-    /* wave */
-    .iridescent-wave{position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden; will-change:transform; transform:translate3d(0,0,0)}
-    .iridescent-wave::before{
-      content:""; position:absolute; inset:-22%;
-      background: conic-gradient(from var(--wave-rot,0deg) at var(--orb-x,50%) var(--orb-y,20%), rgba(127,240,255,.25), rgba(255,106,223,.20), rgba(127,240,255,.25));
-      filter: blur(var(--wave-halo-blur)) saturate(150%); mix-blend-mode: color-dodge; opacity: var(--wave-opacity);
-      animation: waveSpin 22s linear infinite;
-    }
-    .iridescent-wave::after{
-      content:""; position:absolute; left:-14%; right:-14%; top:-220%; bottom:-220%;
-      background:
-        radial-gradient(80% 60% at 50% 30%, rgba(255,255,255,.55), rgba(255,255,255,0) 60%),
-        linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.55) 35%, rgba(255,255,255,0) 70%);
-      filter: blur(18px); mix-blend-mode: soft-light; opacity:.35;
-      animation: rippleDown var(--wave-speed) cubic-bezier(.42,0,.58,1) infinite;
-    }
-    @keyframes waveSpin{to{transform:rotate(1turn)}} @keyframes rippleDown{0%{transform:translate3d(0,-35%,0)}100%{transform:translate3d(0,35%,0)}}
-
-    /* frosty veil */
-    .frost-veil{position:fixed; inset:0; z-index:1; pointer-events:none; background:rgba(255,255,255,var(--frost-alpha));
-      backdrop-filter: blur(var(--frost-blur)) saturate(120%) contrast(102%); -webkit-backdrop-filter: blur(var(--frost-blur)) saturate(120%) contrast(102%);}
-
-    /* hero */
-    .about-hero{position:relative; padding: calc(var(--ui) * clamp(20px,6vw,68px)) 20px 8px; text-align:center; z-index:5;}
-    .about-hero .hero-inner{max-width:min(1100px,92vw); margin-inline:auto; position:relative; z-index:5;}
-    .about-hero .hero-inner::before{
+    /* --- HERO --- */
+    .contact-hero{position:relative; padding: clamp(20px,6vw,56px) 20px 8px; text-align:center;}
+    .contact-hero .hero-inner{max-width:min(1100px,92vw); margin-inline:auto; position:relative; z-index:0;}
+    .contact-hero .hero-inner::before{
       content:""; position:absolute; inset:-12% -14% -18% -14%; z-index:-1; pointer-events:none;
       background:
         radial-gradient(72% 100% at 30% 40%, rgba(68,64,255,.28), transparent 60%),
         radial-gradient(64% 80% at 70% 60%, rgba(255,233,255,.38), transparent 60%);
       filter: blur(28px) saturate(120%); opacity:.9; animation: floatBlob 24s ease-in-out infinite alternate;
     }
-    @keyframes floatBlob{0%{transform:translateY(0) rotate(0) scale(1)}100%{transform:translateY(-6px) rotate(6deg) scale(1.02)}}
+    @keyframes floatBlob{ 0%{transform:translateY(0) rotate(0) scale(1)} 100%{transform:translateY(-6px) rotate(6deg) scale(1.02)} }
 
-    /* H1 — back to your density sizing */
+    /* H1 (warp + prism) */
     .name-edge{
       --text:#0e0f1a;
       font-family:"Funnel Display", system-ui, sans-serif;
-      font-weight:600;
-      font-size: calc(var(--ui) * clamp(42px,8vw,66px));
+      font-weight:600; font-size:calc(var(--ui) * clamp(42px,8vw,66px));
       letter-spacing:-.02em; line-height:.92; margin:0 0 6px;
-      text-transform:lowercase; position:relative; display:inline-block; color:var(--text);
-      filter:url(#softWobble); isolation:isolate;
+      text-transform:lowercase; position:relative; display:inline-block;
+      color:var(--text); filter:url(#softWobble); isolation:isolate;
     }
     .name-edge::after{
-      content:attr(data-text); position:absolute; inset:0; z-index:-1; pointer-events:none;
+      content:attr(data-text);
+      position:absolute; inset:0; z-index:-1; pointer-events:none;
       background: conic-gradient(from 0deg, var(--indigo), var(--pink) 40%, #8aaaff, var(--indigo));
-      -webkit-background-clip:text; background-clip:text; color:transparent; transform: scale(1.04);
-      filter: blur(6px) saturate(125%); opacity:.75; mix-blend-mode: plus-lighter;
+      -webkit-background-clip:text; background-clip:text; color:transparent;
+      transform: scale(1.04); filter: blur(6px) saturate(125%); opacity:.75; mix-blend-mode: plus-lighter;
     }
     .name-edge .warp,.name-edge .prism{
       position:absolute; inset:0; display:inline-block;
       -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 35%, #000 65%, transparent 100%);
               mask-image: linear-gradient(90deg, transparent 0%, #000 35%, #000 65%, transparent 100%);
-      -webkit-mask-size:220% 100%; mask-size:220% 100%;
-      -webkit-mask-position:-60% 0; mask-position:-60% 0; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat;
+      -webkit-mask-size: 220% 100%; mask-size: 220% 100%;
+      -webkit-mask-position: -60% 0; mask-position: -60% 0; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat;
       will-change: -webkit-mask-position, mask-position;
     }
-    .name-edge .warp{z-index:1; color:var(--text); -webkit-text-fill-color:currentColor; filter:url(#lensWarp);}
-    .name-edge .prism{z-index:2; mix-blend-mode:screen; opacity:.55; filter: blur(.6px) saturate(120%);
-      background: linear-gradient(90deg, #7ff0ff 0%, #ff6adf 50%, #7ff0ff 100%); -webkit-background-clip:text; background-clip:text; color:transparent; transform: translateX(.4px);}
-    @keyframes sweepBand{from{ -webkit-mask-position:-60% 0; mask-position:-60% 0 } to{ -webkit-mask-position:160% 0; mask-position:160% 0 }}
-    @media (min-width:641px){ .name-edge .warp, .name-edge .prism{ animation: sweepBand 7s cubic-bezier(.45,.05,.36,1) infinite alternate; } }
-    @media (max-width:640px){ .name-edge .warp, .name-edge .prism{ animation: sweepBand 3.2s cubic-bezier(.5,.1,.2,1) 1 both; } }
-    @media (prefers-reduced-motion: reduce){
-      .name-edge::after{animation:none} .name-edge .warp,.name-edge .prism{animation:none !important}
-      .iridescent-wave::before,.iridescent-wave::after{animation:none !important}
+    .name-edge .warp{ z-index:1; color:var(--text); -webkit-text-fill-color:currentColor; filter:url(#lensWarp); }
+    .name-edge .prism{
+      z-index:2; mix-blend-mode:screen; opacity:.55; filter: blur(.6px) saturate(120%);
+      background: linear-gradient(90deg, #7ff0ff 0%, #ff6adf 50%, #7ff0ff 100%);
+      -webkit-background-clip:text; background-clip:text; color:transparent;
+      transform: translateX(.4px);
+    }
+    @keyframes sweepBand{ from{ -webkit-mask-position:-60% 0; mask-position:-60% 0 } to{ -webkit-mask-position:160% 0; mask-position:160% 0 } }
+    @media (min-width:641px){ .name-edge .warp,.name-edge .prism{ animation: sweepBand 7s cubic-bezier(.45,.05,.36,1) infinite alternate; } }
+    @media (max-width:640px){ .name-edge .warp,.name-edge .prism{ animation: sweepBand 3.2s cubic-bezier(.5,.1,.2,1) 1 both; } }
+    @media (prefers-reduced-motion: reduce){ .name-edge .warp,.name-edge .prism{ animation:none !important } }
+
+    .contact-sub{
+      margin:6px 0 24px;
+      font:400 calc(var(--ui) * clamp(16px,2.4vw,20px))/1.2 "Jacquarda Bastarda 9", serif;
+      opacity:.85; text-align:center;
     }
 
-    .about-sub{margin:6px 0 22px; font:400 calc(var(--ui) * clamp(16px,2.4vw,22px))/1.2 "Jacquarda Bastarda 9", serif; opacity:.85; text-align:center;}
-
-    /* background art scale (you liked this) */
-    .page-about{ --bg:.58; --bg-right: calc(-8vw * var(--bg)); --bg-bottom: calc(-6vh * var(--bg)); --bg-w: min(calc(82vw * var(--bg)), calc(980px * var(--bg))); }
-    .bg-art{ position:fixed; right:var(--bg-right); bottom:var(--bg-bottom); width:var(--bg-w); pointer-events:none; z-index:0; overflow:visible; }
-    .bg-art .art-svg{position:absolute; right:0; bottom:0; width:100%; height:auto}
-    .bg-art .art-svg image.base{opacity:.08; filter:saturate(110%) contrast(102%);}
-    .bg-art .art-svg image.glow{opacity:.6}
-    .img-mag,.img-blur,.tint,.lens-aura{position:fixed; inset:0; pointer-events:none; z-index:2;}
-    .img-mag,.img-blur{
-      background-image:url('./assets/heater1.png'); background-repeat:no-repeat;
-      background-position:right var(--bg-right) bottom var(--bg-bottom); background-size:var(--bg-w) auto;
-      -webkit-mask-image: radial-gradient(circle var(--lr) at var(--lx,78%) var(--ly,76%), #000 0%, #000 62%, rgba(0,0,0,.75) 78%, transparent 92%);
-              mask-image: radial-gradient(circle var(--lr) at var(--lx,78%) var(--ly,76%), #000 0%, #000 62%, rgba(0,0,0,.75) 78%, transparent 92%);
-    }
-    .img-mag{filter:saturate(115%) contrast(103%); opacity:.88}
-    .img-blur{filter:blur(12px) saturate(120%); opacity:.22}
-    .tint{
-      -webkit-mask-image: radial-gradient(circle calc(var(--lr)*1.05) at var(--lx,78%) var(--ly,76%), #000 0%, #000 60%, transparent 82%);
-              mask-image: radial-gradient(circle calc(var(--lr)*1.05) at var(--lx,78%) var(--ly,76%), #000 0%, #000 60%, transparent 82%);
-      background: radial-gradient(closest-side, rgba(68,64,255,.22), rgba(68,64,255,.16) 55%, transparent 80%); z-index:3;
-    }
-    .lens-aura{left:var(--lx,78%); top:var(--ly,76%); width:calc(var(--lr)*2.1); height:calc(var(--lr)*2.1); transform:translate(-50%,-50%); border-radius:50%; filter:blur(.6px) saturate(120%); z-index:4;}
-    .lens-aura::before,.lens-aura::after{content:""; position:absolute; inset:-18%; border-radius:50%}
-    .lens-aura::before{background: radial-gradient(closest-side, rgba(255,255,255,.22), rgba(255,255,255,.08) 55%, transparent 70%); mix-blend-mode:screen; filter:blur(12px)}
-    .lens-aura::after{background: radial-gradient(closest-side, rgba(255,255,255,.18), transparent 65%), conic-gradient(from 0deg, rgba(127,240,255,.38), rgba(255,106,223,.35), rgba(127,240,255,.38)); mix-blend-mode:screen; opacity:.55; filter:blur(7px)}
-
-    /* card — mini */
-    .wrap{display:grid; place-items:center; padding: calc(var(--ui) * 14px) calc(var(--ui) * 12px) calc(var(--ui) * 96px); position:relative; z-index:5;}
-    .card-iris{
-      position:relative;
-      width: min(92vw, 520px);         /* narrower */
-      border-radius: calc(var(--ui) * var(--cardR));
-      background: rgba(255,255,255,.64);
-      backdrop-filter: blur(12px) saturate(135%) contrast(103%); -webkit-backdrop-filter: blur(12px) saturate(135%) contrast(103%);
-      background-clip: padding-box; border: 1px solid rgba(255,255,255,.38);
-      box-shadow: 0 14px 42px rgba(68,64,255,.10), 0 3px 10px rgba(0,0,0,.06);
-      isolation:isolate; overflow:hidden;
-    }
+    /* --- Center card (iris border) --- */
+    .wrap{display:grid; place-items:center; padding: 14px 12px 96px;}
+    .card-iris{position:relative; width:min(92vw, 560px); border-radius:var(--cardR);
+      box-shadow:0 18px 54px rgba(68,64,255,.10), 0 3px 12px rgba(0,0,0,.06); background:#fff; isolation:isolate; }
     .card-iris::before{
       content:""; position:absolute; inset:-1px; border-radius:inherit; padding:1px;
       background:conic-gradient(from var(--b,0deg), var(--indigo), var(--pink) 40%, #a8a3ff, var(--indigo));
@@ -195,27 +139,30 @@
     }
     @keyframes spin{to{--b:360deg}}
 
-    .about-card{position:relative; padding: calc(var(--ui) * clamp(12px,3.2vw,20px)) calc(var(--ui) * clamp(14px,4vw,24px)); display:grid; gap: calc(var(--ui) * 12px);}
-    .about-copy p{margin:0; color:#2a2f45; font-size: clamp(13.5px, 1.5vw, 14.5px); line-height:1.42;}
-    .about-copy ul{margin:0; padding-left:16px}
-    .about-copy li{margin:3px 0; font-size: clamp(13.5px, 1.5vw, 14.5px); line-height:1.42;}
-
-    /* Jacquarda section heads (weight 500 as you set) */
-    .pxlh{
-      font-family:"Jacquarda Bastarda 9", serif;
-      font-weight: 500;
-      font-size: clamp(17px, 2vw, 20px);
-      line-height: 1.15; letter-spacing:.25px; color:#17182a;
+    .contact-card{
+      position:relative; padding: clamp(14px, 3.6vw, 22px) clamp(2px, 3.6vw, 6px);
+      display:grid; gap:14px;
+      transform-style: preserve-3d;
+    }
+    /* gentle desktop tilt */
+    @media (hover:hover) and (pointer:fine){
+      .card-iris[data-tilt] .contact-card{ transition: transform .18s ease; }
+      .card-iris[data-tilt]:hover .contact-card{
+        transform: perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateZ(6px);
+      }
     }
 
-    /* pixel-mini buttons (same across site) */
+    .row{display:flex; align-items:center; gap:10px; flex-wrap:wrap}
+    .handle{font:600 14px/1.2 "DM Sans",system-ui,sans-serif; color:#1b1e35}
+    .muted{opacity:.65; font-size:13px}
+
+    /* --- Pixel-mini buttons (brand-consistent) --- */
     :root{ --px-font: "Funnel Display", system-ui, sans-serif; }
     .btn-pixel{
       --px: 10.5px; --px-track: .16em;
       display:inline-flex; align-items:center; justify-content:center; gap:.5ch;
       padding: 8px 12px; border-radius: 10px;
-      font: 800 var(--px)/1 var(--px-font);
-      text-transform: uppercase; letter-spacing: var(--px-track);
+      font: 800 var(--px)/1 var(--px-font); text-transform: uppercase; letter-spacing: var(--px-track);
       background: linear-gradient(180deg, #ffffff, #f6f6ff);
       border: 1px solid #1f22ff; color:#17182a;
       box-shadow: 0 0 0 1px rgba(68,64,255,.08) inset, 0 6px 18px rgba(68,64,255,.12);
@@ -226,53 +173,44 @@
     .btn-pixel:active{ transform: translateY(0); filter: saturate(105%); }
     .btn-pixel--ghost{ background: transparent; color:#2a2f45; border:1px solid #5a57ff; box-shadow:none; }
     .btn-pixel:focus-visible{ outline:2px solid #5a57ff; outline-offset:2px; }
-    .about-cta{ display:flex; flex-wrap:wrap; gap:8px 10px; margin-top:8px; justify-content:center; }
 
-    /* tilt sheen */
-    .card-iris.feature-card{ transform-style:preserve-3d; transition: transform .18s ease, box-shadow .2s ease; }
-    .card-iris.feature-card.is-hot{ transform: perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateZ(6px); box-shadow: 0 22px 60px rgba(68,64,255,.16); }
-    .card-iris.feature-card::after{
-      content:""; position:absolute; inset:-25%;
-      background: radial-gradient(260px 260px at var(--mx,50%) var(--my,50%), rgba(127,240,255,.32), rgba(255,106,223,.22) 35%, transparent 60%);
-      mix-blend-mode: color-dodge; filter: blur(22px) saturate(140%); opacity:0; transition: opacity .2s ease; pointer-events:none;
+    /* Button layout — intentional, centered */
+    .actions{
+      display:flex; flex-wrap:wrap; gap:8px 10px;
+      justify-content:center; align-items:center;
+      margin-top: 4px;
     }
-    .card-iris.feature-card.is-hot::after{ opacity:1; }
 
-    /* footer */
+    /* Icons */
+    .icon{width:16px; height:16px; display:inline-block; vertical-align:-2px}
+    .icon svg{width:100%; height:100%; shape-rendering:crispEdges}
+
+    /* --- Glass footer --- */
     .glass-footer{
-      position:fixed; left:0; right:0; bottom:0; z-index:20; display:flex; align-items:center; justify-content:center; gap:12px;
-      padding:8px 12px; margin:8px; border-radius:16px; background: rgba(255,255,255,.35);
-      backdrop-filter: blur(10px) saturate(135%) contrast(105%); -webkit-backdrop-filter: blur(10px) saturate(135%) contrast(105%);
+      position:fixed; left:0; right:0; bottom:0; z-index:20;
+      display:flex; align-items:center; justify-content:center; gap:12px;
+      padding: 8px 12px; margin: 8px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.35);
+      backdrop-filter: blur(10px) saturate(135%) contrast(105%);
+      -webkit-backdrop-filter: blur(10px) saturate(135%) contrast(105%);
       box-shadow: 0 10px 30px rgba(68,64,255,.12);
-      -webkit-mask-image: radial-gradient(120% 120% at 50% 0%, #000 40%, rgba(0,0,0,.85) 72%, transparent 100%); mask-image: radial-gradient(120% 120% at 50% 0%, #000 40%, rgba(0,0,0,.85) 72%, transparent 100%);
+      -webkit-mask-image: radial-gradient(120% 120% at 50% 0%, #000 40%, rgba(0,0,0,.85) 72%, transparent 100%);
+              mask-image: radial-gradient(120% 120% at 50% 0%, #000 40%, rgba(0,0,0,.85) 72%, transparent 100%);
     }
     .glass-footer a, .glass-footer span{font:600 13px/1 "DM Sans"; color:#1b1e35; text-decoration:none}
     .glass-footer .dot{width:5px; height:5px; border-radius:50%; background:linear-gradient(90deg,var(--indigo),#8aa3ff)}
 
-    /* responsive */
-    @media (max-width:1024px){
-      .page-about{ --bg-right: calc(-6vw * var(--bg)); --bg-bottom: calc(-2vh * var(--bg)); --bg-w: min(calc(110vw * var(--bg)), calc(1400px * var(--bg))); }
-      .card-iris{ width:min(80vw, 520px); }
+    /* Phone polish */
+    @media (max-width:480px){
+      .card-iris{width:min(94vw, 560px)}
+      .btn-pixel{ --px: 10px; padding: 8px 10px; }
     }
-    @media (max-width:640px){
-      .page-about{ --bg-right: calc(-4vw * var(--bg)); --bg-bottom: calc(-2vh * var(--bg)); --bg-w: calc(125vw * var(--bg)); }
-      .wrap{ padding-bottom: max(72px, calc(var(--ui) * 90px)); }
-      .card-iris{
-        width: min(92vw, 520px);
-        max-height: 74svh;                 /* firmer cap -> less floppy */
-        overflow:auto; -webkit-overflow-scrolling:touch; overscroll-behavior:contain;
-      }
-      .about-card{ gap:10px; }
-      .btn-pixel{ --px:10px; padding:8px 10px; }
-    }
-
-    .handle{font:600 14px/1.2 "DM Sans",system-ui,sans-serif; color:#1b1e35}
-
   </style>
 </head>
-<body class="page-about density-xs">
 
-  <!-- SVG defs -->
+<body class="page-contact density-xs">
+  <!-- SVG defs FIRST (iOS needs filters available before use) -->
   <svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden">
     <filter id="softWobble" x="-50%" y="-50%" width="200%" height="200%">
       <feTurbulence type="fractalNoise" baseFrequency="0.008" numOctaves="1" seed="11" result="noise">
@@ -288,7 +226,7 @@
   </svg>
 
   <!-- Header / Nav -->
-  <header class="site-header role="banner" data-animate class="fade-in">
+  <header class="site-header" role="banner" data-animate class="fade-in">
     <div class="navcontainer header__inner">
       <a class="brand" href="/chrrybmbindigo/" aria-label="chrrybmb home">
         <img class="brand__logo-img" src="./assets/indigo_chrry_indypinky.svg" alt="chrrybmb logo"
@@ -297,112 +235,119 @@
       <nav class="nav" aria-label="Primary">
         <ul id="navMenu" class="nav__list">
           <li><a href="./index.html">Home</a></li>
-          <li><a aria-current="page" href="./about.html">About</a></li>
-          <li><a href="./contact.html">Contact</a></li>
+          <li><a href="./about.html">About</a></li>
+          <li><a aria-current="page" href="./contact.html">Contact</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
-  <!-- Iridescent wave -->
-  <div class="iridescent-wave" aria-hidden="true"></div>
-
-  <!-- Frosty overlay -->
-  <div class="frost-veil" aria-hidden="true"></div>
-
-  <!-- Background artwork -->
-  <aside class="bg-art" aria-hidden="true">
-    <svg class="art-svg" viewBox="0 0 800 900" preserveAspectRatio="xMidYMax meet" role="img" aria-label="">
-      <defs>
-        <filter id="prismEdgeGlow" x="-20%" y="-20%" width="140%" height="140%">
-          <feMorphology in="SourceAlpha" operator="dilate" radius="2" result="edgeExpand"/>
-          <feMorphology in="SourceAlpha" operator="erode"  radius="2" result="edgeContract"/>
-          <feComposite in="edgeExpand" in2="edgeContract" operator="out" result="edgeRing"/>
-          <feTurbulence type="fractalNoise" baseFrequency=".0008" numOctaves="2" seed="7" result="noise"/>
-          <feDisplacementMap in="edgeRing" in2="noise" scale="7" xChannelSelector="R" yChannelSelector="G" result="ringWobble"/>
-          <feGaussianBlur in="ringWobble" stdDeviation="4.4" result="ringSoft"/>
-          <feGaussianBlur in="ringWobble" stdDeviation="9"   result="ringWide"/>
-          <feFlood flood-color="#ffffff" flood-opacity="0.9" result="whiteFlood"/>
-          <feComposite in="whiteFlood" in2="ringSoft" operator="in" result="whiteGlow"/>
-          <feFlood flood-color="#f800ff" flood-opacity="0.9" result="magFlood"/>
-          <feComposite in="magFlood" in2="ringSoft" operator="in" result="magGlow"/>
-          <feFlood flood-color="#4440ff" flood-opacity="0.5" result="indigoFlood"/>
-          <feComposite in="indigoFlood" in2="ringWide" operator="in" result="indigoGlow"/>
-          <feMerge result="glow"><feMergeNode in="indigoGlow"/><feMergeNode in="magGlow"/><feMergeNode in="whiteGlow"/></feMerge>
-          <feBlend in="SourceGraphic" in2="glow" mode="screen" result="lit"/>
-          <feComposite in="lit" in2="SourceGraphic" operator="over"/>
-        </filter>
-      </defs>
-      <image class="base" href="./assets/heater1.png" x="0" y="0" width="800" height="900" />
-      <image class="glow" href="./assets/heater1.png" x="0" y="0" width="800" height="900" filter="url(#prismEdgeGlow)"/>
-    </svg>
-  </aside>
-
-  <!-- Lens layers -->
-  <span class="img-mag"  aria-hidden="true"></span>
-  <span class="img-blur" aria-hidden="true"></span>
-  <span class="tint"     aria-hidden="true"></span>
-  <span class="lens-aura" aria-hidden="true"></span>
-
   <!-- Hero -->
-  <section class="about-hero" aria-label="Intro" data-animate class="fade-in">
-    <div class="hero-inner">
-      <h1 class="name-edge" data-text="about">
-        <span class="text">about</span>
-        <span class="warp"  aria-hidden="true">about</span>
-        <span class="prism" aria-hidden="true">about</span>
+  <section class="contact-hero" aria-label="Intro">
+    <div class="hero-inner fade-up" data-animate>
+      <h1 class="name-edge" data-text="contact">
+        <span class="text">contact</span>
+        <span class="warp"  aria-hidden="true">contact</span>
+        <span class="prism" aria-hidden="true">contact</span>
       </h1>
-      <div class="about-sub">the world is an iridescent prism</div>
+      <div class="contact-sub">let’s build brand & web that moves</div>
     </div>
   </section>
 
   <!-- Center card -->
-  <main class="wrap" role="main" data-animate class="fade-up">
-    <section class="card-iris feature-card" data-tilt>
-      <div class="about-card">
-        <div class="about-copy">
-          <span class="pxlh">hi, i'm denisa.</span>
-          <p>I build crisp, scalable brand & web systems—end-to-end from strategy to shipped UI. Since 2007 I’ve worked across print, web, and marketing; these days I live mostly in design/dev and creative direction.</p>
-        </div>
-        <div class="about-copy">
-          <span class="pxlh">a natural calling</span>
-          <ul>
-            <li>Design systems, responsive UX, tidy front-end.</li>
-            <li>Campaign & art direction with that prism-y glow.</li>
-            <li>Calm, grounded process—yoga brain in a pixel world.</li>
-          </ul>
-        </div>
-        <div class="about-copy">
-          <span class="pxlh">currently</span>
-          <p>Senior brand & web design, marketing creative, and part-time at the studio. Open to roles where design and web meet growth.</p>
+  <main class="wrap" role="main">
+    <section class="card-iris zoom-in" data-tilt data-animate style="--stagger:140ms">
+      <div class="contact-card">
+        <div class="row">
+          <span class="icon" aria-hidden="true">
+            <!-- pixel-esque envelope -->
+            <svg viewBox="0 0 16 16" fill="currentColor">
+              <rect x="1" y="3" width="14" height="10" rx="1" />
+              <path d="M2 4l6 5 6-5" fill="none" stroke="#fff" stroke-width="1.2" />
+            </svg>
+          </span>
+          <span class="handle">denisa j. moraru</span>
+          <span class="muted">/ Senior Brand & Web Designer</span>
         </div>
 
-        <!-- Pixel-mini buttons -->
-        <div class="about-cta">
-          <a class="btn-pixel" href="./resume.html">Resume</a>
-          <a class="btn-pixel btn-pixel--ghost" href="./contact.html">Contact</a>
+        <div class="row">
+          <span class="icon" aria-hidden="true">
+            <!-- pixel-esque link/doc -->
+            <svg viewBox="0 0 16 16" fill="currentColor">
+              <rect x="3" y="2" width="10" height="12" rx="2" />
+              <rect x="5" y="5" width="6" height="1" fill="#fff"/>
+              <rect x="5" y="8" width="6" height="1" fill="#fff"/>
+            </svg>
+          </span>
+          <a class="handle" href="./resume.html">view resume</a>
+          <span class="muted"> • <a href="./assets/denisa_moraru_resume_2025_indigo.pdf" download>download pdf</a></span>
+        </div>
+
+        <div class="row">
+          <span class="icon" aria-hidden="true">
+            <!-- pixel-esque at/mail -->
+            <svg viewBox="0 0 16 16" fill="currentColor">
+              <circle cx="8" cy="8" r="7"/>
+              <circle cx="8" cy="8" r="3" fill="#fff"/>
+            </svg>
+          </span>
+          <a class="handle" href="mailto:denisa@chrrybmb.com">denisa@chrrybmb.com</a>
+        </div>
+
+        <div class="actions">
+          <a class="btn-pixel" href="mailto:denisa@chrrybmb.com?subject=Hello%20Denisa&body=Hi%20Denisa%2C%20">Email me</a>
+          <button id="copyBtn" class="btn-pixel btn-pixel--ghost" type="button" aria-live="polite">Copy email</button>
         </div>
       </div>
     </section>
   </main>
 
   <!-- Glass footer -->
-  <footer class="glass-footer" role="contentinfo">
+  <footer class="glass-footer fade-up" data-animate style="--stagger:220ms" role="contentinfo">
     <span class="dot" aria-hidden="true"></span>
     <span>© <span id="year"></span> chrrybmb.com / denisajomo.com</span>
   </footer>
 
-  <!-- wobble filter -->
-  <svg width="0" height="0" style="position:absolute">
-    <filter id="softWobble" x="-50%" y="-50%" width="200%" height="200%">
-      <feTurbulence type="fractalNoise" baseFrequency="0.008" numOctaves="1" seed="11" result="noise">
-        <animate attributeName="baseFrequency" dur="14s" values="0.008;0.010;0.008" repeatCount="indefinite" />
-      </feTurbulence>
-      <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G"/>
-    </filter>
-  </svg>
+  <script>
+    // copy email feedback
+    document.getElementById('copyBtn')?.addEventListener('click', async (e)=>{
+      try{
+        await navigator.clipboard.writeText('denisa@chrrybmb.com');
+        const btn = e.currentTarget;
+        const prev = btn.textContent;
+        btn.textContent = 'Copied ✧';
+        setTimeout(()=> btn.textContent = prev, 1200);
+      }catch(_){}
+    });
 
+    // gentle tilt on desktop
+    (function(){
+      const card = document.querySelector('.card-iris[data-tilt]');
+      if(!card) return;
+      const fine = matchMedia('(hover:hover) and (pointer:fine)').matches;
+      if(!fine) return;
+      const inner = card.querySelector('.contact-card');
+      let rAF = null;
+      function onMove(ev){
+        const rect = card.getBoundingClientRect();
+        const x = (ev.clientX - rect.left) / rect.width;
+        const y = (ev.clientY - rect.top)  / rect.height;
+        const ry = (x - 0.5) * 10;  // rotateY
+        const rx = (0.5 - y) * 8;   // rotateX
+        if(rAF) cancelAnimationFrame(rAF);
+        rAF = requestAnimationFrame(()=>{
+          card.style.setProperty('--rx', rx.toFixed(2) + 'deg');
+          card.style.setProperty('--ry', ry.toFixed(2) + 'deg');
+        });
+      }
+      card.addEventListener('mousemove', onMove);
+      card.addEventListener('mouseleave', ()=> {
+        card.style.setProperty('--rx','0deg'); card.style.setProperty('--ry','0deg');
+      });
+    })();
+  </script>
+
+  <!-- Shared global interactions -->
   <script type="module" src="./site.js" defer></script>
-  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
