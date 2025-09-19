@@ -178,32 +178,3 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 })();
 
-(function () {
-  const gap = "   "; // spacing between loops
-  const msg = "chrrybmb — who looks inside awakes ⋆˙⟡";
-  const scrollText = (msg + gap);
-  let i = 0;
-
-  function tick(){
-    // rotate the string
-    document.title = scrollText.slice(i) + scrollText.slice(0, i);
-    i = (i + 1) % scrollText.length;
-  }
-
-  let timer = setInterval(tick, 200); // speed: smaller = faster (e.g., 120)
-
-  // respect reduced motion
-  const m = window.matchMedia("(prefers-reduced-motion: reduce)");
-  function setMotion(e){
-    if (e.matches) { clearInterval(timer); document.title = msg; }
-    else { clearInterval(timer); timer = setInterval(tick, 200); }
-  }
-  setMotion(m);
-  m.addEventListener("change", setMotion);
-
-  // optional: pause when user is on the tab to reduce distraction
-  document.addEventListener("visibilitychange", () => {
-    if (document.hidden) { setMotion({matches:false}); }
-    else { setMotion(m); }
-  });
-})();
