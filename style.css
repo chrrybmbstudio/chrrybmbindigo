@@ -858,6 +858,48 @@ animation: beamsSpin 28s linear infinite;
   --indigo:  #4440ff;
 }
 
+.marquee{
+  --speed: 22s;               /* slower → bigger number */
+  --pad: clamp(8px, 2vw, 14px);
+  position: relative;
+  overflow: hidden;
+  padding-block: var(--pad);
+  background: linear-gradient(180deg, rgba(255,255,255,.62), rgba(255,255,255,.42));
+  backdrop-filter: blur(10px) saturate(115%);
+  -webkit-backdrop-filter: blur(10px) saturate(115%);
+  border-radius: 12px;
+  box-shadow: 0 8px 26px rgba(68,64,255,.10);
+  /* soft edge fade */
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 7%, #000 93%, transparent 100%);
+          mask-image: linear-gradient(to right, transparent 0, #000 7%, #000 93%, transparent 100%);
+}
+
+.marquee__track{
+  display: flex;
+  width: max-content;
+  gap: 0;
+  animation: marquee var(--speed) linear infinite;
+}
+
+.marquee__text{
+  font: 800 clamp(10px, 2.2vw, 14px)/1 "Funnel Display", system-ui, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: .12em;      /* your micro-caps pixel track */
+  white-space: nowrap;
+  padding-right: 2ch;         /* space before the next loop */
+  color: #1b1e35;
+}
+
+/* Seamless loop: move half the total width (we duplicated content) */
+@keyframes marquee {
+  from { transform: translate3d(0,0,0) }
+  to   { transform: translate3d(-50%,0,0) }
+}
+
+/* Reduce motion respect */
+@media (prefers-reduced-motion: reduce){
+  .marquee__track{ animation: none }
+}
 
 
 /* Base “+” */
