@@ -8,7 +8,7 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
 (function(){
   const hdr = document.querySelector('.site-header');
   if(!hdr) return;
-  addEventListener('scroll', () => hdr.classList.toggle('is-scrolled', scrollY > 4));
+  addEventListener('scroll', () => hdr.classList.toggle('is-scrolled', scrollY > 4), {passive:true});
 })();
 
 // 3) Mouse / touch orb → updates CSS vars --orb-x / --orb-y
@@ -98,27 +98,59 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// 7) Reveal iris cards on view
-document.addEventListener('DOMContentLoaded', () => {
-  const cards = document.querySelectorAll('.card-iris[data-animate]');
-  const show = el => el.classList.add('is-in');
-  if (!('IntersectionObserver' in window)) { cards.forEach(show); return; }
+// 7) ✨ Global reveal-on-load/scroll (hero, cards, footer… anything with [data-animate])
+(function(){
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const nodes = Array.from(document.querySelectorAll('[data-animate]'));
+  if (!nodes.length) return;
+
+  // Auto-stagger in DOM order unless element sets its own --stagger inline
+  let auto = 0;
+  const STEP = 70; // ms
+  nodes.forEach(el => {
+    if (!el.style.getPropertyValue('--stagger')){
+      el.style.setProperty('--stagger', `${auto}ms`);
+      auto += STEP;
+    }
+  });
+
+  const reveal = el => el.classList.add('is-in');
+
+  if (prefersReduced || !('IntersectionObserver' in window)) {
+    nodes.forEach(reveal);
+    return;
+  }
+
   const io = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) { show(e.target); io.unobserve(e.target); }});
-  }, { rootMargin: '0px 0px -10% 0px', threshold: 0.1 });
-  cards.forEach(c => io.observe(c));
-});
+    entries.forEach(entry => {
+      if (entry.isIntersecting){
+        reveal(entry.target);
+        io.unobserve(entry.target);
+      }
+    });
+  }, { root: null, rootMargin: '0px 0px -10% 0px', threshold: 0.22 });
+
+  nodes.forEach(el => io.observe(el));
+
+  // Nudge above-the-fold on load (feels instant on fast pages)
+  addEventListener('load', () => {
+    requestAnimationFrame(() => {
+      nodes.slice(0, 6).forEach(reveal);
+    });
+  });
+})();
 
 // 8) Feature-card tilt + iridescent sheen
 (function(){
   const cards = document.querySelectorAll('.feature-card');
   if (!cards.length) return;
   const fine = matchMedia('(hover:hover) and (pointer:fine)').matches;
+  const prefersReduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   cards.forEach(card => {
     let raf = 0;
     function onMove(ev){
-      if (!fine) return;
+      if (!fine || prefersReduced) return;
       const r = card.getBoundingClientRect();
       const x = (ev.clientX - r.left) / r.width;
       const y = (ev.clientY - r.top)  / r.height;
@@ -134,7 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
         card.style.setProperty('--my', (y*100).toFixed(2) + '%');
       });
     }
-    function onEnter(){ card.classList.add('is-hot'); }
+    function onEnter(){ if (!prefersReduced) card.classList.add('is-hot'); }
     function onLeave(){
       card.classList.remove('is-hot');
       card.style.setProperty('--ry','0deg');
