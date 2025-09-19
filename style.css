@@ -69,7 +69,13 @@ a:hover{ text-decoration:underline }
   font-style: normal;
 }
 
-.pxlh{ font-family:"Jacquarda Bastarda 9", serif; font-size:1.2em; font-weight:600;xs}
+.pxlh{
+  font-family:"Jacquarda Bastarda 9", serif;
+  font-weight:600; /* your note */
+  font-size: calc(var(--ui) * 1.2em);
+  line-height: calc(var(--ui) * 40px);
+  margin: 0;
+}
 
 
 .container{ 
@@ -267,6 +273,27 @@ a:hover{ text-decoration:underline }
 }
 
 
+    /* --- Glass footer --- */
+    .glass-footer{
+      position:fixed; left:0; right:0; bottom:0; z-index:20;
+      display:flex; align-items:center; justify-content:center; gap:12px;
+      padding: 8px 12px; margin: 8px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.35);
+      backdrop-filter: blur(10px) saturate(135%) contrast(105%);
+      -webkit-backdrop-filter: blur(10px) saturate(135%) contrast(105%);
+      box-shadow: 0 10px 30px rgba(68,64,255,.12);
+      -webkit-mask-image: radial-gradient(120% 120% at 50% 0%, #000 40%, rgba(0,0,0,.85) 72%, transparent 100%);
+              mask-image: radial-gradient(120% 120% at 50% 0%, #000 40%, rgba(0,0,0,.85) 72%, transparent 100%);
+    }
+    .glass-footer a, .glass-footer span{font:600 13px/1 "DM Sans"; color:#1b1e35; text-decoration:none}
+    .glass-footer .dot{width:5px; height:5px; border-radius:50%; background:linear-gradient(90deg,var(--indigo),#8aa3ff)}
+
+    /* Phone polish */
+    @media (max-width:480px){
+      .card-iris{width:min(94vw, 560px)}
+      .btn-pixel{ --px: 10px; padding: 8px 10px; }
+    }
 
 /* ---------------- Hero ---------------- */
 .hero{
