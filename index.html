@@ -129,21 +129,6 @@
       mix-blend-mode: screen; opacity:.55; filter: blur(7px);
     }
 
-    /* --- Glass footer --- */
-    .glass-footer{
-      position:fixed; left:0; right:0; bottom:0; z-index:20;
-      display:flex; align-items:center; justify-content:center; gap:12px;
-      padding: 8px 12px; margin: 8px;
-      border-radius: 16px;
-      background: rgba(255,255,255,.35);
-      backdrop-filter: blur(10px) saturate(135%) contrast(105%);
-      -webkit-backdrop-filter: blur(10px) saturate(135%) contrast(105%);
-      box-shadow: 0 10px 30px rgba(68,64,255,.12);
-      -webkit-mask-image: radial-gradient(120% 120% at 50% 0%, #000 40%, rgba(0,0,0,.85) 72%, transparent 100%);
-              mask-image: radial-gradient(120% 120% at 50% 0%, #000 40%, rgba(0,0,0,.85) 72%, transparent 100%);
-    }
-    .glass-footer a, .glass-footer span{font:600 13px/1 "DM Sans"; color:#1b1e35; text-decoration:none}
-    .glass-footer .dot{width:5px; height:5px; border-radius:50%; background:linear-gradient(90deg,var(--indigo),#8aa3ff)}
 
     /* Phone polish */
     @media (max-width:480px){
@@ -432,7 +417,7 @@
           </article>
           <article class="card-iris feature-card" data-animate="fade-up">
             <span class="pxlh">Art Direction</span>
-            <p>Campaign concepts, motion, and visuals with that prism-y glow.</p>
+            <p>Campaign concepts, motion, and visuals.</p>
             <a class="btn-pixel btn-pixel--ghost" href="./work.html#ad">EXPLORE</a>
           </article>
         </div>
@@ -440,11 +425,6 @@
     </main>
   </div>
 
-  <!-- Glass footer -->
-  <footer class="glass-footer" role="contentinfo" data-animate="fade-in" style="--stagger:120ms">
-    <span class="dot" aria-hidden="true"></span>
-    <span>© <span id="year"></span> chrrybmb.com / denisajomo.com</span>
-  </footer>
 
   <!-- Shared wobble filter (if style.css uses it) -->
   <svg width="0" height="0" style="position:absolute">
@@ -455,6 +435,12 @@
       <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G"/>
     </filter>
   </svg>
+
+  <!-- Glass footer -->
+  <footer class="glass-footer fade-up" role="contentinfo">
+    <span class="dot" aria-hidden="true"></span>
+    <span>© <span id="year"></span> chrrybmb.com / denisajomo.com</span>
+  </footer>
 
   <!-- Tiny tilt/sheeny interaction (subtle, noticeable) -->
   <script>
