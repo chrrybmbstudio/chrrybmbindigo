@@ -79,7 +79,7 @@ a:hover{ text-decoration:underline }
  }
 
  .navcontainer {
-  max-width: 1100px;
+  max-width: 700px;
   margin: auto;
  }
 
@@ -1066,6 +1066,20 @@ animation: beamsSpin 28s linear infinite;
     margin-inline: auto;          /* centers the narrower card */
   }
 }
+
+
+/* Global density system */
+:root{ --ui: 1 }                  /* default = normal */
+.density-sm{ --ui: .92 }
+.density-xs{ --ui: .66 }
+
+/* Helpers that scale common primitives */
+.u-fs-hero   { font-size: calc(var(--ui) * var(--fs-hero, clamp(42px,8vw,76px))); }
+.u-fs-lede   { font-size: calc(var(--ui) * var(--fs-lede, clamp(16px,2.4vw,20px))); }
+.u-pad-card  { padding: calc(var(--ui) * 22px) calc(var(--ui) * 6px); }
+.u-radius    { border-radius: calc(var(--ui) * var(--cardR, 22px)); }
+.u-btn       { font-size: calc(var(--ui) * 14px); padding: calc(var(--ui) * 12px) calc(var(--ui) * 14px); }
+.u-icon      { width: calc(var(--ui) * 18px); height: calc(var(--ui) * 18px); }
 
 
 
