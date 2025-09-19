@@ -1,11 +1,20 @@
-<!doctype html>
-<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>404 — lost in the prism</title>
+
+  <!-- Root-absolute so it works at any missing path -->
   <link rel="icon" type="image/svg+xml" href="/assets/eye.svg">
   <link rel="stylesheet" href="/style.css" />
+  <!-- (Optional) if your buttons/effects rely on site.js -->
+  <script type="module" src="/site.js" defer></script>
+
+  <!-- Fonts: include them here because 404.html doesn’t inherit your other pages -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Jacquarda+Bastarda+9&display=swap" rel="stylesheet">
+
   <meta name="theme-color" content="#4440ff">
   <style>
     .lost-wrap{min-height:100svh; display:grid; place-items:center; position:relative}
@@ -19,10 +28,10 @@
     .lost-title{ font: 800 clamp(28px,6vw,54px)/.95 "Funnel Display", system-ui, sans-serif; letter-spacing:.12em; text-transform:uppercase }
     .lost-sub{ font-family:"Jacquarda Bastarda 9", serif; font-size:clamp(16px,3.2vw,22px); margin:.4em 0 1em; color:#2c3144}
     .lost-actions{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap }
-    .btn-pixel{ /* reuse your button class if already global */ }
     .orb{ position:fixed; inset:0; pointer-events:none; background:radial-gradient(40% 30% at 70% 60%, rgba(68,64,255,.18), transparent 60%) }
   </style>
 </head>
+
 <body class="density-xs">
   <div class="iridescent-wave" aria-hidden="true"></div>
   <div class="orb" aria-hidden="true"></div>
