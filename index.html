@@ -41,6 +41,10 @@
       /* pixel-mini vibe */
       --px-font:"Funnel Display", system-ui, sans-serif;
       --px-track:.12em;
+
+      /* NEW: fluid page gutters + space for fixed footer */
+      --page-pad: clamp(16px, 5vw, 28px);
+      --footer-space: 96px; /* breathing room so cards never hide under footer */
     }
 
     body{
@@ -49,6 +53,19 @@
         linear-gradient(180deg, #ffffff, #faf9ff);
       color: var(--ink);
       -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+    }
+
+    /* Provide a robust “container” everywhere this page expects it */
+    .container{
+      width: min(1100px, 100%);
+      margin-inline: auto;
+      padding-inline: var(--page-pad);
+      box-sizing: border-box;
+    }
+
+    /* The main content gets bottom padding to clear the fixed footer */
+    .site-main{
+      padding-bottom: calc(var(--footer-space) + env(safe-area-inset-bottom, 0px));
     }
 
     /* IRIDESCENT WAVE (full-page) — anti-seam overscan + GPU hinting */
@@ -95,7 +112,7 @@
       mix-blend-mode: screen; opacity:.55; filter: blur(7px);
     }
 
-    /* Glass footer */
+    /* Glass footer (fixed) */
     .glass-footer{
       position:fixed; left:0; right:0; bottom:0; z-index:20; display:flex; align-items:center; justify-content:center; gap:14px;
       padding:10px 14px; margin:10px; border-radius:16px; background: rgba(255,255,255,.35);
@@ -136,30 +153,20 @@
       border-radius: calc(var(--ui) * clamp(18px, 1.4vw, 28px));
     }
     .hero__grid{ display:grid; grid-template-columns:1fr; gap: calc(var(--ui) * min(32px, 3.5vw)); align-items:end; }
-    
     @media (min-width:900px) {
-      .hero__grid{
-        grid-template-columns: 1.1fr .9fr }
-
+      .hero__grid{ grid-template-columns: 1.1fr .9fr }
+    }
+    @media (max-width:900px){
+      .hero__content { text-align:center; }
+      .hero__cta{
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
       }
-
-      @media (max-width:900px){
-  .hero__content { text-align:center; } /* you already have this */
-
-  /* center the button row on mobile/tablet */
-  .hero__cta{
-    justify-content: center;
-    align-items: center;
-    width: 100%;           /* helps when wrapping */
-    margin-left: auto;     /* ensure the flex row itself is centered */
-    margin-right: auto;
-  }
-
-  .hero__cta .btn-pixel{
-    flex: 0 0 auto;        /* don't stretch */
-  }
-}
-
+      .hero__cta .btn-pixel{ flex: 0 0 auto; }
+    }
 
     /* Headline & kicker scale */
     .name-edge{
@@ -182,7 +189,7 @@
 
     /* ===== Pixel-mini buttons (Funnel Display, ALL CAPS) ===== */
     .btn-pixel{
-      --px: 10.5px;              /* easy knob */
+      --px: 10.5px;
       display:inline-flex; align-items:center; justify-content:center; gap:.4ch;
       padding: 8px 12px; border-radius: 10px;
       font: 800 var(--px)/1 var(--px-font);
@@ -203,31 +210,39 @@
       background: transparent; color:#2a2f45; border:1px solid #5a57ff;
       box-shadow:none;
     }
-    /* keep spacing consistent where used */
     .hero__cta{ display:flex; gap: calc(var(--ui) * 12px); margin: 0 0 calc(var(--ui) * 8px); flex-wrap:wrap; }
 
     /* ===== Features (cards smaller content + a bit more padding) ===== */
-    .features{ padding: calc(var(--ui) * clamp(22px, 5vw, 44px)) 0; }
-    .features__grid{ display:grid; grid-template-columns:1fr; gap: 16px; }
-    @media (min-width:780px){ .features__grid{ grid-template-columns: repeat(3, 1fr); } }
+    .features{
+      padding: calc(var(--ui) * clamp(22px, 5vw, 44px)) 0;
+      /* EXTRA bottom space so the last row never kisses the footer */
+      margin-bottom: calc(var(--footer-space) / 2);
+    }
+
+    .features__grid{
+      display:grid;
+      /* Fully fluid columns; smoothly adapt at ANY width */
+      grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
+      gap: 16px;
+      padding-inline: var(--page-pad);
+      box-sizing: border-box;
+    }
 
     .card-iris{
       position: relative; border-radius: calc(var(--ui) * 18px);
-      padding: 16px 18px;  /* a touch more inner padding */
+      padding: 16px 18px;
       background: linear-gradient(180deg, rgba(255,255,255,.62), rgba(255,255,255,.42));
       backdrop-filter: blur(10px) saturate(115%); -webkit-backdrop-filter: blur(10px) saturate(115%);
       box-shadow: 0 10px 40px rgba(68,64,255,.08), 0 1px 0 rgba(255,255,255,.6) inset;
       overflow:hidden; isolation:isolate; transform-origin: 50% 60%;
       transition: transform .18s ease, box-shadow .2s ease;
     }
-    /* Iridescent border ring */
     .card-iris::before{
       content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none;
       padding:1px; background: linear-gradient(135deg, rgba(248,0,255,.45), rgba(68,64,255,.45));
       -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
       -webkit-mask-composite: xor; mask-composite: exclude; opacity:.85;
     }
-    /* Soft prism sweep on hover */
     .card-iris::after{
       content:""; position:absolute; inset:-2px; border-radius:inherit; pointer-events:none; padding:1px;
       background: linear-gradient(90deg, rgba(248,0,255,0) 0%, rgba(248,0,255,.45) 44%, rgba(255,255,255,.95) 50%, rgba(68,64,255,.45) 56%, rgba(248,0,255,0) 100%);
@@ -238,25 +253,57 @@
     }
     .card-iris.is-hot::after{ opacity:1; background-position:160% 0; }
 
-    /* subtle tilt on hover (desktop) */
-    .feature-card{ display:flex; flex-direction:column; gap: 10px; min-height: 99px }
+    .feature-card{ display:flex; flex-direction:column; gap: 10px; }
     .feature-card h3, .feature-card .pxlh{ margin:0; font-size: calc(var(--ui) * 16px); line-height:1.1; letter-spacing:.02em; }
     .feature-card p{ margin: 0 0 auto; color:#2c3144; font-size: max(12px, calc(var(--ui)* 13.5px)); line-height:1.42; }
 
-    /* CTA inside cards uses pixel-mini */
-    .feature-card .btn-pixel{ margin-top: 8px; }
+       /* === Mini cards: tighter height with balanced spacing === */
+:root{
+  --card-pad-y: 12px;      /* was 16px */
+  --card-pad-x: 14px;      /* was 18px */
+  --card-gap:    8px;      /* was 10px */
+  --card-btn-gap:6px;      /* space above the button */
+}
 
-    /* Mobile breathing room */
-    @media (max-width: 680px){
-      .features__grid{ grid-template-columns: 1fr; gap: 18px; padding-inline: clamp(14px, 5vw, 24px); }
-      .feature-card{ width: min(100%, 560px); margin-inline:auto; }
-    }
+.card-iris{
+  padding: var(--card-pad-y) var(--card-pad-x);
+}
 
-    .mb {
-    margin-bottom: 80px;
+.feature-card{
+  gap: var(--card-gap);
+  /* if you previously set a min-height somewhere, kill it: */
+  min-height: unset;
+}
+
+/* tighten copy rhythm so card can be shorter */
+.feature-card .pxlh,
+.feature-card h3{
+  /* keep size but reduce the vertical rhythm a touch */
+  line-height: 1.08;
+}
+
+
+.feature-card p{
+  margin: 6px 0 0;         /* was: 0 0 auto */
+  line-height: 1.36;      
+}
+
+/* mini CTA spacing */
+.feature-card .btn-pixel{
+  margin-top: var(--card-btn-gap); /* was ~8px */
+}
+
+/* (optional) go even smaller on really narrow screens */
+@media (max-width: 520px){
+  :root{
+    --card-pad-y: 10px;
+    --card-pad-x: 12px;
+    --card-gap:    7px;
+    --card-btn-gap:5px;
   }
-  </style>
+}
 
+  </style>
 
 </head>
 
@@ -346,17 +393,17 @@
       <!-- FEATURES -->
       <section class="features" aria-label="Featured work">
         <div class="container features__grid">
-          <article class="card-iris feature-card mb" data-tilt>
+          <article class="card-iris feature-card" data-tilt>
             <span class="pxlh">Web UX</span>
             <p>Information architecture, flows, and responsive front-end systems.</p>
             <a class="btn-pixel btn-pixel--ghost" href="./work.html#ux">EXPLORE</a>
           </article>
-          <article class="card-iris feature-card mb" data-tilt>
+          <article class="card-iris feature-card" data-tilt>
             <span class="pxlh">Brand Systems</span>
             <p>Identity, typography, usage rules, and scalable component libraries.</p>
             <a class="btn-pixel btn-pixel--ghost" href="./work.html#brand">EXPLORE</a>
           </article>
-          <article class="card-iris feature-card mb" data-tilt>
+          <article class="card-iris feature-card" data-tilt>
             <span class="pxlh">Art Direction</span>
             <p>Campaign concepts, motion, and visuals with that prism-y glow.</p>
             <a class="btn-pixel btn-pixel--ghost" href="./work.html#ad">EXPLORE</a>
