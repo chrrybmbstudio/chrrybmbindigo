@@ -1094,6 +1094,43 @@ animation: beamsSpin 28s linear infinite;
 @keyframes xm-left{ from{transform:translate3d(0,0,0)} to{transform:translate3d(-100%,0,0)} }
 @keyframes xm-left-2{ from{transform:translate3d(100%,0,0)} to{transform:translate3d(0,0,0)} }
 
+/* --- FORCE RUN on mobile & iOS --- */
+/* Ensure our lanes have an explicit, running animation */
+.xm-marquee .xm-lane{
+  animation-name: xm-left;
+  animation-duration: var(--speed);
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-play-state: running;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translate3d(0,0,0);
+}
+.xm-marquee .xm-lane:nth-of-type(2){ animation-name: xm-left-2; }
+
+/* If any global CSS paused animations, override it on touch devices */
+@media (hover:none) and (pointer:coarse){
+  .xm-marquee .xm-lane{
+    animation-play-state: running !important;
+  }
+}
+
+/* If you previously respected reduced-motion, neutralize it for this component */
+@media (prefers-reduced-motion: reduce){
+  .xm-marquee .xm-lane{
+    animation-name: xm-left !important;
+    animation-duration: var(--speed) !important;
+    animation-iteration-count: infinite !important;
+    animation-play-state: running !important;
+  }
+  .xm-marquee .xm-lane:nth-of-type(2){
+    animation-name: xm-left-2 !important;
+  }
+}
+
+/* Safety: never pause on hover unless explicitly wrapped */
+.xm-marquee:hover .xm-lane{ animation-play-state: running; }
+
 
 /* Base “+” */
 .plus-field .plus{
