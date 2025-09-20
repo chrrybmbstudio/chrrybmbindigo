@@ -365,3 +365,59 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
+// Seamless marquee: build ONE exact cycle wide enough for the viewport,
+// then render it TWICE and animate exactly one cycle width.
+(function initMarquees(){
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  document.querySelectorAll('.marquee[data-allow-motion]').forEach(host => {
+    const track = host.querySelector('.marquee__track');
+    if (!track) return;
+
+    // template: original content nodes
+    const template = [...track.children].map(n => n.cloneNode(true));
+
+    function build(){
+      // 1) Start clean, build ONE cycle that is at least as wide as the container
+      track.replaceChildren();                       // empty
+      const containerW = host.getBoundingClientRect().width || host.clientWidth;
+
+      // keep repeating original phrase until we cover container width
+      do { template.forEach(n => track.appendChild(n.cloneNode(true))); }
+      while (track.scrollWidth < containerW);
+
+      // Measure this ONE cycle width
+      const oneCycleW = track.scrollWidth;
+
+      // 2) Duplicate that exact cycle once more (now we have exactly TWO cycles)
+      const oneCycleNodes = [...track.children].map(n => n.cloneNode(true));
+      oneCycleNodes.forEach(n => track.appendChild(n)); // total width = 2 * oneCycleW
+
+      // 3) Animate by exactly ONE cycle width for a perfect wrap
+      track.style.setProperty('--loop-distance', oneCycleW + 'px');
+
+      // 4) Duration from pixels-per-second (consistent speed everywhere)
+      const pps = parseFloat(getComputedStyle(host).getPropertyValue('--pps')) || 80;
+      track.style.setProperty('--dur', (oneCycleW / pps) + 's');
+    }
+
+    build();
+
+    // Rebuild on resize / orientation change
+    let raf = 0;
+    const onResize = () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(build); };
+    addEventListener('resize', onResize, { passive:true });
+  });
+})();
+
+// Restart marquee animations (fix occasional iOS stall after navigation/back)
+(() => {
+  const lanes = document.querySelectorAll('.xm-marquee .xm-lane');
+  lanes.forEach(l => {
+    l.style.animation = 'none';
+    // force reflow
+    // eslint-disable-next-line no-unused-expressions
+    l.offsetHeight;
+    l.style.animation = '';
+  });
+})();
