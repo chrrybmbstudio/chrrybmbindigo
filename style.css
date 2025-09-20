@@ -1113,7 +1113,7 @@ animation: beamsSpin 28s linear infinite;
 }
 
 .marquee__text{
-  background: linear-gradient(333deg,#1b1e35 0 40%, #7ff0ff60 40%, #ff6adf70 50%, #1b1e35 80%);
+  background: linear-gradient(333deg,#1b1e35 0 70%, #7ff0ff20 20%, #ff6adf20 10%, #1b1e35 80%);
   -webkit-background-clip:text; background-clip:text; color:transparent;
   animation: shimmer 8s linear infinite;
   background-size: 200% 100%;
