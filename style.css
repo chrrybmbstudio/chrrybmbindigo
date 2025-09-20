@@ -1140,6 +1140,12 @@ animation: beamsSpin 28s linear infinite;
   .marquee__lane{ animation: none; transform: none; position: static; }
 }
 
+/* force motion on this component */
+.marquee .marquee__lane{
+  animation-play-state: running !important;
+}
+
+
 
 /* Base “+” */
 .plus-field .plus{
