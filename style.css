@@ -951,6 +951,7 @@ animation: beamsSpin 28s linear infinite;
 }
 
 
+
 /* Base “+” */
 .plus-field .plus{
   position: absolute;
@@ -1015,6 +1016,8 @@ animation: beamsSpin 28s linear infinite;
   0%,100% { opacity: var(--alpha, .65); filter: drop-shadow(0 0 1px rgba(68,64,255,.16)); }
   50%     { opacity: calc(var(--alpha, .65) + .12); filter: drop-shadow(0 0 1.6px rgba(68,64,255,.28)); }
 }
+
+
 
 /* =========================
    chrrybmb — header + search
@@ -1140,8 +1143,21 @@ animation: beamsSpin 28s linear infinite;
   border:1px solid #5a57ff; border-radius:8px; padding:6px 8px; background:#fff; color:#17182a;
 }
 .search__results{
-  list-style:non
-
+  list-style:none; margin:0; padding:6px; max-height:min(52vh, 420px); overflow:auto;
+}
+.search__results li{
+  border-radius:12px; padding:10px 12px; display:grid; gap:4px;
+  background:linear-gradient(180deg, rgba(255,255,255,.55), rgba(255,255,255,.42));
+  border:1px solid transparent;
+}
+.search__results li + li{ margin-top:6px }
+.search__results a{
+  text-decoration:none; color:#121324; font:600 13px/1.25 "DM Sans", system-ui, sans-serif;
+}
+.search__results .path{ font:600 11px/1 "DM Sans"; opacity:.65 }
+.search__results li[aria-selected="true"]{
+  border-color:#5a57ff; box-shadow:0 0 0 1px rgba(68,64,255,.10) inset;
+}
 
 
 /* features */
@@ -1404,19 +1420,3 @@ animation: beamsSpin 28s linear infinite;
 }
 
 
-/* 900–1300px only */
-@media (min-width: 901px) and (max-width: 1300px){
-  /* tighten container edges just for this band */
-  .site-header .container{
-    padding-inline-start: 10px;           /* left */
-    padding-inline-end: 10px;             /* right */
-  }
-
-  /* if your hero also needs it */
-  .hero{ padding-inline-start: 50px; }
-
-  .brand{
-    transform: none;                     
-    margin-inline-start: 0;              
-  }
-}
