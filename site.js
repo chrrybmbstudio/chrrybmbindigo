@@ -239,15 +239,17 @@ document.addEventListener('DOMContentLoaded', () => {
   // const firstBtn = buttons[0]; const firstPane = document.getElementById(firstBtn.getAttribute('aria-controls'));
   // firstBtn.setAttribute('aria-expanded','true'); firstPane.hidden = false;
 })();
-
-
-(function(){
+// site.js — search overlay (mini, robust, page-safe)
+(function initSearch() {
+  const dlg   = document.getElementById('search');
   const openBtn = document.getElementById('openSearch');
-  const dlg = document.getElementById('search');
   const input = document.getElementById('searchInput');
-  const list = document.getElementById('searchResults');
+  const list  = document.getElementById('searchResults');
 
-  // tiny index — edit to match your routes
+  // if this page doesn’t have the search markup, bail gracefully
+  if (!dlg || !openBtn || !input || !list) return;
+
+  // tiny index — adjust to your routes
   const INDEX = [
     { title: 'home',            url: '/index.html',           path: 'chrrybmb' },
     { title: 'about',           url: '/about.html',           path: 'about' },
@@ -258,49 +260,108 @@ document.addEventListener('DOMContentLoaded', () => {
     { title: '404',             url: '/404.html',             path: 'system' }
   ];
 
-  function render(items, selectFirst=true){
-    list.innerHTML = items.length ? items.map((it,i)=>`
-      <li role="option" ${selectFirst && i===0 ? 'aria-selected="true"' : ''} data-i="${i}">
-        <a href="${it.url}">${it.title}</a>
-        <span class="path">${it.path}</span>
-      </li>`).join('') : `<li aria-disabled="true"><span class="path">no results</span></li>`;
-  }
-  function filter(q){
+  const render = (items, selectFirst = true) => {
+    list.innerHTML = items.length
+      ? items.map((it,i)=>`
+        <li role="option" ${selectFirst && i===0 ? 'aria-selected="true"' : ''} data-i="${i}">
+          <a href="${it.url}">${it.title}</a>
+          <span class="path">${it.path}</span>
+        </li>`).join('')
+      : `<li aria-disabled="true"><span class="path">no results</span></li>`;
+  };
+
+  const filter = q => {
     q = q.trim().toLowerCase();
-    if(!q) return INDEX;
+    if (!q) return INDEX;
     return INDEX.filter(it =>
       it.title.toLowerCase().includes(q) ||
       it.path.toLowerCase().includes(q) ||
       it.url.toLowerCase().includes(q)
     );
-  }
-  function select(delta){
+  };
+
+  const select = delta => {
     const items = [...list.querySelectorAll('li[role="option"]')];
-    const cur = items.findIndex(li => li.getAttribute('aria-selected')==='true');
-    const next = Math.max(0, Math.min(items.length-1, cur + delta));
+    if (!items.length) return;
+    const cur = items.findIndex(li => li.getAttribute('aria-selected') === 'true');
+    const next = Math.max(0, Math.min(items.length - 1, (cur === -1 ? 0 : cur + delta)));
     items.forEach((li,i)=> li.setAttribute('aria-selected', i===next ? 'true' : 'false'));
-    items[next]?.scrollIntoView({block:'nearest'});
-  }
+    items[next]?.scrollIntoView({ block:'nearest' });
+  };
 
-  function open(){ dlg.hidden = false; render(INDEX); input.value=''; setTimeout(()=>input.focus(),0); document.body.style.overflow='hidden'; }
-  function close(){ dlg.hidden = true; document.body.style.overflow=''; openBtn?.focus(); }
+  const open = () => {
+    dlg.hidden = false;
+    render(INDEX);
+    input.value = '';
+    requestAnimationFrame(() => input.focus());
+    document.body.style.overflow = 'hidden';
+  };
+  const close = () => {
+    dlg.hidden = true;
+    document.body.style.overflow = '';
+    openBtn?.focus();
+  };
 
-  openBtn?.addEventListener('click', open);
-  dlg.addEventListener('click', e => { if(e.target.hasAttribute('data-close')) close(); });
+  // events
+  openBtn.addEventListener('click', open);
+  dlg.addEventListener('click', e => { if (e.target.hasAttribute('data-close')) close(); });
   input.addEventListener('input', e => render(filter(e.target.value)));
 
-  dlg.addEventListener('keydown', (e)=>{
-    if(e.key==='Escape'){ e.preventDefault(); close(); }
-    if(e.key==='ArrowDown'){ e.preventDefault(); select(1); }
-    if(e.key==='ArrowUp'){ e.preventDefault(); select(-1); }
-    if(e.key==='Enter'){
-      const sel = list.querySelector('li[aria-selected="true"] a'); if(sel) window.location.href = sel.getAttribute('href');
+  // keyboard inside the dialog
+  dlg.addEventListener('keydown', e => {
+    if (e.key === 'Escape')       { e.preventDefault(); close(); }
+    else if (e.key === 'ArrowDown'){ e.preventDefault(); select(1); }
+    else if (e.key === 'ArrowUp')  { e.preventDefault(); select(-1); }
+    else if (e.key === 'Enter') {
+      const sel = list.querySelector('li[aria-selected="true"] a');
+      if (sel) window.location.href = sel.getAttribute('href');
     }
   });
 
   // global shortcut ⌘K / Ctrl+K
-  addEventListener('keydown', (e)=>{
+  window.addEventListener('keydown', e => {
     const k = e.key.toLowerCase();
-    if((e.metaKey || e.ctrlKey) && k==='k'){ e.preventDefault(); dlg.hidden ? open() : close(); }
+    if ((e.metaKey || e.ctrlKey) && k === 'k') {
+      e.preventDefault();
+      dlg.hidden ? open() : close();
+    }
   });
 })();
+
+// close on ESC from anywhere while dialog is open
+document.addEventListener('keydown', (e)=>{
+  if (!dlg.hidden && e.key === 'Escape') {
+    e.preventDefault();
+    close();
+  }
+});
+
+// also catch ESC specifically on the search input (Safari clears instead)
+input.addEventListener('keydown', (e)=>{
+  if (e.key === 'Escape') {
+    e.preventDefault();
+    close();
+  }
+});
+
+
+// open/close helpers defined earlier...
+// const open = () => { ... }
+// const close = () => { ... }
+
+// 1) Delegated close for backdrop *and* the pill
+dlg.addEventListener('click', (e) => {
+  if (e.target.closest('[data-close]')) {
+    e.preventDefault();
+    close();
+  }
+});
+
+// 2) Close on Escape from anywhere while dialog is open
+document.addEventListener('keydown', (e) => {
+  if (!dlg.hidden && e.key === 'Escape') {
+    e.preventDefault();
+    close();
+  }
+});
+
