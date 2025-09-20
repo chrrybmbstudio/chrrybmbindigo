@@ -1062,49 +1062,83 @@ animation: beamsSpin 28s linear infinite;
   --indigo:  #4440ff;
 }
 
+/* Full-bleed so it truly spans the page */
+.marquee--bleed{
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  margin-left: -50vw;
+  border-radius: 0;
+}
+
 .marquee{
-  --speed: 22s;               /* slower → bigger number */
+  --speed: 55s; /* knob: lower = faster, higher = slower */
   --pad: clamp(8px, 2vw, 14px);
   position: relative;
   overflow: hidden;
   padding-block: var(--pad);
+
+  /* your glassy vibe */
   background: linear-gradient(180deg, rgba(255,255,255,.62), rgba(255,255,255,.42));
   backdrop-filter: blur(10px) saturate(115%);
   -webkit-backdrop-filter: blur(10px) saturate(115%);
-  border-radius: 12px;
   box-shadow: 0 8px 26px rgba(68,64,255,.10);
-  /* soft edge fade */
+
+  /* optional soft edge fade — delete this block if you want fully visible edges */
   -webkit-mask-image: linear-gradient(to right, transparent 0, #000 7%, #000 93%, transparent 100%);
           mask-image: linear-gradient(to right, transparent 0, #000 7%, #000 93%, transparent 100%);
 }
 
-.marquee__track{
-  display: flex;
-  width: max-content;
-  gap: 0;
-  animation: marquee var(--speed) linear infinite;
+/* lanes are placed side-by-side and animated */
+.marquee__lane{
+  position: absolute;
+  top: 0; left: 0;
+  display: inline-block;
+  white-space: nowrap;
+  will-change: transform;
+  animation: marquee-left var(--speed) linear infinite;
+}
+
+/* lane B starts immediately after lane A (one full width later) */
+.marquee__lane:nth-of-type(2){
+  animation-name: marquee-left-2;
 }
 
 .marquee__text{
   font: 800 clamp(10px, 2.2vw, 14px)/1 "Funnel Display", system-ui, sans-serif;
   text-transform: uppercase;
-  letter-spacing: .12em;      /* your micro-caps pixel track */
-  white-space: nowrap;
-  padding-right: 2ch;         /* space before the next loop */
+  letter-spacing: .12em;
   color: #1b1e35;
+  padding-right: 2ch; /* spacing between repeats */
 }
 
-/* Seamless loop: move half the total width (we duplicated content) */
-@keyframes marquee {
-  from { transform: translate3d(0,0,0) }
-  to   { transform: translate3d(-50%,0,0) }
+.marquee__text{
+  background: linear-gradient(333deg,#1b1e35 0 40%, #7ff0ff60 40%, #ff6adf70 50%, #1b1e35 80%);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+  animation: shimmer 8s linear infinite;
+  background-size: 200% 100%;
+}
+@keyframes shimmer{ to { background-position: -200% 0; } }
+
+
+/* The trick:
+   lane A moves from 0% to -100% of its own width,
+   lane B moves from +100% to 0% — they trade places perfectly. */
+@keyframes marquee-left{
+  from { transform: translateX(0%); }
+  to   { transform: translateX(-100%); }
+}
+@keyframes marquee-left-2{
+  from { transform: translateX(100%); }
+  to   { transform: translateX(0%); }
 }
 
-/* Reduce motion respect */
+
+/* If the user prefers reduced motion, stop animating (optional).
+   Remove this block if you ALWAYS want motion regardless of OS setting. */
 @media (prefers-reduced-motion: reduce){
-  .marquee__track{ animation: none }
+  .marquee__lane{ animation: none; transform: none; position: static; }
 }
-
 
 
 /* Base “+” */
