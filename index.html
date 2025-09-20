@@ -296,14 +296,6 @@
       [data-animate]{ opacity:1 !important; transform:none !important; }
     }
 
-    /* mobile force-on */
-@media (max-width: 900px){
-  .marquee__track{
-    animation: marquee var(--speed,26s) linear infinite !important;
-    will-change: transform;
-    transform: translate3d(0,0,0);
-  }
-}
 
   </style>
 
@@ -353,23 +345,35 @@
   <!-- Iridescent wave -->
   <div class="iridescent-wave" aria-hidden="true"></div>
 
+
   <!-- FULL-VIEW lens layer (no images, no clipping) -->
   <div class="bg-art" aria-hidden="true">
     <span class="lens-glass"></span>
     <span class="lens-aura"></span>
+  </div>  
+
+  
+
+<!-- Full-bleed marquee (edge-to-edge) -->
+<div class="marquee marquee--bleed">
+  <!-- lane A -->
+  <div class="marquee__lane">
+    <span class="marquee__text">who looks inside awakes • </span>
+    <span class="marquee__text" aria-hidden="true">who looks inside awakes • </span>
+    <span class="marquee__text" aria-hidden="true">who looks inside awakes • </span>
   </div>
+  <!-- lane B (identical content) -->
+  <div class="marquee__lane" aria-hidden="true">
+    <span class="marquee__text">who looks inside awakes • </span>
+    <span class="marquee__text" aria-hidden="true">who looks inside awakes • </span>
+    <span class="marquee__text" aria-hidden="true">who looks inside awakes • </span>
+  </div>
+</div>
+
+  
 
   <div class="site-shell">
     <main id="main" class="site-main" role="main">
-
-      <div class="marquee" data-allow-motion>
-        <div class="marquee__track">
-          <span class="marquee__text">who looks inside awakes • </span>
-          <span class="marquee__text" aria-hidden="true">who looks inside awakes • </span>
-        </div>
-      </div>
-      
-      
       <!-- HERO -->
       <section class="hero" aria-label="Intro" data-animate="zoom-in" style="--stagger:100ms">
         <div class="container">
@@ -427,17 +431,17 @@
       <!-- FEATURES -->
       <section class="features" aria-label="Featured work">
         <div class="container features__grid">
-          <article class="card-iris feature-card" data-animate="fade-up">
+          <article class="card-iris feature-card" data-animate="fade-in">
             <span class="pxlh">Web UX</span>
             <p>Information architecture, flows, and responsive front-end systems.</p>
             <a class="btn-pixel btn-pixel--ghost" href="./web-ux.html">EXPLORE</a>
           </article>
-          <article class="card-iris feature-card" data-animate="fade-up">
+          <article class="card-iris feature-card" data-animate="fade-in">
             <span class="pxlh">Brand Systems</span>
             <p>Identity, typography, usage rules, and scalable component libraries.</p>
             <a class="btn-pixel btn-pixel--ghost" href="./brand-systems.html">EXPLORE</a>
           </article>
-          <article class="card-iris feature-card" data-animate="fade-up">
+          <article class="card-iris feature-card" data-animate="fade-in">
             <span class="pxlh">Art Direction</span>
             <p>Campaign concepts, motion, and visuals that inevitably attract.</p>
             <a class="btn-pixel btn-pixel--ghost" href="./work.html#ad">EXPLORE</a>
@@ -447,6 +451,7 @@
     </main>
   </div>
 
+  
 
   <!-- Shared wobble filter (if style.css uses it) -->
   <svg width="0" height="0" style="position:absolute">
