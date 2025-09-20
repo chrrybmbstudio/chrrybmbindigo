@@ -1062,82 +1062,88 @@ animation: beamsSpin 28s linear infinite;
   --indigo:  #4440ff;
 }
 
-/* Full-bleed so it truly spans the page */
-.marquee--bleed{
-  width: 100vw;
-  position: relative;
-  left: 50%;
-  margin-left: -50vw;
-  border-radius: 0;
+
+/* ignore reduced-motion for this instance only */
+@media (prefers-reduced-motion: reduce){
+  .marquee--always .marquee__lane{
+    animation: marquee-left var(--speed) linear infinite !important;
+  }
+  .marquee--always .marquee__lane:nth-of-type(2){
+    animation: marquee-left-2 var(--speed) linear infinite !important;
+  }
 }
 
-.marquee{
-  --speed: 55s; /* knob: lower = faster, higher = slower */
+/* ===== Marquee (island styles; prefixed to avoid conflicts) ===== */
+.xm-marquee{
+  --speed: 22s;                          /* lower = faster */
   --pad: clamp(8px, 2vw, 14px);
+
   position: relative;
   overflow: hidden;
   padding-block: var(--pad);
 
-  /* your glassy vibe */
+  /* your glassy look */
   background: linear-gradient(180deg, rgba(255,255,255,.62), rgba(255,255,255,.42));
   backdrop-filter: blur(10px) saturate(115%);
   -webkit-backdrop-filter: blur(10px) saturate(115%);
   box-shadow: 0 8px 26px rgba(68,64,255,.10);
 
-  /* optional soft edge fade — delete this block if you want fully visible edges */
+  /* optional soft edge fade — delete if you want full visibility */
   -webkit-mask-image: linear-gradient(to right, transparent 0, #000 7%, #000 93%, transparent 100%);
           mask-image: linear-gradient(to right, transparent 0, #000 7%, #000 93%, transparent 100%);
 }
 
-/* lanes are placed side-by-side and animated */
-.marquee__lane{
-  position: absolute;
-  top: 0; left: 0;
+/* Full-bleed: escapes any centered container to span 100vw */
+.xm-bleed{
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  border-radius: 0;                       /* optional */
+}
+
+/* Two lanes slide past each other and loop forever */
+.xm-lane{
+  position: absolute; top: 0; left: 0;
   display: inline-block;
   white-space: nowrap;
   will-change: transform;
-  animation: marquee-left var(--speed) linear infinite;
+  backface-visibility: hidden;            /* mobile/safari smoothness */
+  animation: xm-left var(--speed) linear infinite;
+}
+.xm-lane:nth-of-type(2){
+  animation-name: xm-left-2;              /* offset lane */
 }
 
-/* lane B starts immediately after lane A (one full width later) */
-.marquee__lane:nth-of-type(2){
-  animation-name: marquee-left-2;
-}
-
-.marquee__text{
+/* Text styling (your vibe) */
+.xm-text{
   font: 800 clamp(10px, 2.2vw, 14px)/1 "Funnel Display", system-ui, sans-serif;
   text-transform: uppercase;
   letter-spacing: .12em;
   color: #1b1e35;
-  padding-right: 2ch; /* spacing between repeats */
+  padding-right: 2ch;                      /* gap between repeats */
+  white-space: nowrap;
 }
 
-.marquee__text{
-  background: linear-gradient(333deg,#1b1e35 0 70%, #7ff0ff20 20%, #ff6adf20 10%, #1b1e35 80%);
-  -webkit-background-clip:text; background-clip:text; color:transparent;
-  animation: shimmer 8s linear infinite;
-  background-size: 200% 100%;
+/* Keyframes: GPU-friendly translate3d for iOS/Android/Safari */
+@keyframes xm-left{
+  from { transform: translate3d(0,0,0); }
+  to   { transform: translate3d(-100%,0,0); }
 }
-@keyframes shimmer{ to { background-position: -200% 0; } }
-
-
-/* The trick:
-   lane A moves from 0% to -100% of its own width,
-   lane B moves from +100% to 0% — they trade places perfectly. */
-@keyframes marquee-left{
-  from { transform: translateX(0%); }
-  to   { transform: translateX(-100%); }
-}
-@keyframes marquee-left-2{
-  from { transform: translateX(100%); }
-  to   { transform: translateX(0%); }
+@keyframes xm-left-2{
+  from { transform: translate3d(100%,0,0); }
+  to   { transform: translate3d(0,0,0); }
 }
 
+/* If you want it to ALWAYS animate on mobile, keep this block empty.
+   If you want to respect OS “Reduce Motion”, uncomment below:
 
-/* force motion on this component */
-.marquee .marquee__lane{
-  animation-play-state: running !important;
+@media (prefers-reduced-motion: reduce){
+  .xm-lane{ animation: none; transform: none; position: static; }
 }
+*/
 
 
 
