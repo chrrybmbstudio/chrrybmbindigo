@@ -173,7 +173,7 @@ a:hover{ text-decoration:underline }
   border:1px solid #5a57ff; background:linear-gradient(180deg,#fff,#f6f6ff);
   box-shadow:0 0 0 1px rgba(68,64,255,.06) inset; color:#17182a;
 }
-.icon-btn svg{ inline-size: 60%; block-size: 60%; }
+.icon-btn svg{ inline-size: 77%; block-size: 77%; }
 .icon-btn:hover{ box-shadow:0 0 0 1px rgba(68,64,255,.12) inset, 0 6px 16px rgba(68,64,255,.10) }
 .icon-btn:focus-visible{ outline:2px solid #5a57ff; outline-offset:2px }
 
