@@ -1062,89 +1062,37 @@ animation: beamsSpin 28s linear infinite;
   --indigo:  #4440ff;
 }
 
-
-/* ignore reduced-motion for this instance only */
-@media (prefers-reduced-motion: reduce){
-  .marquee--always .marquee__lane{
-    animation: marquee-left var(--speed) linear infinite !important;
-  }
-  .marquee--always .marquee__lane:nth-of-type(2){
-    animation: marquee-left-2 var(--speed) linear infinite !important;
-  }
-}
-
-/* ===== Marquee (island styles; prefixed to avoid conflicts) ===== */
+/* ===== Marquee ===== */
 .xm-marquee{
-  --speed: 22s;                          /* lower = faster */
+  --speed: 22s;
   --pad: clamp(8px, 2vw, 14px);
-
   position: relative;
   overflow: hidden;
   padding-block: var(--pad);
-
-  /* your glassy look */
   background: linear-gradient(180deg, rgba(255,255,255,.62), rgba(255,255,255,.42));
   backdrop-filter: blur(10px) saturate(115%);
   -webkit-backdrop-filter: blur(10px) saturate(115%);
   box-shadow: 0 8px 26px rgba(68,64,255,.10);
-
-  /* optional soft edge fade — delete if you want full visibility */
   -webkit-mask-image: linear-gradient(to right, transparent 0, #000 7%, #000 93%, transparent 100%);
           mask-image: linear-gradient(to right, transparent 0, #000 7%, #000 93%, transparent 100%);
 }
-
-/* Full-bleed: escapes any centered container to span 100vw */
 .xm-bleed{
-  width: 100vw;
-  position: relative;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
-  border-radius: 0;                       /* optional */
+  width: 100vw; position: relative; left: 50%; margin-left: -50vw; border-radius: 0;
 }
-
-/* Two lanes slide past each other and loop forever */
 .xm-lane{
   position: absolute; top: 0; left: 0;
-  display: inline-block;
-  white-space: nowrap;
-  will-change: transform;
-  backface-visibility: hidden;            /* mobile/safari smoothness */
+  display: inline-block; white-space: nowrap;
+  will-change: transform; backface-visibility: hidden;
   animation: xm-left var(--speed) linear infinite;
 }
-.xm-lane:nth-of-type(2){
-  animation-name: xm-left-2;              /* offset lane */
-}
-
-/* Text styling (your vibe) */
+.xm-lane:nth-of-type(2){ animation-name: xm-left-2; }
 .xm-text{
   font: 800 clamp(10px, 2.2vw, 14px)/1 "Funnel Display", system-ui, sans-serif;
-  text-transform: uppercase;
-  letter-spacing: .12em;
-  color: #1b1e35;
-  padding-right: 2ch;                      /* gap between repeats */
-  white-space: nowrap;
+  text-transform: uppercase; letter-spacing: .12em; color: #1b1e35;
+  padding-right: 2ch; white-space: nowrap;
 }
-
-/* Keyframes: GPU-friendly translate3d for iOS/Android/Safari */
-@keyframes xm-left{
-  from { transform: translate3d(0,0,0); }
-  to   { transform: translate3d(-100%,0,0); }
-}
-@keyframes xm-left-2{
-  from { transform: translate3d(100%,0,0); }
-  to   { transform: translate3d(0,0,0); }
-}
-
-/* If you want it to ALWAYS animate on mobile, keep this block empty.
-   If you want to respect OS “Reduce Motion”, uncomment below:
-
-@media (prefers-reduced-motion: reduce){
-  .xm-lane{ animation: none; transform: none; position: static; }
-}
-*/
-
+@keyframes xm-left{ from{transform:translate3d(0,0,0)} to{transform:translate3d(-100%,0,0)} }
+@keyframes xm-left-2{ from{transform:translate3d(100%,0,0)} to{transform:translate3d(0,0,0)} }
 
 
 /* Base “+” */
