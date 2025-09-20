@@ -299,17 +299,6 @@
 
   </style>
 
-<style>
-  /* minimal must-have rules to prove it works */
-  .xm-marquee{ --speed:22s; overflow:hidden; padding-block:10px }
-  .xm-bleed{ width:100vw; position:relative; left:50%; margin-left:-50vw }
-  .xm-lane{ position:absolute; top:0; left:0; white-space:nowrap; will-change:transform; backface-visibility:hidden; animation:xm-left var(--speed) linear infinite }
-  .xm-lane:nth-of-type(2){ animation-name:xm-left-2 }
-  .xm-text{ font:800 12px/1 "Funnel Display",system-ui,sans-serif; letter-spacing:.12em; text-transform:uppercase; padding-right:2ch; color:#1b1e35; white-space:nowrap }
-  @keyframes xm-left{ from{transform:translate3d(0,0,0)} to{transform:translate3d(-100%,0,0)} }
-  @keyframes xm-left-2{ from{transform:translate3d(100%,0,0)} to{transform:translate3d(0,0,0)} }
-  </style>
-  
 
 </head>
 
@@ -365,23 +354,18 @@
   </div>  
 
   
-<!-- Full-bleed, responsive marquee -->
-<div class="xm-marquee xm-bleed">
-  <!-- Lane A -->
-  <div class="xm-lane">
-    <span class="xm-text">who looks inside awakes • </span>
-    <span class="xm-text" aria-hidden="true">who looks inside awakes • </span>
-    <span class="xm-text" aria-hidden="true">who looks inside awakes • </span>
+  <div class="xm-marquee xm-bleed">
+    <div class="xm-lane">
+      <span class="xm-text">who looks inside awakes • </span>
+      <span class="xm-text" aria-hidden="true">who looks inside awakes • </span>
+      <span class="xm-text" aria-hidden="true">who looks inside awakes • </span>
+    </div>
+    <div class="xm-lane" aria-hidden="true">
+      <span class="xm-text">who looks inside awakes • </span>
+      <span class="xm-text" aria-hidden="true">who looks inside awakes • </span>
+      <span class="xm-text" aria-hidden="true">who looks inside awakes • </span>
+    </div>
   </div>
-  <!-- Lane B (identical content) -->
-  <div class="xm-lane" aria-hidden="true">
-    <span class="xm-text">who looks inside awakes • </span>
-    <span class="xm-text" aria-hidden="true">who looks inside awakes • </span>
-    <span class="xm-text" aria-hidden="true">who looks inside awakes • </span>
-  </div>
-</div>
-
-
   
 
   <div class="site-shell">
