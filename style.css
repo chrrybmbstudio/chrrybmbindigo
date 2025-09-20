@@ -1134,12 +1134,6 @@ animation: beamsSpin 28s linear infinite;
 }
 
 
-/* If the user prefers reduced motion, stop animating (optional).
-   Remove this block if you ALWAYS want motion regardless of OS setting. */
-@media (prefers-reduced-motion: reduce){
-  .marquee__lane{ animation: none; transform: none; position: static; }
-}
-
 /* force motion on this component */
 .marquee .marquee__lane{
   animation-play-state: running !important;
