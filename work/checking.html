@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Checking Hub Redesign — Case Study • chrrybmb</title>
+  <meta name="description" content="Case study: Credit Union of Georgia checking hub — IA simplification, UX refresh, and search hygiene with measured growth." />
+  <link rel="canonical" href="https://chrrybmb.com/work/checking.html" />
+  <link rel="icon" href="../assets/eye.png" />
+  <link rel="apple-touch-icon" href="../assets/eye.png" />
+  <meta property="og:title" content="Checking Hub Redesign — Case Study">
+  <meta property="og:description" content="Simpler IA, clearer plan compare, accessible CTAs, and search hygiene that moved the needle." />
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://chrrybmb.com/work/checking.html">
+  <meta property="og:image" content="https://chrrybmb.com/assets/og-image.jpg">
+
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Jacquarda+Bastarda+9&display=swap" rel="stylesheet">
+
+  <style>
+    :root{ --indigo:#4440ff; --pink:#ffe9ff; --ink:#0e0f1a; --cardR: clamp(18px,1.6vw,26px) }
+    body.page-case{ --ui:.78; background:
+      radial-gradient(60% 60% at var(--orb-x,72%) var(--orb-y,68%), rgba(68,64,255,.13), transparent 60%),
+      linear-gradient(180deg,#fff,#faf9ff); color:var(--ink); -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility }
+
+    .section{ padding: clamp(14px,4.8vw,28px) var(--page-pad,16px) }
+    .container{ width:min(980px,100%); margin-inline:auto }
+
+    .hero{ text-align:center; padding-top: clamp(22px,6vw,60px) }
+    .name-edge{ --text:#0e0f1a; font-family:"Funnel Display",system-ui; font-weight:600; font-size:calc(var(--ui) * clamp(38px,7vw,64px)); letter-spacing:-.02em; line-height:.92; margin:0 0 6px; text-transform:lowercase; position:relative; display:inline-block; color:var(--text); filter:url(#softWobble); }
+    .name-edge::after{ content:attr(data-text); position:absolute; inset:0; z-index:-1; background: conic-gradient(from 0deg, var(--indigo), var(--pink) 40%, #8aaaff, var(--indigo)); -webkit-background-clip:text; background-clip:text; color:transparent; transform:scale(1.04); filter:blur(6px) saturate(125%); opacity:.75; mix-blend-mode: plus-lighter }
+    .name-edge .warp,.name-edge .prism{ position:absolute; inset:0; -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 35%, #000 65%, transparent 100%); mask-image: linear-gradient(90deg, transparent 0%, #000 35%, #000 65%, transparent 100%); -webkit-mask-size:220% 100%; mask-size:220% 100%; -webkit-mask-position: -60% 0; mask-position:-60% 0 }
+    .name-edge .prism{ mix-blend-mode:screen; opacity:.55; filter: blur(.6px) saturate(120%); background: linear-gradient(90deg,#7ff0ff 0%, #ff6adf 50%, #7ff0ff 100%); -webkit-background-clip:text; background-clip:text; color:transparent; transform: translateX(.4px) }
+    @media (min-width:641px){ .name-edge .warp,.name-edge .prism{ animation: sweepBand 7s cubic-bezier(.45,.05,.36,1) infinite alternate } }
+    @keyframes sweepBand{ from{ -webkit-mask-position:-60% 0 } to{ -webkit-mask-position:160% 0 } }
+
+    .sub{ font:400 calc(var(--ui) * clamp(15px,2.1vw,19px))/1.2 "Jacquarda Bastarda 9",serif; opacity:.9; margin:6px 0 16px }
+
+    .lede{ text-align:center; color:#2b2f44; max-width:min(780px,92vw); margin: 0 auto }
+
+    /* meta bar */
+    .meta{ display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin: 12px auto 0 }
+    .tag{ display:inline-block; font:800 10px/1 "Funnel Display",system-ui; letter-spacing:.16em; text-transform:uppercase; padding:6px 8px; border-radius:10px; border:1px solid #5a57ff; background:linear-gradient(180deg,#fff,#f6f6ff); color:#17182a }
+
+    /* grid blocks */
+    .grid{ display:grid; gap:16px }
+    .grid--2{ grid-template-columns:1fr; }
+    @media (min-width:900px){ .grid--2{ grid-template-columns: 1.1fr .9fr } }
+
+    /* cards */
+    .card{ border:1px solid rgba(68,64,255,.35); border-radius: var(--cardR); background:linear-gradient(180deg,#fff,#f6f6ff); padding:16px; box-shadow: 0 0 0 1px rgba(68,64,255,.06) inset }
+    .card h3{ margin:.2rem 0 .35rem; font-size: clamp(16px,1.9vw,18px) }
+    .card p{ margin:.3rem 0; color:#2c3144 }
+
+    /* media */
+    .thumb{ aspect-ratio: 16/9; border-radius:14px; overflow:hidden; border:1px solid rgba(68,64,255,.25); background:#eef0ff; position:relative }
+    .thumb img{ width:100%; height:100%; object-fit:cover; display:block }
+
+    /* checklist / bullets */
+    .mini-list{ margin:.25em 0 0; padding-left:1.1em }
+    .mini-list li{ margin:.25em 0; font-size: 14px }
+
+    /* metrics */
+    .metrics{ display:grid; grid-template-columns: repeat(auto-fit,minmax(160px,1fr)); gap:10px; margin-top:8px }
+    .metric{ border-radius:14px; border:1px dashed rgba(68,64,255,.35); padding:12px; text-align:center; background:linear-gradient(180deg,#fff,#fafaff) }
+    .metric b{ display:block; font-family:"Funnel Display"; font-size: clamp(18px,3.6vw,28px); letter-spacing:.02em }
+    .metric span{ display:block; font:700 10px/1 "Funnel Display"; letter-spacing:.16em; text-transform:uppercase; opacity:.8; margin-top:4px }
+
+    /* interactions */
+    [data-animate]{ opacity:0; transform: translateY(8px); transition: opacity .6s ease, transform .6s ease }
+    .is-in[data-animate]{ opacity:1; transform:none }
+    .sheen{ position:relative }
+    .sheen::after{ content:""; position:absolute; inset:0; background: linear-gradient(110deg, transparent 20%, rgba(255,255,255,.65) 50%, transparent 80%); transform: translateX(-120%); }
+    .sheen:hover::after{ animation: sheen 1200ms cubic-bezier(.4,.0,.2,1) 1 }
+    @keyframes sheen{ to{ transform: translateX(120%) } }
+
+    .btn-row{ display:flex; flex-wrap:wrap; gap:8px; margin-top:10px }
+    .btn-pixel{ --shadow: rgba(68,64,255,.12); display:inline-flex; align-items:center; gap:8px; padding:10px 12px; border-radius: 12px; border:1px solid #5a57ff; background:linear-gradient(180deg,#fff,#f6f6ff); font:700 12px/1 "Funnel Display",system-ui; letter-spacing:.12em; text-transform:uppercase; box-shadow: 0 8px 16px var(--shadow); text-decoration:none; color:#17182a }
+    .btn-pixel--ghost{ background:linear-gradient(180deg,#ffffff,#ffffff); border-style:dashed; opacity:.9 }
+
+    /* disclosure */
+    details{ border:1px solid rgba(68,64,255,.35); border-radius:12px; padding:10px 12px; background:linear-gradient(180deg,#fff,#f6f6ff) }
+    summary{ cursor:pointer; font:800 10px/1 "Funnel Display"; letter-spacing:.16em; text-transform:uppercase }
+
+    .footmargin{ padding-bottom: 80px }
+  
+    /* floating transparency note (dismissible) */
+    .floating-note{ position:fixed; right:14px; bottom:96px; z-index:40; max-width:min(360px, 86vw); }
+    .floating-note[hidden]{ display:none }
+    .floating-note .fn-card{ border:1px solid rgba(68,64,255,.35); border-radius:14px; background:linear-gradient(180deg,#fff,#f6f6ff); box-shadow: 0 12px 28px rgba(68,64,255,.18); padding:12px 12px 12px 14px; color:#17182a }
+    .floating-note .fn-head{ display:flex; align-items:center; gap:8px; margin-bottom:6px }
+    .floating-note .badge{ font:700 10px/1 "Funnel Display",system-ui; letter-spacing:.16em; text-transform:uppercase; padding:6px 8px; border-radius:10px; border:1px solid #5a57ff; background:linear-gradient(180deg,#fff,#f6f6ff) }
+    .floating-note .fn-close{ margin-left:auto; appearance:none; border:none; background:transparent; cursor:pointer; padding:4px; border-radius:8px }
+    .floating-note .fn-close:focus-visible{ outline:2px solid #5a57ff; outline-offset:2px }
+    .floating-note p{ margin:0; font-size:13.5px; color:#2c3144 }
+    @media (max-width: 480px){ .floating-note{ right:10px; left:10px; bottom:88px } }
+
+    @media (prefers-reduced-motion: no-preference){
+      .floating-note{ animation: fn-fade-in .4s ease both }
+      @keyframes fn-fade-in{ from{ opacity:0; transform: translateY(8px)} to{ opacity:1; transform:none } }
+    }
+</style>
+</head>
+
+<body class="page-case density-xs">
+<header class="site-header" role="banner">
+  <div class="site-header__chrome" aria-hidden="true"></div>
+  <div class="header__inner">
+    <a class="brand" href="/" aria-label="chrrybmb home">
+      <img class="brand__logo-img" src="../assets/indigo_chrry_indypinky.svg" alt="chrrybmb logo" width="64" height="38" decoding="async">
+    </a>
+    <nav class="nav" aria-label="primary">
+      <ul class="nav__list">
+        <li><a href="/index.html">home</a></li>
+        <li><a href="/about.html">about</a></li>
+        <li><a href="/work.html">work</a></li>
+        <li><a href="/contact.html">contact</a></li>
+      </ul>
+    </nav>
+    <div class="header__actions">
+      <a class="btn-pixel btn-pixel--ghost" href="../brand-system.html">brand</a>
+    </div>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+  <section class="section hero" aria-label="title">
+    <div class="container" data-animate>
+      <h1 class="name-edge" data-text="checking hub redesign">
+        <span class="text">checking hub redesign</span>
+        <span class="warp" aria-hidden="true">checking hub redesign</span>
+        <span class="prism" aria-hidden="true">checking hub redesign</span>
+      </h1>
+      <p class="sub">credit union of georgia — simpler IA, clearer plan compare, accessible CTAs, and search hygiene.</p>
+      <p class="lede">Goal: reduce friction to account selection and improve findability. Approach: restructure the page, clarify the plan matrix, tune copy/metadata, and harden accessibility. Measured weekly via Google Analytics; search quality monitored with SEMrush + Search Console.</p>
+      <div class="meta" aria-label="meta tags">
+        <span class="tag">ux</span><span class="tag">ia</span><span class="tag">seo</span><span class="tag">accessibility</span><span class="tag">analytics</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-label="overview">
+    <div class="container grid grid--2">
+      <article class="card" data-animate>
+        <h3>problem</h3>
+        <p>Users struggled to compare checking options and choose a path. The previous page buried CTAs, mixed headings, and repeated content, which slowed decision-making.</p>
+        <h3>role</h3>
+        <p>Solo UX/design + content hygiene: IA simplification, component layout, microcopy, accessibility review, and analytics reporting.</p>
+        <h3>objectives</h3>
+        <ul class="mini-list">
+          <li>Make plan comparison scannable in <em>under 8 seconds</em>.</li>
+          <li>Clarify CTAs and next steps for each account.</li>
+          <li>Improve organic discoverability without spammy tactics.</li>
+        </ul>
+      </article>
+
+      <aside class="card sheen" data-animate>
+        <div class="thumb" aria-hidden="true">
+          <img src="../assets/checking-cuofga.png" alt="Checking page after redesign">
+        </div>
+        <div class="btn-row">
+          <a class="btn-pixel" href="https://cuofga.org/" target="_blank" rel="noopener">live site</a>
+          <a class="btn-pixel btn-pixel--ghost" href="../work.html#proj-checking">back to projects</a>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section" aria-label="moves">
+    <div class="container grid grid--2">
+      <article class="card" data-animate>
+        <h3>ux & ia</h3>
+        <ul class="mini-list">
+          <li>Reorganized content into a clear <strong>plan matrix</strong> with consistent labels.</li>
+          <li>Added <strong>CTA hierarchy</strong> (primary apply, secondary learn) with obvious exits.</li>
+          <li>Normalized <strong>H1–H3</strong> structure; removed duplicate headings.</li>
+          <li>Improved focus states, contrast, and motion sensitivity.</li>
+        </ul>
+        <h3>content & seo hygiene</h3>
+        <ul class="mini-list">
+          <li>Trimmed marketing filler; tightened microcopy for clarity.</li>
+          <li>Alt text, descriptive links, and purposeful metadata.</li>
+          <li>Submitted sitemap & ensured robots directives were sane.</li>
+        </ul>
+      </article>
+
+      <article class="card" data-animate>
+        <h3>search quality</h3>
+        <ul class="mini-list">
+          <li>SEMrush backlink audit → compiled <strong>disavow</strong> list to reduce toxic links.</li>
+          <li>Shipped disavow file via <strong>Google Search Console</strong>.</li>
+          <li>Monitored keyword movement and indexed coverage weekly.</li>
+        </ul>
+        <h3>measurement</h3>
+        <ul class="mini-list">
+          <li>Weekly Google Analytics snapshots: sessions, time on page, exit rate, and conversion events.</li>
+          <li>Compared pre/post windows and annotated launch in GA for clarity.</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" aria-label="results">
+    <div class="container">
+      <article class="card" data-animate>
+        <h3>outcomes</h3>
+        <p>Post-launch, engagement indicators improved and the page’s visibility strengthened. (Formal numbers available upon request; some source files were not retained.)</p>
+        <div class="metrics">
+          <div class="metric"><b data-metric="sessions-delta">+—%</b><span>sessions</span></div>
+          <div class="metric"><b data-metric="time-delta">+—%</b><span>avg time on page</span></div>
+          <div class="metric"><b data-metric="exit-delta">−—%</b><span>exit rate</span></div>
+          <div class="metric"><b data-metric="apply-cta">+—%</b><span>apply cta clicks</span></div>
+        </div>
+        <p style="margin-top:10px"><em>Note:</em> Growth was acknowledged in Google account communications during this period.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section footmargin" aria-label="artifacts">
+    <div class="container grid">
+      <details data-animate>
+        <summary>artifact annex — screenshots & notes</summary>
+        <div class="grid" style="margin-top:10px; grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); gap:10px">
+          <figure class="card sheen">
+            <div class="thumb"><img src="../assets/checking-cuofga.png" alt="After redesign"/></div>
+            <figcaption>After redesign — plan matrix + clarified CTAs.</figcaption>
+          </figure>
+          <figure class="card sheen">
+            <div class="thumb"><img src="../assets/checking-before.png" alt="Before redesign (placeholder)"/></div>
+            <figcaption>Before (recreated) — mixed headings and CTAs.</figcaption>
+          </figure>
+        </div>
+      </details>
+
+      <!-- transparency moved to floating note -->
+    </div>
+  </section>
+
+  <!-- floating transparency note (dismissible) -->
+  <div id="transparencyNote" class="floating-note" role="dialog" aria-label="transparency note" aria-live="polite" aria-modal="false">
+    <div class="fn-card">
+      <div class="fn-head">
+        <span class="badge" aria-hidden="true">note</span>
+        <button class="fn-close" type="button" aria-label="Dismiss note" title="Dismiss" id="dismissNote">✕</button>
+      </div>
+      <p>Some original working files from this role weren’t retained. Visuals shown are screenshots and reconstructed mockups that represent the work I led.</p>
+    </div>
+  </div>
+</main>
+
+<footer class="glass-footer" role="contentinfo">
+  <span class="dot" aria-hidden="true"></span>
+  <span>© <span id="year"></span> chrrybmb.com / denisajomo.com</span>
+</footer>
+
+<svg width="0" height="0" class="visually-hidden" aria-hidden="true">
+  <filter id="softWobble"><feGaussianBlur in="SourceGraphic" stdDeviation="0"/></filter>
+</svg>
+<script type="module" src="../site.js" defer></script>
+<script>
+  // intersection reveal
+  const io = new IntersectionObserver((es)=>{
+    es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('is-in'); io.unobserve(e.target) } })
+  },{ threshold:.1 });
+  document.querySelectorAll('[data-animate]').forEach(el=>io.observe(el));
+</script>
+<script>
+  // Dismiss + persist the transparency note
+  (function(){
+    const KEY = 'dismissTransparencyNote';
+    const note = document.getElementById('transparencyNote');
+    const btn = document.getElementById('dismissNote');
+    if(localStorage.getItem(KEY)==='1'){ note?.setAttribute('hidden',''); }
+    btn?.addEventListener('click', ()=>{ localStorage.setItem(KEY,'1'); note?.setAttribute('hidden',''); });
+  })();
+</script>
+</body>
+</html>
