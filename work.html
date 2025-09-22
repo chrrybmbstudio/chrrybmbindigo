@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>chrrybmb — work</title>
+  <meta name="description" content="Selected work: compact UX, brand systems, and search-forward growth." />
+  <link rel="canonical" href="https://chrrybmb.com/work.html" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="./assets/eye.png" />
+  <link rel="apple-touch-icon" href="./assets/eye.png" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="chrrybmb — work">
+  <meta property="og:description" content="mini on purpose: UX flows that convert, accessible patterns, and calm visuals." />
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://chrrybmb.com/work.html">
+  <meta property="og:image" content="https://chrrybmb.com/assets/og-image.jpg">
+  <meta property="og:image:alt" content="iridescent glow with eye mark">
+
+  <!-- Base site CSS -->
+  <link rel="stylesheet" href="./style.css" />
+
+  <!-- Fonts (same set as brand-system.html) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Jacquarda+Bastarda+9&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --indigo:#4440ff; --pink:#ffe9ff; --ink:#0e0f1a; --cardR: clamp(18px,1.6vw,26px);
+    }
+    body.page-work{
+      --ui:.72;
+      background:
+        radial-gradient(60% 60% at var(--orb-x,72%) var(--orb-y,68%), rgba(68,64,255,.13), transparent 60%),
+        linear-gradient(180deg, #ffffff, #faf9ff);
+      color:var(--ink);
+      -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+    }
+
+    /* hero */
+    .work-hero{position:relative; padding: clamp(24px,7vw,64px) 20px 0; text-align:center;}
+    .work-hero .inner{max-width:min(1100px,92vw); margin-inline:auto; position:relative;}
+    .work-hero .sub{ 
+      margin:6px 0 24px;
+      font:400 calc(var(--ui) * clamp(16px,2.4vw,20px))/1.2 "Jacquarda Bastarda 9", serif;
+      opacity:.85; text-align:center;
+    }
+
+    /* H1 (reuse the prism/warp from brand-system) */
+    .name-edge{
+      --text:#0e0f1a;
+      font-family:"Funnel Display", system-ui, sans-serif;
+      font-weight:600; font-size:calc(var(--ui) * clamp(42px,8vw,66px));
+      letter-spacing:-.02em; line-height:.92; margin:0 0 6px;
+      text-transform:lowercase; position:relative; display:inline-block;
+      color:var(--text); filter:url(#softWobble); isolation:isolate;
+    }
+    .name-edge::after{
+      content:attr(data-text);
+      position:absolute; inset:0; z-index:-1; pointer-events:none;
+      background: conic-gradient(from 0deg, var(--indigo), var(--pink) 40%, #8aaaff, var(--indigo));
+      -webkit-background-clip:text; background-clip:text; color:transparent;
+      transform: scale(1.04); filter: blur(6px) saturate(125%); opacity:.75; mix-blend-mode: plus-lighter;
+    }
+    .name-edge .warp,.name-edge .prism{
+      position:absolute; inset:0; display:inline-block;
+      -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 35%, #000 65%, transparent 100%);
+      mask-image: linear-gradient(90deg, transparent 0%, #000 35%, #000 65%, transparent 100%);
+      -webkit-mask-size: 220% 100%; mask-size: 220% 100%;
+      -webkit-mask-position: -60% 0; mask-position: -60% 0; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat;
+      will-change: -webkit-mask-position, mask-position;
+    }
+    .name-edge .warp{ z-index:1; color:var(--text); -webkit-text-fill-color:currentColor; }
+    .name-edge .prism{
+      z-index:2; mix-blend-mode:screen; opacity:.55; filter: blur(.6px) saturate(120%);
+      background: linear-gradient(90deg, #7ff0ff 0%, #ff6adf 50%, #7ff0ff 100%);
+      -webkit-background-clip:text; background-clip:text; color:transparent; transform: translateX(.4px);
+    }
+    @media (min-width:641px){ .name-edge .warp,.name-edge .prism{ animation: sweepBand 7s cubic-bezier(.45,.05,.36,1) infinite alternate; } }
+    @media (max-width:640px){ .name-edge .warp,.name-edge .prism{ animation: sweepBand 3.2s cubic-bezier(.5,.1,.2,1) 1 both; } }
+    @keyframes sweepBand{ from{ -webkit-mask-position:-60% 0; mask-position:-60% 0 } to{ -webkit-mask-position:160% 0; mask-position:160% 0 } }
+
+    /* layout */
+    .section{padding: clamp(14px,5vw,8px) var(--page-pad, 16px)}
+    .container{ width: min(1100px, 100%); margin-inline:auto}
+    .rail-wrap{ position:relative }
+    .rail{ display:grid; grid-auto-flow: column; grid-auto-columns: min(86%, 360px); gap:14px; overflow-x:auto; overscroll-behavior-x: contain; scroll-snap-type:x mandatory; padding-bottom: 4px; }
+    .rail:focus{ outline:2px solid #5a57ff; outline-offset:4px }
+    .slide{ scroll-snap-align: start; }
+    @media (min-width: 1040px){ .rail{ grid-auto-columns: 33%; } }
+
+    /* card */
+    .card-iris{ padding: 14px 16px; border-radius: var(--cardR); background: linear-gradient(180deg,#ffffff,#f6f6ff); border:1px solid rgba(68,64,255,.35); box-shadow: 0 0 0 1px rgba(68,64,255,.06) inset; }
+    .card-iris h3{ margin:0 0 6px; font-size: clamp(16px, 2vw, 18px); letter-spacing:.02em }
+    .card-iris p{ margin:0; color:#2c3144; font-size: max(12px, 13.5px); line-height:1.42 }
+    .card-iris .meta{ display:flex; flex-wrap:wrap; gap:6px; margin:8px 0 }
+    .tag{ display:inline-block; font:800 10px/1 "Funnel Display",system-ui,sans-serif; letter-spacing:.16em; text-transform:uppercase; padding:6px 8px; border-radius:10px; border:1px solid #5a57ff; background:linear-gradient(180deg,#fff,#f6f6ff); color:#17182a }
+    .btn-row{ display:flex; flex-wrap:wrap; gap:8px; margin-top:10px }
+    .btn-pixel{ --shadow: rgba(68,64,255,.12); display:inline-flex; align-items:center; gap:8px; padding:10px 12px; border-radius: 12px; border:1px solid #5a57ff; background:linear-gradient(180deg,#fff,#f6f6ff); font:700 12px/1 "Funnel Display",system-ui; letter-spacing:.12em; text-transform:uppercase; box-shadow: 0 8px 16px var(--shadow); text-decoration:none; color:#17182a }
+    .btn-pixel--ghost{ background:linear-gradient(180deg,#ffffff,#ffffff); border-style:dashed; opacity:.9 }
+
+    /* small reveal hooks */
+    [data-animate]{ opacity:0; transform: translateY(8px); transition: opacity .6s ease, transform .6s ease; }
+    .is-in[data-animate]{ opacity:1; transform:none }
+    @media (prefers-reduced-motion: reduce){ [data-animate]{ opacity:1 !important; transform:none !important; transition:none !important } }
+
+    .pxlh{ font:600 12px/1 "Funnel Display",system-ui; letter-spacing:.14em; text-transform:uppercase; display:block; margin-bottom:6px }
+    .visually-hidden{ position:absolute!important; height:1px;width:1px; overflow:hidden; clip:rect(1px,1px,1px,1px); white-space:nowrap; }
+
+    /* project thumbnails */
+    .thumb{ aspect-ratio: 16/9; border-radius:14px; background:#eef0ff; border:1px solid rgba(68,64,255,.25); margin:8px 0 10px; overflow:hidden; position:relative }
+    .thumb img{ width:100%; height:100%; object-fit:cover; display:block }
+    .thumb .badge{ position:absolute; left:8px; top:8px }
+
+    .callout{ text-align:center; margin: 8px auto 0; max-width:min(900px, 92vw); color:#262a3f }
+    .badge{ display:inline-block; font:700 10px/1 "Funnel Display", system-ui, sans-serif; letter-spacing:.16em; text-transform:uppercase; padding:6px 8px; border-radius:10px; border:1px solid #5a57ff; background:linear-gradient(180deg,#fff,#f6f6ff); color:#17182a }
+
+    /* foot margin so glass footer doesn't overlap */
+    .footmargin{ padding-bottom: 80px }
+  
+    /* vertical grid override */
+    .grid{ display:grid; grid-template-columns: min(780px, 100%); justify-content:center; gap: 16px; }
+
+    /* interaction: tilt + sheen (brand-calm) */
+    .card-iris.interactive{ position:relative; overflow:hidden; will-change: transform, box-shadow; }
+    .card-iris.interactive:focus-within{ box-shadow: 0 0 0 2px #5a57ff, 0 12px 28px rgba(68,64,255,.18) }
+    .tilt{ transform-style: preserve-3d; transition: transform .18s ease, box-shadow .18s ease }
+    .thumb{ aspect-ratio: 16/9; border-radius:14px; background:#eef0ff; border:1px solid rgba(68,64,255,.25); margin:10px 0 10px; overflow:hidden; position:relative }
+    .thumb img{ width:100%; height:100%; object-fit:cover; display:block; transform: translateZ(18px) }
+    .thumb::after{ content:""; position:absolute; inset:0; background: linear-gradient(110deg, transparent 20%, rgba(255,255,255,.65) 50%, transparent 80%); transform: translateX(-120%); }
+    .card-iris.interactive:hover .thumb::after{ animation: sheen 1200ms cubic-bezier(.4,.0,.2,1) 1 }
+    @keyframes sheen{ to{ transform: translateX(120%) } }
+</style>
+</head>
+
+<body class="page-work density-xs">
+<header class="site-header" role="banner">
+  <div class="site-header__chrome" aria-hidden="true"></div>
+  <div class="header__inner">
+    <a class="brand" href="/" aria-label="chrrybmb home">
+      <img class="brand__logo-img" src="./assets/indigo_chrry_indypinky.svg" alt="chrrybmb logo" width="64" height="38" decoding="async">
+    </a>
+    <nav class="nav" aria-label="primary">
+      <ul class="nav__list">
+        <li><a href="/index.html">home</a></li>
+        <li><a href="/about.html">about</a></li>
+        <li><a href="/contact.html">contact</a></li>
+      </ul>
+    </nav>
+    <div class="header__actions">
+      <a class="btn-pixel btn-pixel--ghost" href="./brand-system.html">brand</a>
+    </div>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+  <!-- Hero -->
+  <section class="work-hero" aria-label="Intro">
+    <div class="inner" data-animate>
+      <h1 class="name-edge" data-text="work">
+        <span class="text">work</span>
+        <span class="warp" aria-hidden="true">work</span>
+        <span class="prism" aria-hidden="true">work</span>
+      </h1>
+      <p class="sub">selected projects: ux systems, web growth, and calm iridescent visuals.</p>
+    </div>
+  </section>
+
+  <!-- Cards grid (vertical) -->
+  <section class="section" aria-label="Projects">
+    <div class="container grid">
+
+      <!-- Project 1: Checking Page Redesign (CUofGA) -->
+      <article class="card-iris interactive" data-animate id="proj-checking">
+        <div class="tilt">
+          <span class="pxlh">credit union of georgia</span>
+          <h3>Checking hub — redesigned for clarity & conversion</h3>
+          <p>Cleaner IA, faster plan compare, and SEO hygiene that moved the needle.</p>
+          <div class="thumb" aria-hidden="true">
+            <img src="./assets/checking-cuofga.png" alt="Checking page redesign thumbnail">
+          </div>
+          <div class="meta">
+            <span class="tag">ux</span>
+            <span class="tag">ia</span>
+            <span class="tag">seo</span>
+            <span class="tag">analytics</span>
+          </div>
+          <div class="btn-row">
+            <a class="btn-pixel" href="./work/checking.html">view case study</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 2: Site Migration + Stability -->
+      <article class="card-iris interactive" data-animate id="proj-migration">
+        <div class="tilt">
+          <span class="pxlh">infrastructure & process</span>
+          <h3>Site migration — zero-downtime, cleaner deploys</h3>
+          <p>Staging stood up, PHP updated, media/plugin audit, and safer rollbacks.</p>
+          <div class="thumb" aria-hidden="true">
+            <img src="./assets/migration-cuofga.png" alt="Migration project thumbnail">
+          </div>
+          <div class="meta">
+            <span class="tag">stability</span>
+            <span class="tag">performance</span>
+            <span class="tag">governance</span>
+          </div>
+          <div class="btn-row">
+            <a class="btn-pixel" href="./work/migration.html">view case study</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 3: Checking Campaign Billboards -->
+      <article class="card-iris interactive" data-animate id="proj-billboards">
+        <div class="tilt">
+          <span class="pxlh">campaign creative</span>
+          <h3>OOH billboards — bold, legible, on-brand</h3>
+          <p>Large-format typography tuned for distance + quick read at speed.</p>
+          <div class="thumb" aria-hidden="true">
+            <img src="./assets/checking-lemonade-billboard.png" alt="Billboards mockup thumbnail">
+          </div>
+          <div class="meta">
+            <span class="tag">ooh</span>
+            <span class="tag">art direction</span>
+            <span class="tag">brand system</span>
+          </div>
+          <div class="btn-row">
+            <a class="btn-pixel" href="./work/billboards.html">view case study</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- Transparency note -->
+  <section class="section footmargin" aria-label="note">
+    <div class="container">
+      <article class="card-iris" data-animate>
+        <p class="callout"><span class="badge" aria-hidden="true">note</span> Due to circumstances outside my control, I no longer have access to some original working files from this role. Where helpful, I’ve included screenshots, live photos, and reconstructed mockups to represent the work I led.</p>
+      </article>
+    </div>
+  </section>
+</main>
+
+<!-- Glass footer -->
+<footer class="glass-footer" role="contentinfo">
+  <span class="dot" aria-hidden="true"></span>
+  <span>© <span id="year"></span> chrrybmb.com / denisajomo.com</span>
+</footer>
+
+<!-- SVG filters (reused hook) -->
+<svg width="0" height="0" class="visually-hidden" aria-hidden="true">
+  <filter id="softWobble"><feGaussianBlur in="SourceGraphic" stdDeviation="0"/></filter>
+  <filter id="lensWarp"><feGaussianBlur in="SourceGraphic" stdDeviation="0"/></filter>
+</svg>
+
+<!-- Shared interactions -->
+<script type="module" src="./site.js" defer></script>
+<script>
+  // tilt interaction on pointer move (respects reduced motion)
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!reduced){
+    document.querySelectorAll('.card-iris.interactive .tilt').forEach(el=>{
+      const parent = el.closest('.card-iris');
+      parent.addEventListener('mousemove', (e)=>{
+        const r = parent.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - 0.5;
+        const y = (e.clientY - r.top) / r.height - 0.5;
+        el.style.transform = `rotateX(${(-y*6).toFixed(2)}deg) rotateY(${(x*6).toFixed(2)}deg)`;
+      });
+      parent.addEventListener('mouseleave', ()=>{ el.style.transform = '' });
+      parent.addEventListener('blur', ()=>{ el.style.transform = '' }, true);
+    });
+  }
+</script>
+</body>
+</html>
