@@ -427,32 +427,47 @@ a:hover{ text-decoration:underline }
   align-self: flex-end;        /* sit on the bottom of the hero column */
 }
 
+/* Size tokens */
+:root { --footer-h: 48px; --footer-gap: 8px; }
+@media (max-width:480px){ :root { --footer-h: 54px } }
 
-    /* --- Glass footer --- */
-    .glass-footer{
-      position:fixed; left:0; right:0; bottom:0; z-index:20;
-      display:flex; align-items:center; justify-content:center; gap:12px;
-      padding: 8px 12px; margin: 8px;
-      border-radius: 16px;
-      background: rgba(255,255,255,.35);
-      backdrop-filter: blur(10px) saturate(135%) contrast(105%);
-      -webkit-backdrop-filter: blur(10px) saturate(135%) contrast(105%);
-      box-shadow: 0 10px 30px rgba(68,64,255,.12);
-      -webkit-mask-image: radial-gradient(120% 120% at 50% 0%, #000 40%, rgba(0,0,0,.85) 72%, transparent 100%);
-              mask-image: radial-gradient(120% 120% at 50% 0%, #000 40%, rgba(0,0,0,.85) 72%, transparent 100%);
-    }
-    .glass-footer a, .glass-footer span{font:600 13px/1 "DM Sans"; color:#1b1e35; text-decoration:none}
-    .glass-footer .dot{width:5px; height:5px; border-radius:50%; background:linear-gradient(90deg,var(--indigo),#8aa3ff)}
+/* Glass footer */
+.glass-footer{
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: max(8px, env(safe-area-inset-bottom, 0px)); /* avoid iOS home pill */
+  z-index: 20;
 
-    /* Phone polish */
-    @media (max-width:480px){
-      .card-iris{width:min(94vw, 560px)}
-      .btn-pixel{ --px: 10px; padding: 8px 10px; }
-    }
+  display: flex; align-items: center; justify-content: center; gap: 12px;
+  padding: 8px 12px; /* slightly taller, easier tap target on mobile */
+  border-radius: 16px;
 
-    .footmargin {
-      margin-bottom: 80px;
-    }
+  /* keep it inside the viewport on small screens */
+  max-width: calc(100vw - 16px - env(safe-area-inset-left,0px) - env(safe-area-inset-right,0px));
+  background: rgba(255,255,255,.35);
+  backdrop-filter: blur(10px) saturate(135%) contrast(105%);
+  -webkit-backdrop-filter: blur(10px) saturate(135%) contrast(105%);
+  box-shadow: 0 10px 30px rgba(68,64,255,.12);
+
+  /* the mask is pretty, but can clip text on tiny screens — soften it on phones */
+  -webkit-mask-image: radial-gradient(120% 120% at 50% 0%, #000 45%, rgba(0,0,0,.85) 75%, transparent 100%);
+          mask-image: radial-gradient(120% 120% at 50% 0%, #000 45%, rgba(0,0,0,.85) 75%, transparent 100%);
+}
+.glass-footer a, .glass-footer span{
+  font:600 13px/1 "DM Sans"; color:#1b1e35; text-decoration:none;
+}
+.glass-footer .dot{
+  width:5px; height:5px; border-radius:50%;
+  background:linear-gradient(90deg,var(--indigo),#8aa3ff)
+}
+
+/* Add to the body on pages with the glass footer */
+body.page-work,
+body.page-case {
+  padding-bottom: calc(var(--footer-h) + var(--footer-gap) + env(safe-area-inset-bottom, 0px));
+}
+
 
 /* ---------------- Hero ---------------- */
 .hero{
@@ -703,27 +718,6 @@ a:hover{ text-decoration:underline }
   .hero__img{ width: min(72vw, 520px) }
 }
 
-/* Footer (minimal) */
-.site-footer {
-  border-top:1px solid rgba(0,0,0,.06);
-  margin: 50px 0 0 0;
-  padding:24px 0;
-  background:#fff
-}
-
-.footer__inner{ display:flex; justify-content:space-between; align-items:center; gap:12px }
-.footer__inner p{ margin:0; color:#5a6076 }
-.social{ list-style:none; display:flex; gap:16px; margin:0; padding:0 }
-.social a{ color:#2c3144 }
-.social a:hover{ color:#4440ff; text-decoration:none }
-
-/* Respect reduced motion */
-@media (prefers-reduced-motion: reduce){
-  *{ animation:none !important; transition:none !important }
-}
-
-
-/
 
 /* ensure we can absolutely position inside the media box */
 .hero__media{ position: relative; }
