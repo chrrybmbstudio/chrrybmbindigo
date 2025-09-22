@@ -421,3 +421,19 @@ document.addEventListener('keydown', (e) => {
     l.style.animation = '';
   });
 })();
+
+  // Hide glass footer when focusing inputs on small screens
+  (() => {
+    const isSmall = matchMedia('(max-width: 640px)').matches;
+    if(!isSmall) return;
+    const gf = document.querySelector('.glass-footer');
+    if(!gf) return;
+
+    const onFocus = e => {
+      if(e.target.matches('input, textarea, [contenteditable="true"]')) gf.style.opacity = '0';
+    };
+    const onBlur = () => { gf.style.opacity = ''; };
+
+    document.addEventListener('focusin', onFocus);
+    document.addEventListener('focusout', onBlur);
+  })();
