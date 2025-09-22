@@ -196,6 +196,7 @@
     @keyframes spin{to{--b:360deg}}
 
     .about-card{position:relative; padding: calc(var(--ui) * clamp(12px,3.2vw,20px)) calc(var(--ui) * clamp(14px,4vw,24px)); display:grid; gap: calc(var(--ui) * 12px);}
+    .about-card h3{ margin:.2rem 0 .35rem; font-size: clamp(16px,1.9vw,18px) }}
     .about-copy p{margin:0; color:#2a2f45; font-size: clamp(13.5px, 1.5vw, 14.5px); line-height:1.42;}
     .about-copy ul{margin:0; padding-left:16px}
     .about-copy li{margin:3px 0; font-size: clamp(13.5px, 1.5vw, 14.5px); line-height:1.42;}
@@ -237,17 +238,6 @@
       mix-blend-mode: color-dodge; filter: blur(22px) saturate(140%); opacity:0; transition: opacity .2s ease; pointer-events:none;
     }
     .card-iris.feature-card.is-hot::after{ opacity:1; }
-
-    /* footer */
-    .glass-footer{
-      position:fixed; left:0; right:0; bottom:0; z-index:20; display:flex; align-items:center; justify-content:center; gap:12px;
-      padding:8px 12px; margin:8px; border-radius:16px; background: rgba(255,255,255,.35);
-      backdrop-filter: blur(10px) saturate(135%) contrast(105%); -webkit-backdrop-filter: blur(10px) saturate(135%) contrast(105%);
-      box-shadow: 0 10px 30px rgba(68,64,255,.12);
-      -webkit-mask-image: radial-gradient(120% 120% at 50% 0%, #000 40%, rgba(0,0,0,.85) 72%, transparent 100%); mask-image: radial-gradient(120% 120% at 50% 0%, #000 40%, rgba(0,0,0,.85) 72%, transparent 100%);
-    }
-    .glass-footer a, .glass-footer span{font:600 13px/1 "DM Sans"; color:#1b1e35; text-decoration:none}
-    .glass-footer .dot{width:5px; height:5px; border-radius:50%; background:linear-gradient(90deg,var(--indigo),#8aa3ff)}
 
     /* responsive */
     @media (max-width:1024px){
@@ -384,11 +374,11 @@
     <section class="card-iris feature-card" data-tilt>
       <div class="about-card">
         <div class="about-copy">
-          <span class="pxlh">hi, i'm denisa.</span>
+          <h3>hi, i'm denisa.</h3>
           <p>I build crisp, scalable brand & web systems—end-to-end from strategy to shipped UI. Since 2007 I’ve worked across print, web, and marketing; these days I live mostly in design/dev and creative direction.</p>
         </div>
         <div class="about-copy">
-          <span class="pxlh">a natural calling</span>
+          <h3>a natural calling</h3>
           <ul>
             <li>Design systems, responsive UX, tidy front-end.</li>
             <li>Campaign & art direction with that prism-y glow.</li>
@@ -396,7 +386,7 @@
           </ul>
         </div>
         <div class="about-copy">
-          <span class="pxlh">currently</span>
+          <h3>currently</h3>
           <p>Senior brand & web design, marketing creative, and part-time at the studio. Open to roles where design and web meet growth.</p>
         </div>
 
