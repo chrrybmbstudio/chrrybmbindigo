@@ -157,23 +157,6 @@
       mix-blend-mode: screen; opacity:.6; filter: blur(7px);
     }
 
-
-    /* --- Glass footer --- */
-    .glass-footer{
-      position:fixed; left:0; right:0; bottom:0; z-index:20;
-      display:flex; align-items:center; justify-content:center; gap:12px;
-      padding: 8px 12px; margin: 8px;
-      border-radius: 16px;
-      background: rgba(255,255,255,.35);
-      backdrop-filter: blur(10px) saturate(135%) contrast(105%);
-      -webkit-backdrop-filter: blur(10px) saturate(135%) contrast(105%);
-      box-shadow: 0 10px 30px rgba(68,64,255,.12);
-      -webkit-mask-image: radial-gradient(120% 120% at 50% 0%, #000 40%, rgba(0,0,0,.85) 72%, transparent 100%);
-              mask-image: radial-gradient(120% 120% at 50% 0%, #000 40%, rgba(0,0,0,.85) 72%, transparent 100%);
-    }
-    .glass-footer a, .glass-footer span{font:600 13px/1 "DM Sans"; color:#1b1e35; text-decoration:none}
-    .glass-footer .dot{width:5px; height:5px; border-radius:50%; background:linear-gradient(90deg,var(--indigo),#8aa3ff)}
-
     /* Phone polish */
     @media (max-width:480px){
       .card-iris{width:min(94vw, 560px)}
@@ -231,7 +214,6 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
   gap: clamp(12px, 2.6vw, 18px);
-  padding-bottom: calc(80px + var(--safe-footer));
 }
 
     /* ===== Card base (mini) ===== */
@@ -314,9 +296,6 @@
 
     /* CTA row */
     .brand-cta{ display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin-top:12px }
-
-    /* Footer never overlapping content */
-    .page-end-spacer{ height: calc(80px + var(--safe-footer)); }
 
 
         /* --- tiny reveal system tokens (pairs with site.js) --- */
@@ -567,5 +546,11 @@
       <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G"/>
     </filter>
   </svg>
+
+          <!-- Glass footer -->
+          <footer class="glass-footer fade-up" role="contentinfo">
+            <span class="dot" aria-hidden="true"></span>
+            <span>© <span id="year"></span> chrrybmb.com / denisajomo.com</span>
+          </footer>
 </body>
 </html>
