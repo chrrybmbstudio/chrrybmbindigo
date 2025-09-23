@@ -38,7 +38,7 @@
 
 
 <!-- Open Graph -->
-<meta property="og:title" content="chrrybmb — denisa j. moraru>
+<meta property="og:title" content="chrrybmb — denisa j. moraru">
 <meta property="og:description" content="creative leadership for brand & web.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://chrrybmb.com/">
@@ -283,7 +283,7 @@
     }
     .card-iris.is-hot::after{ opacity:1; background-position:160% 0; }
 
-    .feature-card{ display:flex; flex-direction:column; gap: 10px; }
+    .feature-card{ display:flex; flex-direction:column; align-items: flex-start; gap: 10px; }
     .feature-card h3, .feature-card .pxlh{ margin:0; font-size: calc(var(--ui) * 19px); line-height:1.1; letter-spacing:.02em; }
     .feature-card p{ margin: 0 0 auto; color:#2c3144; font-size: max(12px, calc(var(--ui)* 13.5px)); line-height:1.42; }
 
@@ -317,6 +317,12 @@
     }
     @media (prefers-reduced-motion: reduce){
       [data-animate]{ opacity:1 !important; transform:none !important; }
+
+      @media (max-width: 520px){
+  .feature-card{ align-items: center; }
+  .feature-card .btn-pixel{ align-self: center; }
+}
+
     }
   </style>
 
