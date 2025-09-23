@@ -422,36 +422,109 @@ document.addEventListener('keydown', (e) => {
   });
 })();
 
-  // Hide glass footer when focusing inputs on small screens
-  (() => {
-    const isSmall = matchMedia('(max-width: 640px)').matches;
-    if(!isSmall) return;
-    const gf = document.querySelector('.glass-footer');
-    if(!gf) return;
-
-    const onFocus = e => {
-      if(e.target.matches('input, textarea, [contenteditable="true"]')) gf.style.opacity = '0';
-    };
-    const onBlur = () => { gf.style.opacity = ''; };
-
-    document.addEventListener('focusin', onFocus);
-    document.addEventListener('focusout', onBlur);
-  })();
-
+  // footer height render tool
   (function(){
     const root = document.documentElement;
     const footer = document.querySelector('.glass-footer');
-    if(!footer) return;
+    const spacer = document.querySelector('.footer-spacer');
+    if(!footer || !spacer) return;
 
-    const setH = () => {
+    const update = () => {
       const h = Math.ceil(footer.getBoundingClientRect().height);
       root.style.setProperty('--footer-h', h + 'px');
     };
-    setH();
 
-    // update on resize / orientation / safe-area changes / font load
-    const ro = new ResizeObserver(setH);
-    ro.observe(footer);
-    window.addEventListener('orientationchange', setH);
-    window.addEventListener('load', setH);
+    // run once and on changes that might affect height
+    update();
+    new ResizeObserver(update).observe(footer);
+    window.addEventListener('orientationchange', update, {passive:true});
+    window.addEventListener('load', update, {once:true});
   })();
+
+  // === Mobile flow-in reveals (site-wide) =========================
+// Triggers a subtle slide-up+fade as elements enter the viewport.
+// Runs only on small screens and if the user hasn't reduced motion.
+
+(function flowInMobile() {
+  const smallScreen = matchMedia('(max-width: 640px)').matches;
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!smallScreen || reduceMotion || !('IntersectionObserver' in window)) return;
+
+  // What should animate? You can add more selectors as needed.
+  const TARGETS = [
+    '.card-iris',
+    '.feature-card',
+    '.features__grid > *',
+    '.hero [data-animate]',    // if your hero uses data-animate
+    '[data-reveal]'            // opt-in hook you can sprinkle anywhere
+  ].join(',');
+
+  // Initial guard: don’t re-animate if you navigate back/forward.
+  const ALREADY = new WeakSet();
+
+  // A little helper to compute stagger based on sibling order
+  function getStagger(el) {
+    const siblings = Array.from(el.parentElement?.children || []);
+    const index = Math.max(0, siblings.indexOf(el));
+    // 0..n → 0, 60, 120, 180 ms …
+    return index * 60;
+  }
+
+  const io = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+
+      const el = entry.target;
+      if (ALREADY.has(el)) { obs.unobserve(el); return; }
+      ALREADY.add(el);
+
+      // Optional: allow per-element overrides via CSS variables
+      const baseDelay = Number(getComputedStyle(el).getPropertyValue('--reveal-delay').trim().replace('ms','')) || 0;
+      const stagger = getStagger(el);
+      const delay = baseDelay + stagger;
+
+      // Web Animations API: slide up + fade
+      el.animate(
+        [
+          { transform: 'translateY(14px)', opacity: 0, filter: 'blur(2px)' },
+          { transform: 'translateY(0)',    opacity: 1, filter: 'blur(0)' }
+        ],
+        {
+          duration: 520,
+          delay,
+          easing: 'cubic-bezier(.16,.84,.44,1)',
+          fill: 'both'
+        }
+      );
+
+      // If you also use a CSS class state (for non-WA browsers), set it:
+      el.classList.add('is-in');
+
+      // We’re done with this element
+      obs.unobserve(el);
+    });
+  }, {
+    root: null,
+    rootMargin: '0px 0px -6% 0px', // trigger a hair before fully in view
+    threshold: 0.08
+  });
+
+  // Seed: collect all targets that exist at load
+  document.querySelectorAll(TARGETS).forEach(el => {
+    // Make sure initial state is "hidden-ish" only on mobile (see CSS below)
+    el.style.setProperty('--flow-init', '1'); 
+    io.observe(el);
+  });
+
+  // If content is dynamically added later:
+  const mo = new MutationObserver(muts => {
+    muts.forEach(m => {
+      m.addedNodes.forEach(node => {
+        if (!(node instanceof Element)) return;
+        if (node.matches(TARGETS)) { node.style.setProperty('--flow-init','1'); io.observe(node); }
+        node.querySelectorAll?.(TARGETS).forEach(el => { el.style.setProperty('--flow-init','1'); io.observe(el); });
+      });
+    });
+  });
+  mo.observe(document.documentElement, { childList: true, subtree: true });
+})();
