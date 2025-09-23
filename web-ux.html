@@ -205,6 +205,7 @@
     .ux-acc__btn:hover{ box-shadow: 0 0 0 1px rgba(68,64,255,.12) inset, 0 6px 16px rgba(68,64,255,.10); }
     .ux-acc__btn:focus-visible{ outline:2px solid #5a57ff; outline-offset:2px }
     .ux-acc__btn[aria-expanded="true"]{ border-color:#3e3aff; box-shadow: 0 0 0 1px rgba(68,64,255,.12) inset, 0 12px 28px rgba(68,64,255,.14); }
+    .ux-acc__btn.is-open i::after{ transform: scaleY(0) }
 
     .ux-acc__btn i{ width:14px; height:14px; flex:0 0 14px; position:relative; }
     .ux-acc__btn i::before, .ux-acc__btn i::after{
@@ -500,130 +501,133 @@
   <!-- Site JS (if any) -->
   <script type="module" src="./site.js" defer></script>
 
-  <!-- Accordion logic (accessible + animated + persistent) -->
   <script>
-  (function(){
-    const STORE_KEY = 'uxAccOpen:v1';
-    const root = document.querySelector('.ux-acc');
-    if(!root) return;
-
-    const items = [...root.querySelectorAll('.ux-acc__item')];
-    const btns  = items.map(i => i.querySelector('.ux-acc__btn'));
-    const panes = items.map(i => i.querySelector('.ux-acc__pane'));
-    const prog  = document.querySelector('.ux-acc__prog > i');
-
-    // Restore state
-    const saved = new Set(JSON.parse(localStorage.getItem(STORE_KEY) || '[]'));
-    panes.forEach((pane, i) => {
-      const id = pane.id;
-      const shouldOpen = saved.has(id) || (location.hash.replace('#','') === id);
-      setOpen(i, shouldOpen, false);
-    });
-    updateProgress();
-
-    // Click / toggle handler
-    root.addEventListener('click', (e)=>{
-      const btn = e.target.closest('.ux-acc__btn');
-      if(!btn) return;
-      const idx = btns.indexOf(btn);
-      setOpen(idx, btn.getAttribute('aria-expanded') !== 'true', true);
-      updateProgress();
-    });
-
-    // Keyboard nav (Up/Down/Home/End, Left/Right collapse/expand)
-    root.addEventListener('keydown', (e)=>{
-      const btn = e.target.closest('.ux-acc__btn');
-      if(!btn) return;
-      const i = btns.indexOf(btn);
-      let next = null;
-      switch(e.key){
-        case 'ArrowDown': next = btns[i+1] || btns[0]; break;
-        case 'ArrowUp':   next = btns[i-1] || btns[btns.length-1]; break;
-        case 'Home':      next = btns[0]; break;
-        case 'End':       next = btns[btns.length-1]; break;
-        case 'ArrowRight': setOpen(i, true, true); return;
-        case 'ArrowLeft':  setOpen(i, false, true); return;
-        default: return;
-      }
-      e.preventDefault();
-      next.focus();
-    });
-
-    // Expand/Collapse all
-    document.querySelector('[data-acc="expand"]')?.addEventListener('click', ()=>{
-      btns.forEach((_, i)=> setOpen(i, true, false));
-      saveState(); updateProgress();
-    });
-    document.querySelector('[data-acc="collapse"]')?.addEventListener('click', ()=>{
-      btns.forEach((_, i)=> setOpen(i, false, false));
-      saveState(); updateProgress();
-    });
-
-    // Resize observer to keep max-heights honest if content wraps on resize
-    const ro = new ResizeObserver(()=>{
-      panes.forEach((pane, i)=> {
-        if(pane.classList.contains('is-open')){
-          pane.style.maxHeight = pane.scrollHeight + 'px';
-        }
+    (function(){
+      const STORE_KEY = 'uxAccOpen:v1';
+      const root = document.querySelector('.ux-acc');
+      if(!root) return;
+    
+      const items = [...root.querySelectorAll('.ux-acc__item')];
+      const btns  = items.map(i => i.querySelector('.ux-acc__btn'));
+      const panes = items.map(i => i.querySelector('.ux-acc__pane'));
+      const prog  = document.querySelector('.ux-acc__prog > i');
+    
+      // restore state + hash
+      const saved = new Set(JSON.parse(localStorage.getItem(STORE_KEY) || '[]'));
+      const hashId = location.hash.replace('#','');
+      panes.forEach((pane, i) => {
+        const shouldOpen = saved.has(pane.id) || (pane.id === hashId);
+        setOpen(i, shouldOpen, false);
       });
-    });
-    panes.forEach(p => ro.observe(p));
-
-    // Helpers
-    function setOpen(index, open, animate){
-      const btn  = btns[index];
-      const pane = panes[index];
-      if(!btn || !pane) return;
-
-      btn.setAttribute('aria-expanded', String(open));
-      pane.classList.toggle('is-open', open);
-
-      // animate height
-      if(open){
-        pane.hidden = false;
-        const h = pane.scrollHeight;
-        if(animate){
-          pane.style.maxHeight = '0px';
-          requestAnimationFrame(()=>{
-            pane.style.maxHeight = h + 'px';
-          });
-        }else{
-          pane.style.maxHeight = h + 'px';
+      updateProgress();
+    
+      // clicks
+      root.addEventListener('click', (e)=>{
+        const btn = e.target.closest('.ux-acc__btn');
+        if(!btn) return;
+        const i = btns.indexOf(btn);
+        const open = btn.getAttribute('aria-expanded') !== 'true';
+        setOpen(i, open, true);
+        updateProgress();
+      });
+    
+      // keyboard
+      root.addEventListener('keydown', (e)=>{
+        const btn = e.target.closest('.ux-acc__btn');
+        if(!btn) return;
+        const i = btns.indexOf(btn);
+        let next = null;
+        switch(e.key){
+          case 'ArrowDown': next = btns[i+1] || btns[0]; break;
+          case 'ArrowUp':   next = btns[i-1] || btns[btns.length-1]; break;
+          case 'Home':      next = btns[0]; break;
+          case 'End':       next = btns[btns.length-1]; break;
+          case 'ArrowRight': setOpen(i, true, true); return;
+          case 'ArrowLeft':  setOpen(i, false, true); return;
+          default: return;
         }
-      }else{
-        if(animate){
+        e.preventDefault(); next.focus();
+      });
+    
+      // expand/collapse all
+      document.querySelector('[data-acc="expand"]')?.addEventListener('click', ()=>{
+        btns.forEach((_, i)=> setOpen(i, true, false));
+        saveState(); updateProgress();
+      });
+      document.querySelector('[data-acc="collapse"]')?.addEventListener('click', ()=>{
+        btns.forEach((_, i)=> setOpen(i, false, false));
+        saveState(); updateProgress();
+      });
+    
+      // resize: keep heights honest
+      const ro = new ResizeObserver(()=>{
+        panes.forEach((pane) => {
+          if(pane.classList.contains('is-open')){
+            pane.style.maxHeight = pane.scrollHeight + 'px';
+          }
+        });
+      });
+      panes.forEach(p => ro.observe(p));
+    
+      function setOpen(index, open, animate){
+        const btn  = btns[index];
+        const pane = panes[index];
+        if(!btn || !pane) return;
+    
+        // state hooks
+        btn.setAttribute('aria-expanded', String(open));
+        btn.classList.toggle('is-open', open); // <— NEW: drives the minus reliably
+        pane.classList.toggle('is-open', open);
+    
+        if(open){
+          pane.hidden = false;
           const h = pane.scrollHeight;
-          pane.style.maxHeight = h + 'px';
-          requestAnimationFrame(()=>{
+          if(animate){
             pane.style.maxHeight = '0px';
-          });
-          setTimeout(()=> { pane.hidden = true; }, 260);
+            requestAnimationFrame(()=>{ pane.style.maxHeight = h + 'px'; });
+          }else{
+            pane.style.maxHeight = h + 'px';
+          }
         }else{
-          pane.style.maxHeight = '0px';
-          pane.hidden = true;
+          const h = pane.scrollHeight;
+          if(animate){
+            pane.style.maxHeight = h + 'px';
+            requestAnimationFrame(()=>{ pane.style.maxHeight = '0px'; });
+            // close only after the height transition actually completes
+            const onEnd = (ev)=>{
+              if(ev.propertyName === 'max-height'){
+                pane.hidden = true;
+                pane.removeEventListener('transitionend', onEnd);
+              }
+            };
+            pane.addEventListener('transitionend', onEnd);
+          }else{
+            pane.style.maxHeight = '0px';
+            pane.hidden = true;
+          }
         }
+        saveState();
       }
-      saveState();
-    }
-
-    function saveState(){
-      const openIds = panes.filter(p => p.classList.contains('is-open')).map(p => p.id);
-      localStorage.setItem(STORE_KEY, JSON.stringify(openIds));
-    }
-
-    function updateProgress(){
-      const openCount = panes.filter(p => p.classList.contains('is-open')).length;
-      const pct = Math.round((openCount / panes.length) * 100);
-      if(prog) prog.style.width = pct + '%';
-    }
-
-    // Intersection reveal (in case site.js isn't doing it on this page)
-    const io = new IntersectionObserver((entries)=>{
-      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('is-in'); io.unobserve(e.target); } });
-    },{ threshold:.12 });
-    document.querySelectorAll('[data-animate]').forEach(el=> io.observe(el));
-  })();
-  </script>
+    
+      function saveState(){
+        const openIds = panes.filter(p => p.classList.contains('is-open')).map(p => p.id);
+        localStorage.setItem(STORE_KEY, JSON.stringify(openIds));
+      }
+    
+      function updateProgress(){
+        const openCount = panes.filter(p => p.classList.contains('is-open')).length;
+        const pct = Math.round((openCount / panes.length) * 100);
+        if(prog) prog.style.width = pct + '%';
+      }
+    
+      // minimal reveal if site.js isn't handling it
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('is-in'); io.unobserve(e.target); } });
+      },{ threshold:.12 });
+      document.querySelectorAll('[data-animate]').forEach(el=> io.observe(el));
+    })();
+    </script>
+    
 
   <footer class="site-footer" role="contentinfo">
     <span class="dot" aria-hidden="true"></span>
