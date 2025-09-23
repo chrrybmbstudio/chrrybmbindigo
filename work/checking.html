@@ -3,377 +3,369 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+
   <title>Checking Hub Redesign — Case Study • chrrybmb</title>
   <meta name="description" content="Case study: Credit Union of Georgia checking hub — IA simplification, UX refresh, and search hygiene with measured growth." />
   <link rel="canonical" href="https://chrrybmb.com/work/checking.html" />
   <link rel="icon" href="../assets/eye.png" />
   <link rel="apple-touch-icon" href="../assets/eye.png" />
 
-  <!-- OG -->
+  <!-- Open Graph -->
   <meta property="og:title" content="Checking Hub Redesign — Case Study">
-  <meta property="og:description" content="Simpler IA, clearer plan compare, accessible CTAs, and search hygiene that moved the needle.">
+  <meta property="og:description" content="Simpler IA, clearer plan compare, accessible CTAs, and search hygiene that moved the needle." />
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://chrrybmb.com/work/checking.html">
   <meta property="og:image" content="https://chrrybmb.com/assets/og-image.jpg">
 
-  <!-- Base site CSS + Fonts -->
+  <!-- Base site CSS -->
   <link rel="stylesheet" href="../style.css" />
+
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Jacquarda+Bastarda+9&display=swap" rel="stylesheet">
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2V368XS4ED"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-    
-      gtag('config', 'G-2V368XS4ED');
-    </script>
-
+  <!-- Page-scoped styles (after style.css) -->
   <style>
-    :root{
+    /* ===== Theme + background (keep your interactive orb) ===== */
+    .page-case{
       --indigo:#4440ff; --pink:#ffe9ff; --ink:#0e0f1a; --cardR: clamp(18px,1.6vw,26px);
-      --page-pad: clamp(16px, 5vw, 28px);
-      --footer-space: 96px;
-    }
-
-    body.page-case{
-      --ui:.78;
+      --ui:.72; /* compact but readable */
       background:
-        radial-gradient(60% 60% at var(--orb-x,72%) var(--orb-y,68%), rgba(68,64,255,.16), transparent 60%),
+        radial-gradient(60% 60% at var(--orb-x,72%) var(--orb-y,68%), rgba(68,64,255,.13), transparent 60%),
         linear-gradient(180deg, #ffffff, #faf9ff);
       color:var(--ink);
       -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
     }
 
-    .section{ padding: clamp(14px,4.8vw,28px) var(--page-pad) }
-    .container{ width:min(980px,100%); margin-inline:auto }
+    /* Iridescent wave + lens glass/aura (borrowed from home) */
+    .iridescent-wave{ position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow:hidden; }
+    .iridescent-wave::before{
+      content:""; position:absolute; left:-25vw; right:-25vw; top:-200vh; bottom:-200vh;
+      background: conic-gradient(from var(--wave-rot,0deg) at var(--orb-x,50%) var(--orb-y,20%),
+        rgba(127,240,255,.25), rgba(255,106,223,.20), rgba(127,240,255,.25));
+      filter: blur(54px) saturate(150%); mix-blend-mode: color-dodge; opacity:.72;
+      animation: waveSpin 22s linear infinite;
+    }
+    .iridescent-wave::after{
+      content:""; position:absolute; left:-25vw; right:-25vw; top:-240vh; bottom:-240vh;
+      background:
+        radial-gradient(80% 60% at 50% 30%, rgba(255,255,255,.55), rgba(255,255,255,0) 60%),
+        linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.55) 35%, rgba(255,255,255,0) 70%);
+      filter: blur(18px); mix-blend-mode: soft-light; opacity:.35;
+      animation: rippleDown 36s cubic-bezier(.42,0,.58,1) infinite;
+    }
+    @keyframes waveSpin{ to { transform: rotate(1turn) } }
+    @keyframes rippleDown{ 0%{transform:translate3d(0,-35%,0)} 100%{transform:translate3d(0,35%,0)} }
 
-    /* ===== HERO: minimal on-page (no background cards) ===== */
-    .hero{ padding-top: clamp(12px, 3.5vw, 28px); padding-bottom: 0; text-align:center; }
+    .bg-art{ position: fixed; inset: 0; z-index: 1; pointer-events: none; }
+    .lens-glass{
+      --lr:140px;
+      position:absolute; left: var(--lx, 72%); top: var(--ly, 68%);
+      width: calc(var(--lr)*2); height: calc(var(--lr)*2); transform: translate(-50%,-50%); border-radius: 50%;
+      backdrop-filter: blur(12px) saturate(125%) contrast(105%); -webkit-backdrop-filter: blur(12px) saturate(125%) contrast(105%);
+      -webkit-mask-image: radial-gradient(circle var(--lr) at 50% 50%, #000 60%, rgba(0,0,0,.7) 76%, transparent 90%);
+              mask-image: radial-gradient(circle var(--lr) at 50% 50%, #000 60%, rgba(0,0,0,.7) 76%, transparent 90%);
+      background: radial-gradient(closest-side, rgba(68,64,255,.18), transparent 70%);
+    }
+    .lens-aura{
+      --lr:140px;
+      position:absolute; left:var(--lx, 72%); top:var(--ly, 68%); width:calc(var(--lr)*2.1); height:calc(var(--lr)*2.1);
+      transform: translate(-50%,-50%); border-radius:50%; pointer-events:none; filter: blur(.6px) saturate(120%);
+    }
+    .lens-aura::before, .lens-aura::after{ content:""; position:absolute; inset:-18%; border-radius:50%; pointer-events:none; }
+    .lens-aura::before{ background: radial-gradient(closest-side, rgba(255,255,255,.22), rgba(255,255,255,.08) 55%, transparent 70%); mix-blend-mode: screen; filter: blur(12px); }
+    .lens-aura::after{
+      background:
+        radial-gradient(closest-side, rgba(255,255,255,.18), transparent 65%),
+        conic-gradient(from 0deg, rgba(127,240,255,.38), rgba(255,106,223,.35), rgba(127,240,255,.38));
+      mix-blend-mode: screen; opacity:.55; filter: blur(7px);
+    }
+
+    /* ===== Reveal tokens (contact page vibe) ===== */
+    [data-animate]{
+      opacity:0; transform: translateY(var(--rise, 10px)) scale(var(--scale, 1)); filter: blur(var(--blur, 0px));
+      transition: opacity .6s ease, transform .6s ease, filter .6s ease; transition-delay: var(--stagger, 0ms);
+      will-change: opacity, transform, filter;
+    }
+    .is-in[data-animate]{ opacity:1; transform:none; filter:none; }
+    .fade-up { --rise: 10px }
+    .zoom-in { --scale: .96; --blur: 2px }
+    @media (prefers-reduced-motion: reduce){
+      [data-animate]{ opacity:1; transform:none; filter:none; transition:none }
+      .iridescent-wave, .iridescent-wave::before, .iridescent-wave::after{ animation: none !important; }
+    }
+
+    /* ===== Hero (contact style) ===== */
+    .case-hero{ position:relative; padding: clamp(20px,6vw,56px) 20px 10px; text-align:center; z-index:2; }
+    .case-hero .hero-inner{ max-width:min(1100px,92vw); margin-inline:auto; position:relative; z-index:0; }
+    .case-hero .hero-inner::before{
+      content:""; position:absolute; inset:-12% -14% -18% -14%; z-index:-1; pointer-events:none;
+      background:
+        radial-gradient(72% 100% at 30% 40%, rgba(68,64,255,.28), transparent 60%),
+        radial-gradient(64% 80% at 70% 60%, rgba(255,233,255,.38), transparent 60%);
+      filter: blur(28px) saturate(120%); opacity:.9; animation: floatBlob 24s ease-in-out infinite alternate;
+    }
+    @keyframes floatBlob{ 0%{transform:translateY(0) rotate(0) scale(1)} 100%{transform:translateY(-6px) rotate(6deg) scale(1.02)} }
+
     .name-edge{
       --text:#0e0f1a;
       font-family:"Funnel Display", system-ui, sans-serif;
-      font-weight:600; font-size: clamp(26px, 4.2vw, 44px);
-      letter-spacing:-.01em; line-height:.9; margin:0 0 6px;
-      text-transform:lowercase; position:relative; display:inline-block; color:var(--text);
-      filter:url(#softWobble); isolation:isolate;
+      font-weight:600; font-size:calc(var(--ui) * clamp(36px,7vw,62px));
+      letter-spacing:-.02em; line-height:.92; margin:0 0 6px;
+      text-transform:lowercase; position:relative; display:inline-block;
+      color:var(--text); filter:url(#softWobble); isolation:isolate;
     }
     .name-edge::after{
-      content:attr(data-text);
-      position:absolute; inset:0; z-index:-1; pointer-events:none;
+      content:attr(data-text); position:absolute; inset:0; z-index:-1; pointer-events:none;
       background: conic-gradient(from 0deg, var(--indigo), var(--pink) 40%, #8aaaff, var(--indigo));
       -webkit-background-clip:text; background-clip:text; color:transparent;
-      transform: scale(1.02); filter: blur(4px) saturate(110%); opacity:.55; mix-blend-mode: plus-lighter;
+      transform: scale(1.04); filter: blur(6px) saturate(125%); opacity:.65; mix-blend-mode: plus-lighter;
     }
-    /* calmer top: keep shimmer bands off for a cleaner hero */
-    .name-edge .warp, .name-edge .prism{ display:none }
+    .name-edge .warp,.name-edge .prism{
+      position:absolute; inset:0;
+      -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 35%, #000 65%, transparent 100%);
+      mask-image: linear-gradient(90deg, transparent 0%, #000 35%, #000 65%, transparent 100%);
+      -webkit-mask-size: 220% 100%; mask-size: 220% 100%;
+      -webkit-mask-position: -60% 0; mask-position: -60% 0;
+      will-change: -webkit-mask-position, mask-position;
+    }
+    .name-edge .warp{ z-index:1; color:var(--text); -webkit-text-fill-color:currentColor; }
+    .name-edge .prism{
+      z-index:2; mix-blend-mode:screen; opacity:.55; filter: blur(.6px) saturate(120%);
+      background: linear-gradient(90deg, #7ff0ff 0%, #ff6adf 50%, #7ff0ff 100%);
+      -webkit-background-clip:text; background-clip:text; color:transparent; transform: translateX(.4px);
+    }
+    @media (min-width:641px){ .name-edge .warp,.name-edge .prism{ animation: sweepBand 7s cubic-bezier(.45,.05,.36,1) infinite alternate; } }
+    @media (max-width:640px){ .name-edge .warp,.name-edge .prism{ animation: sweepBand 3.2s cubic-bezier(.5,.1,.2,1) 1 both; } }
+    @keyframes sweepBand{ from{ -webkit-mask-position:-60% 0; mask-position:-60% 0 } to{ -webkit-mask-position:160% 0; mask-position:160% 0 } }
 
-    .sub{
-      margin:6px 0 6px;
-      font:400 calc(var(--ui) * clamp(14px,1.9vw,18px))/1.2 "Jacquarda Bastarda 9", serif;
-      opacity:.9;
+    .case-sub{
+      margin:6px 0 18px;
+      font:400 calc(var(--ui) * clamp(16px,2.2vw,20px))/1.2 "Jacquarda Bastarda 9", serif;
+      opacity:.85; text-align:center;
     }
+    .meta{ display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin: 10px auto 0 }
+    .tag{ display:inline-block; font:800 10px/1 "Funnel Display",system-ui; letter-spacing:.16em; text-transform:uppercase; padding:6px 8px; border-radius:10px; border:1px solid #5a57ff; background:linear-gradient(180deg,#fff,#f6f6ff); color:#17182a }
 
-    .meta{ display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin: 8px auto 0 }
-    .tag{
-      display:inline-block; font:800 10px/1 "Funnel Display",system-ui; letter-spacing:.16em; text-transform:uppercase;
-      padding:6px 8px; border-radius:10px; border:1px solid #5a57ff; background:linear-gradient(180deg,#fff,#f6f6ff); color:#17182a
-    }
+    /* ===== Content ===== */
+    .section{ padding: clamp(16px,5vw,28px) var(--page-pad,16px); position:relative; z-index:2; }
+    .container{ width:min(980px,100%); margin-inline:auto }
 
-    /* Slim separator after hero */
-    .hero-sep{
-      width:min(980px,92vw); height:1px; margin: clamp(10px, 2.6vw, 18px) auto 0;
-      background: linear-gradient(90deg, rgba(68,64,255,0), rgba(68,64,255,.35), rgba(68,64,255,0));
-      border-radius:1px;
-    }
-
-    /* ===== OVERVIEW (separate; clean label + rule) ===== */
-    .section--overview{ padding-top: clamp(8px,3.6vw,18px) }
-    .overview-head{
-      display:flex; align-items:center; gap:10px; margin: 0 auto 10px; width:min(980px,92vw);
-    }
-    .overview-head .chip{
-      font:800 10px/1 "Funnel Display",system-ui; letter-spacing:.16em; text-transform:uppercase;
-      padding:6px 8px; border-radius:10px; border:1px solid #5a57ff; background:linear-gradient(180deg,#fff,#f6f6ff); color:#17182a;
-    }
-    .overview-head .rule{
-      flex:1; height:1px; background: linear-gradient(90deg, rgba(68,64,255,0), rgba(68,64,255,.35), rgba(68,64,255,0)); border-radius:1px;
-    }
-
-    /* grid blocks */
     .grid{ display:grid; gap:16px }
     .grid--2{ grid-template-columns:1fr; }
     @media (min-width:900px){ .grid--2{ grid-template-columns: 1.1fr .9fr } }
 
-    /* simple cards for content sections (kept, but feel free to remove if you want it fully bare) */
     .card{
       border:1px solid rgba(68,64,255,.35); border-radius: var(--cardR);
-      background:linear-gradient(180deg,#fff,#f6f6ff);
-      padding:16px; box-shadow: 0 0 0 1px rgba(68,64,255,.06) inset;
+      background:linear-gradient(180deg,#fff,#f6f6ff); padding:16px;
+      box-shadow: 0 0 0 1px rgba(68,64,255,.06) inset;
     }
-    .card h3{ margin:.2rem 0 .35rem; font-size: clamp(16px,1.9vw,18px) }
+    .card h3{ margin:.2rem 0 .35rem; font-size: clamp(16px,1.8vw,18px) }
     .card p{ margin:.3rem 0; color:#2c3144 }
 
-    /* media */
-    .thumb{ aspect-ratio: 16/9; border-radius:14px; overflow:hidden; border:1px solid rgba(68,64,255,.25); background:#eef0ff; position:relative }
+    .thumb{ aspect-ratio: 16/9; border-radius:14px; overflow:hidden; border:1px solid rgba(68,64,255,.25); background:#eef0ff; }
     .thumb img{ width:100%; height:100%; object-fit:cover; display:block }
 
-    /* lists */
     .mini-list{ margin:.25em 0 0; padding-left:1.1em }
     .mini-list li{ margin:.25em 0; font-size: 14px }
 
-    /* metrics */
+    .btn-row{ display:flex; flex-wrap:wrap; gap:8px; margin-top:10px }
+    .btn-pixel{
+      --px: 10.5px; --px-track: .16em;
+      display:inline-flex; align-items:center; justify-content:center; gap:.5ch;
+      padding: 10px 12px; border-radius: 12px;
+      font: 800 var(--px)/1 "Funnel Display", system-ui; text-transform: uppercase; letter-spacing: var(--px-track);
+      background: linear-gradient(180deg, #ffffff, #f6f6ff);
+      border: 1px solid #1f22ff; color:#17182a;
+      box-shadow: 0 0 0 1px rgba(68,64,255,.08) inset, 0 6px 18px rgba(68,64,255,.12);
+      text-decoration:none; cursor:pointer; user-select:none;
+      transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
+    }
+    .btn-pixel:hover{ transform: translateY(-0.5px); box-shadow: 0 0 0 1px rgba(68,64,255,.10) inset, 0 10px 22px rgba(68,64,255,.18); }
+    .btn-pixel--ghost{ background:#fff; border-style:dashed; opacity:.92 }
+
     .metrics{ display:grid; grid-template-columns: repeat(auto-fit,minmax(160px,1fr)); gap:10px; margin-top:8px }
     .metric{ border-radius:14px; border:1px dashed rgba(68,64,255,.35); padding:12px; text-align:center; background:linear-gradient(180deg,#fff,#fafaff) }
     .metric b{ display:block; font-family:"Funnel Display"; font-size: clamp(18px,3.6vw,28px); letter-spacing:.02em }
     .metric span{ display:block; font:700 10px/1 "Funnel Display"; letter-spacing:.16em; text-transform:uppercase; opacity:.8; margin-top:4px }
 
-    /* buttons — reuse “ghost” from checking/work page (dashed) */
-    .btn-row{ display:flex; flex-wrap:wrap; gap:8px; margin-top:10px }
-    .btn-pixel{
-      --shadow: rgba(68,64,255,.12);
-      display:inline-flex; align-items:center; gap:8px;
-      padding:10px 12px; border-radius: 12px; border:1px solid #5a57ff;
-      background:linear-gradient(180deg,#fff,#f6f6ff);
-      font:700 12px/1 "Funnel Display",system-ui; letter-spacing:.12em; text-transform:uppercase;
-      box-shadow: 0 8px 16px var(--shadow); text-decoration:none; color:#17182a;
-      transition: transform .12s ease, box-shadow .12s ease;
-    }
-    .btn-pixel:hover{ transform: translateY(-0.5px); box-shadow: 0 12px 22px rgba(68,64,255,.18) }
-    .btn-pixel--ghost{ background:#fff; border-style:dashed; opacity:.92 }
-
-    /* interactions (no reflection): simple reveal */
-    [data-animate]{ opacity:0; transform: translateY(8px); transition: opacity .6s ease, transform .6s ease }
-    .is-in[data-animate]{ opacity:1; transform:none }
-
-    .footmargin{ padding-bottom: 80px }
-
-    /* floating transparency note (dismissible) */
-    .floating-note{ position:fixed; right:14px; bottom:calc(96px + env(safe-area-inset-bottom,0px)); z-index:40; max-width:min(360px, 86vw); }
-    .floating-note[hidden]{ display:none }
-    .floating-note .fn-card{ border:1px solid rgba(68,64,255,.35); border-radius:14px; background:linear-gradient(180deg,#fff,#f6f6ff); box-shadow: 0 12px 28px rgba(68,64,255,.18); padding:12px 12px 12px 14px; color:#17182a }
-    .floating-note .fn-head{ display:flex; align-items:center; gap:8px; margin-bottom:6px }
-    .floating-note .badge{ font:700 10px/1 "Funnel Display",system-ui; letter-spacing:.16em; text-transform:uppercase; padding:6px 8px; border-radius:10px; border:1px solid #5a57ff; background:linear-gradient(180deg,#fff,#f6f6ff) }
-    .floating-note .fn-close{ margin-left:auto; appearance:none; border:none; background:transparent; cursor:pointer; padding:4px; border-radius:8px }
-    .floating-note .fn-close:focus-visible{ outline:2px solid #5a57ff; outline-offset:2px }
-    .floating-note p{ margin:0; font-size:13.5px; color:#2c3144 }
-    @media (max-width: 480px){ .floating-note{ right:10px; left:10px; } }
-
-    @media (prefers-reduced-motion: no-preference){
-      .floating-note{ animation: fn-fade-in .4s ease both }
-      @keyframes fn-fade-in{ from{ opacity:0; transform: translateY(8px)} to{ opacity:1; transform:none } }
+    /* Small H1 tweak vs. contact page (you asked for slimmer titles) */
+    @media (max-width: 480px){
+      .name-edge{ font-size: clamp(28px, 8vw, 40px); }
     }
   </style>
 </head>
 
 <body class="page-case density-xs">
-<header class="site-header" role="banner">
-  <div class="site-header__chrome" aria-hidden="true"></div>
-  <div class="header__inner">
-    <a class="brand" href="/" aria-label="chrrybmb home">
-      <img class="brand__logo-img" src="../assets/indigo_chrry_indypinky.svg" alt="chrrybmb logo" width="64" height="38" decoding="async">
-    </a>
-    <nav class="nav" aria-label="primary">
-      <ul class="nav__list">
-        <li><a href="/index.html">home</a></li>
-        <li><a href="/about.html">about</a></li>
-        <li><a href="/contact.html">contact</a></li>
-      </ul>
-    </nav>
-    <div class="header__actions">
-      <a class="btn-pixel btn-pixel--ghost" href="../brand-system.html">brand</a>
-    </div>
-  </div>
-</header>
+  <!-- SVG defs FIRST (for filters) -->
+  <svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden">
+    <filter id="softWobble" x="-50%" y="-50%" width="200%" height="200%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.008" numOctaves="1" seed="11" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </svg>
 
-<main id="main" tabindex="-1">
-  <!-- HERO -->
-  <section class="section hero" aria-label="title">
-    <div class="container" data-animate>
+  <!-- Header -->
+  <header class="site-header" role="banner">
+    <div class="site-header__chrome" aria-hidden="true"></div>
+    <div class="header__inner">
+      <a class="brand" href="/" aria-label="chrrybmb home">
+        <img class="brand__logo-img" src="../assets/indigo_chrry_indypinky.svg" alt="chrrybmb logo" width="64" height="38" decoding="async">
+      </a>
+      <nav class="nav" aria-label="primary">
+        <ul class="nav__list">
+          <li><a href="/index.html">home</a></li>
+          <li><a href="/about.html">about</a></li>
+          <li><a href="/contact.html">contact</a></li>
+        </ul>
+      </nav>
+      <div class="header__actions">
+        <a class="btn-pixel btn-pixel--ghost" href="../brand-system.html">brand</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Background orb layers -->
+  <div class="iridescent-wave" aria-hidden="true"></div>
+  <div class="bg-art" aria-hidden="true">
+    <span class="lens-glass"></span>
+    <span class="lens-aura"></span>
+  </div>
+
+  <!-- Hero -->
+  <section class="case-hero" aria-label="Intro">
+    <div class="hero-inner fade-up" data-animate>
       <h1 class="name-edge" data-text="checking hub redesign">
         <span class="text">checking hub redesign</span>
+        <span class="warp"  aria-hidden="true">checking hub redesign</span>
+        <span class="prism" aria-hidden="true">checking hub redesign</span>
       </h1>
-      <p class="sub">credit union of georgia — simpler IA, clearer plan compare, accessible CTAs, and search hygiene.</p>
+      <div class="case-sub">credit union of georgia — simpler IA, clearer compare, accessible CTAs, and search hygiene</div>
       <div class="meta" aria-label="meta tags">
         <span class="tag">ux</span><span class="tag">ia</span><span class="tag">seo</span><span class="tag">accessibility</span><span class="tag">analytics</span>
       </div>
     </div>
-    <div class="hero-sep" aria-hidden="true"></div>
   </section>
 
-  <!-- OVERVIEW -->
-  <section class="section section--overview" aria-label="overview">
-    <div class="overview-head">
-      <span class="chip">overview</span><span class="rule" aria-hidden="true"></span>
-    </div>
+  <!-- Content -->
+  <main id="main" tabindex="-1">
+    <section class="section" aria-label="overview">
+      <div class="container grid grid--2">
+        <article class="card" data-animate>
+          <h3>overview</h3>
+          <p>Reduce friction to account selection and improve findability. We restructured the page, clarified the plan matrix, tuned copy/metadata, and hardened accessibility. Measured weekly via Google Analytics; search quality monitored with SEMrush + Search Console.</p>
+          <h3>role</h3>
+          <p>Solo UX/design + content hygiene: IA simplification, component layout, microcopy, accessibility review, and analytics reporting.</p>
+          <h3>objectives</h3>
+          <ul class="mini-list">
+            <li>Make plan comparison scannable in <em>under 8 seconds</em>.</li>
+            <li>Clarify CTAs and next steps for each account.</li>
+            <li>Improve organic discoverability without spammy tactics.</li>
+          </ul>
+        </article>
 
-    <div class="container grid grid--2">
-      <article class="card" data-animate>
-        <h3>problem</h3>
-        <p>Users struggled to compare checking options and choose a path. The previous page buried CTAs, mixed headings, and repeated content, which slowed decision-making.</p>
-        <h3>goal</h3>
-        <p>Reduce friction to account selection and improve findability for checking plans.</p>
-        <h3>approach</h3>
-        <ul class="mini-list">
-          <li>Restructure page; introduce a clear <strong>plan matrix</strong> with consistent labels.</li>
-          <li>Clarify <strong>CTA hierarchy</strong> (primary apply, secondary learn) with obvious exits.</li>
-          <li>Tighten microcopy & metadata; normalize <strong>H1–H3</strong>; improve accessibility.</li>
-          <li>Monitor via GA; audit backlinks in SEMrush; ship disavow through Search Console.</li>
-        </ul>
-      </article>
-
-      <aside class="card" data-animate>
-        <div class="thumb" aria-hidden="true">
-          <img src="../assets/checking-cuofga.png" alt="Checking page after redesign">
-        </div>
-        <div class="btn-row">
-          <a class="btn-pixel" href="https://cuofga.org/" target="_blank" rel="noopener">live site</a>
-          <a class="btn-pixel btn-pixel--ghost" href="../work.html#proj-checking">back to projects</a>
-        </div>
-      </aside>
-    </div>
-  </section>
-
-  <!-- MOVES -->
-  <section class="section" aria-label="moves">
-    <div class="container grid grid--2">
-      <article class="card" data-animate>
-        <h3>ux & ia</h3>
-        <ul class="mini-list">
-          <li>Reorganized content into a clear <strong>plan matrix</strong> with consistent labels.</li>
-          <li>Added <strong>CTA hierarchy</strong> (primary apply, secondary learn) with obvious exits.</li>
-          <li>Normalized <strong>H1–H3</strong> structure; removed duplicate headings.</li>
-          <li>Improved focus states, contrast, and motion sensitivity.</li>
-        </ul>
-        <h3>content & seo hygiene</h3>
-        <ul class="mini-list">
-          <li>Trimmed marketing filler; tightened microcopy for clarity.</li>
-          <li>Alt text, descriptive links, and purposeful metadata.</li>
-          <li>Submitted sitemap & ensured robots directives were sane.</li>
-        </ul>
-      </article>
-
-      <article class="card" data-animate>
-        <h3>search quality</h3>
-        <ul class="mini-list">
-          <li>SEMrush backlink audit → compiled <strong>disavow</strong> list to reduce toxic links.</li>
-          <li>Shipped disavow file via <strong>Google Search Console</strong>.</li>
-          <li>Monitored keyword movement and indexed coverage weekly.</li>
-        </ul>
-        <h3>measurement</h3>
-        <ul class="mini-list">
-          <li>Weekly Google Analytics snapshots: sessions, time on page, exit rate, and conversion events.</li>
-          <li>Compared pre/post windows and annotated launch in GA for clarity.</li>
-        </ul>
-      </article>
-    </div>
-  </section>
-
-  <!-- RESULTS -->
-  <section class="section" aria-label="results">
-    <div class="container">
-      <article class="card" data-animate>
-        <h3>outcomes</h3>
-        <p>Post-launch, engagement indicators improved and the page’s visibility strengthened. (Formal numbers available upon request; some source files were not retained.)</p>
-        <div class="metrics">
-          <div class="metric"><b data-metric="sessions-delta">+—%</b><span>sessions</span></div>
-          <div class="metric"><b data-metric="time-delta">+—%</b><span>avg time on page</span></div>
-          <div class="metric"><b data-metric="exit-delta">−—%</b><span>exit rate</span></div>
-          <div class="metric"><b data-metric="apply-cta">+—%</b><span>apply cta clicks</span></div>
-        </div>
-        <p style="margin-top:10px"><em>Note:</em> Growth was acknowledged in Google account communications during this period.</p>
-      </article>
-    </div>
-  </section>
-
-  <!-- ARTIFACTS -->
-  <section class="section footmargin" aria-label="artifacts">
-    <div class="container grid">
-      <details data-animate>
-        <summary>artifact annex — screenshots & notes</summary>
-        <div class="grid" style="margin-top:10px; grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); gap:10px">
-          <figure class="card">
-            <div class="thumb"><img src="../assets/checking-cuofga.png" alt="After redesign"/></div>
-            <figcaption>After redesign — plan matrix + clarified CTAs.</figcaption>
-          </figure>
-          <figure class="card">
-            <div class="thumb"><img src="../assets/checking-before.png" alt="Before redesign (placeholder)"/></div>
-            <figcaption>Before (recreated) — mixed headings and CTAs.</figcaption>
-          </figure>
-        </div>
-      </details>
-    </div>
-  </section>
-
-  <!-- floating transparency note (dismissible) -->
-  <div id="transparencyNote" class="floating-note" role="dialog" aria-label="transparency note" aria-live="polite" aria-modal="false">
-    <div class="fn-card">
-      <div class="fn-head">
-        <span class="badge" aria-hidden="true">note</span>
-        <button class="fn-close" type="button" aria-label="Dismiss note" title="Dismiss" id="dismissNote">✕</button>
+        <aside class="card sheen" data-animate>
+          <div class="thumb" aria-hidden="true">
+            <img src="../assets/checking-cuofga.png" alt="Checking page after redesign">
+          </div>
+          <div class="btn-row">
+            <a class="btn-pixel" href="https://cuofga.org/" target="_blank" rel="noopener">live site</a>
+            <a class="btn-pixel btn-pixel--ghost" href="../work.html#proj-checking">back to projects</a>
+          </div>
+        </aside>
       </div>
-      <p>Some original working files from this role weren’t retained. Visuals shown are screenshots and reconstructed mockups that represent the work I led.</p>
-    </div>
-  </div>
-</main>
+    </section>
 
-<!-- Footer -->
-<footer class="glass-footer" role="contentinfo">
-  <span class="dot" aria-hidden="true"></span>
-  <span>© <span id="year"></span> chrrybmb.com / denisajomo.com</span>
-</footer>
+    <section class="section" aria-label="moves">
+      <div class="container grid grid--2">
+        <article class="card" data-animate>
+          <h3>ux & ia</h3>
+          <ul class="mini-list">
+            <li>Reorganized content into a clear <strong>plan matrix</strong> with consistent labels.</li>
+            <li>Added <strong>CTA hierarchy</strong> (primary apply, secondary learn) with obvious exits.</li>
+            <li>Normalized <strong>H1–H3</strong> structure; removed duplicate headings.</li>
+            <li>Improved focus states, contrast, and motion sensitivity.</li>
+          </ul>
+        </article>
 
-<!-- SVG filters -->
-<svg width="0" height="0" class="visually-hidden" aria-hidden="true">
-  <filter id="softWobble"><feGaussianBlur in="SourceGraphic" stdDeviation="0"/></filter>
-</svg>
+        <article class="card" data-animate>
+          <h3>content & seo hygiene</h3>
+          <ul class="mini-list">
+            <li>Trimmed marketing filler; tightened microcopy for clarity.</li>
+            <li>Alt text, descriptive links, and purposeful metadata.</li>
+            <li>Submitted sitemap & ensured robots directives were sane.</li>
+          </ul>
+          <h3>search quality</h3>
+          <ul class="mini-list">
+            <li>SEMrush backlink audit → compiled <strong>disavow</strong> list to reduce toxic links.</li>
+            <li>Shipped disavow file via <strong>Google Search Console</strong>.</li>
+            <li>Monitored keyword movement and indexed coverage weekly.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
 
-<!-- Reveal + orb parallax (no reflection) -->
-<script>
-  // intersection reveal
-  const io = new IntersectionObserver((es)=>{
-    es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('is-in'); io.unobserve(e.target) } })
-  },{ threshold:.1 });
-  document.querySelectorAll('[data-animate]').forEach(el=>io.observe(el));
+    <section class="section" aria-label="results">
+      <div class="container">
+        <article class="card" data-animate>
+          <h3>outcomes</h3>
+          <p>Post-launch, engagement indicators improved and the page’s visibility strengthened. (Formal numbers available upon request; some source files were not retained.)</p>
+          <div class="metrics">
+            <div class="metric"><b data-metric="sessions-delta">+—%</b><span>sessions</span></div>
+            <div class="metric"><b data-metric="time-delta">+—%</b><span>avg time on page</span></div>
+            <div class="metric"><b data-metric="exit-delta">−—%</b><span>exit rate</span></div>
+            <div class="metric"><b data-metric="apply-cta">+—%</b><span>apply cta clicks</span></div>
+          </div>
+        </article>
+      </div>
+    </section>
 
-  // subtle background orb parallax (moves gradient focus point)
-  (function(){
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if(reduce) return;
-    const root = document.documentElement;
-    function move(e){
-      const x = (e.clientX / window.innerWidth) * 100;
-      const y = (e.clientY / window.innerHeight) * 100;
-      root.style.setProperty('--orb-x', x + '%');
-      root.style.setProperty('--orb-y', y + '%');
+    <section class="section" aria-label="artifacts">
+      <div class="container">
+        <details class="card" data-animate>
+          <summary>artifact annex — screenshots & notes</summary>
+          <div class="grid" style="margin-top:10px; grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); gap:10px">
+            <figure class="card sheen">
+              <div class="thumb"><img src="../assets/checking-cuofga.png" alt="After redesign"/></div>
+              <figcaption>After redesign — plan matrix + clarified CTAs.</figcaption>
+            </figure>
+            <figure class="card sheen">
+              <div class="thumb"><img src="../assets/checking-before.png" alt="Before redesign (placeholder)"/></div>
+              <figcaption>Before (recreated) — mixed headings and CTAs.</figcaption>
+            </figure>
+          </div>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer (uses your global .glass-footer styles) -->
+  <footer class="glass-footer" role="contentinfo">
+    <span class="dot" aria-hidden="true"></span>
+    <span>© <span id="year"></span> chrrybmb.com / denisajomo.com</span>
+  </footer>
+
+  <!-- Intersection reveal -->
+  <script>
+    const io = new IntersectionObserver((es)=>{
+      es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('is-in'); io.unobserve(e.target) } })
+    },{ threshold:.1 });
+    document.querySelectorAll('[data-animate]').forEach(el=>io.observe(el));
+  </script>
+
+  <!-- Gentle title band sweep on first paint for mobile (no loop) -->
+  <script>
+    if (matchMedia('(max-width:640px)').matches) {
+      const prism = document.querySelector('.name-edge .prism');
+      const warp  = document.querySelector('.name-edge .warp');
+      if (prism && warp) {
+        prism.style.animation = 'sweepBand 3.2s cubic-bezier(.5,.1,.2,1) 1 both';
+        warp.style.animation  = 'sweepBand 3.2s cubic-bezier(.5,.1,.2,1) 1 both';
+      }
     }
-    window.addEventListener('mousemove', move, { passive:true });
-    // touch fallback
-    window.addEventListener('touchmove', (e)=>{
-      const t = e.touches[0]; if(!t) return;
-      const x = (t.clientX / window.innerWidth) * 100;
-      const y = (t.clientY / window.innerHeight) * 100;
-      root.style.setProperty('--orb-x', x + '%');
-      root.style.setProperty('--orb-y', y + '%');
-    }, { passive:true });
-  })();
-
-  // Dismiss + persist the transparency note
-  (function(){
-    const KEY = 'dismissTransparencyNote';
-    const note = document.getElementById('transparencyNote');
-    const btn = document.getElementById('dismissNote');
-    if(localStorage.getItem(KEY)==='1'){ note?.setAttribute('hidden',''); }
-    btn?.addEventListener('click', ()=>{ localStorage.setItem(KEY,'1'); note?.setAttribute('hidden',''); });
-  })();
-</script>
-
-<!-- Shared script -->
-<script type="module" src="../site.js" defer></script>
+  </script>
 </body>
 </html>
