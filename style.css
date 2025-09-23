@@ -435,7 +435,7 @@ a:hover{ text-decoration:underline }
 .glass-footer{
   position: fixed;
   left: 50%;
-  bottom: 0;
+  bottom: env(safe-area-inset-bottom, 0px);
   transform: translateX(-50%);
   z-index: 30;
 
@@ -466,7 +466,6 @@ body{
 /* Mobile: full-width bottom bar + reserve space on the page so it never overlaps */
 @media (max-width: 640px){
   .glass-footer{
-    left: 0; right: 0; transform: none;
     border-radius: 0;
     border-top-left-radius: 16px;
     border-top-right-radius: 16px;
@@ -478,13 +477,7 @@ body{
   }
 }
 
-/* Accessibility: if user prefers less motion, avoid weird fixed jank from masks */
-@media (max-width:640px) and (prefers-reduced-motion: reduce){
-  .glass-footer{
-    -webkit-mask-image: none;
-            mask-image: none;
-  }
-}
+
 
 /* ---------------- Hero ---------------- */
 .hero{
