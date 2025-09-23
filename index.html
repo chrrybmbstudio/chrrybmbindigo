@@ -499,24 +499,19 @@
   <!-- Single shared script -->
   <script type="module" src="./site.js" defer></script>
 
-<!-- Footer -->
-<footer class="site-footer" role="contentinfo">
-  <div class="footer__inner">
-    <a class="footer__brand" href="/index.html" aria-label="chrrybmb home">
-      <!-- tiny dot to match brand -->
-      <span class="dot" aria-hidden="true"></span>
-      <span class="brand-text">chrrybmb</span>
-    </a>
-
-    <nav class="footer__nav" aria-label="Footer">
-    </nav>
-
-    <small class="footer__copy">
-      © <span id="year"></span> chrrybmb.com / denisajomo.com
-    </small>
-  </div>
-</footer>
-
+  <footer class="site-footer" role="contentinfo">
+    <span class="dot" aria-hidden="true"></span>
+    <small>© <span id="year"></span> chrrybmb.com / denisajomo.com</small>
+  </footer>
+  
+  <script>
+    // year only
+    (function(){
+      const y = document.getElementById('year');
+      if (y) y.textContent = new Date().getFullYear();
+    })();
+  </script>
+  
 
 </body>
 </html>
