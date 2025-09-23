@@ -431,72 +431,55 @@ a:hover{ text-decoration:underline }
 :root { --footer-h: 48px; --footer-gap: 8px; }
 @media (max-width:480px){ :root { --footer-h: 54px } }
 
-/* Glass footer */
+/* ===== Clean glass footer (single source of truth) ===== */
+
+/* fallback var; JS will update this to the real height */
+:root { --footer-h: 56px; }
+
+/* Desktop/tablet: centered pill pinned above the bottom */
 .glass-footer{
   position: fixed;
   left: 50%;
   transform: translateX(-50%);
-  bottom: max(8px, env(safe-area-inset-bottom, 0px)); /* avoid iOS home pill */
-  z-index: 20;
+  bottom: max(12px, env(safe-area-inset-bottom, 0px));
+  z-index: 40;
 
-  display: flex; align-items: center; justify-content: center; gap: 12px;
-  padding: 8px 12px; /* slightly taller, easier tap target on mobile */
+  display:flex; align-items:center; gap:12px;
+  padding: 10px 14px;
   border-radius: 16px;
 
-  /* keep it inside the viewport on small screens */
-  max-width: calc(100vw - 16px - env(safe-area-inset-left,0px) - env(safe-area-inset-right,0px));
   background: rgba(255,255,255,.35);
   backdrop-filter: blur(10px) saturate(135%) contrast(105%);
   -webkit-backdrop-filter: blur(10px) saturate(135%) contrast(105%);
   box-shadow: 0 10px 30px rgba(68,64,255,.12);
 
-  /* the mask is pretty, but can clip text on tiny screens — soften it on phones */
-  -webkit-mask-image: radial-gradient(120% 120% at 50% 0%, #000 45%, rgba(0,0,0,.85) 75%, transparent 100%);
-          mask-image: radial-gradient(120% 120% at 50% 0%, #000 45%, rgba(0,0,0,.85) 75%, transparent 100%);
+  /* keep inside viewport on narrow widths */
+  max-width: calc(100vw - 24px - env(safe-area-inset-left,0px) - env(safe-area-inset-right,0px));
 }
 .glass-footer a, .glass-footer span{
-  font:600 13px/1 "DM Sans"; color:#1b1e35; text-decoration:none;
+  font:600 13px/1 "DM Sans", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color:#1b1e35; text-decoration:none;
 }
 .glass-footer .dot{
   width:5px; height:5px; border-radius:50%;
-  background:linear-gradient(90deg,var(--indigo),#8aa3ff)
+  background:linear-gradient(90deg,var(--indigo,#4440ff),#8aa3ff);
 }
 
-/* Add to the body on pages with the glass footer */
-body.page-work,
-body.page-case {
-  padding-bottom: calc(var(--footer-h) + var(--footer-gap) + env(safe-area-inset-bottom, 0px));
-}
-
-/* put near your page-scoped helpers */
-:root{
-  --footer-h: 60px; /* fallback */
-}
-
-/* your main already has padding-bottom, keep it or remove it; the spacer is the source of truth */
-.footer-spacer{
-  height: calc(var(--footer-h) + env(safe-area-inset-bottom, 0px));
-}
-
-/* your mobile full-width bar is great — keep it */
-@media (max-width:640px){
+/* Mobile: full-width bottom bar with rounded top corners */
+@media (max-width: 640px){
   .glass-footer{
-    position: fixed;
-    left: 0; right: 0; bottom: 0;
-    z-index: 20;
+    left: 0; right: 0; bottom: 0; transform: none;
     margin: 0;
     border-radius: 0;
     border-top-left-radius: 16px;
     border-top-right-radius: 16px;
     padding: 12px 14px calc(12px + env(safe-area-inset-bottom, 0px));
-
     max-width: none;
-    transform: none;
-    -webkit-mask-image: none;
-            mask-image: none;
   }
 }
 
+/* Spacer that prevents content from being covered by the fixed footer */
+.footer-spacer{ height: calc(var(--footer-h) + env(safe-area-inset-bottom, 0px)); }
 
 /* ---------------- Hero ---------------- */
 .hero{
