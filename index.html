@@ -64,7 +64,6 @@
       --px-font:"Funnel Display", system-ui, sans-serif;
       --px-track:.12em;
 
-      --footer-space: 60px; /* breathing room so cards never hide under footer */
 
       /* === Reveal system knobs === */
       --reveal-dur: .72s;
@@ -86,11 +85,6 @@
       margin-inline: auto;
       padding-inline: var(--page-pad);
       box-sizing: border-box;
-    }
-
-    /* The main content gets bottom padding to clear the fixed footer */
-    .site-main{
-      padding-bottom: calc(var(--footer-space) + env(safe-area-inset-bottom, 0px));
     }
 
     /* IRIDESCENT WAVE (full-page) — anti-seam overscan + GPU hinting */
@@ -226,9 +220,10 @@
 
     /* ===== Features ===== */
     .features{
-      padding: calc(var(--ui) * clamp(22px, 5vw, 44px)) 0;
-      margin-bottom: calc(var(--footer-space) / 2);
-    }
+  padding: calc(var(--ui) * clamp(22px, 5vw, 44px)) 0;
+  margin-bottom: calc(var(--footer-h) * 0.5); /* optional, aesthetic only */
+}
+
 
     .features__grid{
       display:grid;
@@ -307,12 +302,7 @@
 
 <body class="density-xs">
   
-    <!-- Glass footer -->
-    <footer class="glass-footer fade-up" role="contentinfo">
-      <span class="dot" aria-hidden="true"></span>
-      <span>© <span id="year"></span> chrrybmb.com / denisajomo.com</span>
-    </footer>
-  
+
 
 <!-- Header / Nav -->
 <header class="site-header" role="banner">
@@ -455,8 +445,8 @@
         </div>
       </section>
 
-      <!-- Add this just before </main> -->
-<div class="footer-spacer" aria-hidden="true"></div>
+  <div class="footer-spacer" aria-hidden="true"></div>
+
 
     </main>
   </div>
@@ -523,6 +513,13 @@
 
   <!-- Single shared script -->
   <script type="module" src="./site.js" defer></script>
+
+      <!-- Glass footer -->
+      <footer class="glass-footer fade-up" role="contentinfo">
+        <span class="dot" aria-hidden="true"></span>
+        <span>© <span id="year"></span> chrrybmb.com / denisajomo.com</span>
+      </footer>
+    
   
 </body>
 </html>
