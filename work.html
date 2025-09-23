@@ -7,9 +7,31 @@
   <meta name="description" content="Selected work: compact UX, brand systems, and search-forward growth." />
   <link rel="canonical" href="https://chrrybmb.com/work.html" />
 
-  <!-- Favicon -->
-  <link rel="icon" href="./assets/eye.png" />
-  <link rel="apple-touch-icon" href="./assets/eye.png" />
+<!-- Favicon -->
+<!-- Icons: SVG first, PNG fallbacks -->
+<link rel="icon" href="/assets/eye.svg?v=2" type="image/svg+xml">
+<link rel="icon" href="/assets/eye-32.png?v=2" sizes="32x32" type="image/png">
+<link rel="icon" href="/assets/eye-16.png?v=2" sizes="16x16" type="image/png">
+
+<!-- iOS home screen (SVG not supported here) -->
+<link rel="apple-touch-icon" href="/assets/eye-180.png?v=2">
+
+<!-- Safari pinned tab (monochrome mask SVG) -->
+<link rel="mask-icon" href="/assets/eye-mask.svg?v=2" color="#4440ff">
+
+<!-- PWA manifest (optional, nice to have) -->
+<link rel="manifest" href="/site.webmanifest?v=2">
+
+<!-- Browser chrome color (light/dark) -->
+<meta name="theme-color" content="#ffffff">
+<meta name="theme-color" content="#0e0f1a" media="(prefers-color-scheme: dark)">
+<meta name="msapplication-TileColor" content="#4440ff">
+
+<!-- Social previews (refresh your image if you update the design) -->
+<meta property="og:image" content="https://chrrybmb.com/assets/og-image.jpg?v=2">
+<meta property="og:image:alt" content="chrrybmb — iridescent eye mark on prism glow">
+<meta name="twitter:card" content="summary_large_image">
+
 
   <!-- Open Graph -->
   <meta property="og:title" content="chrrybmb — work">
