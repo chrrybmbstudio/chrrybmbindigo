@@ -303,25 +303,6 @@
       [data-animate]{ opacity:1 !important; transform:none !important; }
     }
 
-    /* Mobile: pin as a full-width bottom bar */
-@media (max-width: 640px){
-  .glass-footer{
-    position: fixed;
-    left: 0; right: 0; bottom: 0;
-    z-index: 20;
-
-    margin: 0;               /* no margins—true bar */
-    border-radius: 0;
-    border-top-left-radius: 16px;  /* optional soft top corners */
-    border-top-right-radius: 16px;
-    padding: 12px 14px calc(12px + env(safe-area-inset-bottom, 0px));
-
-    max-width: none;
-    transform: none;
-    -webkit-mask-image: none; /* prevent clipping on tiny widths */
-            mask-image: none;
-  }
-}
 
   </style>
 
@@ -477,6 +458,10 @@
           </article>
         </div>
       </section>
+
+      <!-- Add this just before </main> -->
+<div class="footer-spacer" aria-hidden="true"></div>
+
     </main>
   </div>
 
