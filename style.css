@@ -427,43 +427,63 @@ a:hover{ text-decoration:underline }
   align-self: flex-end;        /* sit on the bottom of the hero column */
 }
 
-/* Base (desktop stays fixed) */
-:root { --footer-h: 56px; } /* fallback */
+/* --- Footer: single source of truth --- */
+
+/* we’ll let JS measure the real height and set --footer-h at runtime */
+:root { --footer-h: 56px; } /* fallback if JS is blocked */
+
 .glass-footer{
   position: fixed;
   left: 50%;
   bottom: 0;
   transform: translateX(-50%);
   z-index: 30;
+
   display: flex; align-items: center; gap: 12px;
   padding: 10px 14px calc(10px + env(safe-area-inset-bottom, 0px));
   border-radius: 16px;
+
   background: rgba(255,255,255,.35);
   backdrop-filter: blur(10px) saturate(135%) contrast(105%);
   -webkit-backdrop-filter: blur(10px) saturate(135%) contrast(105%);
   box-shadow: 0 10px 30px rgba(68,64,255,.12);
 }
-.glass-footer a, .glass-footer span{ font:600 13px/1 "DM Sans"; color:#1b1e35; text-decoration:none; }
-.glass-footer .dot{ width:5px; height:5px; border-radius:50%; background:linear-gradient(90deg,var(--indigo,#4440ff),#8aa3ff); }
 
-/* Desktop: no padding-bottom needed (footer is fixed) */
-body{ padding-bottom: 0; }
+/* text */
+.glass-footer a, .glass-footer span{
+  font:600 13px/1 "DM Sans"; color:#1b1e35; text-decoration:none;
+}
+.glass-footer .dot{
+  width:5px; height:5px; border-radius:50%;
+  background:linear-gradient(90deg,var(--indigo,#4440ff),#8aa3ff);
+}
 
-/* MOBILE: footer becomes normal flow (static), spans full width, never overlaps */
-@media (max-width:640px){
+/* Make sure ALL pages leave space for the fixed bar (simplest: pad the body) */
+body{
+  padding-bottom: 0; /* desktop default */
+}
+
+/* Mobile: full-width bottom bar + reserve space on the page so it never overlaps */
+@media (max-width: 640px){
   .glass-footer{
-    position: static;           /* <- key */
-    left: auto; right: auto; bottom: auto; transform: none;
-    width: 100%;
+    left: 0; right: 0; transform: none;
     border-radius: 0;
-    border-top-left-radius: 16px;  /* keep the nice top curve */
+    border-top-left-radius: 16px;
     border-top-right-radius: 16px;
-    padding: 12px 14px calc(12px + env(safe-area-inset-bottom, 0px));
-    max-width: none;
   }
 
-  /* No need to reserve space since it's no longer fixed */
-  body{ padding-bottom: 0; }
+  /* global guard: push page content above the bar */
+  body{
+    padding-bottom: calc(var(--footer-h) + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+/* Accessibility: if user prefers less motion, avoid weird fixed jank from masks */
+@media (max-width:640px) and (prefers-reduced-motion: reduce){
+  .glass-footer{
+    -webkit-mask-image: none;
+            mask-image: none;
+  }
 }
 
 /* ---------------- Hero ---------------- */
