@@ -8,63 +8,59 @@
   <title>chrrybmb - brand systems ⋆˙⟡</title>
   <meta name="description" content="chrrybmb" />
   <link rel="canonical" href="https://chrrybmb.com/" />
+
   <!-- Favicon -->
   <link rel="icon" href="./assets/eye.png" />
   <link rel="apple-touch-icon" href="./assets/eye.png" />
 
-<!-- Open Graph -->
-<meta property="og:title" content="chrrybmb — denisa jomo">
-<meta property="og:description" content="creative leadership for brand & web.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://chrrybmb.com/">
-<meta property="og:image" content="https://chrrybmb.com/assets/og-image.jpg">
-<meta property="og:image:alt" content="chrrybmb iridescent glow with eye mark">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:site_name" content="chrrybmb">
+  <!-- Open Graph -->
+  <meta property="og:title" content="chrrybmb — denisa jomo">
+  <meta property="og:description" content="creative leadership for brand & web.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://chrrybmb.com/">
+  <meta property="og:image" content="https://chrrybmb.com/assets/og-image.jpg">
+  <meta property="og:image:alt" content="chrrybmb iridescent glow with eye mark">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="chrrybmb">
 
-<!-- Twitter -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="chrrybmb — denisa jomo">
-<meta name="twitter:description" content="creative leadership for brand & web.">
-<meta name="twitter:image" content="https://chrrybmb.com/assets/og-image.jpg">
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="chrrybmb — denisa jomo">
+  <meta name="twitter:description" content="creative leadership for brand & web.">
+  <meta name="twitter:image" content="https://chrrybmb.com/assets/og-image.jpg">
 
   <!-- Base site CSS -->
   <link rel="stylesheet" href="/style.css?v=9">
   <link rel="stylesheet" href="/mobilestyle.css?v=1" media="(max-width: 640px)">
 
-  <!-- Fonts (same set used across the site) -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@500;700;800&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Jacquarda+Bastarda+9&display=swap" rel="stylesheet" />
 
-          <!-- Google tag (gtag.js) -->
-          <script async src="https://www.googletagmanager.com/gtag/js?id=G-2V368XS4ED"></script>
-          <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-          
-            gtag('config', 'G-2V368XS4ED');
-          </script>
-  
-  </head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2V368XS4ED"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-2V368XS4ED');
+  </script>
 
   <style>
+    /* ===== Jank guards ===== */
+    html, body { height:100%; max-width:100vw; overflow-x:clip; }
+    body.page-brand { min-height:100svh; display:flex; flex-direction:column; }
+    main.brand-grid { flex:1; }
+
     /* ===== Page base ===== */
     .page-brand{
       --indigo:#4440ff; --pink:#ffe9ff; --ink:#0e0f1a; --cardR: clamp(18px,1.6vw,26px);
-      --px-font:"Funnel Display", system-ui, sans-serif;
-      --px-track:.12em;
-      --ui:.66;                         /* compact density */
-      --safe-footer: max(12px, env(safe-area-inset-bottom)); /* breathing room for fixed footer */
-
-      /* defaults for animated vars so it looks nice before first move */
-      --orb-x:72%; --orb-y:68%;
-      --lx:72%;  --ly:68%;
-      --lr:140px;
+      --px-font:"Funnel Display", system-ui, sans-serif; --px-track:.12em; --ui:.66;
+      --orb-x:72%; --orb-y:68%; --lx:72%; --ly:68%; --lr:140px;
 
       background:
         radial-gradient(60% 60% at var(--orb-x) var(--orb-y), rgba(68,64,255,.13), transparent 60%),
@@ -73,22 +69,20 @@
       -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
     }
 
-    /* Iridescent wave (shared look) */
-    .iridescent-wave{ position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow:hidden; will-change: transform; transform: translateZ(0); backface-visibility: hidden; contain: paint; }
+    /* Iridescent wave */
+    .iridescent-wave{ position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow:hidden; transform: translateZ(0); backface-visibility: hidden; contain: paint; }
     .iridescent-wave::before{
       content:""; position:absolute; left:-25vw; right:-25vw; top:-200vh; bottom:-200vh;
       background: conic-gradient(from var(--wave-rot,0deg) at var(--orb-x) var(--orb-y),
         rgba(127,240,255,.25), rgba(255,106,223,.20), rgba(127,240,255,.25));
-      filter: blur(54px) saturate(150%); mix-blend-mode: color-dodge; opacity:.72;
-      animation: waveSpin 22s linear infinite; will-change: transform;
+      filter: blur(54px) saturate(150%); mix-blend-mode: color-dodge; opacity:.72; animation: waveSpin 22s linear infinite;
     }
     .iridescent-wave::after{
       content:""; position:absolute; left:-25vw; right:-25vw; top:-240vh; bottom:-240vh;
       background:
         radial-gradient(80% 60% at 50% 30%, rgba(255,255,255,.55), rgba(255,255,255,0) 60%),
         linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.55) 35%, rgba(255,255,255,0) 70%);
-      filter: blur(18px); mix-blend-mode: soft-light; opacity:.35;
-      animation: rippleDown 36s cubic-bezier(.42,0,.58,1) infinite; will-change: transform;
+      filter: blur(18px); mix-blend-mode: soft-light; opacity:.35; animation: rippleDown 36s cubic-bezier(.42,0,.58,1) infinite;
     }
     @keyframes waveSpin{ to { transform: rotate(1turn) } }
     @keyframes rippleDown{ 0%{transform:translate3d(0,-35%,0)} 100%{transform:translate3d(0,35%,0)} }
@@ -103,50 +97,24 @@
       backdrop-filter: blur(4px) saturate(125%) contrast(105%); -webkit-backdrop-filter: blur(4px) saturate(125%) contrast(105%);
       -webkit-mask-image: radial-gradient(circle var(--lr) at 50% 50%, #000 60%, rgba(0,0,0,.7) 76%, transparent 90%);
               mask-image: radial-gradient(circle var(--lr) at 50% 50%, #000 60%, rgba(0,0,0,.7) 76%, transparent 90%);
-              background:
-    radial-gradient(closest-side,
-      rgba(68,64,255,.10),         /* was .18 — lighter tint in the center */
-      rgba(68,64,255,0) 68%);      /* push the fade farther out */
-  -webkit-mask-image:
-    radial-gradient(circle var(--lr,140px) at 50% 50%,
-      #000 58%, rgba(0,0,0,.65) 78%, transparent 92%);
-          mask-image:
-    radial-gradient(circle var(--lr,140px) at 50% 50%,
-      #000 58%, rgba(0,0,0,.65) 78%, transparent 92%);
-}
-
-.lens-zoom{
-  position:absolute;
-  left: var(--lx,72%); top: var(--ly,68%);
-  width: calc(var(--lr,140px)*2); height: calc(var(--lr,140px)*2);
-  transform: translate(-50%,-50%);
-  border-radius: 50%;
-  pointer-events:none;
-  /* reuse the page background but scaled up a bit */
-  background:
-    radial-gradient(60% 60% at var(--orb-x,72%) var(--orb-y,68%),
-      rgba(68,64,255,.13), transparent 20%),
-    linear-gradient(180deg, #ffffff20, #faf9ff30);
-  background-repeat: no-repeat, no-repeat;
-
-  /* “Zoom” by scaling the background slightly larger than the page */
-  background-size:
-    180% 180%, 180% 180%;                /* <— zoom factor */
-  background-position:
-    var(--orb-x,72%) var(--orb-y,68%),   /* keep aligned with the page orb */
-    center center;
-
-  /* clip to a tighter inner circle so it reads as a core */
-  -webkit-mask-image: radial-gradient(circle calc(var(--lr,140px)*.72) at 50% 50%, #000 60%, transparent 72%);
-          mask-image: radial-gradient(circle calc(var(--lr,140px)*.72) at 50% 50%, #000 60%, transparent 72%);
-  filter: saturate(120%) contrast(105%);   /* punchy center */
-  opacity: .95;                              /* mostly clear, still a touch of glass */
-  z-index: 0;                                /* sits under lens-glass glow */
-}
-
+      background: radial-gradient(closest-side, rgba(68,64,255,.10), rgba(68,64,255,0) 68%);
+    }
+    .lens-zoom{
+      position:absolute; left: var(--lx,72%); top: var(--ly,68%);
+      width: calc(var(--lr,140px)*2); height: calc(var(--lr,140px)*2);
+      transform: translate(-50%,-50%); border-radius: 50%; pointer-events:none;
+      background:
+        radial-gradient(60% 60% at var(--orb-x,72%) var(--orb-y,68%), rgba(68,64,255,.13), transparent 20%),
+        linear-gradient(180deg, #ffffff20, #faf9ff30);
+      background-size: 180% 180%, 180% 180%;
+      background-position: var(--orb-x,72%) var(--orb-y,68%), center center;
+      -webkit-mask-image: radial-gradient(circle calc(var(--lr,140px)*.72) at 50% 50%, #000 60%, transparent 72%);
+              mask-image: radial-gradient(circle calc(var(--lr,140px)*.72) at 50% 50%, #000 60%, transparent 72%);
+      filter: saturate(120%) contrast(105%); opacity:.95; z-index:0;
+    }
     .lens-aura{
-      position:absolute; z-index: 0; left:var(--lx); top:var(--ly); width:calc(var(--lr)*2.1); height:calc(var(--lr)*2.1);
-      transform: translate(-50%,-50%); border-radius:50%; pointer-events:none; filter: blur(0.6px) saturate(120%);
+      position:absolute; left:var(--lx); top:var(--ly); width:calc(var(--lr)*2.1); height:calc(var(--lr)*2.1);
+      transform: translate(-50%,-50%); border-radius:50%; pointer-events:none; filter: blur(.6px) saturate(120%);
     }
     .lens-aura::before, .lens-aura::after{ content:""; position:absolute; inset:-18%; border-radius:50%; pointer-events:none; }
     .lens-aura::before{ background: radial-gradient(closest-side, rgba(255,255,255,.22), rgba(255,255,255,.08) 55%, transparent 70%); mix-blend-mode: screen; filter: blur(12px); }
@@ -157,20 +125,12 @@
       mix-blend-mode: screen; opacity:.6; filter: blur(7px);
     }
 
-    /* Phone polish */
-    @media (max-width:480px){
-      .card-iris{width:min(94vw, 560px)}
-      .btn-pixel{ --px: 10px; padding: 8px 10px; }
-    }
-
-    
-    /* ===== Pixel-mini buttons ===== */
+    /* Buttons */
     .btn-pixel{
       --px: 10.5px;
       display:inline-flex; align-items:center; justify-content:center; gap:.4ch;
       padding: 8px 12px; border-radius: 10px;
-      font: 800 var(--px)/1 var(--px-font);
-      text-transform: uppercase; letter-spacing: var(--px-track);
+      font: 800 var(--px)/1 var(--px-font); text-transform: uppercase; letter-spacing: var(--px-track);
       background: linear-gradient(180deg, #ffffff, #f6f6ff);
       border: 1px solid #1f22ff; color:#1a1a2b;
       box-shadow: 0 0 0 1px rgba(68,64,255,.08) inset, 0 6px 18px rgba(68,64,255,.12);
@@ -178,16 +138,15 @@
       text-decoration:none; cursor:pointer;
     }
     .btn-pixel:hover{ transform: translateY(-0.5px); box-shadow: 0 0 0 1px rgba(68,64,255,.10) inset, 0 10px 22px rgba(68,64,255,.18); }
-    .btn-pixel:active{ transform: translateY(0); filter: saturate(105%); }
     .btn-pixel--ghost{ background:#fff; border-style:dashed; opacity:.92 }
 
-    /* ===== Hero ===== */
+    /* Hero */
     .brand-hero{ position:relative; padding: calc(var(--ui) * clamp(20px,6vw,60px)) 20px 6px; text-align:center; }
     .brand-hero .hero-inner{ max-width:min(1100px,92vw); margin-inline:auto; position:relative; z-index:5; }
     .brand-hero .name-edge{
       --text:#0e0f1a;
       font-family:"Funnel Display", system-ui, sans-serif;
-      font-weight:600; font-size: calc(var(--ui) * clamp(32px, 6vw, 54px)); /* mini */
+      font-weight:600; font-size: calc(var(--ui) * clamp(32px, 6vw, 54px));
       letter-spacing:-.02em; line-height:.92; margin:0 0 6px;
       text-transform:lowercase; position:relative; display:inline-block; color:var(--text);
       filter:url(#softWobble); isolation:isolate;
@@ -200,23 +159,21 @@
     }
     .brand-hero .sub{
       margin:8px 0 18px;
-      font:400 clamp(15px,2.4vw,15px)/1.2 "Jacquarda Bastarda 9", serif; /* mini */
+      font:400 clamp(15px,2.4vw,15px)/1.2 "Jacquarda Bastarda 9", serif;
       opacity:.85;
     }
+    .brand-cta{ display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin-top:12px }
 
-    /* ===== Sections grid ===== */
+    /* Grid */
     .brand-grid{
-  box-sizing: border-box;                 /* include padding in the width */
-  width: 100%;                            /* fill viewport */
-  max-width: 1100px;                      /* cap on large screens */
-  margin-inline: auto;
-  padding: clamp(8px, 3vw, 16px);
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
-  gap: clamp(12px, 2.6vw, 18px);
-}
+      width: 100%; max-width: 1100px; margin-inline: auto;
+      padding: clamp(8px, 3vw, 16px);
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
+      gap: clamp(12px, 2.6vw, 18px);
+    }
 
-    /* ===== Card base (mini) ===== */
+    /* Card */
     .card-iris{
       position:relative; border-radius: calc(var(--ui) * 18px);
       background: linear-gradient(180deg, rgba(255,255,255,.62), rgba(255,255,255,.42));
@@ -225,7 +182,8 @@
       overflow:hidden; isolation:isolate;
       padding: 14px 16px;
       display:flex; flex-direction:column; gap: 10px;
-      min-height: 0; /* no floppy stretch on narrow screens */
+      min-height: 0;
+      transition: transform .18s ease, box-shadow .18s ease;
     }
     .card-iris::before{
       content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none;
@@ -233,30 +191,23 @@
       -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
       -webkit-mask-composite: xor; mask-composite: exclude; opacity:.85;
     }
+    .card-iris:hover{ transform: translateY(-2px); box-shadow: 0 14px 46px rgba(68,64,255,.12), 0 1px 0 rgba(255,255,255,.7) inset; }
+
     .card-title{
       font-family:"Funnel Display", system-ui, sans-serif; font-weight:700;
       font-size: calc(var(--ui) * 18px); letter-spacing:.01em; margin:0;
     }
-    .pxlh{
-      font-family:"Jacquarda Bastarda 9", serif;
-      font-weight:500; /* your note */
-      font-size: calc(var(--ui) * 1.2em);
-      line-height: calc(var(--ui) * 40px);
-      margin: 0;
-    }
+    .pxlh{ font-family:"Jacquarda Bastarda 9", serif; font-weight:500; font-size: calc(var(--ui) * 1.2em); line-height: calc(var(--ui) * 40px); margin: 0; }
     .mini{ font-size: max(12px, calc(var(--ui) * 13.5px)); color:#2c3144; line-height:1.42; }
 
-    /* ===== Typography cards ===== */
+    /* Typography specimens */
     .type-stack{ display:grid; gap: 6px; grid-template-columns: 1fr; }
     .type-row{
       display:flex; align-items:baseline; justify-content:space-between; gap:10px;
       border:1px dashed rgba(68,64,255,.18); border-radius:10px; padding:10px 12px;
       background: rgba(255,255,255,.45);
     }
-    .type-sample{
-      font-family:"Funnel Display", system-ui, sans-serif; font-weight:700;
-      font-size: clamp(22px, 4.2vw, 44px); letter-spacing:-0.02em; line-height:1;
-    }
+    .type-sample{ font-family:"Funnel Display", system-ui, sans-serif; font-weight:700; font-size: clamp(22px, 4.2vw, 44px); letter-spacing:-0.02em; line-height:1; }
     .type-meta{ font: 600 12px/1 "DM Sans"; opacity:.7 }
     .type-specimen{ display:grid; gap:6px; margin-top:6px; font-family:"Funnel Display", system-ui, sans-serif; }
     .type-specimen .row{ font-size: clamp(14px, 2.6vw, 18px); letter-spacing:.01em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
@@ -264,63 +215,67 @@
     .accent-title{ font-family:"Jacquarda Bastarda 9", serif; font-weight:500; font-size: clamp(18px, 4vw, 28px); line-height:1.05; }
     .accent-meta{ font: 600 12px/1 "DM Sans"; opacity:.7 }
 
-    /* ===== Color system ===== */
-    .swatch-grid{ display:grid; gap:10px; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
-    .swatch{ display:grid; grid-template-rows:auto 1fr auto; gap:8px; border-radius: 14px; padding:10px; background: rgba(255,255,255,.55); border:1px dashed rgba(68,64,255,.18); }
-    .pixel-tile{
-      position:relative; width:100%; aspect-ratio:1/1; border-radius:8px;
-      box-shadow: 0 1px 0 rgba(0,0,0,.05) inset, 0 10px 30px rgba(68,64,255,.08);
-      image-rendering: pixelated; overflow:hidden;
+    /* ===== “Before” photo chip (skeleton) – tuned to show more subject ===== */
+    .photo-chip{
+      position:relative; border-radius:16px; overflow:hidden;
+      border:1px solid rgba(68,64,255,.28);
+      background: linear-gradient(180deg,#fff,#f6f6ff);
+      box-shadow: 0 0 0 1px rgba(68,64,255,.06) inset, 0 8px 24px rgba(68,64,255,.08);
     }
-    .pixel-tile::after{
-      content:""; position:absolute; inset:0; pointer-events:none; opacity:.2;
-      background:
-        linear-gradient(to right, rgba(255,255,255,.35) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255,255,255,.35) 1px, transparent 1px);
-      background-size: 10px 10px, 10px 10px;
-      mix-blend-mode: soft-light;
+    .photo-chip::before{
+      content:""; position:absolute; inset:-1px; border-radius:inherit; padding:1px;
+      background: conic-gradient(from var(--b,0deg), var(--indigo), var(--pink) 40%, #a8a3ff, var(--indigo));
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite:xor; mask-composite:exclude; opacity:.9; pointer-events:none;
+      animation: spin 18s linear infinite;
     }
-    .tile-indigo{ background:#4440ff; }
-    .tile-pink{ background:#ffe9ff; }
-    .tile-iris{
-      background:
-        radial-gradient(80% 80% at 30% 35%, rgba(127,240,255,.85), rgba(127,240,255,.35) 35%, transparent 60%),
-        radial-gradient(80% 80% at 70% 65%, rgba(255,106,223,.8), rgba(255,106,223,.28) 35%, transparent 60%),
-        linear-gradient(180deg, #aebdff, #ffffff 60%);
-      filter: saturate(120%);
+    @keyframes spin{ to{ --b:360deg } }
+    .photo-chip .badge{
+      position:absolute; left:8px; top:8px;
+      display:inline-block; font:700 10px/1 var(--px-font); letter-spacing:.16em; text-transform:uppercase;
+      padding:6px 8px; border-radius:10px; border:1px solid #5a57ff; background:linear-gradient(180deg,#fff,#f6f6ff); color:#17182a
     }
-    .codes{ font: 600 12px/1.35 "DM Sans"; color:#1b1e35 }
-    .codes .meta{ opacity:.6; }
-    .swatch .row{ display:flex; align-items:center; justify-content:space-between; gap:8px; }
-    .copy-btn{ padding:6px 8px; border-radius:8px; font:800 10px/1 var(--px-font); letter-spacing:.12em; background:#fff; border:1px solid #1f22ff; cursor:pointer; }
+    .photo-chip .frame{
+      width:100%;
+      height: clamp(180px, 38vw, 260px);            /* mini height, but taller than 16:9 */
+      background:#eef0ff;
+      display:block; overflow:hidden;
+    }
+    .photo-chip img{
+      width:100%; height:100%;
+      object-fit: contain;                          /* show more of the figure */
+      object-position: center top;                  /* bias toward top if portrait */
+      display:block;
+    }
+    .photo-caption{ padding:10px 12px; font: 600 12.5px/1.35 "DM Sans", system-ui; color:#243; }
 
-    /* CTA row */
-    .brand-cta{ display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin-top:12px }
-
-
-        /* --- tiny reveal system tokens (pairs with site.js) --- */
-        [data-animate]{
-      opacity:0;
-      transform: translateY(var(--rise, 10px)) scale(var(--scale, 1));
-      filter: blur(var(--blur, 0px));
-      transition:
-        opacity .6s ease,
-        transform .6s ease,
-        filter .6s ease;
-      transition-delay: var(--stagger, 0ms);
-      will-change: opacity, transform, filter;
+    /* ===== Compact swatch chips ===== */
+    .swatch-minigrid{
+      display:grid; gap:8px;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      align-items:start;
     }
-    .is-in[data-animate]{
-      opacity:1; transform: translateY(0) scale(1); filter: none;
+    .swatch-chip{
+      display:grid; grid-template-columns: 22px 1fr auto; align-items:center; gap:10px;
+      padding:10px 12px; border-radius:12px;
+      background: rgba(255,255,255,.55);
+      border:1px dashed rgba(68,64,255,.18);
+      cursor:pointer; user-select:none;
+      transition: transform .12s ease, box-shadow .12s ease;
     }
-    /* quick presets */
-    .fade-up { --rise: 10px }
-    .zoom-in { --scale: .96; --blur: 2px }
-    @media (prefers-reduced-motion: reduce){
-      [data-animate]{ opacity:1; transform:none; filter:none; transition:none }
+    .swatch-chip:hover{ transform: translateY(-1px); box-shadow: 0 10px 24px rgba(68,64,255,.08); }
+    .chip-dot{
+      width:18px; height:18px; border-radius:6px; background: var(--dot,#4440ff);
+      box-shadow: 0 1px 0 rgba(0,0,0,.08) inset, 0 6px 16px rgba(68,64,255,.08);
+      border:1px solid rgba(0,0,0,.05);
     }
+    .chip-name{ font: 700 12px/1 var(--px-font); letter-spacing:.08em; text-transform:uppercase; color:#121326; }
+    .chip-code{ font: 600 12px/1 "DM Sans"; opacity:.8; }
 
-
+    /* Reveal tokens */
+    [data-animate]{ opacity:0; transform: translateY(8px); transition: opacity .6s ease, transform .6s ease; }
+    .is-in[data-animate]{ opacity:1; transform:none }
+    @media (prefers-reduced-motion: reduce){ [data-animate]{ opacity:1 !important; transform:none !important; transition:none !important } }
   </style>
 </head>
 
@@ -330,52 +285,45 @@
 
   <!-- Lens layer -->
   <div class="bg-art" aria-hidden="true">
-    <span class="lens-zoom"></span> 
+    <span class="lens-zoom"></span>
     <span class="lens-glass"></span>
     <span class="lens-aura"></span>
   </div>
 
-<!-- Header / Nav -->
-<header class="site-header" role="banner">
-  <div class="site-header__chrome" aria-hidden="true"></div> <!-- subtle prism edge -->
-  <div class="header__inner">
-    <a class="brand" href="/" aria-label="chrrybmb home">
-      <img class="brand__logo-img" src="./assets/indigo_chrry_indypinky.svg" alt="chrrybmb logo" width="64" height="38" decoding="async">
-    </a>
-
-    <nav class="nav" aria-label="primary">
-      <ul class="nav__list">
-        <li><a href="/index.html">home</a></li>
-        <li><a href="/about.html">about</a></li>
-        <li><a href="/contact.html">contact</a></li>
-      </ul>
-    </nav>
-
-    <!-- actions: search -->
-    <div class="header__actions">
-      <button class="icon-btn" id="openSearch" aria-label="open search" title="search (⌘/Ctrl + K)">
-        <!-- tiny loupe -->
-        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M11.2 10.3l3.1 3.1-1 1-3.1-3.1a5 5 0 1 1 1-1zm-6.2.7a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" fill="currentColor"/></svg>
-      </button>
-    </div>
-  </div>
-
-  <!-- search overlay -->
-  <div class="search" id="search" role="dialog" aria-modal="true" aria-labelledby="searchLabel" hidden>
-    <div class="search__backdrop" data-close></div>
-    <div class="search__panel">
-      <div class="search__head">
-        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M11.2 10.3l3.1 3.1-1 1-3.1-3.1a5 5 0 1 1 1-1zm-6.2.7a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" fill="currentColor"/></svg>
-        <input id="searchInput" type="search" placeholder="search the site…" autocomplete="off" aria-label="search">
-        <button class="kbd" type="button" data-close aria-label="Close search (Esc)">esc</button>
+  <!-- Header / Nav -->
+  <header class="site-header" role="banner">
+    <div class="site-header__chrome" aria-hidden="true"></div>
+    <div class="header__inner">
+      <a class="brand" href="/" aria-label="chrrybmb home">
+        <img class="brand__logo-img" src="./assets/indigo_chrry_indypinky.svg" alt="chrrybmb logo" width="64" height="38" decoding="async">
+      </a>
+      <nav class="nav" aria-label="primary">
+        <ul class="nav__list">
+          <li><a href="/index.html">home</a></li>
+          <li><a href="/about.html">about</a></li>
+          <li><a href="/contact.html">contact</a></li>
+        </ul>
+      </nav>
+      <div class="header__actions">
+        <button class="icon-btn" id="openSearch" aria-label="open search" title="search (⌘/Ctrl + K)">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M11.2 10.3l3.1 3.1-1 1-3.1-3.1a5 5 0 1 1 1-1zm-6.2.7a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" fill="currentColor"/></svg>
+        </button>
       </div>
-      <ul id="searchResults" class="search__results" role="listbox" aria-live="polite"></ul>
     </div>
-  </div>
-  
-</header>
+    <div class="search" id="search" role="dialog" aria-modal="true" aria-labelledby="searchLabel" hidden>
+      <div class="search__backdrop" data-close></div>
+      <div class="search__panel">
+        <div class="search__head">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M11.2 10.3l3.1 3.1-1 1-3.1-3.1a5 5 0 1 1 1-1zm-6.2.7a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" fill="currentColor"/></svg>
+          <input id="searchInput" type="search" placeholder="search the site…" autocomplete="off" aria-label="search">
+          <button class="kbd" type="button" data-close aria-label="Close search (Esc)">esc</button>
+        </div>
+        <ul id="searchResults" class="search__results" role="listbox" aria-live="polite"></ul>
+      </div>
+    </div>
+  </header>
 
-  <!-- SVG defs (for soft wobble) -->
+  <!-- Soft wobble filter -->
   <svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden">
     <filter id="softWobble" x="-50%" y="-50%" width="200%" height="200%">
       <feTurbulence type="fractalNoise" baseFrequency="0.008" numOctaves="1" seed="11" result="noise">
@@ -386,8 +334,8 @@
   </svg>
 
   <!-- Hero -->
-  <section class="brand-hero" aria-label="Intro" data-animate class="fade-in">
-    <div class="hero-inner">
+  <section class="brand-hero" aria-label="Intro">
+    <div class="hero-inner" data-animate>
       <h1 class="name-edge" data-text="brand systems">
         <span class="text">brand systems</span>
       </h1>
@@ -400,19 +348,33 @@
   </section>
 
   <!-- Content grid -->
-  <main class="brand-grid" role="main" data-animate class="fade-up">
-
-    <!-- Brand story (mini) -->
-    <article class="card-iris">
+  <main class="brand-grid" role="main">
+    <!-- Brand story -->
+    <article class="card-iris" data-animate>
       <h3 class="card-title pxlh">brand story</h3>
       <p class="mini">
-        Chrrybmb pairs crisp UI with iridescent motion— retro 8-bit energy meets prism fractals. The system stays
-        <em>mini</em> and intentional: compact spacing, pixel-ish accents, and modern type with a nostalgic vibe.
+        Chrrybmb pairs crisp UI with iridescent motion—retro 8-bit energy meets prism fractals.
+        The system stays <em>mini</em> and intentional: compact spacing, pixel cues, and modern type with a nostalgic glow.
       </p>
     </article>
 
+    <!-- Hero imagery inspo (skeleton “before”) -->
+    <article class="card-iris" data-animate>
+      <h3 class="card-title pxlh">hero imagery inspo</h3>
+      <div class="photo-chip" style="margin-top:4px">
+        <span class="badge">before</span>
+        <figure class="frame" style="margin:0">
+          <img src="./assets/skeleton_before.png" alt="skeleton in eka pada rajakapotasana — the seed image behind the chrrybmb hero" loading="lazy" decoding="async">
+        </figure>
+        <figcaption class="photo-caption">
+          side-door muse → homepage icon. eka pada rajakapotasana, heart up to the sky—
+          aligned with her higher self. raw, joyful, a little punk. the edit turned that spark into the site’s prism glow.
+        </figcaption>
+      </div>
+    </article>
+
     <!-- Typography: Funnel Display -->
-    <article class="card-iris">
+    <article class="card-iris" data-animate>
       <h3 class="card-title pxlh">typography · funnel display</h3>
       <div class="type-stack">
         <div class="type-row">
@@ -435,11 +397,11 @@
       </div>
     </article>
 
-    <!-- Typography: Jacquarda Bastarda 9 -->
-    <article class="card-iris">
+    <!-- Typography: Jacquarda -->
+    <article class="card-iris" data-animate>
       <h3 class="card-title pxlh">typography · jacquarda (accent)</h3>
       <p class="accent-title">the world is an iridescent prism</p>
-      <p class="mini">Used for kickers / lyrical asides to contrast the tech-clean Funnel Display.</p>
+      <p class="mini">A lyrical counterweight to Funnel Display—used for kickers and asides.</p>
       <div class="accent-block" style="margin-top:4px">
         <div class="accent-meta">Specimen</div>
         <div class="row" style="margin-top:6px; font-family:'Jacquarda Bastarda 9', serif">
@@ -448,43 +410,34 @@
       </div>
     </article>
 
-    <!-- Color system -->
-    <article class="card-iris">
+    <!-- Color system (MINI CHIPS) -->
+    <article class="card-iris" data-animate>
       <h3 class="card-title pxlh">color system</h3>
-      <p class="mini">Core swatches</p>
+      <p class="mini">Core swatches (tap to copy)</p>
 
-      <div class="swatch-grid" style="margin-top:6px">
-        <!-- Indigo -->
-        <div class="swatch">
-          <div class="pixel-tile tile-indigo"></div>
-          <div class="codes">
-            <div class="row"><span>#4440FF</span><button class="copy-btn" data-copy="#4440FF">COPY</button></div>
-            <div class="meta">CMYK 73, 75, 0, 0 · RGB 68, 64, 255</div>
-          </div>
+      <div class="swatch-minigrid" style="margin-top:6px">
+        <div class="swatch-chip" data-copy="#4440FF">
+          <span class="chip-dot" style="--dot:#4440FF"></span>
+          <span class="chip-name">indigo</span>
+          <span class="chip-code">#4440FF</span>
         </div>
-        <!-- Pink -->
-        <div class="swatch">
-          <div class="pixel-tile tile-pink"></div>
-          <div class="codes">
-            <div class="row"><span>#FFE9FF</span><button class="copy-btn" data-copy="#FFE9FF">COPY</button></div>
-            <div class="meta">CMYK 0, 9, 0, 0 · RGB 255, 233, 255</div>
-          </div>
+        <div class="swatch-chip" data-copy="#FFE9FF">
+          <span class="chip-dot" style="--dot:#FFE9FF"></span>
+          <span class="chip-name">pink</span>
+          <span class="chip-code">#FFE9FF</span>
         </div>
-        <!-- Iridescence effect -->
-        <div class="swatch">
-          <div class="pixel-tile tile-iris"></div>
-          <div class="codes">
-            <div class="row"><span>iridescence</span></div>
-            <div class="meta">conic/radial blend · screen/dodge mixes</div>
-          </div>
+        <div class="swatch-chip" data-copy="iridescence">
+          <span class="chip-dot" style="--dot:linear-gradient(135deg,#7ff0ff,#ff6adf)"></span>
+          <span class="chip-name">iridescence</span>
+          <span class="chip-code">conic/radial blend</span>
         </div>
       </div>
     </article>
 
     <!-- Components: Buttons -->
-    <article class="card-iris">
+    <article class="card-iris" data-animate>
       <h3 class="card-title pxlh">components · buttons</h3>
-      <p class="mini">Pixel-mini, uppercase Funnel Display. Primary and ghost.</p>
+      <p class="mini">Pixel-mini, uppercase Funnel Display. Primary + ghost.</p>
       <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:4px; justify-content:center">
         <a class="btn-pixel" href="#">PRIMARY</a>
         <a class="btn-pixel btn-pixel--ghost" href="#">GHOST</a>
@@ -492,66 +445,55 @@
     </article>
   </main>
 
-  <div class="page-end-spacer" aria-hidden="true"></div>
-  <div data-include="/partials/footer.html"></div>
-
-
-
-  <!-- Tiny helpers -->
-  <script>
-    // pointer-driven vars: move BOTH the orb and the lens
-    (function(){
-      // IMPORTANT: set vars on the element that *defines* them (.page-brand),
-      // otherwise body-scoped values keep winning in the cascade.
-      const host = document.querySelector('.page-brand') || document.body || document.documentElement;
-  
-      // nice defaults so things look good before first move
-      host.style.setProperty('--orb-x', '72%');
-      host.style.setProperty('--orb-y', '68%');
-      host.style.setProperty('--lx', '72%');
-      host.style.setProperty('--ly', '68%');
-  
-      let raf = 0;
-      function onPoint(e){
-        const t = e.touches ? e.touches[0] : e;
-        const xPct = (t.clientX / innerWidth) * 100;
-        const yPct = (t.clientY / innerHeight) * 100;
-        if (raf) cancelAnimationFrame(raf);
-        raf = requestAnimationFrame(()=>{
-          const x = xPct.toFixed(2) + '%';
-          const y = yPct.toFixed(2) + '%';
-          host.style.setProperty('--orb-x', x);
-          host.style.setProperty('--orb-y', y);
-          host.style.setProperty('--lx', x);
-          host.style.setProperty('--ly', y);
-        });
-      }
-  
-      // desktop + iOS Safari
-      addEventListener('pointermove', onPoint, { passive:true });
-      addEventListener('touchmove',   onPoint, { passive:true });
-      // (optional) fallback for older browsers:
-      addEventListener('mousemove',   onPoint, { passive:true });
-    })();
-  </script>
-  
-  <script type="module" src="./site.js" defer></script>
-
-  <!-- Shared wobble filter (fallback for older pages) -->
-  <svg width="0" height="0" style="position:absolute">
-    <filter id="softWobble" x="-50%" y="-50%" width="200%" height="200%">
-      <feTurbulence type="fractalNoise" baseFrequency="0.008" numOctaves="1" seed="11" result="noise">
-        <animate attributeName="baseFrequency" dur="14s" values="0.008;0.010;0.008" repeatCount="indefinite" />
-      </feTurbulence>
-      <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G"/>
-    </filter>
-  </svg>
-
+  <!-- Footer -->
   <footer class="site-footer" role="contentinfo">
     <span class="dot" aria-hidden="true"></span>
     <small>© <span id="year"></span> chrrybmb.com / denisajomo.com</small>
   </footer>
 
-  
+  <!-- Pointer-driven vars -->
+  <script>
+    (function(){
+      const host = document.querySelector('.page-brand') || document.body || document.documentElement;
+      host.style.setProperty('--orb-x','72%'); host.style.setProperty('--orb-y','68%');
+      host.style.setProperty('--lx','72%'); host.style.setProperty('--ly','68%');
+      let raf = 0;
+      function onPoint(e){
+        const t = e.touches ? e.touches[0] : e;
+        const x = (t.clientX / innerWidth) * 100;
+        const y = (t.clientY / innerHeight) * 100;
+        if (raf) cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(()=>{
+          const xs = x.toFixed(2) + '%', ys = y.toFixed(2) + '%';
+          host.style.setProperty('--orb-x', xs); host.style.setProperty('--orb-y', ys);
+          host.style.setProperty('--lx', xs);    host.style.setProperty('--ly', ys);
+        });
+      }
+      addEventListener('pointermove', onPoint, { passive:true });
+      addEventListener('touchmove',   onPoint, { passive:true });
+    })();
+
+    // intersection reveal
+    const io = new IntersectionObserver((es)=>{
+      es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('is-in'); io.unobserve(e.target) } })
+    },{ threshold:.12 });
+    document.querySelectorAll('[data-animate]').forEach(el=>io.observe(el));
+
+    // copy (chips or explicit [data-copy] controls)
+    document.addEventListener('click', (e)=>{
+      const el = e.target.closest('[data-copy]');
+      if(!el) return;
+      const val = el.getAttribute('data-copy');
+      navigator.clipboard.writeText(val).then(()=>{
+        const prev = el.querySelector('.chip-code')?.textContent || el.textContent;
+        if (el.querySelector('.chip-code')) {
+          el.querySelector('.chip-code').textContent = 'copied';
+          setTimeout(()=> el.querySelector('.chip-code').textContent = prev, 900);
+        }
+      }).catch(()=>{});
+    });
+  </script>
+
+  <script type="module" src="./site.js" defer></script>
 </body>
 </html>
