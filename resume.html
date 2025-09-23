@@ -90,14 +90,14 @@
     @media (prefers-reduced-motion: reduce){ .name-edge .warp, .name-edge .prism{ animation:none !important } }
 
     .resume-sub{ margin:6px 0 26px; font:400 clamp(16px,2.4vw,20px)/1.2 "Jacquarda Bastarda 9", serif; opacity:.82; }
-
-    /* ---------- Card + PDF ---------- */
-    .resume-wrap{ max-width: 980px; margin: 0 auto calc(18px + 14svh); padding-inline: 12px; }
+ /* ---------- Card + PDF ---------- */
+ .resume-wrap{ max-width: 980px; margin: 0 auto 24px; padding-inline: 12px; }
     .card-iris{
       position:relative; width:min(92vw, 640px); margin: 0 auto;
       border-radius: var(--cardR); background:#fff;
       box-shadow:0 18px 54px rgba(68,64,255,.10), 0 3px 12px rgba(0,0,0,.06);
       isolation:isolate;
+      overflow: hidden; /* prevent inner scroller from radiusing outside */
     }
     .card-iris::before{
       content:""; position:absolute; inset:-1px; border-radius:inherit; padding:1px;
@@ -108,9 +108,9 @@
     }
     @keyframes spin{to{--b:360deg}}
 
-    /* Slightly smaller viewport for the PDF + room for footer */
+    /* PDF viewport – scaled down on mobile, stable on Windows */
     .pdf-scroller{
-      --h: clamp(56svh, 68svh, 78svh);
+      --h: clamp(50svh, 62svh, 78svh);
       height: var(--h);
       overflow:auto; border-radius:inherit; background:#fff; scroll-behavior:smooth; position:relative;
     }
@@ -121,6 +121,12 @@
     .pdf-scroller::after{ content:""; position:absolute; left:0; top:0; width:4px; height:var(--prog,0%); background: linear-gradient(180deg, var(--indigo), var(--pink)); border-radius:0 6px 6px 0 }
 
     .pdf-page{ display:block; width:100%; height:auto; background:#fff; margin:0 auto; box-shadow:0 1px 0 rgba(0,0,0,.05) }
+
+    /* smaller card & viewport on the smallest phones */
+    @media (max-width: 520px){
+      .page-resume .card-iris{ width:min(92vw, 480px); }
+      .pdf-scroller{ --h: clamp(46svh, 54svh, 62svh); }
+    }
 
     /* ---------- Pixel-mini buttons (brand-consistent) ---------- */
     :root{ --px-font: "Funnel Display", system-ui, sans-serif; }
@@ -160,14 +166,13 @@
     .page-resume .name-edge{ font-size: calc(var(--ui) * clamp(42px,8vw,72px)); }
     .page-resume .resume-sub{ font-size: calc(var(--ui) * clamp(16px,2.4vw,20px)); }
     .page-resume .card-iris{ width: min(62vw, 520px); }
-    .page-resume .pdf-scroller{ --h: clamp(54svh, 64svh, 76svh); }
+    .page-resume .pdf-scroller{ --h: clamp(48svh, 58svh, 72svh); }
 
-    /* Mobile polish */
+    /* Mobile polish overrides density if needed */
     @media (max-width: 520px){
-      .page-resume .card-iris{ width:min(94vw,560px); }
       .btn-pixel{ --px: 10px; padding: 8px 10px; }
       .tool-group{ padding:5px; gap:6px; }
-      .resume-wrap{ margin-bottom: calc(16px + 18svh); }
+      .resume-wrap{ margin-bottom: 24px; }
     }
 
     @media (prefers-reduced-motion: reduce){
@@ -178,7 +183,26 @@
     .resume-cta {
       display: flex;
       justify-content: center;
-      margin-top: 40px;
+      margin-top: 20px;
+    }
+
+    /* --- tiny reveal system tokens (pairs with site.js) --- */
+    [data-animate]{
+      opacity:0;
+      transform: translateY(var(--rise, 10px)) scale(var(--scale, 1));
+      filter: blur(var(--blur, 0px));
+      transition:
+        opacity .6s ease,
+        transform .6s ease,
+        filter .6s ease;
+      transition-delay: var(--stagger, 0ms);
+      will-change: opacity, transform, filter;
+    }
+    .is-in[data-animate]{ opacity:1; transform: translateY(0) scale(1); filter: none; }
+    .fade-up { --rise: 10px }
+    .zoom-in { --scale: .96; --blur: 2px }
+    @media (prefers-reduced-motion: reduce){
+      [data-animate]{ opacity:1; transform:none; filter:none; transition:none }
     }
 
         /* --- tiny reveal system tokens (pairs with site.js) --- */
@@ -222,22 +246,25 @@
     </filter>
   </svg>
 
-<!-- Header / Nav -->
-<header class="site-header" role="banner">
-  <div class="site-header__chrome" aria-hidden="true"></div> <!-- subtle prism edge -->
-  <div class="header__inner">
-    <a class="brand" href="/" aria-label="chrrybmb home">
-      <img class="brand__logo-img" src="./assets/indigo_chrry_indypinky.svg" alt="chrrybmb logo" width="64" height="38" decoding="async">
-    </a>
-
-    <nav class="nav" aria-label="primary">
-      <ul class="nav__list">
-        <li><a href="/index.html">home</a></li>
-        <li><a href="/about.html">about</a></li>
-        <li><a href="/contact.html">contact</a></li>
-      </ul>
-    </nav>
-
+  <header class="site-header" role="banner">
+    <div class="site-header__chrome" aria-hidden="true"></div>
+    <div class="header__inner">
+      <a class="brand" href="/" aria-label="chrrybmb home">
+        <img class="brand__logo-img" src="./assets/indigo_chrry_indypinky.svg" alt="chrrybmb logo" width="64" height="38" decoding="async">
+      </a>
+      <nav class="nav" aria-label="primary">
+        <ul class="nav__list">
+          <li><a href="/index.html">home</a></li>
+          <li><a href="/about.html">about</a></li>
+          <li><a href="/contact.html">contact</a></li>
+        </ul>
+      </nav>
+      <div class="header__actions">
+        <a class="btn-pixel btn-pixel--ghost" href="./brand-system.html">brand</a>
+      </div>
+    </div>
+  </header>
+  
     <!-- actions: search -->
     <div class="header__actions">
       <button class="icon-btn" id="openSearch" aria-label="open search" title="search (⌘/Ctrl + K)">
@@ -305,8 +332,6 @@
 
   </main>
 
-
-
   <!-- pdf.js (module build) with render + width-only observer -->
   <script type="module">
     import * as pdfjsLib from 'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.8.69/build/pdf.mjs';
@@ -314,14 +339,17 @@
       'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.8.69/build/pdf.worker.mjs';
 
     const scroller = document.getElementById('pdfScroller');
-    const url = scroller.dataset.pdf + (scroller.dataset.pdf.includes('?') ? '&' : '?') + 'v=5';
+    const url = scroller.dataset.pdf + (scroller.dataset.pdf.includes('?') ? '&' : '?') + 'v=6';
 
-    /* Start slightly smaller for breathing room */
-    let zoom = 0.88;
+    /* Start smaller on phones for breathing room */
+    let zoom = matchMedia('(max-width: 520px)').matches ? 0.78 : 0.88;
+
     const MIN = 0.70, MAX = 2.0, STEP = 0.15;
-    const DPR = Math.min(window.devicePixelRatio || 1.25, 2.0);
-    let doc = null;
 
+    /* Cap DPR to avoid huge canvases on some Windows setups */
+    const DPR = Math.min(window.devicePixelRatio || 1, 1.75);
+
+    let doc = null;
     let renderToken = 0, isRendering = false, needsRerender = false, lastWidth = 0, rafId = 0;
 
     function setProgress(){
@@ -366,7 +394,10 @@
 
         const canvas = document.createElement('canvas');
         canvas.className = 'pdf-page';
+
         const ctx = canvas.getContext('2d', { alpha: false });
+        if(!ctx){ injectObjectEmbed(url); return; } /* hard fallback if 2d context fails */
+
         canvas.width  = Math.floor(v.width  * DPR);
         canvas.height = Math.floor(v.height * DPR);
         canvas.style.width  = Math.floor(v.width)  + 'px';
@@ -413,6 +444,8 @@
       obj.type = 'application/pdf';
       obj.data = pdfUrl + '#view=FitH&toolbar=0&navpanes=0&statusbar=0';
       obj.setAttribute('aria-label', 'Resume PDF');
+      obj.style.width = '100%';
+      obj.style.height = 'var(--h)';
       const timer = setTimeout(() => {
         try { if (!obj.contentDocument) showButtons(pdfUrl); } catch(_){ showButtons(pdfUrl); }
       }, 1200);
@@ -427,28 +460,6 @@
           <a class="btn-pixel btn-pixel--ghost" href="${pdfUrl}" download>Download</a>
         </div>`;
     }
-  </script>
-
-  <script>
-    // Orb background follow
-    (function () {
-      const target = document.documentElement;
-      target.style.setProperty('--orb-x', '72%');
-      target.style.setProperty('--orb-y', '68%');
-      let raf = 0;
-      function onPoint(e) {
-        const t = e.touches ? e.touches[0] : e;
-        const x = (t.clientX / window.innerWidth) * 100;
-        const y = (t.clientY / window.innerHeight) * 100;
-        if (raf) cancelAnimationFrame(raf);
-        raf = requestAnimationFrame(() => {
-          target.style.setProperty('--orb-x', x.toFixed(2) + '%');
-          target.style.setProperty('--orb-y', y.toFixed(2) + '%');
-        });
-      }
-      window.addEventListener('pointermove', onPoint, { passive: true });
-      window.addEventListener('touchmove',   onPoint, { passive: true });
-    })();
   </script>
 
 <script type="module" src="./site.js" defer></script>
