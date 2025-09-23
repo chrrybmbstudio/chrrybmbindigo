@@ -422,15 +422,33 @@ document.addEventListener('keydown', (e) => {
   });
 })();
 
-(function(){
-  const footer = document.querySelector('.glass-footer');
-  if(!footer) return;
-  const setSpace = ()=> {
-    const h = footer.offsetHeight || 56;
-    document.documentElement.style.setProperty('--footer-h', h + 'px');
-  };
-  setSpace();
-  new ResizeObserver(setSpace).observe(footer);
-  window.addEventListener('resize', setSpace, {passive:true});
-  window.addEventListener('orientationchange', setSpace, {passive:true});
-})();
+  (function(){
+    const footer = document.querySelector('.site-footer');
+    const setYear = () => {
+      const y = document.getElementById('year');
+      if (y) y.textContent = new Date().getFullYear();
+    };
+    const setFooterHeight = () => {
+      if (!footer) return;
+      const h = Math.ceil(footer.getBoundingClientRect().height);
+      document.documentElement.style.setProperty('--footer-h', h + 'px');
+    };
+
+    setYear();
+    setFooterHeight();
+
+    // Recalculate on viewport changes (rotation, toolbar show/hide, zoom)
+    window.addEventListener('resize', setFooterHeight);
+    window.addEventListener('orientationchange', setFooterHeight);
+
+    // iOS visual viewport changes (address bar / keyboard)
+    if (window.visualViewport){
+      visualViewport.addEventListener('resize', setFooterHeight);
+      visualViewport.addEventListener('scroll', setFooterHeight);
+    }
+
+    // in case fonts load late and change metrics
+    if (document.fonts && document.fonts.ready){
+      document.fonts.ready.then(setFooterHeight).catch(()=>{});
+    }
+  })();
