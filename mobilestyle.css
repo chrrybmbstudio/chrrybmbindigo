@@ -1,68 +1,30 @@
 /* mobilestyle.css */
-
-/* 1) Mobile typography + gutters */
-html { font-size: 17px; }         /* slightly larger base */
-body { line-height: 1.45; }
-
-:root{ --page-pad: clamp(16px, 4.5vw, 24px); }
-.container{ padding-inline: var(--page-pad); }
-
-/* 2) Hero: tighter rhythm */
-.hero{
-  width: auto;
-  margin: 12px var(--page-pad);
-  border-radius: 18px;
-  box-shadow: 0 14px 36px rgba(68,64,255,.10), 0 1px 6px rgba(0,0,0,.04);
-}
-.hero-card{ padding: 16px 16px 0; }
-.hero__content h1{ font-size: clamp(28px, 9vw, 40px); }
-.kicker{ font-size: clamp(16px, 4.4vw, 18px); }
-
-/* 3) Features / cards */
-.features{ padding: 22px 0; margin: 10px 0 0; }
-.features__grid{ grid-template-columns: 1fr; gap: 14px; }
-
-.card-iris{
-  padding: 14px;
-  border-radius: 16px;
-  box-shadow: 0 10px 28px rgba(68,64,255,.09), 0 1px 0 rgba(255,255,255,.6) inset;
-}
-.feature-card h3, .feature-card .pxlh{ font-size: clamp(14px, 4.2vw, 16px); }
-.feature-card p{ font-size: clamp(13px, 3.8vw, 15px); }
-
-/* 4) Buttons: comfy tap targets; toggle full-width if you like */
-.btn-pixel{
-  padding: 12px 14px;
-  min-height: 44px;
-  border-radius: 12px;
-  gap: .6ch;
-}
-/* Optional: make CTAs full-width on phone */
-/* .btn-pixel{ width: 100%; justify-content: center; } */
-
-/* 5) Touch feedback (no-hover devices) */
-@media (hover: none){
-  .card-iris{ transition: box-shadow .16s ease, transform .12s ease; }
-  .card-iris:active{ transform: scale(.995); box-shadow: 0 14px 32px rgba(68,64,255,.14); }
+/* Mobile-only initial state for flow-in targets */
+@media (max-width: 640px) {
+  .card-iris,
+  .feature-card,
+  .features__grid > *,
+  [data-reveal],
+  .hero [data-animate] {
+    /* only apply if JS set the flag; keeps desktop/SSR clean */
+    transform: translateY(calc(var(--flow-init, 0) * 10px));
+    opacity: calc(1 - var(--flow-init, 0) * .25);
+    filter: blur(calc(var(--flow-init, 0) * 1px));
+    will-change: transform, opacity, filter;
+  }
+  .is-in {
+    transform: none !important;
+    opacity: 1 !important;
+    filter: none !important;
+  }
 }
 
-/* 6) Background effects: soften for clarity/perf */
-.iridescent-wave::before{ filter: blur(44px) saturate(135%); opacity: .58; }
-.iridescent-wave::after{ opacity: .28; }
-.lens-glass{ backdrop-filter: blur(10px) saturate(115%) contrast(103%); }
-
-/* 7) Media: more visual weight on small screens */
-.thumb{ aspect-ratio: 4/3; border-radius: 14px; }
-.thumb img{ object-fit: cover; }
-
-/* 8) Optional: sticky header on mobile to anchor UI */
-.site-header{
-  position: sticky; top: 0; z-index: 30;
-  backdrop-filter: blur(8px) saturate(120%);
-}
-.site-header .header__inner{ padding-block: 8px; }
-
-/* 9) Respect reduced motion (complements your global rule) */
-@media (prefers-reduced-motion: reduce){
-  .iridescent-wave, .iridescent-wave::before, .iridescent-wave::after{ animation: none !important; }
+/* Always respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .card-iris, .feature-card, .features__grid > *, [data-reveal] {
+    transform: none !important;
+    opacity: 1 !important;
+    filter: none !important;
+    transition: none !important;
+  }
 }
