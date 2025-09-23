@@ -9,9 +9,33 @@
   <title>chrrybmb - who looks inside awakes ⋆˙⟡</title>
   <meta name="description" content="chrrybmb" />
   <link rel="canonical" href="https://chrrybmb.com/" />
+
+
   <!-- Favicon -->
-  <link rel="icon" href="./assets/eye.png" />
-  <link rel="apple-touch-icon" href="./assets/eye.svg" />
+<!-- Icons: SVG first, PNG fallbacks -->
+<link rel="icon" href="/assets/eye.svg?v=2" type="image/svg+xml">
+<link rel="icon" href="/assets/eye-32.png?v=2" sizes="32x32" type="image/png">
+<link rel="icon" href="/assets/eye-16.png?v=2" sizes="16x16" type="image/png">
+
+<!-- iOS home screen (SVG not supported here) -->
+<link rel="apple-touch-icon" href="/assets/eye-180.png?v=2">
+
+<!-- Safari pinned tab (monochrome mask SVG) -->
+<link rel="mask-icon" href="/assets/eye-mask.svg?v=2" color="#4440ff">
+
+<!-- PWA manifest (optional, nice to have) -->
+<link rel="manifest" href="/site.webmanifest?v=2">
+
+<!-- Browser chrome color (light/dark) -->
+<meta name="theme-color" content="#ffffff">
+<meta name="theme-color" content="#0e0f1a" media="(prefers-color-scheme: dark)">
+<meta name="msapplication-TileColor" content="#4440ff">
+
+<!-- Social previews (refresh your image if you update the design) -->
+<meta property="og:image" content="https://chrrybmb.com/assets/og-image.jpg?v=2">
+<meta property="og:image:alt" content="chrrybmb — iridescent eye mark on prism glow">
+<meta name="twitter:card" content="summary_large_image">
+
 
 <!-- Open Graph -->
 <meta property="og:title" content="chrrybmb — denisa jomo">
@@ -300,9 +324,6 @@
 </head>
 
 <body class="density-xs">
-  
-
-
 <!-- Header / Nav -->
 <header class="site-header" role="banner">
   <div class="site-header__chrome" aria-hidden="true"></div> <!-- subtle prism edge -->
@@ -446,53 +467,6 @@
       <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G"/>
     </filter>
   </svg>
-
-
-  <!-- Tiny tilt/sheeny interaction (subtle, noticeable) -->
-  <script>
-    (function(){
-      const cards = document.querySelectorAll('.card-iris.feature-card[data-tilt]');
-      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (!cards.length || prefersReduced) return;
-
-      const clamp = (n, min, max) => Math.max(min, Math.min(n, max));
-
-      cards.forEach(card => {
-        let raf = null;
-
-        function handleMove(e){
-          const r = card.getBoundingClientRect();
-          const x = (e.clientX - r.left) / r.width;   // 0..1
-          const y = (e.clientY - r.top)  / r.height;  // 0..1
-
-          const rx = clamp((0.5 - y) * 6, -6, 6);     // tilt X
-          const ry = clamp((x - 0.5) * 8, -8, 8);     // tilt Y
-
-          card.style.setProperty('--rx', rx.toFixed(2) + 'deg');
-          card.style.setProperty('--ry', ry.toFixed(2) + 'deg');
-          card.style.setProperty('--mx', (x*100).toFixed(1) + '%');
-          card.style.setProperty('--my', (y*100).toFixed(1) + '%');
-
-          if (!raf){
-            card.classList.add('is-hot');
-            raf = requestAnimationFrame(() => { card.style.transform = `perspective(900px) rotateX(var(--rx)) rotateY(var(--ry)) translateZ(6px)`; raf = null; });
-          }
-        }
-
-        function reset(){
-          card.classList.remove('is-hot');
-          card.style.removeProperty('--rx'); card.style.removeProperty('--ry'); card.style.removeProperty('--mx'); card.style.removeProperty('--my');
-          card.style.transform = '';
-        }
-
-        card.addEventListener('mousemove', handleMove);
-        card.addEventListener('mouseleave', reset);
-        card.addEventListener('blur', reset, true);
-        card.addEventListener('touchstart', ()=>card.classList.add('is-hot'), {passive:true});
-        card.addEventListener('touchend', ()=>card.classList.remove('is-hot'), {passive:true});
-      });
-    })();
-  </script>
 
   
 
