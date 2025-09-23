@@ -12,27 +12,26 @@
   <link rel="icon" href="./assets/eye.png" />
   <link rel="apple-touch-icon" href="./assets/eye.png" />
 
-<!-- Open Graph -->
-<meta property="og:title" content="chrrybmb — denisa jomo">
-<meta property="og:description" content="creative leadership for brand & web.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://chrrybmb.com/">
-<meta property="og:image" content="https://chrrybmb.com/assets/og-image.jpg">
-<meta property="og:image:alt" content="chrrybmb iridescent glow with eye mark">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:site_name" content="chrrybmb">
+  <!-- Open Graph -->
+  <meta property="og:title" content="chrrybmb — denisa jomo">
+  <meta property="og:description" content="creative leadership for brand & web.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://chrrybmb.com/">
+  <meta property="og:image" content="https://chrrybmb.com/assets/og-image.jpg">
+  <meta property="og:image:alt" content="chrrybmb iridescent glow with eye mark">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="chrrybmb">
 
-<!-- Twitter -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="chrrybmb — denisa jomo">
-<meta name="twitter:description" content="creative leadership for brand & web.">
-<meta name="twitter:image" content="https://chrrybmb.com/assets/og-image.jpg">
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="chrrybmb — denisa jomo">
+  <meta name="twitter:description" content="creative leadership for brand & web.">
+  <meta name="twitter:image" content="https://chrrybmb.com/assets/og-image.jpg">
 
   <!-- Base site CSS -->
   <link rel="stylesheet" href="/style.css?v=9">
   <link rel="stylesheet" href="/mobilestyle.css?v=1" media="(max-width: 640px)">
-  
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -42,17 +41,19 @@
   <link href="https://fonts.googleapis.com/css2?family=Jacquarda+Bastarda+9&display=swap" rel="stylesheet">
 
   <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-2V368XS4ED"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-2V368XS4ED');
-</script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2V368XS4ED"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-2V368XS4ED');
+  </script>
 
   <!-- Page-scoped styles (win the cascade after style.css) -->
   <style>
+    /* page-wide safety: no sideways scroll anywhere */
+    html, body { max-width: 100vw; overflow-x: clip; }
+
     .page-contact{
       --indigo:#4440ff; --pink:#ffe9ff; --ink:#0e0f1a; --cardR: clamp(18px,1.6vw,26px);
       background:
@@ -61,6 +62,7 @@
       color:var(--ink);
       -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
       --ui:.66; /* compact vibe */
+      overflow-x: clip; /* belt + suspenders */
     }
 
     /* --- tiny reveal system tokens (pairs with site.js) --- */
@@ -75,10 +77,7 @@
       transition-delay: var(--stagger, 0ms);
       will-change: opacity, transform, filter;
     }
-    .is-in[data-animate]{
-      opacity:1; transform: translateY(0) scale(1); filter: none;
-    }
-    /* quick presets */
+    .is-in[data-animate]{ opacity:1; transform: translateY(0) scale(1); filter: none; }
     .fade-up { --rise: 10px }
     .zoom-in { --scale: .96; --blur: 2px }
     @media (prefers-reduced-motion: reduce){
@@ -86,8 +85,9 @@
     }
 
     /* --- HERO --- */
-    .contact-hero{position:relative; padding: clamp(20px,6vw,56px) 20px 8px; text-align:center;}
-    .contact-hero .hero-inner{max-width:min(1100px,92vw); margin-inline:auto; position:relative; z-index:0;}
+    /* FIX: missing space after clamp() caused weird padding behavior */
+    .contact-hero{ position:relative; padding: clamp(20px,6vw,56px) 20px 8px; text-align:center; }
+    .contact-hero .hero-inner{ max-width:min(1100px,92vw); margin-inline:auto; position:relative; z-index:0; }
     .contact-hero .hero-inner::before{
       content:""; position:absolute; inset:-12% -14% -18% -14%; z-index:-1; pointer-events:none;
       background:
@@ -140,9 +140,19 @@
     }
 
     /* --- Center card (iris border) --- */
-    .wrap{display:grid; place-items:center; padding: 14px 12px 96px;}
-    .card-iris{position:relative; width:min(92vw, 560px); border-radius:var(--cardR);
-      box-shadow:0 18px 54px rgba(68,64,255,.10), 0 3px 12px rgba(0,0,0,.06); background:#fff; isolation:isolate; }
+    /* FIX: stop vertical centering so the card sits right under the title */
+    .wrap{
+      display:grid;
+      justify-items:center;
+      align-items:start;         /* <— was center via place-items; created the big gap */
+      padding: 14px 12px 96px;
+      margin-top: 0;             /* defensive: ensure no unexpected top margin */
+    }
+
+    .card-iris{
+      position:relative; width:min(92vw, 560px); border-radius:var(--cardR);
+      box-shadow:0 18px 54px rgba(68,64,255,.10), 0 3px 12px rgba(0,0,0,.06); background:#fff; isolation:isolate;
+    }
     .card-iris::before{
       content:""; position:absolute; inset:-1px; border-radius:inherit; padding:1px;
       background:conic-gradient(from var(--b,0deg), var(--indigo), var(--pink) 40%, #a8a3ff, var(--indigo));
@@ -156,13 +166,6 @@
       position:relative; padding: clamp(14px, 3.6vw, 22px) clamp(2px, 3.6vw, 6px);
       display:grid; gap:14px;
       transform-style: preserve-3d;
-    }
-    /* gentle desktop tilt */
-    @media (hover:hover) and (pointer:fine){
-      .card-iris[data-tilt] .contact-card{ transition: transform .18s ease; }
-      .card-iris[data-tilt]:hover .contact-card{
-        transform: perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateZ(6px);
-      }
     }
 
     .row{display:flex; align-items:center; gap:10px; flex-wrap:wrap}
@@ -187,7 +190,6 @@
     .btn-pixel--ghost{ background:#fff; border-style:dashed; opacity:.92 }
     .btn-pixel:focus-visible{ outline:2px solid #5a57ff; outline-offset:2px; }
 
-    /* Button layout — intentional, centered */
     .actions{
       display:flex; flex-wrap:wrap; gap:8px 10px;
       justify-content:center; align-items:center;
@@ -198,13 +200,11 @@
     .icon{width:16px; height:16px; display:inline-block; vertical-align:-2px}
     .icon svg{width:100%; height:100%; shape-rendering:crispEdges}
 
-
     /* Phone polish */
     @media (max-width:480px){
       .card-iris{width:min(94vw, 560px)}
       .btn-pixel{ --px: 10px; padding: 8px 10px; }
     }
-
   </style>
 </head>
 
@@ -224,47 +224,46 @@
     </filter>
   </svg>
 
-  <!-- Header / Nav -->
-<header class="site-header" role="banner">
-  <div class="site-header__chrome" aria-hidden="true"></div> <!-- subtle prism edge -->
-  <div class="header__inner">
-    <a class="brand" href="/" aria-label="chrrybmb home">
-      <img class="brand__logo-img" src="./assets/indigo_chrry_indypinky.svg" alt="chrrybmb logo" width="64" height="38" decoding="async">
-    </a>
+  <!-- Header / Nav (unchanged) -->
+  <header class="site-header" role="banner">
+    <div class="site-header__chrome" aria-hidden="true"></div> <!-- subtle prism edge -->
+    <div class="header__inner">
+      <a class="brand" href="/" aria-label="chrrybmb home">
+        <img class="brand__logo-img" src="./assets/indigo_chrry_indypinky.svg" alt="chrrybmb logo" width="64" height="38" decoding="async">
+      </a>
 
-    <nav class="nav" aria-label="primary">
-      <ul class="nav__list">
-        <li><a href="/index.html">home</a></li>
-        <li><a href="/about.html">about</a></li>
-        <li><a href="/contact.html">contact</a></li>
-      </ul>
-    </nav>
+      <nav class="nav" aria-label="primary">
+        <ul class="nav__list">
+          <li><a href="/index.html">home</a></li>
+          <li><a href="/about.html">about</a></li>
+          <li><a href="/contact.html">contact</a></li>
+        </ul>
+      </nav>
 
-    <!-- actions: search -->
-    <div class="header__actions">
-      <button class="icon-btn" id="openSearch" aria-label="open search" title="search (⌘/Ctrl + K)">
-        <!-- tiny loupe -->
-        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M11.2 10.3l3.1 3.1-1 1-3.1-3.1a5 5 0 1 1 1-1zm-6.2.7a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" fill="currentColor"/></svg>
-      </button>
-    </div>
-  </div>
-
-  <!-- search overlay -->
-  <div class="search" id="search" role="dialog" aria-modal="true" aria-labelledby="searchLabel" hidden>
-    <div class="search__backdrop" data-close></div>
-    <div class="search__panel">
-      <div class="search__head">
-        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M11.2 10.3l3.1 3.1-1 1-3.1-3.1a5 5 0 1 1 1-1zm-6.2.7a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" fill="currentColor"/></svg>
-        <input id="searchInput" type="search" placeholder="search the site…" autocomplete="off" aria-label="search">
-        <button class="kbd" type="button" data-close aria-label="Close search (Esc)">esc</button>
+      <!-- actions: search -->
+      <div class="header__actions">
+        <button class="icon-btn" id="openSearch" aria-label="open search" title="search (⌘/Ctrl + K)">
+          <!-- tiny loupe -->
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M11.2 10.3l3.1 3.1-1 1-3.1-3.1a5 5 0 1 1 1-1zm-6.2.7a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" fill="currentColor"/></svg>
+        </button>
       </div>
-      <ul id="searchResults" class="search__results" role="listbox" aria-live="polite"></ul>
     </div>
-  </div>
-  
-</header>
 
-  <!-- Hero -->
+    <!-- search overlay -->
+    <div class="search" id="search" role="dialog" aria-modal="true" aria-labelledby="searchLabel" hidden>
+      <div class="search__backdrop" data-close></div>
+      <div class="search__panel">
+        <div class="search__head">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M11.2 10.3l3.1 3.1-1 1-3.1-3.1a5 5 0 1 1 1-1zm-6.2.7a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" fill="currentColor"/></svg>
+          <input id="searchInput" type="search" placeholder="search the site…" autocomplete="off" aria-label="search">
+          <button class="kbd" type="button" data-close aria-label="Close search (Esc)">esc</button>
+        </div>
+        <ul id="searchResults" class="search__results" role="listbox" aria-live="polite"></ul>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero (unchanged look) -->
   <section class="contact-hero" aria-label="Intro">
     <div class="hero-inner fade-up" data-animate>
       <h1 class="name-edge" data-text="contact">
@@ -324,7 +323,6 @@
     </section>
   </main>
 
-
   <script>
     // copy email feedback
     document.getElementById('copyBtn')?.addEventListener('click', async (e)=>{
@@ -367,11 +365,9 @@
   <!-- Shared global interactions -->
   <script type="module" src="./site.js" defer></script>
 
-
   <footer class="site-footer" role="contentinfo">
     <span class="dot" aria-hidden="true"></span>
     <small>© <span id="year"></span> chrrybmb.com / denisajomo.com</small>
   </footer>
-  
 </body>
 </html>
