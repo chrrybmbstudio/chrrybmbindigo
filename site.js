@@ -422,25 +422,22 @@ document.addEventListener('keydown', (e) => {
   });
 })();
 
-// footer-guard: keep content from hiding under the fixed footer on mobile
-(function(){
-  const footer = document.querySelector('.glass-footer');
-  if (!footer) return;
 
-  const setH = () => {
-    // measure live height
-    const h = Math.ceil(footer.getBoundingClientRect().height);
-    document.documentElement.style.setProperty('--footer-h', h + 'px');
+(function(){
+  const slots = document.querySelectorAll('[data-include]');
+  if (!slots.length) return;
+
+  const inject = async (el) => {
+    try{
+      const url = el.getAttribute('data-include');
+      const html = await (await fetch(url, {cache:'no-cache'})).text();
+      el.outerHTML = html;
+
+      // Re-run the footer guard after injection (if you use it)
+      if (typeof footerGuard === 'function') footerGuard();
+    }catch(e){ console.warn('Include failed:', e); }
   };
 
-  // set once on ready, then on resize, and if the footer’s layout changes
-  window.addEventListener('load', setH);
-  window.addEventListener('resize', setH);
-  const ro = new ResizeObserver(setH);
-  ro.observe(footer);
-
-  // optional: re-run when fonts load, sometimes changes height slightly
-  if (document.fonts && document.fonts.ready) {
-    document.fonts.ready.then(setH).catch(()=>{});
-  }
+  slots.forEach(inject);
 })();
+
