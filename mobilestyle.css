@@ -35,10 +35,3 @@
     overflow-x: hidden;
   }
 
-  /* If your footer uses a centered translate, remove it on mobile */
-  .glass-footer{
-    left: 0; right: 0; bottom: 0;
-    transform: none;
-    max-width: none;
-  }
-}
