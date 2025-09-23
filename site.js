@@ -422,23 +422,25 @@ document.addEventListener('keydown', (e) => {
   });
 })();
 
-  // footer height render tool
-  (function(){
-    const root = document.documentElement;
-    const footer = document.querySelector('.glass-footer');
-    const spacer = document.querySelector('.footer-spacer');
-    if(!footer || !spacer) return;
+// footer-guard: keep content from hiding under the fixed footer on mobile
+(function(){
+  const footer = document.querySelector('.glass-footer');
+  if (!footer) return;
 
-    const update = () => {
-      const h = Math.ceil(footer.getBoundingClientRect().height);
-      root.style.setProperty('--footer-h', h + 'px');
-    };
+  const setH = () => {
+    // measure live height
+    const h = Math.ceil(footer.getBoundingClientRect().height);
+    document.documentElement.style.setProperty('--footer-h', h + 'px');
+  };
 
-    // run once and on changes that might affect height
-    update();
-    new ResizeObserver(update).observe(footer);
-    window.addEventListener('orientationchange', update, {passive:true});
-    window.addEventListener('load', update, {once:true});
-  })();
+  // set once on ready, then on resize, and if the footer’s layout changes
+  window.addEventListener('load', setH);
+  window.addEventListener('resize', setH);
+  const ro = new ResizeObserver(setH);
+  ro.observe(footer);
 
-  
+  // optional: re-run when fonts load, sometimes changes height slightly
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(setH).catch(()=>{});
+  }
+})();
