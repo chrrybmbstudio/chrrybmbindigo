@@ -1,1 +1,44 @@
+/* ===== Mobile overflow guards ===== */
+@media (max-width: 640px){
+  /* Never allow horizontal scroll */
+  html, body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;      /* primary fix */
+    -webkit-text-size-adjust: 100%;
+  }
 
+  /* Make sure common media can’t overflow */
+  img, svg, video, canvas {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* The hero’s glow pseudo-element is oversized — clip it on mobile */
+  .contact-hero,
+  .contact-hero .hero-inner {
+    overflow: hidden;        /* prevents the ::before from creating side-scroll */
+  }
+
+  /* Soften the overscan a bit to reduce the chance of overflow */
+  .contact-hero .hero-inner::before{
+    /* Still has that nice blob, but not so huge it forces scrollbars */
+    inset: -6% -8% -10% -8%;
+  }
+
+  /* Card stack + wrapper: never exceed the viewport */
+  .wrap,
+  .card-iris,
+  .contact-card {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  /* If your footer uses a centered translate, remove it on mobile */
+  .glass-footer{
+    left: 0; right: 0; bottom: 0;
+    transform: none;
+    max-width: none;
+  }
+}
