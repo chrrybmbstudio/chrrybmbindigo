@@ -437,3 +437,21 @@ document.addEventListener('keydown', (e) => {
     document.addEventListener('focusin', onFocus);
     document.addEventListener('focusout', onBlur);
   })();
+
+  (function(){
+    const root = document.documentElement;
+    const footer = document.querySelector('.glass-footer');
+    if(!footer) return;
+
+    const setH = () => {
+      const h = Math.ceil(footer.getBoundingClientRect().height);
+      root.style.setProperty('--footer-h', h + 'px');
+    };
+    setH();
+
+    // update on resize / orientation / safe-area changes / font load
+    const ro = new ResizeObserver(setH);
+    ro.observe(footer);
+    window.addEventListener('orientationchange', setH);
+    window.addEventListener('load', setH);
+  })();
