@@ -468,29 +468,30 @@ body.page-case {
   padding-bottom: calc(var(--footer-h) + var(--footer-gap) + env(safe-area-inset-bottom, 0px));
 }
 
+/* put near your page-scoped helpers */
+:root{
+  --footer-h: 60px; /* fallback */
+}
 
-/* Base stays as-is for desktop */
+/* your main already has padding-bottom, keep it or remove it; the spacer is the source of truth */
+.footer-spacer{
+  height: calc(var(--footer-h) + env(safe-area-inset-bottom, 0px));
+}
 
-/* Mobile: turn it into a full-width bottom bar */
+/* your mobile full-width bar is great — keep it */
 @media (max-width:640px){
   .glass-footer{
     position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;                             /* stick to screen bottom */
+    left: 0; right: 0; bottom: 0;
     z-index: 20;
-
-    margin: 0;                             /* no margins -> full width */
-    border-radius: 0;                      /* bar look; or use 16px top radii */
-    /* optional rounded top only: */
+    margin: 0;
+    border-radius: 0;
     border-top-left-radius: 16px;
     border-top-right-radius: 16px;
+    padding: 12px 14px calc(12px + env(safe-area-inset-bottom, 0px));
 
-    padding: 10px 14px calc(10px + env(safe-area-inset-bottom, 0px));
-    max-width: none;                       /* undo earlier max-width */
-    transform: none;                       /* undo center translate */
-
-    /* soften/disable the mask on tiny screens to avoid clipping */
+    max-width: none;
+    transform: none;
     -webkit-mask-image: none;
             mask-image: none;
   }
