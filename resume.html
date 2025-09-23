@@ -39,6 +39,8 @@
         linear-gradient(180deg, #ffffff, #faf9ff);
       color:var(--ink);
       -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+
+      overflow-x: clip; 
     }
 
     /* ---------- Hero ---------- */
@@ -304,6 +306,7 @@
   </main>
 
 
+
   <!-- pdf.js (module build) with render + width-only observer -->
   <script type="module">
     import * as pdfjsLib from 'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.8.69/build/pdf.mjs';
@@ -450,11 +453,11 @@
 
 <script type="module" src="./site.js" defer></script>
 
-  <!-- Glass footer -->
-  <footer class="glass-footer" role="contentinfo">
-    <span class="dot" aria-hidden="true"></span>
-    <span>© <span id="year"></span> chrrybmb.com / denisajomo.com</span>
-  </footer>
-  
+            <!-- Glass footer -->
+            <footer class="glass-footer" role="contentinfo">
+              <span class="dot" aria-hidden="true"></span>
+              <span>© <span id="year"></span> chrrybmb.com / denisajomo.com</span>
+            </footer>
+
 </body>
 </html>
