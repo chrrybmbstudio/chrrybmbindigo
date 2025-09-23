@@ -43,6 +43,7 @@
     :root{
       --indigo:#4440ff; --pink:#ffe9ff; --ink:#0e0f1a; --cardR: clamp(18px,1.6vw,26px);
     }
+
     /* jank guard: never allow sideways overflow */
     html, body { max-width: 100vw; overflow-x: clip; }
 
@@ -55,7 +56,7 @@
       -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
     }
 
-    /* hero (kept consistent with your brand) */
+    /* hero (brand-consistent) */
     .work-hero{position:relative; padding: clamp(24px,7vw,64px) 20px 0; text-align:center;}
     .work-hero .inner{max-width:min(1100px,92vw); margin-inline:auto; position:relative;}
     .work-hero .sub{
@@ -72,7 +73,7 @@
       letter-spacing:-.02em; line-height:.92; margin:0 0 6px;
       text-transform:lowercase; position:relative; display:inline-block;
       color:var(--text); filter:url(#softWobble); isolation:isolate;
-      overflow: clip; /* prevents width creep from filters */
+      overflow: clip;
     }
     .name-edge::after{
       content:attr(data-text);
@@ -103,7 +104,6 @@
     .section{ padding: clamp(14px,5vw,18px) var(--page-pad, 16px); }
     .container{ width: min(1100px, 100%); margin-inline:auto; }
 
-    /* NEW: responsive grid (simple, modern) */
     .grid{
       display:grid;
       grid-template-columns: 1fr;
@@ -117,27 +117,46 @@
       .grid{ grid-template-columns: repeat(3, minmax(0,1fr)); }
     }
 
-    /* card (calm, robust, accessible) */
+    /* CARD: calm dimension (iris ring + inner highlight) */
     .card-iris{
       position:relative;
       display:flex; flex-direction:column;
       padding: 14px 16px;
       border-radius: var(--cardR);
       background: linear-gradient(180deg,#ffffff,#f6f6ff);
-      border:1px solid rgba(68,64,255,.28);
-      box-shadow: 0 0 0 1px rgba(68,64,255,.06) inset, 0 8px 24px rgba(68,64,255,.08);
-      transition: transform .18s ease, box-shadow .18s ease;
+      border:1px solid rgba(68,64,255,.24);
+      box-shadow:
+        0 0 0 1px rgba(68,64,255,.06) inset,
+        0 8px 22px rgba(68,64,255,.08);
+      transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
       will-change: transform, box-shadow;
       overflow: hidden;
+      isolation:isolate;
     }
-    /* subtle lift on hover/focus, nothing flashy */
+    /* subtle iridescent ring */
+    .card-iris::before{
+      content:""; position:absolute; inset:-1px; border-radius:inherit; padding:1px;
+      background: conic-gradient(from 210deg, var(--indigo), #a8a3ff 30%, var(--pink) 60%, var(--indigo) 100%);
+      --mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask: var(--mask); -webkit-mask-composite:xor; mask-composite:exclude;
+      opacity:.18; pointer-events:none; transition: opacity .2s ease;
+    }
+    /* soft top highlight */
+    .card-iris::after{
+      content:""; position:absolute; inset:0; border-radius:inherit;
+      background: linear-gradient(180deg, rgba(255,255,255,.45), transparent 30%);
+      mix-blend-mode: soft-light; opacity:.45; pointer-events:none;
+    }
     .card-iris:hover{
       transform: translateY(-2px);
-      box-shadow: 0 0 0 1px rgba(68,64,255,.06) inset, 0 14px 32px rgba(68,64,255,.14);
+      box-shadow:
+        0 0 0 1px rgba(68,64,255,.06) inset,
+        0 14px 32px rgba(68,64,255,.14);
     }
+    .card-iris:hover::before{ opacity:.28 }
     .card-iris:focus-within{
       outline: none;
-      box-shadow: 0 0 0 2px #5a57ff, 0 14px 32px rgba(68,64,255,.18);
+      box-shadow: 0 0 0 2px #5a57ff, 0 16px 34px rgba(68,64,255,.18);
     }
 
     .card-iris h3{ margin:0 0 6px; font-size: clamp(16px, 2vw, 18px); letter-spacing:.02em }
@@ -162,10 +181,10 @@
     }
     .btn-pixel--ghost{ background:#fff; border-style:dashed; opacity:.9 }
 
-    /* thumbnails */
-    .thumb{ aspect-ratio: 16/9; border-radius:14px; background:#eef0ff; border:1px solid rgba(68,64,255,.25); margin:8px 0 10px; overflow:hidden; position:relative }
-    .thumb img{ width:100%; height:100%; object-fit:cover; display:block; transition: transform .4s ease; }
-    .card-iris:hover .thumb img{ transform: scale(1.03); }
+    /* thumbnails (quiet zoom) */
+    .thumb{ aspect-ratio: 16/9; border-radius:14px; background:#eef0ff; border:1px solid rgba(68,64,255,.25); margin:8px 0 10px; overflow:hidden; position:relative; display:block }
+    .thumb img{ width:100%; height:100%; object-fit:cover; display:block; transition: transform .35s ease; }
+    .card-iris:hover .thumb img{ transform: scale(1.02); }
 
     /* small reveal hooks */
     [data-animate]{ opacity:0; transform: translateY(8px); transition: opacity .6s ease, transform .6s ease; }
@@ -179,20 +198,34 @@
     .callout{ text-align:center; margin: 8px auto 0; max-width:min(900px, 92vw); color:#262a3f }
     .visually-hidden{ position:absolute!important; height:1px;width:1px; overflow:hidden; clip:rect(1px,1px,1px,1px); white-space:nowrap; }
 
+    /* footer: flow (not fixed) so it never overlaps content */
+    .site-footer{
+      position: static !important;
+      display:flex; justify-content:center; align-items:center; gap:10px;
+      padding: 12px 14px calc(12px + env(safe-area-inset-bottom, 0px));
+      margin-top: clamp(16px, 6vw, 28px);
+      border-top: 1px solid rgba(68,64,255,.18);
+      background: linear-gradient(180deg, rgba(255,255,255,.72), rgba(255,255,255,.92));
+      backdrop-filter: blur(6px) saturate(120%);
+      -webkit-backdrop-filter: blur(6px) saturate(120%);
+    }
+    .site-footer small, .site-footer .dot{
+      font:600 13px/1 "DM Sans"; color:#1b1e35; text-decoration:none;
+    }
+    .site-footer .dot{ width:5px; height:5px; border-radius:50%; background:linear-gradient(90deg,var(--indigo),#8aa3ff); display:inline-block }
+
     /* safety: media should never force overflow */
     img, svg, canvas, video, object, iframe { max-width:100%; height:auto; }
   </style>
 </head>
 
 <body class="page-work density-xs">
-<!-- Header / Nav -->
 <header class="site-header" role="banner">
-  <div class="site-header__chrome" aria-hidden="true"></div> <!-- subtle prism edge -->
+  <div class="site-header__chrome" aria-hidden="true"></div>
   <div class="header__inner">
     <a class="brand" href="/" aria-label="chrrybmb home">
       <img class="brand__logo-img" src="./assets/indigo_chrry_indypinky.svg" alt="chrrybmb logo" width="64" height="38" decoding="async">
     </a>
-
     <nav class="nav" aria-label="primary">
       <ul class="nav__list">
         <li><a href="/index.html">home</a></li>
@@ -200,17 +233,12 @@
         <li><a href="/contact.html">contact</a></li>
       </ul>
     </nav>
-
-    <!-- actions: search -->
     <div class="header__actions">
       <button class="icon-btn" id="openSearch" aria-label="open search" title="search (⌘/Ctrl + K)">
-        <!-- tiny loupe -->
         <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M11.2 10.3l3.1 3.1-1 1-3.1-3.1a5 5 0 1 1 1-1zm-6.2.7a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" fill="currentColor"/></svg>
       </button>
     </div>
   </div>
-
-  <!-- search overlay -->
   <div class="search" id="search" role="dialog" aria-modal="true" aria-labelledby="searchLabel" hidden>
     <div class="search__backdrop" data-close></div>
     <div class="search__panel">
@@ -293,13 +321,12 @@
   </section>
 </main>
 
-<!-- SVG filters (stubbed to keep the name-edge hook; values managed elsewhere) -->
+<!-- SVG filters (stub to preserve the name-edge hook) -->
 <svg width="0" height="0" class="visually-hidden" aria-hidden="true">
   <filter id="softWobble"><feGaussianBlur in="SourceGraphic" stdDeviation="0"/></filter>
   <filter id="lensWarp"><feGaussianBlur in="SourceGraphic" stdDeviation="0"/></filter>
 </svg>
 
-<!-- Shared interactions (your site.js handles data-animate already) -->
 <script type="module" src="./site.js" defer></script>
 
 <footer class="site-footer" role="contentinfo">
