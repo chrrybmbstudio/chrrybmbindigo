@@ -422,22 +422,15 @@ document.addEventListener('keydown', (e) => {
   });
 })();
 
-
 (function(){
-  const slots = document.querySelectorAll('[data-include]');
-  if (!slots.length) return;
-
-  const inject = async (el) => {
-    try{
-      const url = el.getAttribute('data-include');
-      const html = await (await fetch(url, {cache:'no-cache'})).text();
-      el.outerHTML = html;
-
-      // Re-run the footer guard after injection (if you use it)
-      if (typeof footerGuard === 'function') footerGuard();
-    }catch(e){ console.warn('Include failed:', e); }
+  const footer = document.querySelector('.glass-footer');
+  if(!footer) return;
+  const setSpace = ()=> {
+    const h = footer.offsetHeight || 56;
+    document.documentElement.style.setProperty('--footer-h', h + 'px');
   };
-
-  slots.forEach(inject);
+  setSpace();
+  new ResizeObserver(setSpace).observe(footer);
+  window.addEventListener('resize', setSpace, {passive:true});
+  window.addEventListener('orientationchange', setSpace, {passive:true});
 })();
-
