@@ -55,9 +55,7 @@
       --px-font:"Funnel Display", system-ui, sans-serif;
       --px-track:.12em;
 
-      /* NEW: fluid page gutters + space for fixed footer */
-      --page-pad: clamp(16px, 5vw, 28px);
-      --footer-space: 96px; /* breathing room so cards never hide under footer */
+      --footer-space: 60px; /* breathing room so cards never hide under footer */
 
       /* === Reveal system knobs === */
       --reveal-dur: .72s;
@@ -198,28 +196,23 @@
     }
 
     /* ===== Pixel-mini buttons (Funnel Display, ALL CAPS) ===== */
+    /* buttons — reuse “ghost” from checking/work page (dashed) */
+    .btn-row{ display:flex; flex-wrap:wrap; gap:8px; margin-top:10px }
     .btn-pixel{
-      --px: 10.5px;
-      display:inline-flex; align-items:center; justify-content:center; gap:.4ch;
-      padding: 8px 12px; border-radius: 10px;
-      font: 800 var(--px)/1 var(--px-font);
-      text-transform: uppercase; letter-spacing: var(--px-track);
-      background: linear-gradient(180deg, #ffffff, #f6f6ff);
-      border: 1px solid #1f22ff; color:#1a1a2b;
-      box-shadow:
-        0 0 0 1px rgba(68,64,255,.08) inset,
-        0 6px 18px rgba(68,64,255,.12);
-      transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
-      text-decoration:none; cursor:pointer;
+      --shadow: rgba(68,64,255,.12);
+      display:inline-flex; align-items:center; gap:8px;
+      padding:10px 12px; border-radius: 12px; border:1px solid #5a57ff;
+      background:linear-gradient(180deg,#fff,#f6f6ff);
+      font:700 12px/1 "Funnel Display",system-ui; letter-spacing:.12em; text-transform:uppercase;
+      box-shadow: 0 8px 16px var(--shadow); text-decoration:none; color:#17182a;
+      transition: transform .12s ease, box-shadow .12s ease;
     }
-    .btn-pixel:hover{ transform: translateY(-0.5px); box-shadow:
-        0 0 0 1px rgba(68,64,255,.10) inset,
-        0 10px 22px rgba(68,64,255,.18); }
-    .btn-pixel:active{ transform: translateY(0); filter: saturate(105%); }
-    .btn-pixel--ghost{
-      background: transparent; color:#2a2f45; border:1px solid #5a57ff;
-      box-shadow:none;
-    }
+    .btn-pixel:hover{ transform: translateY(-0.5px); box-shadow: 0 12px 22px rgba(68,64,255,.18) }
+    .btn-pixel--ghost{ background:#fff; border-style:dashed; opacity:.92 }
+
+    /* interactions (no reflection): simple reveal */
+    [data-animate]{ opacity:0; transform: translateY(8px); transition: opacity .6s ease, transform .6s ease }
+    .is-in[data-animate]{ opacity:1; transform:none }
     .hero__cta{ display:flex; gap: calc(var(--ui) * 12px); margin: 0 0 calc(var(--ui) * 8px); flex-wrap:wrap; }
 
     /* ===== Features ===== */
