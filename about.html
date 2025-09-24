@@ -9,30 +9,20 @@
   <link rel="canonical" href="https://chrrybmb.com/" />
 
 <!-- Favicon -->
-<!-- Icons: SVG first, PNG fallbacks -->
 <link rel="icon" href="/assets/eye.svg?v=2" type="image/svg+xml">
 <link rel="icon" href="/assets/eye-32.png?v=2" sizes="32x32" type="image/png">
 <link rel="icon" href="/assets/eye-16.png?v=2" sizes="16x16" type="image/png">
-
-<!-- iOS home screen (SVG not supported here) -->
 <link rel="apple-touch-icon" href="/assets/eye-180.png?v=2">
-
-<!-- Safari pinned tab (monochrome mask SVG) -->
 <link rel="mask-icon" href="/assets/eye-mask.svg?v=2" color="#4440ff">
-
-<!-- PWA manifest (optional, nice to have) -->
 <link rel="manifest" href="/site.webmanifest?v=2">
 
-<!-- Browser chrome color (light/dark) -->
 <meta name="theme-color" content="#ffffff">
 <meta name="theme-color" content="#0e0f1a" media="(prefers-color-scheme: dark)">
 <meta name="msapplication-TileColor" content="#4440ff">
 
-<!-- Social previews (refresh your image if you update the design) -->
 <meta property="og:image" content="https://chrrybmb.com/assets/og-image.jpg?v=2">
 <meta property="og:image:alt" content="chrrybmb — iridescent eye mark on prism glow">
 <meta name="twitter:card" content="summary_large_image">
-
 
 <!-- Open Graph -->
 <meta property="og:title" content="chrrybmb — denisa jomo">
@@ -64,237 +54,257 @@
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2V368XS4ED"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-            
-        gtag('config', 'G-2V368XS4ED');
-    </script>
-
-  </head>
-
-  <style>
-    .page-about{
-      --indigo:#4440ff; --pink:#ffe9ff; --ink:#0e0f1a; --cardR: clamp(18px,1.6vw,26px);
-      --lr: 120px;
-      --wave-opacity:.76; --wave-speed:36s; --wave-halo-blur:54px;
-      --frost-alpha:.26; --frost-blur:8px;
-      color:var(--ink);
-      -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
-      background:
-        radial-gradient(60% 60% at var(--orb-x,72%) var(--orb-y,68%), rgba(68,64,255,.13), transparent 60%),
-        linear-gradient(180deg, #ffffff, #faf9ff);
-      /* keep the site-wide mini scale */
-      --ui:.66;
-    }
-
-
-    /* --- tiny reveal system tokens (pairs with site.js) --- */
-    [data-animate]{
-      opacity:0;
-      transform: translateY(var(--rise, 10px)) scale(var(--scale, 1));
-      filter: blur(var(--blur, 0px));
-      transition:
-        opacity .6s ease,
-        transform .6s ease,
-        filter .6s ease;
-      transition-delay: var(--stagger, 0ms);
-      will-change: opacity, transform, filter;
-    }
-    .is-in[data-animate]{
-      opacity:1; transform: translateY(0) scale(1); filter: none;
-    }
-    /* quick presets */
-    .fade-up { --rise: 10px }
-    .zoom-in { --scale: .96; --blur: 2px }
-    @media (prefers-reduced-motion: reduce){
-      [data-animate]{ opacity:1; transform:none; filter:none; transition:none }
-    }
-
-
-    /* wave */
-    .iridescent-wave{position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden; will-change:transform; transform:translate3d(0,0,0)}
-    .iridescent-wave::before{
-      content:""; position:absolute; inset:-22%;
-      background: conic-gradient(from var(--wave-rot,0deg) at var(--orb-x,50%) var(--orb-y,20%), rgba(127,240,255,.25), rgba(255,106,223,.20), rgba(127,240,255,.25));
-      filter: blur(var(--wave-halo-blur)) saturate(150%); mix-blend-mode: color-dodge; opacity: var(--wave-opacity);
-      animation: waveSpin 22s linear infinite;
-    }
-    .iridescent-wave::after{
-      content:""; position:absolute; left:-14%; right:-14%; top:-220%; bottom:-220%;
-      background:
-        radial-gradient(80% 60% at 50% 30%, rgba(255,255,255,.55), rgba(255,255,255,0) 60%),
-        linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.55) 35%, rgba(255,255,255,0) 70%);
-      filter: blur(18px); mix-blend-mode: soft-light; opacity:.35;
-      animation: rippleDown var(--wave-speed) cubic-bezier(.42,0,.58,1) infinite;
-    }
-    @keyframes waveSpin{to{transform:rotate(1turn)}} @keyframes rippleDown{0%{transform:translate3d(0,-35%,0)}100%{transform:translate3d(0,35%,0)}}
-
-    /* frosty veil */
-    .frost-veil{position:fixed; inset:0; z-index:1; pointer-events:none; background:rgba(255,255,255,var(--frost-alpha));
-      backdrop-filter: blur(var(--frost-blur)) saturate(120%) contrast(102%); -webkit-backdrop-filter: blur(var(--frost-blur)) saturate(120%) contrast(102%);}
-
-    /* hero */
-    .about-hero{position:relative; padding: calc(var(--ui) * clamp(20px,6vw,68px)) 20px 8px; text-align:center; z-index:5;}
-    .about-hero .hero-inner{max-width:min(1100px,92vw); margin-inline:auto; position:relative; z-index:5;}
-    .about-hero .hero-inner::before{
-      content:""; position:absolute; inset:-12% -14% -18% -14%; z-index:-1; pointer-events:none;
-      background:
-        radial-gradient(72% 100% at 30% 40%, rgba(68,64,255,.28), transparent 60%),
-        radial-gradient(64% 80% at 70% 60%, rgba(255,233,255,.38), transparent 60%);
-      filter: blur(28px) saturate(120%); opacity:.9; animation: floatBlob 24s ease-in-out infinite alternate;
-    }
-    @keyframes floatBlob{0%{transform:translateY(0) rotate(0) scale(1)}100%{transform:translateY(-6px) rotate(6deg) scale(1.02)}}
-
-    /* H1 — back to your density sizing */
-    .name-edge{
-      --text:#0e0f1a;
-      font-family:"Funnel Display", system-ui, sans-serif;
-      font-weight:600;
-      font-size: calc(var(--ui) * clamp(42px,8vw,66px));
-      letter-spacing:-.02em; line-height:.92; margin:0 0 6px;
-      text-transform:lowercase; position:relative; display:inline-block; color:var(--text);
-      filter:url(#softWobble); isolation:isolate;
-    }
-    .name-edge::after{
-      content:attr(data-text); position:absolute; inset:0; z-index:-1; pointer-events:none;
-      background: conic-gradient(from 0deg, var(--indigo), var(--pink) 40%, #8aaaff, var(--indigo));
-      -webkit-background-clip:text; background-clip:text; color:transparent; transform: scale(1.04);
-      filter: blur(6px) saturate(125%); opacity:.75; mix-blend-mode: plus-lighter;
-    }
-    .name-edge .warp,.name-edge .prism{
-      position:absolute; inset:0; display:inline-block;
-      -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 35%, #000 65%, transparent 100%);
-              mask-image: linear-gradient(90deg, transparent 0%, #000 35%, #000 65%, transparent 100%);
-      -webkit-mask-size:220% 100%; mask-size:220% 100%;
-      -webkit-mask-position:-60% 0; mask-position:-60% 0; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat;
-      will-change: -webkit-mask-position, mask-position;
-    }
-    .name-edge .warp{z-index:1; color:var(--text); -webkit-text-fill-color:currentColor; filter:url(#lensWarp);}
-    .name-edge .prism{z-index:2; mix-blend-mode:screen; opacity:.55; filter: blur(.6px) saturate(120%);
-      background: linear-gradient(90deg, #7ff0ff 0%, #ff6adf 50%, #7ff0ff 100%); -webkit-background-clip:text; background-clip:text; color:transparent; transform: translateX(.4px);}
-    @keyframes sweepBand{from{ -webkit-mask-position:-60% 0; mask-position:-60% 0 } to{ -webkit-mask-position:160% 0; mask-position:160% 0 }}
-    @media (min-width:641px){ .name-edge .warp, .name-edge .prism{ animation: sweepBand 7s cubic-bezier(.45,.05,.36,1) infinite alternate; } }
-    @media (max-width:640px){ .name-edge .warp, .name-edge .prism{ animation: sweepBand 3.2s cubic-bezier(.5,.1,.2,1) 1 both; } }
-    @media (prefers-reduced-motion: reduce){
-      .name-edge::after{animation:none} .name-edge .warp,.name-edge .prism{animation:none !important}
-      .iridescent-wave::before,.iridescent-wave::after{animation:none !important}
-    }
-
-    .about-sub{margin:6px 0 22px; font:400 calc(var(--ui) * clamp(18px,2.4vw,28px))/1.2 "Jacquarda Bastarda 9", serif; opacity:.85; text-align:center;}
-
-    /* background art scale (you liked this) */
-    .page-about{ --bg:.58; --bg-right: calc(-8vw * var(--bg)); --bg-bottom: calc(-6vh * var(--bg)); --bg-w: min(calc(82vw * var(--bg)), calc(980px * var(--bg))); }
-    .bg-art{ position:fixed; right:var(--bg-right); bottom:var(--bg-bottom); width:var(--bg-w); pointer-events:none; z-index:0; overflow:visible; }
-    .bg-art .art-svg{position:absolute; right:0; bottom:0; width:100%; height:auto}
-    .bg-art .art-svg image.base{opacity:.08; filter:saturate(110%) contrast(102%);}
-    .bg-art .art-svg image.glow{opacity:.6}
-    .img-mag,.img-blur,.tint,.lens-aura{position:fixed; inset:0; pointer-events:none; z-index:2;}
-    .img-mag,.img-blur{
-      background-image:url('./assets/heater1.png'); background-repeat:no-repeat;
-      background-position:right var(--bg-right) bottom var(--bg-bottom); background-size:var(--bg-w) auto;
-      -webkit-mask-image: radial-gradient(circle var(--lr) at var(--lx,78%) var(--ly,76%), #000 0%, #000 62%, rgba(0,0,0,.75) 78%, transparent 92%);
-              mask-image: radial-gradient(circle var(--lr) at var(--lx,78%) var(--ly,76%), #000 0%, #000 62%, rgba(0,0,0,.75) 78%, transparent 92%);
-    }
-    .img-mag{filter:saturate(115%) contrast(103%); opacity:.88}
-    .img-blur{filter:blur(12px) saturate(120%); opacity:.22}
-    .tint{
-      -webkit-mask-image: radial-gradient(circle calc(var(--lr)*1.05) at var(--lx,78%) var(--ly,76%), #000 0%, #000 60%, transparent 82%);
-              mask-image: radial-gradient(circle calc(var(--lr)*1.05) at var(--lx,78%) var(--ly,76%), #000 0%, #000 60%, transparent 82%);
-      background: radial-gradient(closest-side, rgba(68,64,255,.22), rgba(68,64,255,.16) 55%, transparent 80%); z-index:3;
-    }
-    .lens-aura{left:var(--lx,78%); top:var(--ly,76%); width:calc(var(--lr)*2.1); height:calc(var(--lr)*2.1); transform:translate(-50%,-50%); border-radius:50%; filter:blur(.6px) saturate(120%); z-index:4;}
-    .lens-aura::before,.lens-aura::after{content:""; position:absolute; inset:-18%; border-radius:50%}
-    .lens-aura::before{background: radial-gradient(closest-side, rgba(255,255,255,.22), rgba(255,255,255,.08) 55%, transparent 70%); mix-blend-mode:screen; filter:blur(12px)}
-    .lens-aura::after{background: radial-gradient(closest-side, rgba(255,255,255,.18), transparent 65%), conic-gradient(from 0deg, rgba(127,240,255,.38), rgba(255,106,223,.35), rgba(127,240,255,.38)); mix-blend-mode:screen; opacity:.55; filter:blur(7px)}
-
-    /* card — mini */
-    .wrap{display:grid; place-items:center; padding: calc(var(--ui) * 14px) calc(var(--ui) * 12px) calc(var(--ui) * 96px); position:relative; z-index:5;}
-    .card-iris{
-      position:relative;
-      width: min(92vw, 520px);         /* narrower */
-      border-radius: calc(var(--ui) * var(--cardR));
-      background: rgba(255,255,255,.64);
-      backdrop-filter: blur(12px) saturate(135%) contrast(103%); -webkit-backdrop-filter: blur(12px) saturate(135%) contrast(103%);
-      background-clip: padding-box; border: 1px solid rgba(255,255,255,.38);
-      box-shadow: 0 14px 42px rgba(68,64,255,.10), 0 3px 10px rgba(0,0,0,.06);
-      isolation:isolate; overflow:hidden;
-    }
-    .card-iris::before{
-      content:""; position:absolute; inset:-1px; border-radius:inherit; padding:1px;
-      background:conic-gradient(from var(--b,0deg), var(--indigo), var(--pink) 40%, #a8a3ff, var(--indigo));
-      --mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-      -webkit-mask: var(--mask); -webkit-mask-composite:xor; mask-composite:exclude;
-      animation: spin 14s linear infinite; pointer-events:none;
-    }
-    @keyframes spin{to{--b:360deg}}
-
-    .about-card{position:relative; padding: calc(var(--ui) * clamp(12px,3.2vw,20px)) calc(var(--ui) * clamp(14px,4vw,24px)); display:grid; gap: calc(var(--ui) * 12px);}
-    .about-card h3{ margin:.2rem 0 .35rem; font-size: clamp(16px,1.9vw,18px) }}
-    .about-copy p{margin:0; color:#2a2f45; font-size: clamp(13.5px, 1.5vw, 14.5px); line-height:1.42;}
-    .about-copy ul{margin:0; padding-left:16px}
-    .about-copy li{margin:3px 0; font-size: clamp(13.5px, 1.5vw, 14.5px); line-height:1.42;}
-
-    /* Jacquarda section heads (weight 500 as you set) */
-    .pxlh{
-      font-family:"Jacquarda Bastarda 9", serif;
-      font-weight: 500;
-      font-size: clamp(17px, 2vw, 20px);
-      line-height: 1.15; letter-spacing:.25px; color:#17182a;
-    }
-
-    /* pixel-mini buttons (same across site) */
-    :root{ --px-font: "Funnel Display", system-ui, sans-serif; }
-    .btn-pixel{
-      --px: 10.5px; --px-track: .16em;
-      display:inline-flex; align-items:center; justify-content:center; gap:.5ch;
-      padding: 8px 12px; border-radius: 10px;
-      font: 800 var(--px)/1 var(--px-font);
-      text-transform: uppercase; letter-spacing: var(--px-track);
-      background: linear-gradient(180deg, #ffffff, #f6f6ff);
-      border: 1px solid #1f22ff; color:#17182a;
-      box-shadow: 0 0 0 1px rgba(68,64,255,.08) inset, 0 6px 18px rgba(68,64,255,.12);
-      transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
-      text-decoration:none; cursor:pointer; user-select:none;
-    }
-    .btn-pixel:hover{ transform: translateY(-0.5px); box-shadow: 0 0 0 1px rgba(68,64,255,.10) inset, 0 10px 22px rgba(68,64,255,.18); }
-    .btn-pixel:active{ transform: translateY(0); filter: saturate(105%); }
-    .btn-pixel--ghost{ background:#fff; border-style:dashed; opacity:.92 }
-    .btn-pixel:focus-visible{ outline:2px solid #5a57ff; outline-offset:2px; }
-    .about-cta{ display:flex; flex-wrap:wrap; gap:8px 10px; margin-top:8px; justify-content:center; }
-
-    /* tilt sheen */
-    .card-iris.feature-card{ transform-style:preserve-3d; transition: transform .18s ease, box-shadow .2s ease; }
-    .card-iris.feature-card.is-hot{ transform: perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateZ(6px); box-shadow: 0 22px 60px rgba(68,64,255,.16); }
-    .card-iris.feature-card::after{
-      content:""; position:absolute; inset:-25%;
-      background: radial-gradient(260px 260px at var(--mx,50%) var(--my,50%), rgba(127,240,255,.32), rgba(255,106,223,.22) 35%, transparent 60%);
-      mix-blend-mode: color-dodge; filter: blur(22px) saturate(140%); opacity:0; transition: opacity .2s ease; pointer-events:none;
-    }
-    .card-iris.feature-card.is-hot::after{ opacity:1; }
-
-    /* responsive */
-    @media (max-width:1024px){
-      .page-about{ --bg-right: calc(-6vw * var(--bg)); --bg-bottom: calc(-2vh * var(--bg)); --bg-w: min(calc(110vw * var(--bg)), calc(1400px * var(--bg))); }
-      .card-iris{ width:min(80vw, 520px); }
-    }
-    @media (max-width:640px){
-      .page-about{ --bg-right: calc(-4vw * var(--bg)); --bg-bottom: calc(-2vh * var(--bg)); --bg-w: calc(125vw * var(--bg)); }
-      .wrap{ padding-bottom: max(72px, calc(var(--ui) * 90px)); }
-      .card-iris{
-        width: min(92vw, 520px);
-        max-height: 74svh;                 /* firmer cap -> less floppy */
-        overflow:auto; -webkit-overflow-scrolling:touch; overscroll-behavior:contain;
-      }
-      .about-card{ gap:10px; }
-      .btn-pixel{ --px:10px; padding:8px 10px; }
-    }
-
-    .handle{font:600 14px/1.2 "DM Sans",system-ui,sans-serif; color:#1b1e35}
-
-  </style>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-2V368XS4ED');
+  </script>
 </head>
+
+<style>
+  .page-about{
+    --indigo:#4440ff; --pink:#ffe9ff; --ink:#0e0f1a; --cardR: clamp(18px,1.6vw,26px);
+    --lr: 120px;
+    --wave-opacity:.76; --wave-speed:36s; --wave-halo-blur:54px;
+    --frost-alpha:.26; --frost-blur:8px;
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+    background:
+      radial-gradient(60% 60% at var(--orb-x,72%) var(--orb-y,68%), rgba(68,64,255,.13), transparent 60%),
+      linear-gradient(180deg, #ffffff, #faf9ff);
+    --ui:.66;
+  }
+
+  /* reveal tokens */
+  [data-animate]{ opacity:0; transform: translateY(var(--rise, 10px)) scale(var(--scale, 1)); filter: blur(var(--blur, 0px)); transition: opacity .6s ease, transform .6s ease, filter .6s ease; transition-delay: var(--stagger, 0ms); will-change: opacity, transform, filter; }
+  .is-in[data-animate]{ opacity:1; transform: translateY(0) scale(1); filter:none; }
+  .fade-up { --rise: 10px } .zoom-in { --scale:.96; --blur:2px }
+  @media (prefers-reduced-motion: reduce){ [data-animate]{ opacity:1; transform:none; filter:none; transition:none } }
+
+  /* wave */
+  .iridescent-wave{position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden; will-change:transform; transform:translate3d(0,0,0)}
+  .iridescent-wave::before{
+    content:""; position:absolute; inset:-22%;
+    background: conic-gradient(from var(--wave-rot,0deg) at var(--orb-x,50%) var(--orb-y,20%), rgba(127,240,255,.25), rgba(255,106,223,.20), rgba(127,240,255,.25));
+    filter: blur(var(--wave-halo-blur)) saturate(150%); mix-blend-mode: color-dodge; opacity: var(--wave-opacity);
+    animation: waveSpin 22s linear infinite;
+  }
+  .iridescent-wave::after{
+    content:""; position:absolute; left:-14%; right:-14%; top:-220%; bottom:-220%;
+    background:
+      radial-gradient(80% 60% at 50% 30%, rgba(255,255,255,.55), rgba(255,255,255,0) 60%),
+      linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.55) 35%, rgba(255,255,255,0) 70%);
+    filter: blur(18px); mix-blend-mode: soft-light; opacity:.35;
+    animation: rippleDown var(--wave-speed) cubic-bezier(.42,0,.58,1) infinite;
+  }
+  @keyframes waveSpin{to{transform:rotate(1turn)}} @keyframes rippleDown{0%{transform:translate3d(0,-35%,0)}100%{transform:translate3d(0,35%,0)}}
+
+  .frost-veil{position:fixed; inset:0; z-index:1; pointer-events:none; background:rgba(255,255,255,var(--frost-alpha));
+    backdrop-filter: blur(var(--frost-blur)) saturate(120%) contrast(102%); -webkit-backdrop-filter: blur(var(--frost-blur)) saturate(120%) contrast(102%);}
+
+  /* hero */
+  .about-hero{position:relative; padding: calc(var(--ui) * clamp(20px,6vw,68px)) 20px 8px; text-align:center; z-index:5;}
+  .about-hero .hero-inner{max-width:min(1100px,92vw); margin-inline:auto; position:relative; z-index:5;}
+  .about-hero .hero-inner::before{
+    content:""; position:absolute; inset:-12% -14% -18% -14%; z-index:-1; pointer-events:none;
+    background:
+      radial-gradient(72% 100% at 30% 40%, rgba(68,64,255,.28), transparent 60%),
+      radial-gradient(64% 80% at 70% 60%, rgba(255,233,255,.38), transparent 60%);
+    filter: blur(28px) saturate(120%); opacity:.9; animation: floatBlob 24s ease-in-out infinite alternate;
+  }
+  @keyframes floatBlob{0%{transform:translateY(0) rotate(0) scale(1)}100%{transform:translateY(-6px) rotate(6deg) scale(1.02)}}
+
+  .name-edge{
+    --text:#0e0f1a;
+    font-family:"Funnel Display", system-ui, sans-serif;
+    font-weight:600;
+    font-size: calc(var(--ui) * clamp(42px,8vw,66px));
+    letter-spacing:-.02em; line-height:.92; margin:0 0 6px;
+    text-transform:lowercase; position:relative; display:inline-block; color:var(--text);
+    filter:url(#softWobble); isolation:isolate;
+  }
+  .name-edge::after{
+    content:attr(data-text); position:absolute; inset:0; z-index:-1; pointer-events:none;
+    background: conic-gradient(from 0deg, var(--indigo), var(--pink) 40%, #8aaaff, var(--indigo));
+    -webkit-background-clip:text; background-clip:text; color:transparent; transform: scale(1.04);
+    filter: blur(6px) saturate(125%); opacity:.75; mix-blend-mode: plus-lighter;
+  }
+  .name-edge .warp,.name-edge .prism{
+    position:absolute; inset:0; display:inline-block;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 35%, #000 65%, transparent 100%);
+            mask-image: linear-gradient(90deg, transparent 0%, #000 35%, #000 65%, transparent 100%);
+    -webkit-mask-size:220% 100%; mask-size:220% 100%;
+    -webkit-mask-position:-60% 0; mask-position:-60% 0; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat;
+    will-change: -webkit-mask-position, mask-position;
+  }
+  .name-edge .warp{z-index:1; color:var(--text); -webkit-text-fill-color:currentColor; filter:url(#lensWarp);}
+  .name-edge .prism{z-index:2; mix-blend-mode:screen; opacity:.55; filter: blur(.6px) saturate(120%);
+    background: linear-gradient(90deg, #7ff0ff 0%, #ff6adf 50%, #7ff0ff 100%); -webkit-background-clip:text; background-clip:text; color:transparent; transform: translateX(.4px);}
+  @keyframes sweepBand{from{ -webkit-mask-position:-60% 0; mask-position:-60% 0 } to{ -webkit-mask-position:160% 0; mask-position:160% 0 }}
+  @media (min-width:641px){ .name-edge .warp, .name-edge .prism{ animation: sweepBand 7s cubic-bezier(.45,.05,.36,1) infinite alternate; } }
+  @media (max-width:640px){ .name-edge .warp, .name-edge .prism{ animation: sweepBand 3.2s cubic-bezier(.5,.1,.2,1) 1 both; } }
+  @media (prefers-reduced-motion: reduce){
+    .name-edge::after{animation:none} .name-edge .warp,.name-edge .prism{animation:none !important}
+    .iridescent-wave::before,.iridescent-wave::after{animation:none !important}
+  }
+
+  .about-sub{margin:6px 0 22px; font:400 calc(var(--ui) * clamp(18px,2.4vw,28px))/1.2 "Jacquarda Bastarda 9", serif; opacity:.85; text-align:center;}
+
+  /* background art */
+  .page-about{ --bg:.58; --bg-right: calc(-8vw * var(--bg)); --bg-bottom: calc(-6vh * var(--bg)); --bg-w: min(calc(82vw * var(--bg)), calc(980px * var(--bg))); }
+  .bg-art{ position:fixed; right:var(--bg-right); bottom:var(--bg-bottom); width:var(--bg-w); pointer-events:none; z-index:0; overflow:visible; }
+  .bg-art .art-svg{position:absolute; right:0; bottom:0; width:100%; height:auto}
+  .bg-art .art-svg image.base{opacity:.08; filter:saturate(110%) contrast(102%);}
+  .bg-art .art-svg image.glow{opacity:.6}
+  .img-mag,.img-blur,.tint,.lens-aura{position:fixed; inset:0; pointer-events:none; z-index:2;}
+  .img-mag,.img-blur{
+    background-image:url('./assets/heater1.png'); background-repeat:no-repeat;
+    background-position:right var(--bg-right) bottom var(--bg-bottom); background-size:var(--bg-w) auto;
+    -webkit-mask-image: radial-gradient(circle var(--lr) at var(--lx,78%) var(--ly,76%), #000 0%, #000 62%, rgba(0,0,0,.75) 78%, transparent 92%);
+            mask-image: radial-gradient(circle var(--lr) at var(--lx,78%) var(--ly,76%), #000 0%, #000 62%, rgba(0,0,0,.75) 78%, transparent 92%);
+  }
+  .img-mag{filter:saturate(115%) contrast(103%); opacity:.88}
+  .img-blur{filter:blur(12px) saturate(120%); opacity:.22}
+  .tint{
+    -webkit-mask-image: radial-gradient(circle calc(var(--lr)*1.05) at var(--lx,78%) var(--ly,76%), #000 0%, #000 60%, transparent 82%);
+            mask-image: radial-gradient(circle calc(var(--lr)*1.05) at var(--lx,78%) var(--ly,76%), #000 0%, #000 60%, transparent 82%);
+    background: radial-gradient(closest-side, rgba(68,64,255,.22), rgba(68,64,255,.16) 55%, transparent 80%); z-index:3;
+  }
+  .lens-aura{left:var(--lx,78%); top:var(--ly,76%); width:calc(var(--lr)*2.1); height:calc(var(--lr)*2.1); transform:translate(-50%,-50%); border-radius:50%; filter:blur(.6px) saturate(120%); z-index:4;}
+  .lens-aura::before,.lens-aura::after{content:""; position:absolute; inset:-18%; border-radius:50%}
+  .lens-aura::before{background: radial-gradient(closest-side, rgba(255,255,255,.22), rgba(255,255,255,.08) 55%, transparent 70%); mix-blend-mode:screen; filter:blur(12px)}
+  .lens-aura::after{background: radial-gradient(closest-side, rgba(255,255,255,.18), transparent 65%), conic-gradient(from 0deg, rgba(127,240,255,.38), rgba(255,106,223,.35), rgba(127,240,255,.38)); mix-blend-mode:screen; opacity:.55; filter:blur(7px)}
+
+  /* card */
+  .wrap{display:grid; place-items:center; padding: calc(var(--ui) * 14px) calc(var(--ui) * 12px) calc(var(--ui) * 96px); position:relative; z-index:5;}
+  .card-iris{
+    position:relative;
+    width: min(92vw, 520px);
+    border-radius: calc(var(--ui) * var(--cardR));
+    background: rgba(255,255,255,.64);
+    backdrop-filter: blur(12px) saturate(135%) contrast(103%); -webkit-backdrop-filter: blur(12px) saturate(135%) contrast(103%);
+    background-clip: padding-box; border: 1px solid rgba(255,255,255,.38);
+    box-shadow: 0 14px 42px rgba(68,64,255,.10), 0 3px 10px rgba(0,0,0,.06);
+    isolation:isolate; overflow:hidden;
+  }
+  .card-iris::before{
+    content:""; position:absolute; inset:-1px; border-radius:inherit; padding:1px;
+    background:conic-gradient(from var(--b,0deg), var(--indigo), var(--pink) 40%, #a8a3ff, var(--indigo));
+    --mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask: var(--mask); -webkit-mask-composite:xor; mask-composite:exclude;
+    animation: spin 14s linear infinite; pointer-events:none;
+  }
+  @keyframes spin{to{--b:360deg}}
+
+  .about-card{position:relative; padding: calc(var(--ui) * clamp(12px,3.2vw,20px)) calc(var(--ui) * clamp(14px,4vw,24px)); display:grid; gap: calc(var(--ui) * 12px);}
+  .about-card h3{ margin:.2rem 0 .35rem; font-size: clamp(16px,1.9vw,18px); } /* FIX: removed stray brace */
+  .about-copy p{margin:0; color:#2a2f45; font-size: clamp(13.5px, 1.5vw, 14.5px); line-height:1.42;}
+  .about-copy ul{margin:0; padding-left:16px}
+  .about-copy li{margin:3px 0; font-size: clamp(13.5px, 1.5vw, 14.5px); line-height:1.42;}
+
+  .pxlh{
+    font-family:"Jacquarda Bastarda 9", serif;
+    font-weight: 500;
+    font-size: clamp(17px, 2vw, 20px);
+    line-height: 1.15; letter-spacing:.25px; color:#17182a;
+  }
+
+  :root{ --px-font: "Funnel Display", system-ui, sans-serif; }
+  .btn-pixel{
+    --px: 10.5px; --px-track: .16em;
+    display:inline-flex; align-items:center; justify-content:center; gap:.5ch;
+    padding: 8px 12px; border-radius: 10px;
+    font: 800 var(--px)/1 var(--px-font);
+    text-transform: uppercase; letter-spacing: var(--px-track);
+    background: linear-gradient(180deg, #ffffff, #f6f6ff);
+    border: 1px solid #1f22ff; color:#17182a;
+    box-shadow: 0 0 0 1px rgba(68,64,255,.08) inset, 0 6px 18px rgba(68,64,255,.12);
+    transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
+    text-decoration:none; cursor:pointer; user-select:none;
+  }
+  .btn-pixel:hover{ transform: translateY(-0.5px); box-shadow: 0 0 0 1px rgba(68,64,255,.10) inset, 0 10px 22px rgba(68,64,255,.18); }
+  .btn-pixel:active{ transform: translateY(0); filter: saturate(105%); }
+  .btn-pixel--ghost{ background:#fff; border-style:dashed; opacity:.92 }
+  .btn-pixel:focus-visible{ outline:2px solid #5a57ff; outline-offset:2px; }
+  .about-cta{ display:flex; flex-wrap:wrap; gap:8px 10px; margin-top:8px; justify-content:center; }
+
+  /* tilt sheen (kept) */
+  .card-iris.feature-card{ transform-style:preserve-3d; transition: transform .18s ease, box-shadow .2s ease; }
+  .card-iris.feature-card.is-hot{ transform: perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateZ(6px); box-shadow: 0 22px 60px rgba(68,64,255,.16); }
+  .card-iris.feature-card::after{
+    content:""; position:absolute; inset:-25%;
+    background: radial-gradient(260px 260px at var(--mx,50%) var(--my,50%), rgba(127,240,255,.32), rgba(255,106,223,.22) 35%, transparent 60%);
+    mix-blend-mode: color-dodge; filter: blur(22px) saturate(140%); opacity:0; transition: opacity .2s ease; pointer-events:none;
+  }
+  .card-iris.feature-card.is-hot::after{ opacity:1; }
+
+  /* === NEW: About eye plate (interactive, mini) === */
+  .about-mark{
+    width: clamp(64px, 12vw, 96px);
+    aspect-ratio: 1;
+    margin: 2px auto 6px;
+    position: relative;
+    display: grid; place-items: center;
+    border-radius: 50%;
+    background: radial-gradient(closest-side, rgba(68,64,255,.10), transparent 72%);
+    overflow: hidden; isolation: isolate;
+    filter: drop-shadow(0 10px 28px rgba(68,64,255,.10));
+  }
+  .about-mark img{
+    width: 66%;
+    height: auto;
+    display: block;
+    transform: translate3d(var(--tx,0), var(--ty,0), 0) rotate(var(--rot,0deg));
+    transition: transform .12s ease;
+    will-change: transform;
+  }
+  /* halo & glint */
+  .about-mark::before{
+    content:""; position:absolute; inset:-8%;
+    border-radius:50%;
+    background: conic-gradient(from 0deg, rgba(127,240,255,.55), rgba(255,106,223,.45), rgba(127,240,255,.55));
+    mix-blend-mode: screen; filter: blur(6px) saturate(120%);
+    opacity:.55; animation: ringSpin 22s linear infinite;
+  }
+  .about-mark::after{
+    content:""; position:absolute; inset:0; border-radius:50%;
+    background: linear-gradient(110deg, transparent 20%, rgba(255,255,255,.85) 50%, transparent 80%);
+    filter: blur(8px);
+    opacity: 0; transform: rotate(16deg) translateX(-140%);
+    animation: eyeGlint 7s ease-in-out infinite 1.6s;
+    pointer-events:none;
+  }
+  @keyframes ringSpin{ to{ transform: rotate(1turn) } }
+  @keyframes eyeGlint{
+    0% { opacity: 0; transform: rotate(16deg) translateX(-140%) }
+    12%{ opacity:.6 }
+    38%{ opacity: 0; transform: rotate(16deg) translateX(140%) }
+    100%{ opacity:0; transform: rotate(16deg) translateX(140%) }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .about-mark::before, .about-mark::after{ animation: none !important }
+  }
+
+  /* responsive */
+  @media (max-width:1024px){
+    .page-about{ --bg-right: calc(-6vw * var(--bg)); --bg-bottom: calc(-2vh * var(--bg)); --bg-w: min(calc(110vw * var(--bg)), calc(1400px * var(--bg))); }
+    .card-iris{ width:min(80vw, 520px); }
+  }
+  @media (max-width:640px){
+    .page-about{ --bg-right: calc(-4vw * var(--bg)); --bg-bottom: calc(-2vh * var(--bg)); --bg-w: calc(125vw * var(--bg)); }
+    .wrap{ padding-bottom: max(72px, calc(var(--ui) * 90px)); }
+    .card-iris{
+      width: min(92vw, 520px);
+      max-height: 74svh;
+      overflow:auto; -webkit-overflow-scrolling:touch; overscroll-behavior:contain;
+    }
+    .about-card{ gap:10px; }
+    .btn-pixel{ --px:10px; padding:8px 10px; }
+  }
+
+  .handle{font:600 14px/1.2 "DM Sans",system-ui,sans-serif; color:#1b1e35}
+</style>
 <body class="page-about density-xs">
 
   <!-- SVG defs -->
@@ -314,7 +324,7 @@
 
 <!-- Header / Nav -->
 <header class="site-header" role="banner">
-  <div class="site-header__chrome" aria-hidden="true"></div> <!-- subtle prism edge -->
+  <div class="site-header__chrome" aria-hidden="true"></div>
   <div class="header__inner">
     <a class="brand" href="/" aria-label="chrrybmb home">
       <img class="brand__logo-img" src="./assets/indigo_chrry_indypinky.svg" alt="chrrybmb logo" width="64" height="38" decoding="async">
@@ -328,16 +338,13 @@
       </ul>
     </nav>
 
-    <!-- actions: search -->
     <div class="header__actions">
       <button class="icon-btn" id="openSearch" aria-label="open search" title="search (⌘/Ctrl + K)">
-        <!-- tiny loupe -->
         <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M11.2 10.3l3.1 3.1-1 1-3.1-3.1a5 5 0 1 1 1-1zm-6.2.7a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" fill="currentColor"/></svg>
       </button>
     </div>
   </div>
 
-  <!-- search overlay -->
   <div class="search" id="search" role="dialog" aria-modal="true" aria-labelledby="searchLabel" hidden>
     <div class="search__backdrop" data-close></div>
     <div class="search__panel">
@@ -349,7 +356,6 @@
       <ul id="searchResults" class="search__results" role="listbox" aria-live="polite"></ul>
     </div>
   </div>
-  
 </header>
 
   <!-- Iridescent wave -->
@@ -408,6 +414,12 @@
   <main class="wrap" role="main" data-animate class="fade-up">
     <section class="card-iris feature-card" data-tilt>
       <div class="about-card">
+
+        <!-- NEW: interactive brand eye plate -->
+        <div class="about-mark" aria-hidden="true">
+          <img src="./assets/eye-indigo.svg" alt="">
+        </div>
+
         <div class="about-copy">
           <h3>hi, i'm denisa.</h3>
           <p>I build crisp, scalable brand & web systems—end-to-end from strategy to shipped UI. Since 2007 I’ve worked across print, web, and marketing; these days I live mostly in design/dev and creative direction.</p>
@@ -425,7 +437,6 @@
           <p>Senior brand & web design, marketing creative, and part-time at the studio. Open to roles where design and web meet growth.</p>
         </div>
 
-        <!-- Pixel-mini buttons -->
         <div class="about-cta">
           <a class="btn-pixel" href="./resume.html">Resume</a>
           <a class="btn-pixel btn-pixel--ghost" href="./contact.html">Contact</a>
@@ -444,6 +455,35 @@
     </filter>
   </svg>
 
+  <!-- Tiny, scoped interaction: eye parallax on pointer (desktop only) -->
+  <script>
+    (function(){
+      const plate = document.querySelector('.about-mark');
+      if(!plate) return;
+      const fine = matchMedia('(hover:hover) and (pointer:fine)').matches;
+      if(!fine) return;
+
+      let raf = 0;
+      function onMove(ev){
+        const rect = plate.getBoundingClientRect();
+        const x = (ev.clientX - rect.left) / rect.width - 0.5;
+        const y = (ev.clientY - rect.top)  / rect.height - 0.5;
+        if(raf) cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(()=>{
+          plate.style.setProperty('--tx', (x * 6).toFixed(2) + 'px');
+          plate.style.setProperty('--ty', (y * 6).toFixed(2) + 'px');
+          plate.style.setProperty('--rot', (x * 4).toFixed(2) + 'deg');
+        });
+      }
+      plate.addEventListener('mousemove', onMove, { passive:true });
+      plate.addEventListener('mouseleave', ()=> {
+        plate.style.setProperty('--tx','0px');
+        plate.style.setProperty('--ty','0px');
+        plate.style.setProperty('--rot','0deg');
+      }, { passive:true });
+    })();
+  </script>
+
   <script type="module" src="./site.js" defer></script>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 
@@ -451,7 +491,5 @@
     <span class="dot" aria-hidden="true"></span>
     <small>© <span id="year"></span> chrrybmb.com / denisajomo.com</small>
   </footer>
-  
-  
 </body>
 </html>
