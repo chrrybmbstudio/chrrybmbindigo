@@ -173,6 +173,24 @@
     }
     .pill svg{ width:14px; height:14px }
 
+    
+    :root{ --px-font: "Funnel Display", system-ui, sans-serif; }
+    .btn-pixel{
+      --px: 10.5px; --px-track: .16em;
+      display:inline-flex; align-items:center; justify-content:center; gap:.5ch;
+      padding: 8px 12px; border-radius: 10px;
+      font: 800 var(--px)/1 var(--px-font); text-transform: uppercase; letter-spacing: var(--px-track);
+      background: linear-gradient(180deg, #ffffff, #f6f6ff);
+      border: 1px solid #1f22ff; color:#17182a;
+      box-shadow: 0 0 0 1px rgba(68,64,255,.08) inset, 0 6px 18px rgba(68,64,255,.12);
+      transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
+      text-decoration:none; cursor:pointer; user-select:none;
+    }
+    .btn-pixel:hover{ transform: translateY(-0.5px); box-shadow: 0 0 0 1px rgba(68,64,255,.10) inset, 0 10px 22px rgba(68,64,255,.18); }
+    .btn-pixel:active{ transform: translateY(0); filter: saturate(105%); }
+    .btn-pixel--ghost{ background:#fff; border-style:dashed; opacity:.92 }
+    .btn-pixel:focus-visible{ outline:2px solid #5a57ff; outline-offset:2px; }
+
     /* timeline */
     .timeline{ display:grid; gap:10px; }
     .step{
@@ -418,8 +436,8 @@
       <h3 class="ux-acc__title pxlh" id="ux-acc-label">ux checklist</h3>
 
       <div class="check-controls" role="group" aria-label="checklist controls">
-        <button type="button" class="btn" data-acc="expand">expand all</button>
-        <button type="button" class="btn" data-acc="collapse">collapse all</button>
+        <button type="button" class="btn-pixel" data-acc="expand">expand all</button>
+        <button type="button" class="btn-pixel btn-pixel--ghost" data-acc="collapse">collapse all</button>
       </div>
 
       <details class="check">
