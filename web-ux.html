@@ -56,7 +56,7 @@
   <style>
     :root{ --indigo:#4440ff; --pink:#ffe9ff; --ink:#0e0f1a; --cardR: clamp(18px,1.6vw,26px); }
 
-    /* === global layout safety === */
+    /* global safety */
     *,*::before,*::after{ box-sizing:border-box }
     html, body{ max-width:100vw; overflow-x: clip; }
 
@@ -127,9 +127,12 @@
     .container{ width:min(1100px,100%); margin-inline:auto; }
 
     .grid{
-      display:grid; grid-template-columns:1fr; gap:16px; align-items:stretch;
+      display:grid;
+      grid-template-columns:1fr;
+      gap:16px;
+      align-items:stretch;
     }
-    .grid > *{ min-width:0 } /* prevents child overflow from breaking rows */
+    .grid > *{ min-width:0 } /* prevent overflow widows */
     @media (min-width: 720px){ .grid{ grid-template-columns: repeat(2, minmax(0,1fr)); } }
     @media (min-width: 1120px){ .grid{ grid-template-columns: repeat(3, minmax(0,1fr)); } }
 
@@ -141,12 +144,17 @@
       border:1px solid rgba(68,64,255,.28);
       box-shadow: 0 0 0 1px rgba(68,64,255,.06) inset, 0 8px 24px rgba(68,64,255,.08);
       transition: transform .18s ease, box-shadow .18s ease;
-      isolation:isolate; z-index:0;  /* stacking safety */
-      contain: paint; /* localize visual effects */
+      isolation:isolate;
+      z-index:0;
+      transform: translateZ(0); /* make each card its own layer (no bleed) */
     }
-    .card-iris:hover{ transform: translateY(-2px); box-shadow: 0 0 0 1px rgba(68,64,255,.06) inset, 0 14px 32px rgba(68,64,255,.14); z-index:2; }
+    .card-iris:hover{
+      transform: translateZ(0) translateY(-2px);
+      box-shadow: 0 0 0 1px rgba(68,64,255,.06) inset, 0 14px 32px rgba(68,64,255,.14);
+      z-index:2;
+    }
     @media (hover:none){
-      .card-iris:hover{ transform:none; box-shadow: 0 0 0 1px rgba(68,64,255,.06) inset, 0 8px 24px rgba(68,64,255,.08); z-index:0; }
+      .card-iris:hover{ transform: translateZ(0); box-shadow: 0 0 0 1px rgba(68,64,255,.06) inset, 0 8px 24px rgba(68,64,255,.08); z-index:0; }
     }
 
     .pxlh{ font:600 12px/1 "Funnel Display",system-ui; letter-spacing:.14em; text-transform:uppercase; display:block; margin-bottom:6px; color:#17182a }
@@ -155,7 +163,7 @@
     .mini-list{ margin:6px 0 0; padding-left:1.1em }
     .mini-list li{ margin:.25em 0; font-size:13.5px }
 
-    /* principle chips */
+    /* pill row */
     .pill-row{ display:flex; flex-wrap:wrap; gap:8px 10px; justify-content:center; margin: 8px auto 0; }
     .pill{
       display:inline-flex; align-items:center; gap:8px; padding:10px 12px; border-radius:12px;
@@ -179,11 +187,16 @@
     .callout{ text-align:center; margin: 8px auto 0; max-width:min(900px, 92vw); color:#262a3f }
     .badge{ display:inline-block; font:700 10px/1 "Funnel Display", system-ui, sans-serif; letter-spacing:.16em; text-transform:uppercase; padding:6px 8px; border-radius:10px; border:1px solid #5a57ff; background:linear-gradient(180deg,#fff,#f6f6ff); color:#17182a }
 
-    /* reveal hooks (simple) */
-    [data-animate]{ opacity:0; transform: translateY(8px); transition: opacity .6s ease, transform .6s ease; }
+    /* reveal hooks */
+    [data-animate]{ opacity:0; transform: translateY(8px); transition: opacity .48s ease, transform .48s ease; }
     .is-in[data-animate]{ opacity:1; transform:none }
     @media (prefers-reduced-motion: reduce){
       [data-animate]{ opacity:1 !important; transform:none !important; transition:none !important }
+    }
+    /* mobile: no vertical shift (prevents visual crowding) */
+    @media (max-width:640px){
+      .grid{ gap:20px; }
+      [data-animate]{ transform:none; }     /* <-- important fix */
     }
 
     /* ===== Checklist ===== */
@@ -222,13 +235,7 @@
     .ux-acc__pane{ padding:10px 12px 2px; border-left:1px dashed rgba(68,64,255,.3); margin-left:6px; }
     .ux-acc__pane[hidden]{ display:none !important; }
 
-    /* mobile polish */
-    @media (max-width:560px){
-      .grid{ gap:18px; }
-      .card-iris{ padding:12px 14px; }
-    }
-
-    /* section stacking safety (you used this earlier) */
+    /* section stacking safety */
     .section[aria-label="Philosophy"]{ isolation:isolate; }
   </style>
 </head>
@@ -512,13 +519,25 @@
 
   <!-- minimal reveal if site.js isn't doing it -->
   <script>
-    const io = new IntersectionObserver((es)=>{
-      es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('is-in'); io.unobserve(e.target) } })
-    },{ threshold:.12 });
-    document.querySelectorAll('[data-animate]').forEach(el=> io.observe(el));
+    (function(){
+      const els = document.querySelectorAll('[data-animate]');
+      if(!('IntersectionObserver' in window)){
+        els.forEach(el=> el.classList.add('is-in'));
+        return;
+      }
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(e=>{
+          if(e.isIntersecting){
+            e.target.classList.add('is-in');
+            io.unobserve(e.target);
+          }
+        });
+      }, { rootMargin: '0px 0px -10% 0px', threshold: 0.01 }); // reveal a touch earlier
+      els.forEach(el=> io.observe(el));
+    })();
   </script>
 
-  <!-- Accordion logic (simple, fast, reliable) -->
+  <!-- Accordion logic -->
   <script>
     (function(){
       const root = document.querySelector('.ux-acc');
