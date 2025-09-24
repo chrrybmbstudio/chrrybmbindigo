@@ -9,31 +9,23 @@
   <meta name="description" content="chrrybmb" />
   <link rel="canonical" href="https://chrrybmb.com/" />
 
-<!-- Favicon -->
-<!-- Icons: SVG first, PNG fallbacks -->
-<link rel="icon" href="/assets/eye.svg?v=2" type="image/svg+xml">
-<link rel="icon" href="/assets/eye-32.png?v=2" sizes="32x32" type="image/png">
-<link rel="icon" href="/assets/eye-16.png?v=2" sizes="16x16" type="image/png">
+  <!-- Favicon -->
+  <link rel="icon" href="/assets/eye.svg?v=2" type="image/svg+xml">
+  <link rel="icon" href="/assets/eye-32.png?v=2" sizes="32x32" type="image/png">
+  <link rel="icon" href="/assets/eye-16.png?v=2" sizes="16x16" type="image/png">
+  <link rel="apple-touch-icon" href="/assets/eye-180.png?v=2">
+  <link rel="mask-icon" href="/assets/eye-mask.svg?v=2" color="#4440ff">
+  <link rel="manifest" href="/site.webmanifest?v=2">
 
-<!-- iOS home screen (SVG not supported here) -->
-<link rel="apple-touch-icon" href="/assets/eye-180.png?v=2">
+  <!-- Browser chrome color -->
+  <meta name="theme-color" content="#ffffff">
+  <meta name="theme-color" content="#0e0f1a" media="(prefers-color-scheme: dark)">
+  <meta name="msapplication-TileColor" content="#4440ff">
 
-<!-- Safari pinned tab (monochrome mask SVG) -->
-<link rel="mask-icon" href="/assets/eye-mask.svg?v=2" color="#4440ff">
-
-<!-- PWA manifest (optional, nice to have) -->
-<link rel="manifest" href="/site.webmanifest?v=2">
-
-<!-- Browser chrome color (light/dark) -->
-<meta name="theme-color" content="#ffffff">
-<meta name="theme-color" content="#0e0f1a" media="(prefers-color-scheme: dark)">
-<meta name="msapplication-TileColor" content="#4440ff">
-
-<!-- Social previews (refresh your image if you update the design) -->
-<meta property="og:image" content="https://chrrybmb.com/assets/og-image.jpg?v=2">
-<meta property="og:image:alt" content="chrrybmb — iridescent eye mark on prism glow">
-<meta name="twitter:card" content="summary_large_image">
-
+  <!-- Social previews -->
+  <meta property="og:image" content="https://chrrybmb.com/assets/og-image.jpg?v=2">
+  <meta property="og:image:alt" content="chrrybmb — iridescent eye mark on prism glow">
+  <meta name="twitter:card" content="summary_large_image">
 
   <!-- Open Graph -->
   <meta property="og:title" content="chrrybmb — denisa jomo">
@@ -220,6 +212,7 @@
       font-size: calc(var(--ui) * 18px); letter-spacing:.01em; margin:0;
     }
     .pxlh{ font-family:"Jacquarda Bastarda 9", serif; font-weight:500; font-size: calc(var(--ui) * 1.2em); line-height: calc(var(--ui) * 40px); margin: 0; }
+    .pxls{ font:600 12px/1 "Funnel Display",system-ui; letter-spacing:.14em; text-transform:uppercase; display:block; margin-bottom:6px }
     .mini{ font-size: max(12px, calc(var(--ui) * 13.5px)); color:#2c3144; line-height:1.42; }
 
     /* Typography specimens */
@@ -237,7 +230,7 @@
     .accent-title{ font-family:"Jacquarda Bastarda 9", serif; font-weight:500; font-size: clamp(18px, 4vw, 28px); line-height:1.05; }
     .accent-meta{ font: 600 12px/1 "DM Sans"; opacity:.7 }
 
-    /* ===== “Before” photo chip (skeleton) – tuned to show more subject ===== */
+    /* ===== Photo chips (shared) ===== */
     .photo-chip{
       position:relative; border-radius:16px; overflow:hidden;
       border:1px solid rgba(68,64,255,.28);
@@ -257,19 +250,36 @@
       display:inline-block; font:700 10px/1 var(--px-font); letter-spacing:.16em; text-transform:uppercase;
       padding:6px 8px; border-radius:10px; border:1px solid #5a57ff; background:linear-gradient(180deg,#fff,#f6f6ff); color:#17182a
     }
-    .photo-chip .frame{
-      width:100%;
-      height: clamp(180px, 38vw, 260px);            /* mini height, but taller than 16:9 */
-      background:#eef0ff;
-      display:block; overflow:hidden;
-    }
-    .photo-chip img{
-      width:100%; height:100%;
-      object-fit: contain;                          /* show more of the figure */
-      object-position: center top;                  /* bias toward top if portrait */
-      display:block;
-    }
+    .photo-chip .frame{ width:100%; background:#eef0ff; display:block; overflow:hidden; }
+    .photo-chip img{ display:block; width:100%; height:auto; object-fit: contain; object-position:center; }
     .photo-caption{ padding:10px 12px; font: 600 12.5px/1.35 "DM Sans", system-ui; color:#243; }
+
+    /* ===== Natural-height modifier (shows full image, no crop) ===== */
+    .photo-chip--natural .frame{ height:auto; }
+
+    /* ===== Build log stack (vertical) + gentle one-time sheen ===== */
+    .shot-stack{ display:grid; gap:12px; }
+    .shot{ position:relative; overflow:hidden; }
+    .shot::after{
+      content:""; position:absolute; inset:0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.28), transparent);
+      transform: translateX(-120%);
+      opacity:0; pointer-events:none;
+    }
+    .card-iris.is-in .shot::after{
+      animation: sweepSheen 900ms ease-out 250ms both;
+    }
+    @keyframes sweepSheen{
+      0%{ transform: translateX(-120%); opacity:.45 }
+      100%{ transform: translateX(120%);  opacity:0 }
+    }
+    @media (prefers-reduced-motion: reduce){
+      .shot::after{ display:none !important }
+    }
+
+    /* ===== Duo layout (kept for hero inspo card; unused here but harmless) ===== */
+    .photo-duo{ display:grid; gap:10px; grid-template-columns: 1fr; align-items:start; }
+    @media (min-width: 720px){ .photo-duo{ grid-template-columns: 1fr 1fr; } }
 
     /* ===== Compact swatch chips ===== */
     .swatch-minigrid{
@@ -371,18 +381,50 @@
 
   <!-- Content grid -->
   <main class="brand-grid" role="main">
-    <!-- Brand story -->
+    <!-- Brand story (clean, no screenshots here) -->
     <article class="card-iris" data-animate>
-      <h3 class="card-title pxlh">brand story</h3>
+      <h3 class="card-title sub pxls">brand story</h3>
       <p class="mini">
-        Chrrybmb pairs crisp UI with iridescent motion—retro 8-bit energy meets prism fractals.
+        chrrybmb pairs crisp UI with iridescent motion—retro 8-bit energy meets prism fractals.
         The system stays <em>mini</em> and intentional: compact spacing, pixel cues, and modern type with a nostalgic glow.
       </p>
+
+      <div class="shot-stack" role="group" aria-label="site build progress">
+        <figure class="photo-chip photo-chip--natural shot">
+          <span class="badge">how it started</span>
+          <div class="frame">
+            <img src="./assets/how-it-started.png"
+                 alt="Early homepage scaffold: rough blocks, first layout pass, tokens coming online"
+                 loading="lazy" decoding="async">
+          </div>
+          <figcaption class="photo-caption">
+            first pass: grid, nav, and token groundwork. the glow is a whisper—structure first.
+          </figcaption>
+        </figure>
+
+        <figure class="photo-chip photo-chip--natural shot">
+          <span class="badge">how it went</span>
+          <div class="frame">
+            <img src="./assets/how-it-going.png"
+                 alt="Later homepage build: stronger hierarchy, refined spacing, prism glow in place"
+                 loading="lazy" decoding="async">
+          </div>
+          <figcaption class="photo-caption">
+            hierarchy snaps in, spacing breathes, and the prism comes alive. mini by design—high signal, low noise.
+          </figcaption>
+        </figure>
+      </div>
+      <div class="brand-cta" style="margin-top:8px">
+      <a class="btn-pixel mb10" href="./index.html">how it ended</a></div>
     </article>
 
-    <!-- Hero imagery inspo (skeleton “before”) -->
+
+
+    </article>
+
+    <!-- Hero imagery inspo -->
     <article class="card-iris" data-animate>
-      <h3 class="card-title pxlh">hero imagery inspo</h3>
+      <h3 class="card-title pxls">hero imagery inspo</h3>
       <div class="photo-chip" style="margin-top:4px">
         <span class="badge">before</span>
         <figure class="frame" style="margin:0">
@@ -397,7 +439,7 @@
 
     <!-- Typography: Funnel Display -->
     <article class="card-iris" data-animate>
-      <h3 class="card-title pxlh">typography · funnel display</h3>
+      <h3 class="card-title pxls">typography · funnel display</h3>
       <div class="type-stack">
         <div class="type-row">
           <div class="type-sample">Aa</div>
@@ -419,11 +461,15 @@
       </div>
     </article>
 
-    <!-- Typography: Jacquarda -->
+    <!-- Typography: Jacquarda (with pixel/arcade note) -->
     <article class="card-iris" data-animate>
-      <h3 class="card-title pxlh">typography · jacquarda (accent)</h3>
+      <h3 class="card-title pxls">typography · jacquarda (accent)</h3>
       <p class="accent-title">the world is an iridescent prism</p>
-      <p class="mini">A lyrical counterweight to Funnel Display—used for kickers and asides.</p>
+      <p class="mini">
+        A lyrical counterweight to Funnel Display—used for kickers and asides.
+        It also carries a subtle <em>classic arcade</em> vibe that resonated with me and
+        stays true to the brand’s pixel energy across the site.
+      </p>
       <div class="accent-block" style="margin-top:4px">
         <div class="accent-meta">Specimen</div>
         <div class="row" style="margin-top:6px; font-family:'Jacquarda Bastarda 9', serif">
@@ -434,7 +480,7 @@
 
     <!-- Color system (MINI CHIPS) -->
     <article class="card-iris" data-animate>
-      <h3 class="card-title pxlh">color system</h3>
+      <h3 class="card-title pxls">color system</h3>
       <p class="mini">Core swatches (tap to copy)</p>
 
       <div class="swatch-minigrid" style="margin-top:6px">
@@ -458,7 +504,7 @@
 
     <!-- Components: Buttons -->
     <article class="card-iris" data-animate>
-      <h3 class="card-title pxlh">components · buttons</h3>
+      <h3 class="card-title pxls">components · buttons</h3>
       <p class="mini">Pixel-mini, uppercase Funnel Display. Primary + ghost.</p>
       <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:4px; justify-content:center">
         <a class="btn-pixel" href="#">PRIMARY</a>
