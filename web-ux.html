@@ -267,6 +267,38 @@
   [data-animate]{ transform:none !important; } /* guard against shift-on-reveal */
 }
 
+/* --- PATCH: mobile stacking robustness --- */
+
+/* 1) Safari-safe overflow: avoid 'clip' on mobile  */
+html, body{
+  max-width:100vw;
+  overflow-x:hidden; /* was clip */
+}
+
+/* 2) Isolate grid paint so nothing bleeds across rows */
+.grid{ isolation:isolate }
+
+/* 3) Make each card its own paint island */
+.card-iris{
+  contain: paint;                 /* localize shadows/filters */
+  transform: translateZ(0);       /* keep your GPU lift */
+}
+
+/* 4) Kill hover lift/z-index on touch devices (iOS keeps :hover “sticky”) */
+@media (hover:none), (pointer:coarse){
+  .card-iris:hover{
+    transform:none !important;
+    box-shadow: 0 0 0 1px rgba(68,64,255,.06) inset,
+                0 8px 24px rgba(68,64,255,.08) !important;
+    z-index:0 !important;
+  }
+}
+
+/* 5) Ensure reveal animations never offset layout on small screens */
+@media (max-width:640px){
+  [data-animate]{ transform:none !important; }
+}
+
   </style>
 </head>
 
