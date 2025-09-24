@@ -199,40 +199,32 @@
       [data-animate]{ transform:none; }     /* <-- important fix */
     }
 
-    /* === UX Deep Dive (full-width bands, not in the grid) === */
-.section--ux-stack{ position:relative; padding: clamp(16px,5vw,28px) var(--page-pad,16px); }
-.section--ux-stack .container{ width:min(1100px,100%); margin-inline:auto; display:grid; gap:14px; }
+    /* === UX Deep Deck (one card with tabs) === */
+.section--ux-deck{ padding: clamp(16px,5vw,28px) var(--page-pad,16px); }
+.section--ux-deck .container{ width:min(1100px,100%); margin-inline:auto; display:grid; gap:12px; }
 
-/* In-page sticky nav (desktop); scroll-friendly on mobile */
-.stack-head{ display:grid; gap:10px; }
-.stack-nav{
-  display:flex; gap:8px; flex-wrap:wrap; align-items:center;
-  position: sticky; top: calc(10px + env(safe-area-inset-top)); z-index:10;
-  padding-block:2px;
+.tab-head{ display:grid; gap:8px; }
+.tab-nav[role="tablist"]{
+  display:flex; flex-wrap:wrap; gap:8px 10px; align-items:center;
 }
-.stack-nav .pill{ text-decoration:none; }
-.stack-nav .pill[aria-current="true"]{
+.tab-nav .pill{ text-decoration:none; cursor:pointer; }
+.tab-nav .pill[aria-selected="true"]{
   box-shadow:0 0 0 2px #5a57ff inset, 0 6px 16px rgba(68,64,255,.10);
 }
 
-/* Bands */
-.band{ scroll-margin-top: 76px; } /* anchor offset under header */
-.band-card{ padding: 14px 16px; }
-.band--philosophy .band-card,
-.band--process .band-card,
-.band--checklist .band-card{
-  /* reuse card-iris look with your existing class */
-}
-.band-card.card-iris{ display:grid; gap:10px; }
+/* Panel card matches your card-iris */
+.tab-panel.card-iris{ display:grid; gap:10px; padding: 14px 16px; }
+.tab-panel[hidden]{ display:none !important; }
 
-/* Process grid inside band */
+/* Process layout inside panel */
 .timeline-grid{ display:grid; gap:10px; grid-template-columns:1fr; }
 @media (min-width:720px){ .timeline-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
-.step-inline{ display:grid; grid-template-columns:auto 1fr; gap:10px; align-items:start;
+.step-inline{
+  display:grid; grid-template-columns:auto 1fr; gap:10px; align-items:start;
   padding:10px 12px; border-radius:12px; background:#fff; border:1px dashed rgba(68,64,255,.28);
 }
 
-/* Native details checklist (no JS layout jank) */
+/* Checklist uses native <details> for robustness */
 .check{ border-radius:12px; border:1px dashed rgba(68,64,255,.28); background:#fff; overflow:hidden; }
 .check + .check{ margin-top:8px }
 .check summary{
@@ -247,27 +239,16 @@
 .check summary i::before, .check summary i::after{
   content:""; position:absolute; inset:0; margin:auto; background:#1b1e35; border-radius:1px;
 }
-.check summary i::before{ width:12px; height:2px }   /* minus bar */
-.check summary i::after { width:2px; height:12px; transition: transform .12s ease } /* plus bar */
-.check[open] summary i::after{ transform: scaleY(0) } /* shows "-" */
+.check summary i::before{ width:12px; height:2px }
+.check summary i::after { width:2px; height:12px; transition: transform .12s ease }
+.check[open] summary i::after{ transform: scaleY(0) }
 .check .pane{ padding:10px 12px 2px; border-left:1px dashed rgba(68,64,255,.30); margin-left:6px }
 
-/* Controls row above details */
-.check-controls{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:8px }
-.check-controls .btn{
-  display:inline-flex; align-items:center; gap:6px; padding:8px 10px; border-radius:10px;
-  background:#fff; border:1px solid #5a57ff; color:#17182a;
-  font:800 10px/1 "Funnel Display"; letter-spacing:.14em; text-transform:uppercase; cursor:pointer;
-}
-
-/* Mobile polish */
+/* Mobile polish to avoid any transform-induced crowding */
 @media (max-width:640px){
-  .stack-nav{ position:static }      /* avoid covering content on very small headers */
-  .band{ scroll-margin-top: 64px; }
+  [data-animate]{ transform:none !important; } /* guard against shift-on-reveal */
 }
 
-
-   
   </style>
 </head>
 
@@ -401,134 +382,78 @@
     </div>
   </section>
 
-
-  <!-- UX Deep Dive (bands) -->
-<section class="section section--ux-stack" aria-label="ux deep dive">
+  <!-- UX Deep Deck (tabs) -->
+<section class="section section--ux-deck" aria-label="ux deep deck">
   <div class="container" data-animate>
-    <div class="stack-head">
+    <div class="tab-head">
       <span class="pxlh">ux deep dive</span>
-      <nav class="stack-nav" aria-label="in-page">
-        <a class="pill" href="#ux-philosophy" aria-current="true">philosophy</a>
-        <a class="pill" href="#ux-process">process</a>
-        <a class="pill" href="#ux-checklist">checklist</a>
-      </nav>
+      <div class="tab-nav" role="tablist" aria-label="select a topic">
+        <button class="pill" role="tab" id="tab-philosophy" aria-controls="panel-philosophy" aria-selected="true">philosophy</button>
+        <button class="pill" role="tab" id="tab-process"    aria-controls="panel-process"    aria-selected="false">process</button>
+        <button class="pill" role="tab" id="tab-checklist"  aria-controls="panel-checklist"  aria-selected="false">checklist</button>
+      </div>
     </div>
 
-    <!-- Band: Philosophy -->
-    <article id="ux-philosophy" class="band band--philosophy">
-      <div class="band-card card-iris">
-        <span class="pxlh">philosophy</span>
-        <p>ux is everywhere—like towel temperature at a spa or the color that cues a memory. on the web, that translates to signals that feel inevitable: the next step is obvious, the page breathes, and the glow never fights the task.</p>
-        <p class="callout"><span class="badge">mini on purpose</span> — compact grids, pixel cues, and calm iridescence so focus stays on the job.</p>
+    <!-- Panel: Philosophy -->
+    <article id="panel-philosophy" class="tab-panel card-iris" role="tabpanel" aria-labelledby="tab-philosophy">
+      <span class="pxlh">philosophy</span>
+      <p>ux is everywhere—like towel temperature at a spa or the color that cues a memory. on the web, that translates to signals that feel inevitable: the next step is obvious, the page breathes, and the glow never fights the task.</p>
+      <p class="callout"><span class="badge">mini on purpose</span> — compact grids, pixel cues, and calm iridescence so focus stays on the job.</p>
+    </article>
+
+    <!-- Panel: Process -->
+    <article id="panel-process" class="tab-panel card-iris" role="tabpanel" aria-labelledby="tab-process" hidden>
+      <span class="pxlh">process, quick</span>
+      <div class="timeline-grid" role="list">
+        <div class="step-inline" role="listitem"><span class="badge-num">1</span><div><b>discover</b> — jobs to be done, heuristics, constraints.</div></div>
+        <div class="step-inline" role="listitem"><span class="badge-num">2</span><div><b>map flows</b> — click-path sketches, wireflows, microcopy.</div></div>
+        <div class="step-inline" role="listitem"><span class="badge-num">3</span><div><b>prototype & test</b> — high-signal, low-debt experiments.</div></div>
+        <div class="step-inline" role="listitem"><span class="badge-num">4</span><div><b>refine & document</b> — tokens, components, patterns.</div></div>
+        <div class="step-inline" role="listitem"><span class="badge-num">5</span><div><b>ship & measure</b> — privacy-minded analytics; iterate.</div></div>
       </div>
     </article>
 
-    <!-- Band: Process -->
-    <article id="ux-process" class="band band--process">
-      <div class="band-card card-iris">
-        <span class="pxlh">process, quick</span>
-        <div class="timeline-grid" role="list">
-          <div class="step-inline" role="listitem">
-            <span class="badge-num">1</span><div><b>discover</b> — jobs to be done, heuristics, constraints.</div>
-          </div>
-          <div class="step-inline" role="listitem">
-            <span class="badge-num">2</span><div><b>map flows</b> — click-path sketches, wireflows, microcopy.</div>
-          </div>
-          <div class="step-inline" role="listitem">
-            <span class="badge-num">3</span><div><b>prototype & test</b> — high-signal, low-debt experiments.</div>
-          </div>
-          <div class="step-inline" role="listitem">
-            <span class="badge-num">4</span><div><b>refine & document</b> — tokens, components, patterns.</div>
-          </div>
-          <div class="step-inline" role="listitem">
-            <span class="badge-num">5</span><div><b>ship & measure</b> — privacy-minded analytics; iterate.</div>
-          </div>
-        </div>
+    <!-- Panel: Checklist -->
+    <article id="panel-checklist" class="tab-panel card-iris" role="tabpanel" aria-labelledby="tab-checklist" hidden>
+      <h3 class="ux-acc__title pxlh" id="ux-acc-label">ux checklist</h3>
+
+      <div class="check-controls" role="group" aria-label="checklist controls">
+        <button type="button" class="btn" data-acc="expand">expand all</button>
+        <button type="button" class="btn" data-acc="collapse">collapse all</button>
       </div>
-    </article>
 
-    <!-- Band: Checklist (native details for robustness) -->
-    <article id="ux-checklist" class="band band--checklist">
-      <div class="band-card card-iris">
-        <h3 class="ux-acc__title pxlh" id="ux-acc-label">ux checklist</h3>
+      <details class="check">
+        <summary><span>flows & nav</span><i aria-hidden="true"></i></summary>
+        <div class="pane"><ul class="mini-list"><li>clear IA & fast labels</li><li>obvious CTAs + exits</li><li>empty/error states that help</li></ul></div>
+      </details>
 
-        <div class="check-controls">
-          <button type="button" class="btn" data-acc="expand">expand all</button>
-          <button type="button" class="btn" data-acc="collapse">collapse all</button>
-        </div>
+      <details class="check">
+        <summary><span>access & ada</span><i aria-hidden="true"></i></summary>
+        <div class="pane"><ul class="mini-list"><li>wcag contrast, focus rings, skip link</li><li>semantic html + helpful aria (no noise)</li><li>respect prefers-reduced-motion</li></ul></div>
+      </details>
 
-        <details class="check">
-          <summary><span>flows & nav</span><i aria-hidden="true"></i></summary>
-          <div class="pane" role="region" aria-labelledby="ux-acc-label">
-            <ul class="mini-list">
-              <li>clear IA & fast labels</li>
-              <li>obvious CTAs + exits</li>
-              <li>empty/error states that help</li>
-            </ul>
-          </div>
-        </details>
+      <details class="check">
+        <summary><span>speed & stability</span><i aria-hidden="true"></i></summary>
+        <div class="pane"><ul class="mini-list"><li>image strategy (srcset, sizes, format)</li><li>css/js hygiene, defer/lazy boundaries</li><li>jank-free motion; vitals mindset</li></ul></div>
+      </details>
 
-        <details class="check">
-          <summary><span>access & ada</span><i aria-hidden="true"></i></summary>
-          <div class="pane">
-            <ul class="mini-list">
-              <li>wcag contrast, focus rings, skip link</li>
-              <li>semantic html + helpful aria (no noise)</li>
-              <li>respect prefers-reduced-motion</li>
-            </ul>
-          </div>
-        </details>
+      <details class="check">
+        <summary><span>content & seo</span><i aria-hidden="true"></i></summary>
+        <div class="pane"><ul class="mini-list"><li>h1–h6 discipline, alt text, schema</li><li>meta/og/twitter, robots + sitemap</li><li>plain-language microcopy</li></ul></div>
+      </details>
 
-        <details class="check">
-          <summary><span>speed & stability</span><i aria-hidden="true"></i></summary>
-          <div class="pane">
-            <ul class="mini-list">
-              <li>image strategy (srcset, sizes, format)</li>
-              <li>css/js hygiene, defer/lazy boundaries</li>
-              <li>jank-free motion; vitals mindset</li>
-            </ul>
-          </div>
-        </details>
+      <details class="check">
+        <summary><span>security & trust</span><i aria-hidden="true"></i></summary>
+        <div class="pane"><ul class="mini-list"><li>https + hsts, safe iframes</li><li>form friction (honeypot/rate limit)</li><li>privacy-first analytics</li></ul></div>
+      </details>
 
-        <details class="check">
-          <summary><span>content & seo</span><i aria-hidden="true"></i></summary>
-          <div class="pane">
-            <ul class="mini-list">
-              <li>h1–h6 discipline, alt text, schema</li>
-              <li>meta/og/twitter, robots + sitemap</li>
-              <li>plain-language microcopy</li>
-            </ul>
-          </div>
-        </details>
-
-        <details class="check">
-          <summary><span>security & trust</span><i aria-hidden="true"></i></summary>
-          <div class="pane">
-            <ul class="mini-list">
-              <li>https + hsts, safe iframes</li>
-              <li>form friction (honeypot/rate limit)</li>
-              <li>privacy-first analytics</li>
-            </ul>
-          </div>
-        </details>
-
-        <details class="check">
-          <summary><span>patterns that scale</span><i aria-hidden="true"></i></summary>
-          <div class="pane">
-            <ul class="mini-list">
-              <li>tokens → components → pages</li>
-              <li>state/motion rules; docs that read fast</li>
-              <li>mini by default; remixable</li>
-            </ul>
-          </div>
-        </details>
-      </div>
+      <details class="check">
+        <summary><span>patterns that scale</span><i aria-hidden="true"></i></summary>
+        <div class="pane"><ul class="mini-list"><li>tokens → components → pages</li><li>state/motion rules; docs that read fast</li><li>mini by default; remixable</li></ul></div>
+      </details>
     </article>
   </div>
 </section>
-
-
-
 
   <!-- CTA -->
   <section class="section" aria-label="CTA">
@@ -559,26 +484,50 @@
   </script>
 
 
-
 <script>
-  // in-page nav highlight
+  // Tabs: only one panel visible, others fully collapsed
   (function(){
-    const links = [...document.querySelectorAll('.stack-nav a')];
-    if(!links.length) return;
-    const bands = links.map(a => document.querySelector(a.getAttribute('href')));
-    const setActive = (id) => links.forEach(a => {
-      a.setAttribute('aria-current', a.getAttribute('href') === '#'+id ? 'true' : 'false');
+    const tabs = [...document.querySelectorAll('.tab-nav [role="tab"]')];
+    if(!tabs.length) return;
+    const panels = tabs.map(t => document.getElementById(t.getAttribute('aria-controls')));
+
+    function selectTab(next){
+      tabs.forEach((t,i)=>{
+        const sel = t === next;
+        t.setAttribute('aria-selected', sel);
+        panels[i].hidden = !sel;
+      });
+      // ensure revealed panel is scrolled into view nicely on mobile
+      panels[tabs.indexOf(next)]?.scrollIntoView({ block:'nearest', behavior:'smooth' });
+    }
+
+    tabs.forEach(t => t.addEventListener('click', ()=> selectTab(t)));
+
+    // arrow keys for a11y
+    document.querySelector('.tab-nav')?.addEventListener('keydown', (e)=>{
+      if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key)) return;
+      e.preventDefault();
+      const i = tabs.findIndex(t=>t.getAttribute('aria-selected')==='true');
+      let j = i;
+      if(e.key==='ArrowRight') j = (i+1)%tabs.length;
+      if(e.key==='ArrowLeft')  j = (i-1+tabs.length)%tabs.length;
+      if(e.key==='Home')       j = 0;
+      if(e.key==='End')        j = tabs.length-1;
+      tabs[j].focus(); selectTab(tabs[j]);
     });
-    const io = new IntersectionObserver((entries)=>{
-      entries.forEach(en=>{ if(en.isIntersecting) setActive(en.target.id); });
-    }, { rootMargin: '-45% 0px -45% 0px', threshold: 0.01 });
-    bands.forEach(b => b && io.observe(b));
-    links.forEach(a => a.addEventListener('click', ()=> setActive(a.getAttribute('href').slice(1))));
+
+    // open from hash if present (#process / #checklist)
+    const map = { '#ux-philosophy':'tab-philosophy', '#ux-process':'tab-process', '#ux-checklist':'tab-checklist' };
+    const h = location.hash.toLowerCase();
+    if(map[h]){
+      const t = document.getElementById(map[h]);
+      if(t) selectTab(t);
+    }
   })();
 
-  // expand/collapse all (native details)
+  // Checklist expand/collapse all
   (function(){
-    const root = document.getElementById('ux-checklist');
+    const root = document.getElementById('panel-checklist');
     if(!root) return;
     const details = [...root.querySelectorAll('details.check')];
     root.querySelector('[data-acc="expand"]')?.addEventListener('click', ()=> details.forEach(d=> d.open = true));
