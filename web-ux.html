@@ -75,21 +75,20 @@
     .section{
       padding: clamp(16px,5vw,28px) var(--page-pad);
       position:relative;
-      isolation:isolate;           /* new stacking context per section */
-      contain: layout paint;       /* prevent shadow/transform bleed */
+      z-index:0;                 /* each section = its own layer baseline */
     }
-    .section + .section{           /* consistent vertical rhythm */
+    .section + .section{
       margin-top: clamp(12px,4vw,24px);
     }
-
     .container{ width:min(1100px,100%); margin-inline:auto; }
+
     .grid{
       display:grid; grid-template-columns:1fr; gap:16px; align-items:stretch;
-      isolation:isolate; contain: layout paint;
     }
     .grid > *{ min-width:0 }
+
     @media (min-width: 720px){ .grid{ grid-template-columns: repeat(2, minmax(0,1fr)); } }
-    @media (min-width: 1120px){ .grid{ grid-template-columns: repeat(3, minmax(0,1fr)); } }
+    @media (min-width:1120px){ .grid{ grid-template-columns: repeat(3, minmax(0,1fr)); } }
 
     /* ===== Hero ===== */
     .ux-hero{ text-align:center; padding: clamp(24px,7vw,64px) 20px 0; }
@@ -152,15 +151,14 @@
       border:1px solid rgba(68,64,255,.28);
       box-shadow: 0 0 0 1px rgba(68,64,255,.06) inset, 0 8px 24px rgba(68,64,255,.08);
       transition: transform .18s ease, box-shadow .18s ease;
-      z-index:0;
-      contain: paint;             /* localize effects */
-      transform: translateZ(0);   /* its own layer */
+      transform: translateZ(0);
     }
     .card-iris:hover{
       transform: translateZ(0) translateY(-2px);
       box-shadow: 0 0 0 1px rgba(68,64,255,.06) inset, 0 14px 32px rgba(68,64,255,.14);
-      z-index:2;
+      z-index:1;
     }
+    /* kill sticky :hover lift on touch so it never overlays the next section */
     @media (hover:none), (pointer:coarse){
       .card-iris:hover{
         transform:none;
@@ -215,22 +213,24 @@
     .callout{ text-align:center; margin: 8px auto 0; max-width:min(900px, 92vw); color:#262a3f }
     .badge{ display:inline-block; font:700 10px/1 var(--px-font); letter-spacing:.16em; text-transform:uppercase; padding:6px 8px; border-radius:10px; border:1px solid #5a57ff; background:linear-gradient(180deg,#fff,#f6f6ff); color:#17182a }
 
-    /* Reveal (safe on mobile) */
+    /* Reveal (with bulletproof mobile fallback) */
     [data-animate]{ opacity:0; transform: translateY(8px); transition: opacity .48s ease, transform .48s ease; will-change: opacity, transform; }
     .is-in[data-animate]{ opacity:1; transform:none }
     @media (prefers-reduced-motion: reduce){
       [data-animate]{ opacity:1 !important; transform:none !important; transition:none !important }
     }
-    @media (max-width:640px){
+    @media (max-width:720px){
+      /* Always visible on mobile — avoids iOS IO edge-cases */
+      [data-animate]{ opacity:1 !important; transform:none !important; }
       .grid{ gap:20px; }
-      [data-animate]{ transform:none; } /* no nudge on small screens */
     }
 
     /* ===== UX Deep Dive (tabs), isolated & spaced ===== */
     .section--ux-deck{
-      margin-top: clamp(20px,8vw,44px);       /* breathing room below first grid */
+      margin-top: clamp(20px,8vw,44px);
+      z-index:2;                 /* sits above any earlier hovered card */
     }
-    .section--ux-deck::before{                /* subtle divider */
+    .section--ux-deck::before{
       content:""; position:absolute; left:var(--page-pad); right:var(--page-pad); top:0;
       height:1px; background: linear-gradient(90deg, transparent, rgba(68,64,255,.22), transparent);
       transform: translateY(-.5px);
@@ -407,8 +407,8 @@
 
   <!-- UX Deep Dive (tabs) -->
   <section class="section section--ux-deck" aria-label="ux deep deck">
-    <div class="container mt50">
-      <div class="tab-head">
+    <div class="container">
+      <div class="tab-head" data-animate>
         <span class="pxlh">ux deep dive</span>
         <div class="tab-nav" role="tablist" aria-label="select a topic">
           <button class="pill" role="tab" id="tab-philosophy" aria-controls="panel-philosophy" aria-selected="true">philosophy</button>
@@ -418,14 +418,14 @@
       </div>
 
       <!-- Panel: Philosophy -->
-      <article id="panel-philosophy" class="tab-panel card-iris" role="tabpanel" aria-labelledby="tab-philosophy">
+      <article id="panel-philosophy" class="tab-panel card-iris" role="tabpanel" aria-labelledby="tab-philosophy" data-animate>
         <span class="pxlh">philosophy</span>
         <p>ux is everywhere—like towel temperature at a spa or the color that cues a memory. on the web, that translates to signals that feel inevitable: the next step is obvious, the page breathes, and the glow never fights the task.</p>
         <p class="callout"><span class="badge">mini on purpose</span> — compact grids, pixel cues, and calm iridescence so focus stays on the job.</p>
       </article>
 
       <!-- Panel: Process -->
-      <article id="panel-process" class="tab-panel card-iris" role="tabpanel" aria-labelledby="tab-process" hidden>
+      <article id="panel-process" class="tab-panel card-iris" role="tabpanel" aria-labelledby="tab-process" hidden data-animate>
         <span class="pxlh">process, quick</span>
         <div class="timeline-grid" role="list">
           <div class="step-inline" role="listitem"><span class="badge-num">1</span><div><b>discover</b> — jobs to be done, heuristics, constraints.</div></div>
@@ -437,7 +437,7 @@
       </article>
 
       <!-- Panel: Checklist -->
-      <article id="panel-checklist" class="tab-panel card-iris" role="tabpanel" aria-labelledby="tab-checklist" hidden>
+      <article id="panel-checklist" class="tab-panel card-iris" role="tabpanel" aria-labelledby="tab-checklist" hidden data-animate>
         <h3 class="ux-acc__title pxlh" id="ux-acc-label">ux checklist</h3>
 
         <div class="check-controls" role="group" aria-label="checklist controls">
@@ -486,10 +486,15 @@
     </div>
   </section>
 
-  <!-- Intersection reveal -->
+  <!-- Intersection reveal (safe defaults) -->
   <script>
     (function(){
       const els = document.querySelectorAll('[data-animate]');
+      const small = window.matchMedia && window.matchMedia('(max-width: 720px)').matches;
+
+      // On small screens: show everything, no animation (bulletproof).
+      if (small) { els.forEach(el => el.classList.add('is-in')); return; }
+
       if(!('IntersectionObserver' in window)){
         els.forEach(el=> el.classList.add('is-in')); return;
       }
@@ -497,8 +502,14 @@
         entries.forEach(e=>{
           if(e.isIntersecting){ e.target.classList.add('is-in'); io.unobserve(e.target); }
         });
-      }, { rootMargin: '0px 0px -10% 0px', threshold: 0.01 });
+      }, { rootMargin: '0px 0px -5% 0px', threshold: 0 });
+
       els.forEach(el=> io.observe(el));
+
+      // Last-resort guard: if anything somehow remains hidden after load, show it.
+      window.addEventListener('load', ()=> {
+        requestAnimationFrame(()=> els.forEach(el => el.classList.add('is-in')));
+      });
     })();
   </script>
 
@@ -537,7 +548,7 @@
       if(map[h]){ const t = document.getElementById(map[h]); if(t) selectTab(t); }
     })();
 
-    // Checklist expand/collapse all (keep your button styles)
+    // Checklist expand/collapse all (keeps your button styles)
     (function(){
       const root = document.getElementById('panel-checklist');
       if(!root) return;
