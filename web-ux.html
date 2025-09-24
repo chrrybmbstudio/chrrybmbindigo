@@ -237,6 +237,54 @@
 
     /* section stacking safety */
     .section[aria-label="Philosophy"]{ isolation:isolate; }
+
+    /* --- UX Lab (tabbed single card) --- */
+.section--lab .card-iris{ padding:16px; }
+
+.ux-lab{ display:grid; gap:10px; }
+
+/* segmented tabs */
+.lab-tabs{
+  display:flex; gap:8px; flex-wrap:nowrap; overflow:auto; padding-bottom:2px;
+  -webkit-overflow-scrolling: touch; scrollbar-width: thin;
+}
+.lab-tab{
+  flex:0 0 auto;
+  display:inline-flex; align-items:center; justify-content:center; gap:.4ch;
+  padding:8px 12px; border-radius:10px; cursor:pointer; user-select:none;
+  background:#fff; border:1px solid #5a57ff; color:#17182a;
+  font:800 10px/1 "Funnel Display", system-ui, sans-serif; letter-spacing:.14em; text-transform:uppercase;
+  box-shadow: 0 0 0 1px rgba(68,64,255,.06) inset;
+}
+.lab-tab[aria-selected="true"]{
+  box-shadow: 0 0 0 2px #5a57ff inset, 0 6px 16px rgba(68,64,255,.08);
+}
+
+.lab-pane{ margin-top:4px }
+.lab-pane[hidden]{ display:none !important; }
+
+/* Process stepper (mobile-first, scroll & snap) */
+.stepper{
+  display:grid; grid-auto-flow:column; grid-auto-columns: minmax(180px, 1fr);
+  gap:10px; overflow:auto; padding:4px 2px 8px; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch;
+}
+.step-card{
+  scroll-snap-align:start; min-width:180px;
+  display:grid; grid-template-columns:auto 1fr; align-items:start; gap:10px;
+  padding:10px 12px; border-radius:12px; background:#fff; border:1px dashed rgba(68,64,255,.28);
+}
+.step-card .badge-num{
+  display:grid; place-items:center; width:22px; height:22px; border-radius:8px;
+  background:linear-gradient(180deg,#fff,#f6f6ff); border:1px solid #5a57ff;
+  font:800 12px/1 "Funnel Display",system-ui;
+}
+
+/* keep your existing .ux-acc* styles for the checklist */
+
+
+
+
+
   </style>
 </head>
 
@@ -370,144 +418,140 @@
     </div>
   </section>
 
-  <!-- Philosophy -->
-  <section class="section" aria-label="Philosophy">
-    <div class="container">
-      <article class="card-iris" data-animate>
-        <span class="pxlh">philosophy</span>
-        <p>ux is everywhere—like towel temperature at a spa or the color that cues a memory. on the web, that translates to signals that feel inevitable: the next step is obvious, the page breathes, and the glow never fights the task.</p>
-        <p class="callout"><span class="badge">mini on purpose</span> — compact grids, pixel cues, and calm iridescence so focus stays on the job.</p>
-      </article>
-    </div>
-  </section>
+<!-- UX Lab (tabs) -->
+<section class="section section--lab" aria-label="UX details">
+  <div class="container">
+    <article class="card-iris" data-animate>
+      <div class="ux-lab">
 
-  <!-- Process -->
-  <section class="section" aria-label="Process">
-    <div class="container">
-      <article class="card-iris" data-animate>
-        <span class="pxlh">process, quick</span>
-        <div class="timeline" role="list">
-          <div class="step" role="listitem">
-            <span class="badge-num">1</span>
-            <div><b>discover</b> — jobs to be done, heuristics, constraints.</div>
-          </div>
-          <div class="step" role="listitem">
-            <span class="badge-num">2</span>
-            <div><b>map flows</b> — click-path sketches, wireflows, microcopy.</div>
-          </div>
-          <div class="step" role="listitem">
-            <span class="badge-num">3</span>
-            <div><b>prototype & test</b> — high-signal, low-debt experiments.</div>
-          </div>
-          <div class="step" role="listitem">
-            <span class="badge-num">4</span>
-            <div><b>refine & document</b> — tokens, components, patterns.</div>
-          </div>
-          <div class="step" role="listitem">
-            <span class="badge-num">5</span>
-            <div><b>ship & measure</b> — privacy-minded analytics; iterate.</div>
-          </div>
-        </div>
-      </article>
-    </div>
-  </section>
-
-  <!-- UX checklist -->
-  <section class="section" aria-label="ux checklist">
-    <div class="container">
-      <article class="card-iris" data-animate>
-        <h3 class="ux-acc__title pxlh">ux checklist</h3>
-
-        <div class="ux-acc__controls">
-          <button type="button" class="btn" data-acc="expand">expand all</button>
-          <button type="button" class="btn" data-acc="collapse">collapse all</button>
+        <!-- Tabs -->
+        <div class="lab-tabs" role="tablist" aria-label="UX details tabs">
+          <button class="lab-tab" id="tab-philosophy" role="tab"
+                  aria-selected="true" aria-controls="pane-philosophy"
+                  data-tab-target="pane-philosophy">philosophy</button>
+          <button class="lab-tab" id="tab-process" role="tab"
+                  aria-selected="false" aria-controls="pane-process"
+                  data-tab-target="pane-process">process</button>
+          <button class="lab-tab" id="tab-checklist" role="tab"
+                  aria-selected="false" aria-controls="pane-checklist"
+                  data-tab-target="pane-checklist">checklist</button>
         </div>
 
-        <div class="ux-acc" role="region" aria-labelledby="ux-acc-label">
-          <span id="ux-acc-label" class="visually-hidden">expandable ux checklist</span>
+        <!-- Pane: Philosophy -->
+        <section class="lab-pane" id="pane-philosophy" role="tabpanel" aria-labelledby="tab-philosophy">
+          <span class="pxlh">philosophy</span>
+          <p>ux is everywhere—like towel temperature at a spa or the color that cues a memory. on the web, that translates to signals that feel inevitable: the next step is obvious, the page breathes, and the glow never fights the task.</p>
+          <p class="callout"><span class="badge">mini on purpose</span> — compact grids, pixel cues, and calm iridescence so focus stays on the job.</p>
+        </section>
 
-          <div class="ux-acc__item">
-            <button class="ux-acc__btn" aria-expanded="false" aria-controls="ux-acc-pane-1" id="ux-acc-btn-1">
-              <span>flows & nav</span><i aria-hidden="true"></i>
-            </button>
-            <div class="ux-acc__pane" id="ux-acc-pane-1" role="region" aria-labelledby="ux-acc-btn-1" hidden>
-              <ul class="mini-list">
-                <li>clear IA & fast labels</li>
-                <li>obvious CTAs + exits</li>
-                <li>empty/error states that help</li>
-              </ul>
+        <!-- Pane: Process (horizontal stepper on mobile, grid on wide) -->
+        <section class="lab-pane" id="pane-process" role="tabpanel" aria-labelledby="tab-process" hidden>
+          <span class="pxlh">process, quick</span>
+          <div class="stepper" role="list">
+            <div class="step-card" role="listitem">
+              <span class="badge-num">1</span><div><b>discover</b> — jobs to be done, heuristics, constraints.</div>
+            </div>
+            <div class="step-card" role="listitem">
+              <span class="badge-num">2</span><div><b>map flows</b> — click-path sketches, wireflows, microcopy.</div>
+            </div>
+            <div class="step-card" role="listitem">
+              <span class="badge-num">3</span><div><b>prototype & test</b> — high-signal, low-debt experiments.</div>
+            </div>
+            <div class="step-card" role="listitem">
+              <span class="badge-num">4</span><div><b>refine & document</b> — tokens, components, patterns.</div>
+            </div>
+            <div class="step-card" role="listitem">
+              <span class="badge-num">5</span><div><b>ship & measure</b> — privacy-minded analytics; iterate.</div>
             </div>
           </div>
+        </section>
 
-          <div class="ux-acc__item">
-            <button class="ux-acc__btn" aria-expanded="false" aria-controls="ux-acc-pane-2" id="ux-acc-btn-2">
-              <span>access & ada</span><i aria-hidden="true"></i>
-            </button>
-            <div class="ux-acc__pane" id="ux-acc-pane-2" role="region" aria-labelledby="ux-acc-btn-2" hidden>
-              <ul class="mini-list">
-                <li>wcag contrast, focus rings, skip link</li>
-                <li>semantic html + helpful aria (no noise)</li>
-                <li>respect prefers-reduced-motion</li>
-              </ul>
-            </div>
+        <!-- Pane: Checklist (your existing accessible accordion) -->
+        <section class="lab-pane" id="pane-checklist" role="tabpanel" aria-labelledby="tab-checklist" hidden>
+          <h3 class="ux-acc__title pxlh">ux checklist</h3>
+
+          <div class="ux-acc__controls">
+            <button type="button" class="btn" data-acc="expand">expand all</button>
+            <button type="button" class="btn" data-acc="collapse">collapse all</button>
           </div>
 
-          <div class="ux-acc__item">
-            <button class="ux-acc__btn" aria-expanded="false" aria-controls="ux-acc-pane-3" id="ux-acc-btn-3">
-              <span>speed & stability</span><i aria-hidden="true"></i>
-            </button>
-            <div class="ux-acc__pane" id="ux-acc-pane-3" role="region" aria-labelledby="ux-acc-btn-3" hidden>
-              <ul class="mini-list">
-                <li>image strategy (srcset, sizes, format)</li>
-                <li>css/js hygiene, defer/lazy boundaries</li>
-                <li>jank-free motion; vitals mindset</li>
-              </ul>
-            </div>
-          </div>
+          <div class="ux-acc" role="region" aria-labelledby="ux-acc-label">
+            <span id="ux-acc-label" class="visually-hidden">expandable ux checklist</span>
 
-          <div class="ux-acc__item">
-            <button class="ux-acc__btn" aria-expanded="false" aria-controls="ux-acc-pane-4" id="ux-acc-btn-4">
-              <span>content & seo</span><i aria-hidden="true"></i>
-            </button>
-            <div class="ux-acc__pane" id="ux-acc-pane-4" role="region" aria-labelledby="ux-acc-btn-4" hidden>
-              <ul class="mini-list">
-                <li>h1–h6 discipline, alt text, schema</li>
-                <li>meta/og/twitter, robots + sitemap</li>
-                <li>plain-language microcopy</li>
-              </ul>
+            <div class="ux-acc__item">
+              <button class="ux-acc__btn" aria-expanded="false" aria-controls="ux-acc-pane-1" id="ux-acc-btn-1">
+                <span>flows & nav</span><i aria-hidden="true"></i>
+              </button>
+              <div class="ux-acc__pane" id="ux-acc-pane-1" role="region" aria-labelledby="ux-acc-btn-1" hidden>
+                <ul class="mini-list">
+                  <li>clear IA & fast labels</li><li>obvious CTAs + exits</li><li>empty/error states that help</li>
+                </ul>
+              </div>
             </div>
-          </div>
 
-          <div class="ux-acc__item">
-            <button class="ux-acc__btn" aria-expanded="false" aria-controls="ux-acc-pane-5" id="ux-acc-btn-5">
-              <span>security & trust</span><i aria-hidden="true"></i>
-            </button>
-            <div class="ux-acc__pane" id="ux-acc-pane-5" role="region" aria-labelledby="ux-acc-btn-5" hidden>
-              <ul class="mini-list">
-                <li>https + hsts, safe iframes</li>
-                <li>form friction (honeypot/rate limit)</li>
-                <li>privacy-first analytics</li>
-              </ul>
+            <div class="ux-acc__item">
+              <button class="ux-acc__btn" aria-expanded="false" aria-controls="ux-acc-pane-2" id="ux-acc-btn-2">
+                <span>access & ada</span><i aria-hidden="true"></i>
+              </button>
+              <div class="ux-acc__pane" id="ux-acc-pane-2" role="region" aria-labelledby="ux-acc-btn-2" hidden>
+                <ul class="mini-list">
+                  <li>wcag contrast, focus rings, skip link</li><li>semantic html + helpful aria (no noise)</li><li>respect prefers-reduced-motion</li>
+                </ul>
+              </div>
             </div>
-          </div>
 
-          <div class="ux-acc__item">
-            <button class="ux-acc__btn" aria-expanded="false" aria-controls="ux-acc-pane-6" id="ux-acc-btn-6">
-              <span>patterns that scale</span><i aria-hidden="true"></i>
-            </button>
-            <div class="ux-acc__pane" id="ux-acc-pane-6" role="region" aria-labelledby="ux-acc-btn-6" hidden>
-              <ul class="mini-list">
-                <li>tokens → components → pages</li>
-                <li>state/motion rules; docs that read fast</li>
-                <li>mini by default; remixable</li>
-              </ul>
+            <div class="ux-acc__item">
+              <button class="ux-acc__btn" aria-expanded="false" aria-controls="ux-acc-pane-3" id="ux-acc-btn-3">
+                <span>speed & stability</span><i aria-hidden="true"></i>
+              </button>
+              <div class="ux-acc__pane" id="ux-acc-pane-3" role="region" aria-labelledby="ux-acc-btn-3" hidden>
+                <ul class="mini-list">
+                  <li>image strategy (srcset, sizes, format)</li><li>css/js hygiene, defer/lazy boundaries</li><li>jank-free motion; vitals mindset</li>
+                </ul>
+              </div>
             </div>
-          </div>
 
-        </div>
-      </article>
-    </div>
-  </section>
+            <div class="ux-acc__item">
+              <button class="ux-acc__btn" aria-expanded="false" aria-controls="ux-acc-pane-4" id="ux-acc-btn-4">
+                <span>content & seo</span><i aria-hidden="true"></i>
+              </button>
+              <div class="ux-acc__pane" id="ux-acc-pane-4" role="region" aria-labelledby="ux-acc-btn-4" hidden>
+                <ul class="mini-list">
+                  <li>h1–h6 discipline, alt text, schema</li><li>meta/og/twitter, robots + sitemap</li><li>plain-language microcopy</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="ux-acc__item">
+              <button class="ux-acc__btn" aria-expanded="false" aria-controls="ux-acc-pane-5" id="ux-acc-btn-5">
+                <span>security & trust</span><i aria-hidden="true"></i>
+              </button>
+              <div class="ux-acc__pane" id="ux-acc-pane-5" role="region" aria-labelledby="ux-acc-btn-5" hidden>
+                <ul class="mini-list">
+                  <li>https + hsts, safe iframes</li><li>form friction (honeypot/rate limit)</li><li>privacy-first analytics</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="ux-acc__item">
+              <button class="ux-acc__btn" aria-expanded="false" aria-controls="ux-acc-pane-6" id="ux-acc-btn-6">
+                <span>patterns that scale</span><i aria-hidden="true"></i>
+              </button>
+              <div class="ux-acc__pane" id="ux-acc-pane-6" role="region" aria-labelledby="ux-acc-btn-6" hidden>
+                <ul class="mini-list">
+                  <li>tokens → components → pages</li><li>state/motion rules; docs that read fast</li><li>mini by default; remixable</li>
+                </ul>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+      </div>
+    </article>
+  </div>
+</section>
+
 
   <!-- CTA -->
   <section class="section" aria-label="CTA">
@@ -572,6 +616,33 @@
       });
     })();
   </script>
+
+<script>
+  // UX Lab tabs: accessible + keyboard friendly
+  (function(){
+    const tabs = [...document.querySelectorAll('.lab-tab')];
+    if (!tabs.length) return;
+    const panes = tabs.map(btn => document.getElementById(btn.getAttribute('data-tab-target')));
+
+    function setTab(i){
+      tabs.forEach((t,j)=>{
+        const sel = j === i;
+        t.setAttribute('aria-selected', sel);
+        t.tabIndex = sel ? 0 : -1;
+        panes[j] && (panes[j].hidden = !sel);
+      });
+    }
+    tabs.forEach((t,i)=>{
+      t.addEventListener('click', ()=> setTab(i));
+      t.addEventListener('keydown', (e)=>{
+        if(e.key === 'ArrowRight'){ e.preventDefault(); const n=(i+1)%tabs.length; setTab(n); tabs[n].focus(); }
+        if(e.key === 'ArrowLeft'){  e.preventDefault(); const p=(i-1+tabs.length)%tabs.length; setTab(p); tabs[p].focus(); }
+      });
+    });
+    setTab(0);
+  })();
+</script>
+
 
   <footer class="site-footer" role="contentinfo">
     <span class="dot" aria-hidden="true"></span>
