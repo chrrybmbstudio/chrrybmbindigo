@@ -116,14 +116,13 @@
   @keyframes floatBlob{0%{transform:translateY(0) rotate(0) scale(1)}100%{transform:translateY(-6px) rotate(6deg) scale(1.02)}}
 
   .name-edge{
-    --text:#0e0f1a;
-    font-family:"Funnel Display", system-ui, sans-serif;
-    font-weight:600;
-    font-size: calc(var(--ui) * clamp(42px,8vw,66px));
-    letter-spacing:-.02em; line-height:.92; margin:0 0 6px;
-    text-transform:lowercase; position:relative; display:inline-block; color:var(--text);
-    filter:url(#softWobble); isolation:isolate;
-  }
+      --text:#0e0f1a;
+      font-family:"Funnel Display", system-ui, sans-serif;
+      font-weight:600; font-size:calc(var(--ui) * clamp(42px,8vw,66px));
+      letter-spacing:-.02em; line-height:.92; margin:0 0 6px;
+      text-transform:lowercase; position:relative; display:inline-block;
+      color:var(--text); filter:url(#softWobble); isolation:isolate;
+    }
   .name-edge::after{
     content:attr(data-text); position:absolute; inset:0; z-index:-1; pointer-events:none;
     background: conic-gradient(from 0deg, var(--indigo), var(--pink) 40%, #8aaaff, var(--indigo));
