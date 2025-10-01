@@ -124,7 +124,7 @@
     @media (min-width:641px){ .name-edge .warp,.name-edge .prism{ animation: sweepBand 7s cubic-bezier(.45,.05,.36,1) infinite alternate; } }
     @media (max-width:640px){ .name-edge .warp,.name-edge .prism{ animation: sweepBand 3.2s cubic-bezier(.5,.1,.2,1) 1 both; } }
     @media (prefers-reduced-motion: reduce){ .name-edge .warp,.name-edge .prism{ animation:none !important } }
-    .subtitle{ font:400 clamp(18px,3.2vw,24px)/1.2 "Jacquarda Bastarda 9",serif; margin:6px 0 0; opacity:.85 }
+    .subtitle{ font:400 clamp(18px,3.2vw,20px)/1.2 "Jacquarda Bastarda 9",serif; margin:6px 0 0; opacity:.85 }
 
     /* Meta chips + back link */
     .meta{ display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-top:12px }
@@ -197,6 +197,7 @@
     .tile:hover img{ transform: scale(1.05) }
     .tile:hover::before{ opacity:.78 }
     @media (hover:none){ .tile:hover .tile-inner, .tile:hover img{ transform:none } }
+    .tag{display:inline-block;font:800 10px/1 "Funnel Display",system-ui;letter-spacing:.16em;text-transform:uppercase;padding:6px 8px;border-radius:10px;border:1px solid #5a57ff;background: transparent;}
 
     /* Campaign Story */
     .story{ max-width: 72ch; margin: 0 auto; }
@@ -284,21 +285,17 @@
 <div class="bg-art" aria-hidden="true"><span class="lens-glass"></span><span class="lens-aura"></span></div>
 
 <main id="main" class="site-main" role="main">
-  <!-- Title -->
-  <section class="case-hero">
-    <div class="container" data-animate>
-      <h1 class="name-edge" data-text="refreshing checking">refreshing checking</h1>
-      <div class="subtitle">Free High-Interest Checking+</div>
-
-      <div class="meta">
-        <span class="chipy">role · creative direction & design</span>
-        <span class="chipy">channels · sem, display, ooh</span>
-        <span class="chipy">partner · sem vendor</span>
-      </div>
-
-      <div class="top-actions">
-        <a class="btn-pixel" href="/contact.html">hire me</a>
-        <a class="btn-pixel btn-pixel--ghost" href="/work.html">more projects</a>
+  <!-- Hero -->
+  <section class="case-hero" aria-label="Intro">
+    <div class="hero-inner">
+      <h1 class="name-edge" data-text="checking page redesign">
+        <span class="text">refreshing checking campaign</span>
+        <span class="warp" aria-hidden="true">refreshing checking campaign</span>
+        <span class="prism" aria-hidden="true">refreshing checking campaign</span>
+      </h1>
+      <div class="subtitle">Free High-Interest Checking</div>
+      <div class="meta" aria-label="tags">
+        <span class="tag">role · creative direction & design</span><span class="tag">channels · sem, display, ooh</span><span class="tag">analytics</span><span class="tag">front-end</span>
       </div>
     </div>
   </section>
