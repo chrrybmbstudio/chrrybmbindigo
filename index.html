@@ -409,43 +409,43 @@
   .logo-iris{ opacity:.10; animation: none; }
 }
 
-/* Optional: make the scroll pill smaller on phones so it feels intentional */
+/* make the scroll pill smaller on phones */
 @media (max-width: 480px){
   .scroll-cue{ margin: 4px auto 0; }
   .scroll-cue a{ padding: 8px 10px; font-size: 10px; }
   .scroll-cue a svg{ width: 12px; height: 12px; }
 }
 
-/* Back to top */
-.backtop{
-  position: sticky;                /* sticks near the bottom of the viewport */
-  bottom: clamp(10px, 4vh, 24px);  /* how far off the bottom */
-  z-index: 10;
-  padding: 8px 0 2px;              /* tiny breathing room above footer */
+/* Scroll back-to-top cue */
+.backtop {
+  display:flex; justify-content:center; align-items:center;
+  margin: 8px auto 2px;
+  z-index: 5;
 }
 
-.btn-top{
+.backtop a {
   display:inline-flex; align-items:center; gap:8px;
-      padding:10px 12px; border-radius:999px; border:1px dashed #5a57ff;
-      margin: 50px;
-      background: linear-gradient(180deg,#fff,#f7f7ff);
-      font:700 11px/1 "Funnel Display",system-ui; letter-spacing:.12em; text-transform:uppercase;
-      color:#17182a; text-decoration:none; box-shadow:0 6px 14px rgba(68,64,255,.10);
-    }
+  padding:10px 12px; border-radius:999px; border:1px dashed #5a57ff;
+  margin: 50px;
+  background: linear-gradient(180deg,#fff,#f7f7ff);
+  font:700 11px/1 "Funnel Display",system-ui; letter-spacing:.12em; text-transform:uppercase;
+  color:#17182a; text-decoration:none; box-shadow:0 6px 14px rgba(68,64,255,.10);
+}
 
-.btn-top:hover{ transform: translateY(-1px); box-shadow: 0 12px 22px rgba(68,64,255,.18); }
-.btn-top:active{ transform: translateY(0); }
-.btn-top:focus-visible{ outline:2px solid #5a57ff; outline-offset:2px; }
+.backtop a svg {
+  width:14px; height:14px;
+}
 
-.backtop .container{ display:flex; justify-content:center; }
+/* smaller on phones */
+@media (max-width: 480px){
+  .backtop{ margin: 4px auto 0; }
+  .backtop a{ padding: 8px 10px; font-size: 10px; }
+  .backtop a svg{ width: 12px; height: 12px; }
+}
 
-/* Optional: fade in only after some scroll */
-.backtop{ opacity:0; filter:saturate(.96); transition: opacity .2s ease, filter .2s ease; }
-.backtop.is-visible{ opacity:1; filter:none; }
-
-/* Mobile: make sure it fits nicely */
-@media (max-width:480px){
-  .btn-top{ padding:10px 12px; }
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
 }
 
 
@@ -589,7 +589,7 @@
         <div class="container">
           <div class="brand-logo-wrap">
             <span class="logo-iris" aria-hidden="true"></span>
-            <img src="./assets/indigo_chrry_indy.svg" alt="chrrybmb mark" width="400" height="400" loading="lazy" decoding="async">
+            <img src="./assets/indigo_chrry_indy.svg" alt="chrrybmb mark" width="300" loading="lazy" decoding="async">
           </div>
 
           <div class="panel-copy" data-animate style="--stagger:120ms">
@@ -607,14 +607,15 @@
     </main>
   </div>
 
-<!-- Back to top (sticky above footer) -->
-<section class="backtop" aria-label="Back to top">
-  <div class="container">
-    <button class="btn-top" id="backTop" type="button">
-      <svg aria-hidden="true" viewBox="0 0 16 16" width="14" height="14"><path d="M8 2l5 6h-3v6H6V8H3l5-6z" fill="currentColor"/></svg>
-      back to top
-    </button>
-  </div>
+<!-- NEW: tiny scroll up cue -->
+<div class="backtop" aria-hidden="false">
+  <a href="#top" aria-label="Scroll back to top">
+    top
+    <svg viewBox="0 0 16 16" aria-hidden="true">
+      <path d="M8 4l-4 5h8z" fill="currentColor"/>
+    </svg>
+  </a>
+</div>
 </section>
 
 
