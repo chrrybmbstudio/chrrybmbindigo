@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -82,13 +83,6 @@
       --reveal-ydist: clamp(10px, 2.4vw, 18px);
     }
 
-    body{
-      background:
-        radial-gradient(60% 60% at var(--orb-x,72%) var(--orb-y,68%), rgba(68,64,255,.13), transparent 60%),
-        linear-gradient(180deg, #ffffff, #faf9ff);
-      color: var(--ink);
-      -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
-    }
 
     .container{
       width: min(1100px, 100%);
@@ -394,8 +388,8 @@
 
   /* Logo: smaller, crisper on mobile */
   .brand-logo-wrap{
-    max-width: min(222px, 88vw);                /* was 620px desktop — tighten on phones */
-    margin-top: 2px;
+    max-width: min(222px, 88vw);
+    margin-top: -80px;
   }
 
   /* Tone down shimmer on phones (keeps the vibe, avoids “wobble”) */
