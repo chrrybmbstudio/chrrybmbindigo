@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -83,7 +82,6 @@
       --reveal-ydist: clamp(10px, 2.4vw, 18px);
     }
 
-
     .container{
       width: min(1100px, 100%);
       margin-inline: auto;
@@ -92,9 +90,15 @@
     }
 
     /* IRIDESCENT WAVE */
-    .iridescent-wave{ position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow:hidden; will-change: transform; transform: translateZ(0); backface-visibility: hidden; contain: paint; }
+    .iridescent-wave{
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      overflow:hidden; will-change: transform; transform: translateZ(0);
+      backface-visibility: hidden;
+      /* was contain: paint; — removing avoids iOS blend cutoffs */
+      contain: none;
+    }
     .iridescent-wave::before{
-      content:""; position:absolute; left:-25vw; right:-25vw; top:-200vh; bottom:-200vh;
+      content:""; position:absolute; left:-30vw; right:-30vw; top:-260vh; bottom:-260vh;
       background: conic-gradient(from var(--wave-rot,0deg) at var(--orb-x,50%) var(--orb-y,20%),
         rgba(127,240,255,.25), rgba(255,106,223,.20), rgba(127,240,255,.25));
       background-repeat:no-repeat; filter: blur(var(--wave-halo-blur)) saturate(150%);
@@ -102,7 +106,7 @@
       animation: waveSpin 22s linear infinite; will-change: transform; transform: translate3d(0,0,0);
     }
     .iridescent-wave::after{
-      content:""; position:absolute; left:-25vw; right:-25vw; top:-240vh; bottom:-240vh;
+      content:""; position:absolute; left:-30vw; right:-30vw; top:-260vh; bottom:-260vh;
       background:
         radial-gradient(80% 60% at 50% 30%, rgba(255,255,255,.55), rgba(255,255,255,0) 60%),
         linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.55) 35%, rgba(255,255,255,0) 70%);
@@ -145,7 +149,7 @@
     body.density-xs  { --ui: .86; }
     body.density-xxs { --ui: .66; }
 
-    /* HERO */
+    /* HERO (UNCHANGED) */
     .hero{
       margin: calc(var(--ui) * clamp(12px,3vw,28px)) auto;
       border-radius: calc(var(--ui) * clamp(16px, 2.4vw, 28px));
@@ -213,12 +217,12 @@
     .btn-pixel:hover{ transform: translateY(-0.5px); box-shadow: 0 12px 22px rgba(68,64,255,.18) }
     .btn-pixel--ghost{ background:#fff; border-style:dashed; opacity:.92 }
 
-    /* interactions (no reflection): simple reveal */
+    /* interactions */
     [data-animate]{ opacity:0; transform: translateY(8px); transition: opacity .6s ease, transform .6s ease }
     .is-in[data-animate]{ opacity:1; transform:none }
     .hero__cta{ display:flex; gap: calc(var(--ui) * 12px); margin: 0 0 calc(var(--ui) * 8px); flex-wrap:wrap; }
 
-    /* Features */
+    /* Features (UNCHANGED) */
     .features{
       padding: calc(var(--ui) * clamp(22px, 5vw, 44px)) 0;
     }
@@ -258,7 +262,7 @@
     .feature-card h3, .feature-card .pxlh{ margin:0; font-size: calc(var(--ui) * 19px); line-height:1.1; letter-spacing:.02em; }
     .feature-card p{ margin: 0 0 auto; color:#2c3144; font-size: max(12px, calc(var(--ui)* 13.5px)); line-height:1.42; }
 
-    /* Tight mini-card helpers (as-before) */
+    /* Tight mini-card helpers */
     :root{ --card-pad-y: 12px; --card-pad-x: 14px; --card-gap: 8px; --card-btn-gap:6px; }
     .card-iris{ padding: var(--card-pad-y) var(--card-pad-x); }
     .feature-card{ gap: var(--card-gap); min-height: unset; }
@@ -293,35 +297,35 @@
     }
 
     /* =====================================================
-       NEW: bottom section additions (lightweight & responsive)
+       BOTTOM SECTION (compact + robust; arrows-only cues)
        ===================================================== */
 
-    /* Smooth anchor scroll (robust without JS) */
+    /* Smooth anchor scroll */
     html { scroll-behavior: smooth; }
 
-    /* Scroll cue (between Features and Brand panel) */
+    /* Scroll cue (between Features and Brand panel) — ARROW ONLY */
     .scroll-cue {
       display:flex; justify-content:center; align-items:center;
-      margin: 8px auto 2px; /* tiny footprint */
+      margin: 2px auto 0; /* tighter */
     }
     .scroll-cue a {
-      display:inline-flex; align-items:center; gap:8px;
-      padding:10px 12px; border-radius:999px; border:1px dashed #5a57ff;
-      margin: 16px;
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:8px 10px; border-radius:999px; border:1px dashed #5a57ff;
+      margin: 10px; /* was larger; compact */
       background: linear-gradient(180deg,#fff,#f7f7ff);
-      font:700 11px/1 "Funnel Display",system-ui; letter-spacing:.12em; text-transform:uppercase;
       color:#17182a; text-decoration:none; box-shadow:0 6px 14px rgba(68,64,255,.10);
+      width:36px; height:36px; /* pill becomes a neat icon button */
     }
-    .scroll-cue a svg { width:14px; height:14px; }
+    .scroll-cue a svg { width:14px; height:14px; display:block; }
 
-    /* Separator sheen (no big spacer) */
-    .splitter{ position: relative; height: 7vh; min-height:42px; z-index:1; }
+    /* Subtle separator with less height */
+    .splitter{ position: relative; height: 5vh; min-height:32px; z-index:1; }
     .splitter::before{
       content:""; position:relative; inset:-20% -10%;
       background:
         radial-gradient(60% 60% at 50% 10%, rgba(68,64,255,.18), transparent 60%),
         conic-gradient(from 180deg at 50% 50%, rgba(127,240,255,.22), rgba(255,106,223,.18), rgba(127,240,255,.22));
-      filter: blur(28px) saturate(130%); opacity:.5; mix-blend-mode: plus-lighter; pointer-events:none;
+      filter: blur(24px) saturate(130%); opacity:.45; mix-blend-mode: plus-lighter; pointer-events:none;
     }
     .splitter .sheen{
       position:sticky; top:0; height:2px; display:block;
@@ -329,47 +333,50 @@
       filter: blur(1px); opacity:.5
     }
 
-    /* Brand panel */
-    .brand-panel{ position:relative; z-index:2; padding: clamp(20px, 8vw, 80px) 0 clamp(28px, 10vw, 120px); }
+    /* Brand panel — compacted */
+    .brand-panel{
+      position:relative; z-index:2;
+      padding: clamp(16px, 6vw, 56px) 0 clamp(22px, 7vw, 72px);
+    }
     .brand-panel .container{
-      display:grid; grid-template-columns:1fr; gap: clamp(12px, 3.5vw, 28px); align-items:center;
+      display:grid; grid-template-columns:1fr; align-items:center;
+      gap: clamp(10px, 2.6vw, 20px);
     }
     @media (min-width: 960px){
-      .brand-panel .container{ grid-template-columns: 1.1fr .9fr; }
+      .brand-panel .container{ grid-template-columns: 1.05fr .95fr; }
     }
 
     .brand-logo-wrap{
-      position:relative; margin-inline:auto; max-width:min(420px, 72vw);
+      position:relative; margin-inline:auto; max-width:min(360px, 64vw);
       aspect-ratio:1/1;
-      margin: 0 auto;
-      filter: drop-shadow(0 18px 40px rgba(68,64,255,.14));
+      filter: drop-shadow(0 12px 28px rgba(68,64,255,.12));
       isolation:isolate;
     }
     .brand-logo-wrap img{ width:100%; height:100%; object-fit:contain; display:block; }
 
-    /* Iridescent shimmer overlay (perf-friendly) */
     .logo-iris{
       position:absolute; inset:-6%; border-radius:28px; pointer-events:none;
       background: conic-gradient(from var(--iris-rot,0deg), #7ff0ff, rgba(255,106,223,.95), #7ff0ff);
-      mix-blend-mode: color-dodge; opacity: .15; filter: blur(16px) saturate(160%);
+      mix-blend-mode: color-dodge; opacity: .12; filter: blur(14px) saturate(150%);
       animation: irisSpin 18s linear infinite;
     }
     @keyframes irisSpin { to { --iris-rot: 360deg; } }
-    @media (prefers-reduced-motion: reduce){
-      .logo-iris{ animation:none; opacity:.10 }
-    }
+    @media (prefers-reduced-motion: reduce){ .logo-iris{ animation:none; opacity:.10 } }
 
-    .panel-copy{ max-width:720px; margin-inline:auto; margin: 20px 40px 40px 40px;}
-    .panel-copy h2{ font: 600 clamp(22px, 3.2vw, 36px)/1.06 "Funnel Display", system-ui, sans-serif; letter-spacing:-.02em; margin:0 0 8px; }
-    .panel-copy .pxlb{ display:block; font-family:"Jacquarda Bastarda 9", serif; font-size: clamp(20px, 5.6vw, 34px); line-height:1.05; margin: 0 0 8px; color:#2c3144 }
-    .panel-copy p{ margin:0 0 12px; font: 400 clamp(14px, 1.6vw, 18px)/1.45 "DM Sans", system-ui, sans-serif; color:#2c3144; }
+    .panel-copy{
+      max-width:700px; margin-inline:auto;
+      margin: 10px auto 16px; /* compact */
+    }
+    .panel-copy h2{ font: 600 clamp(22px, 3.2vw, 36px)/1.06 "Funnel Display", system-ui, sans-serif; letter-spacing:-.02em; margin:0 0 6px; }
+    .panel-copy .pxlb{ display:block; font-family:"Jacquarda Bastarda 9", serif; font-size: clamp(20px, 5.6vw, 34px); line-height:1.05; margin: 0 0 6px; color:#2c3144 }
+    .panel-copy p{ margin:0 0 8px; font: 400 clamp(14px, 1.6vw, 18px)/1.45 "DM Sans", system-ui, sans-serif; color:#2c3144; }
 
     .quick-nav{
-      display:flex; flex-wrap:wrap; gap:10px; justify-content:center;
+      display:flex; flex-wrap:wrap; gap:8px; justify-content:center;
       margin-top: 6px;
     }
     .quick-nav a{
-      display:inline-flex; align-items:center; gap:8px; padding:10px 12px;
+      display:inline-flex; align-items:center; gap:8px; padding:9px 11px;
       border-radius:12px; border:1px solid #5a57ff; background: transparent;
       font:700 12px/1 "Funnel Display",system-ui; letter-spacing:.12em; text-transform:uppercase;
       color:#17182a; text-decoration:none; box-shadow:0 8px 16px rgba(68,64,255,.12);
@@ -377,108 +384,48 @@
     }
     .quick-nav a:hover{ transform: translateY(-1px); box-shadow:0 12px 22px rgba(68,64,255,.18); }
 
-    /* ===== mobile fix-ups: scroll targeting + brand panel sizing ===== */
-@media (max-width: 640px){
-  /* Make anchor jumps precise on small screens */
-  html { scroll-padding-top: 36px; }            /* global smooth-scroll offset */
-  #brand { scroll-margin-top: 36px; }           /* section-specific landing offset */
+    /* Mobile sizing + anchor precision */
+    @media (max-width: 640px){
+      html { scroll-padding-top: 36px; }
+      #brand { scroll-margin-top: 36px; }
 
-  /* Brand panel spacing */
-  .brand-panel{ padding-top: 18px; padding-bottom: 56px; }
-  .brand-panel .container{ gap: 12px; }
+      .brand-panel{ padding-top: 14px; padding-bottom: 42px; }
+      .brand-panel .container{ gap: 12px; }
 
-  /* Logo: smaller, crisper on mobile */
-  .brand-logo-wrap{
-    max-width: min(222px, 88vw);
-    margin-top: -80px;
-  }
+      .brand-logo-wrap{ max-width: min(200px, 74vw); }
+      .panel-copy{ margin: 6px auto 12px; }
 
-  /* Tone down shimmer on phones (keeps the vibe, avoids “wobble”) */
-  .logo-iris{
-    opacity: .10;
-    animation-duration: 24s;                    /* slower = calmer */
-    filter: blur(14px) saturate(150%);
-  }
+      /* Hide the scroll cues/back-to-top on mobile, per your preference */
+      .scroll-cue, .backtop { display:none !important; }
+    }
 
-  /* Quick-nav spacing and touch targets */
-  .quick-nav{ margin-top: 10px; gap: 8px; }
-  .quick-nav a{ padding: 9px 11px; border-radius: 11px; font-size: 11px; }
-}
+    @media (pointer: coarse){
+      .logo-iris{ opacity:.10; animation: none; }
+    }
 
-/* If it’s a touch device of any size, keep shimmer subtle and avoid jank */
-@media (pointer: coarse){
-  .logo-iris{ opacity:.10; animation: none; }
-}
+    /* Back-to-top (centered; ARROW ONLY; tiny gap above footer) */
+    .backtop{
+      display:flex; justify-content:center; align-items:center;
+      margin: 10px auto 8px;
+    }
+    .backtop a{
+      display:inline-flex; align-items:center; justify-content:center; gap:8px;
+      padding:8px 10px; border-radius:999px; border:1px dashed #5a57ff;
+      background: linear-gradient(180deg,#fff,#f7f7ff);
+      color:#17182a; text-decoration:none; box-shadow:0 6px 14px rgba(68,64,255,.10);
+      width:36px; height:36px; min-height:36px;
+      -webkit-tap-highlight-color:transparent; touch-action:manipulation; outline:none;
+      transform: translateZ(0); will-change: transform, opacity; z-index: 1;
+    }
+    .backtop a svg{ width:14px; height:14px; }
 
-/* make the scroll pill smaller on phones */
-@media (max-width: 480px){
-  .scroll-cue{ margin: 4px auto 0; }
-  .scroll-cue a{ padding: 8px 10px; font-size: 10px; }
-  .scroll-cue a svg{ width: 12px; height: 12px; }
-}
-
- /* Back-to-top cue: desktop/tablet default (inline) */
-.backtop{
-  display:flex; justify-content:center; align-items:center;
-  margin: 12px auto 22px;
-  padding-bottom: 0;
-}
-
-.backtop a{
-  display:inline-flex; align-items:center; gap:8px;
-  padding:10px 14px; border-radius:999px; border:1px dashed #5a57ff;
-  background: linear-gradient(180deg,#fff,#f7f7ff);
-  font:700 12px/1 "Funnel Display", system-ui; letter-spacing:.12em; text-transform:uppercase;
-  color:#17182a; text-decoration:none; box-shadow:0 6px 14px rgba(68,64,255,.10);
-  min-height:44px;
-  -webkit-tap-highlight-color:transparent;
-  touch-action:manipulation;
-  outline:none;
-  transform: translateZ(0);           /* reduce paint jank on mobile */
-  will-change: transform, opacity;
-  z-index: 1;
-}
-
-.backtop a:focus-visible{
-  box-shadow:0 0 0 3px rgba(68,64,255,.25), 0 6px 14px rgba(68,64,255,.10);
-}
-
-.backtop a:active{
-  transform: translateY(1px);
-}
-
-.backtop a svg{
-  width:14px; height:14px;
-}
-
-/* 1) Unify the blend backdrop across the whole page */
-body { isolation: isolate; }
-
-/* 2) Make sure the footer doesn’t paint a solid background that “breaks” the vibe */
-.site-footer {
-  background: transparent;
-  position: relative;   /* keeps it in normal flow */
-  z-index: 2;           /* above .bg-art (z:1); .iridescent-wave is below everything */
-}
-
-/* 3) iOS Safari quirk: avoid clipping/blend cutoff with contain: paint */
-.iridescent-wave { contain: none; }  /* was: contain: paint; */
-
-
-/* Hide back-to-top on mobile only */
-@media (max-width: 640px){
-  .scroll-cue { display: none !important;}
-  .backtop { display: none !important; }
-}
-
-
-
-/* Smooth scroll behavior */
-html {
-  scroll-behavior: smooth;
-}
-
-
+    /* Background blending flush fixes */
+    body { isolation: isolate; }
+    .site-footer {
+      background: transparent;
+      position: relative;
+      z-index: 2; /* above .bg-art (z:1) */
+    }
   </style>
 </head>
 
@@ -603,18 +550,17 @@ html {
         </div>
       </section>
 
-      <!-- NEW: tiny scroll cue -->
+      <!-- Scroll cue (DOWN ARROW ONLY) -->
       <div class="scroll-cue" aria-hidden="false">
         <a href="#brand" aria-label="Scroll to brand section">
-          scroll
           <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 12l-4-5h8z" fill="currentColor"/></svg>
         </a>
       </div>
 
-      <!-- NEW: subtle separator (no big spacer) -->
+      <!-- Subtle separator -->
       <div class="splitter" aria-hidden="true"><span class="sheen"></span></div>
 
-      <!-- NEW: Brand Panel -->
+      <!-- Brand Panel -->
       <section id="brand" class="brand-panel" aria-label="Brand navigation">
         <div class="container">
           <div class="brand-logo-wrap">
@@ -637,15 +583,12 @@ html {
     </main>
   </div>
 
-  <!-- give the anchor an id to match the JS listener -->
-<div class="backtop" aria-hidden="false">
-  <a id="backTop" href="#top" aria-label="Scroll back to top">
-    top
-    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 4l-4 5h8z" fill="currentColor"/></svg>
-  </a>
-</div>
-
-
+  <!-- Back to top (UP ARROW ONLY) -->
+  <div class="backtop" aria-hidden="false">
+    <a id="backTop" href="#top" aria-label="Scroll back to top">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 4l-4 5h8z" fill="currentColor"/></svg>
+    </a>
+  </div>
 
   <!-- Single shared script -->
   <script type="module" src="./site.js" defer></script>
@@ -668,27 +611,26 @@ html {
     })();
   </script>
 
-<script>
-  // Smooth scroll to 0
-  document.getElementById('backTop')?.addEventListener('click', ()=>{
-    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
-  });
+  <script>
+    // Smooth scroll to 0 (desktop/tablet—hidden on mobile via CSS)
+    document.getElementById('backTop')?.addEventListener('click', ()=>{
+      const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+    });
 
-  // Reveal the button after a little scroll (keeps it subtle on short pages)
-  (function(){
-    const wrap = document.querySelector('.backtop');
-    if(!wrap) return;
-    const onScroll = () => wrap.classList.toggle('is-visible', window.scrollY > 400);
-    window.addEventListener('scroll', onScroll, { passive:true });
-    onScroll();
-  })();
-</script>
+    // Reveal the button after a little scroll (keeps it subtle on short pages)
+    (function(){
+      const wrap = document.querySelector('.backtop');
+      if(!wrap) return;
+      const onScroll = () => wrap.classList.toggle('is-visible', window.scrollY > 400);
+      window.addEventListener('scroll', onScroll, { passive:true });
+      onScroll();
+    })();
+  </script>
 
-
-<footer class="site-footer" role="contentinfo">
-  <span class="dot" aria-hidden="true"></span>
-  <small>© <span id="year"></span> chrrybmb.com / denisajomo.com</small>
-</footer>
+  <footer class="site-footer" role="contentinfo">
+    <span class="dot" aria-hidden="true"></span>
+    <small>© <span id="year"></span> chrrybmb.com / denisajomo.com</small>
+  </footer>
 </body>
 </html>
