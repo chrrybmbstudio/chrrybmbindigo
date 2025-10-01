@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+
+  <title>Refreshing Checking — Free High-Interest Checking+ | chrrybmb</title>
+  <meta name="description" content="Case study: Refreshing Checking Campaign — Free High-Interest Checking+. SEM + OOH creative driving new account growth." />
+  <link rel="canonical" href="https://chrrybmb.com/work/refreshing-checking.html" />
+
+  <!-- Favicons -->
+  <link rel="icon" href="/assets/eye.svg?v=2" type="image/svg+xml">
+  <link rel="icon" href="/assets/eye-32.png?v=2" sizes="32x32" type="image/png">
+  <link rel="icon" href="/assets/eye-16.png?v=2" sizes="16x16" type="image/png">
+  <link rel="apple-touch-icon" href="/assets/eye-180.png?v=2">
+  <link rel="mask-icon" href="/assets/eye-mask.svg?v=2" color="#4440ff">
+  <link rel="manifest" href="/site.webmanifest?v=2">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="theme-color" content="#0e0f1a" media="(prefers-color-scheme: dark)">
+  <meta name="msapplication-TileColor" content="#4440ff">
+
+  <!-- Social -->
+  <meta property="og:title" content="Refreshing Checking — Free High-Interest Checking+">
+  <meta property="og:description" content="SEM + OOH creative that lifted brand search and opened new accounts.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://chrrybmb.com/work/refreshing-checking.html">
+  <meta property="og:image" content="https://chrrybmb.com/assets/og-image.jpg">
+  <meta property="og:image:alt" content="Iridescent prism glow with chrrybmb mark">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- Base site CSS -->
+  <link rel="stylesheet" href="/style.css?v=9">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Jacquarda+Bastarda+9&display=swap" rel="stylesheet">
+
+  <!-- Page-scoped styles (wins after style.css) -->
+  <style>
+    html, body { max-width:100vw; overflow-x: clip; }
+    :root{
+      --indigo:#4440ff; --pink:#ffe9ff; --ink:#0e0f1a; --page-pad:16px;
+      --ui:.86; --reveal-dur:.6s; --reveal-ease:cubic-bezier(.16,.84,.44,1);
+      --tileR: 18px;
+    }
+
+    /* Brand background like home/contact */
+    body.case{
+      background:
+        radial-gradient(60% 60% at var(--orb-x,72%) var(--orb-y,68%), rgba(68,64,255,.13), transparent 60%),
+        linear-gradient(180deg, #ffffff, #faf9ff);
+      color:var(--ink);
+      -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+    }
+    .container{ width:min(1100px,100%); margin-inline:auto; padding-inline:var(--page-pad) }
+
+    /* Iridescent wave + lens (lightweight) */
+    .iridescent-wave{ position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden }
+    .iridescent-wave::before{
+      content:""; position:absolute; left:-25vw; right:-25vw; top:-200vh; bottom:-200vh;
+      background: conic-gradient(from var(--wave-rot,0deg) at var(--orb-x,50%) var(--orb-y,20%), rgba(127,240,255,.25), rgba(255,106,223,.20), rgba(127,240,255,.25));
+      filter: blur(54px) saturate(150%); mix-blend-mode: color-dodge; opacity:.72; animation: waveSpin 22s linear infinite;
+    }
+    .iridescent-wave::after{
+      content:""; position:absolute; left:-25vw; right:-25vw; top:-240vh; bottom:-240vh;
+      background: radial-gradient(80% 60% at 50% 30%, rgba(255,255,255,.55), rgba(255,255,255,0) 60%),
+                  linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.55) 35%, rgba(255,255,255,0) 70%);
+      filter: blur(18px); mix-blend-mode: soft-light; opacity:.35; animation: rippleDown 36s cubic-bezier(.42,0,.58,1) infinite;
+    }
+    @keyframes waveSpin{ to { transform: rotate(1turn) } }
+    @keyframes rippleDown{ 0%{transform:translate3d(0,-35%,0)} 100%{transform:translate3d(0,35%,0)} }
+    .bg-art{ position:fixed; inset:0; z-index:1; pointer-events:none }
+    .lens-glass{
+      position:absolute; left:72%; top:68%; width:280px; height:280px; transform:translate(-50%,-50%); border-radius:50%;
+      backdrop-filter: blur(10px) saturate(125%) contrast(105%); -webkit-backdrop-filter: blur(10px) saturate(125%) contrast(105%);
+      -webkit-mask-image: radial-gradient(circle 140px at 50% 50%, #000 60%, rgba(0,0,0,.7) 76%, transparent 90%);
+              mask-image: radial-gradient(circle 140px at 50% 50%, #000 60%, rgba(0,0,0,.7) 76%, transparent 90%);
+      background: radial-gradient(closest-side, rgba(68,64,255,.18), transparent 70%);
+    }
+    .lens-aura{ position:absolute; left:72%; top:68%; width:300px; height:300px; transform:translate(-50%,-50%); border-radius:50% }
+
+    /* Reveal */
+    [data-animate]{ opacity:0; transform: translateY(10px); transition: opacity var(--reveal-dur) var(--reveal-ease), transform var(--reveal-dur) var(--reveal-ease) }
+    .is-in[data-animate]{ opacity:1; transform:none }
+    @media (prefers-reduced-motion: reduce){ [data-animate]{ opacity:1 !important; transform:none !important; transition:none !important } }
+
+    /* Title (contact-style wobble/prism) */
+    .case-hero{ position:relative; padding: clamp(18px,6vw,42px) 0 12px; text-align:center }
+    .name-edge{
+      --text:#0e0f1a;
+      font-family:"Funnel Display",system-ui,sans-serif; font-weight:700;
+      font-size: clamp(34px, 7vw, 60px); letter-spacing:-.02em; line-height:.92;
+      margin:0 0 4px; text-transform:lowercase; color:var(--text); position:relative; display:inline-block;
+      filter:url(#softWobble);
+    }
+    .name-edge::after{
+      content:attr(data-text); position:absolute; inset:0; z-index:-1;
+      background: conic-gradient(from 0deg, var(--indigo), var(--pink) 40%, #8aaaff, var(--indigo));
+      -webkit-background-clip:text; background-clip:text; color:transparent;
+      transform: scale(1.04); filter: blur(6px) saturate(125%); opacity:.75; mix-blend-mode: plus-lighter;
+      pointer-events:none;
+    }
+    .subtitle{ font:400 clamp(18px,3.2vw,24px)/1.2 "Jacquarda Bastarda 9",serif; margin:6px 0 0; opacity:.85 }
+
+    /* Meta chips + back link */
+    .meta{ display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-top:12px }
+    .chip{
+      display:inline-flex; align-items:center; gap:8px; padding:8px 10px; border-radius:12px;
+      background:linear-gradient(180deg,#fff,#f6f6ff); border:1px solid #5a57ff;
+      font:700 11px/1 "Funnel Display",system-ui; letter-spacing:.12em; text-transform:uppercase; color:#17182a;
+      box-shadow:0 8px 16px rgba(68,64,255,.1)
+    }
+    .top-actions{ display:flex; justify-content:center; gap:8px; margin-top:12px }
+    .btn-pixel{
+      --shadow: rgba(68,64,255,.12);
+      display:inline-flex; align-items:center; gap:8px; padding:10px 12px; border-radius: 12px; border:1px solid #5a57ff;
+      background:linear-gradient(180deg,#fff,#f6f6ff); font:700 12px/1 "Funnel Display",system-ui;
+      letter-spacing:.12em; text-transform:uppercase; box-shadow: 0 8px 16px var(--shadow); text-decoration:none; color:#17182a;
+      transition: transform .12s ease, box-shadow .12s ease;
+    }
+    .btn-pixel:hover{ transform: translateY(-0.5px); box-shadow: 0 12px 22px rgba(68,64,255,.18) }
+    .btn-pixel--ghost{ background:#fff; border-style:dashed; opacity:.92 }
+
+    /* Section spacing */
+    .section{ padding: clamp(18px, 5vw, 40px) 0; position:relative; z-index:2 }
+
+    /* --- MEDIA GRID: small 1:1 tiles, indigo↔white duotone, subtle zoom --- */
+    .media-grid{
+      display:grid; gap:12px;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 600px){
+      .media-grid{ grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 980px){
+      .media-grid{ grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .tile{
+      position:relative; border-radius:18px; overflow:hidden; aspect-ratio:1/1; background:#fff;
+      box-shadow: 0 10px 40px rgba(68,64,255,.08), 0 1px 0 rgba(255,255,255,.6) inset;
+      isolation:isolate;
+    }
+    .tile-inner{ width:100%; height:100%; display:grid; place-items:center; transition: transform .35s cubic-bezier(.2,.8,.2,1) }
+    .tile img{
+      width:100%; height:100%; object-fit:contain; transform:scale(1);
+      transition: transform .35s cubic-bezier(.2,.8,.2,1), filter .35s;
+      /* normalize before colorization */
+      filter: saturate(0) brightness(1.05) contrast(1.05);
+    }
+    /* Indigo+white duotone mask (robust across PNGs) */
+    .tile::before{
+      content:""; position:absolute; inset:0; pointer-events:none;
+      background: linear-gradient(130deg, #4440ff 0%, #ffffff 100%);
+      mix-blend-mode: color; opacity:.7; transition: opacity .3s ease;
+    }
+    /* soft film grain to unify */
+    .tile::after{
+      content:""; position:absolute; inset:-20%; pointer-events:none; opacity:.06; mix-blend-mode: soft-light;
+      background:
+        repeating-linear-gradient(0deg, rgba(0,0,0,.2) 0 1px, rgba(0,0,0,0) 1px 2px),
+        repeating-linear-gradient(90deg, rgba(0,0,0,.12) 0 1px, rgba(0,0,0,0) 1px 2px);
+      filter: blur(.4px);
+    }
+    .tile:hover .tile-inner{ transform: scale(1.02) }
+    .tile:hover img{ transform: scale(1.05) }
+    .tile:hover::before{ opacity:.78 }
+    @media (hover:none){ .tile:hover .tile-inner, .tile:hover img{ transform:none } }
+
+    /* Campaign Story */
+    .story{ max-width: 72ch; margin: 0 auto; }
+    .story h2{ font:700 clamp(20px,3.6vw,28px)/1.06 "Funnel Display",system-ui; letter-spacing:-.01em; margin:0 0 8px }
+    .story p{ margin:0 0 10px; color:#2c3144; font:400 15.5px/1.55 "DM Sans",system-ui }
+
+    /* Metrics row (compact) */
+    .metrics{ display:grid; gap:10px; grid-template-columns: repeat(auto-fit, minmax(160px,1fr)); margin-top: 10px }
+    .metric{
+      border-radius:16px; padding:12px;
+      background: linear-gradient(180deg, rgba(255,255,255,.62), rgba(255,255,255,.42));
+      box-shadow: 0 10px 40px rgba(68,64,255,.08), 0 1px 0 rgba(255,255,255,.6) inset;
+      text-align:left;
+    }
+    .metric .num{ font:800 24px/1.05 "Funnel Display",system-ui; letter-spacing:-.01em; color:#0e0f1a }
+    .metric .label{ margin-top:4px; font:500 12px/1.2 "DM Sans",system-ui; color:#2c3144 }
+    .metric small{ display:block; margin-top:6px; font:400 11px/1.3 "DM Sans",system-ui; color:#556; opacity:.8 }
+
+    /* Bottom spotlight (CUofGA UI) — smaller, transparent, flush with copy on mobile */
+    .spotlight{
+      display:grid; gap:16px; align-items:end;
+      grid-template-columns: 1fr;
+      align-items: center;
+    }
+    @media (min-width: 880px){
+      .spotlight{ grid-template-columns: 1.1fr .9fr }
+    }
+    .phone-frame{
+      justify-self:center;
+      max-width:min(200px, 74vw);            /* smaller by default */
+      padding:0; border-radius:24px;
+      background: transparent;               /* no white slab behind transparent PNG */
+      border: 0; box-shadow: none;
+      transition: transform .35s cubic-bezier(.2,.8,.2,1);
+    }
+    .phone-frame img{
+      display:block; width:100%; height:auto; object-fit:contain; border-radius:24px;
+      image-rendering:auto;
+      filter: drop-shadow(0 8px 28px rgba(68,64,255,.18)); /* gentle lift only on the PNG itself */
+    }
+    .phone-frame:hover{ transform: scale(1.02) }
+    @media (hover:none){ .phone-frame:hover{ transform:none } }
+    @media (max-width: 540px){
+      .spotlight{ align-items:center }
+      .phone-frame{ justify-self:start; max-width: 220px; } /* flush with text column */
+    }
+
+    .lead{ max-width: 68ch; color:#2c3144; font:400 15.5px/1.55 "DM Sans",system-ui }
+  </style>
+</head>
+
+<body class="case density-xs">
+<!-- SVG defs for wobble -->
+<svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden">
+  <filter id="softWobble" x="-50%" y="-50%" width="200%" height="200%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.008" numOctaves="1" seed="11" result="noise">
+      <animate attributeName="baseFrequency" dur="14s" values="0.008;0.010;0.008" repeatCount="indefinite" />
+    </feTurbulence>
+    <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+</svg>
+
+<!-- Header (unchanged) -->
+<header class="site-header" role="banner">
+  <div class="site-header__chrome" aria-hidden="true"></div>
+  <div class="header__inner">
+    <a class="brand" href="/" aria-label="chrrybmb home">
+      <img class="brand__logo-img" src="../assets/indigo_chrry_indypinky.svg" alt="chrrybmb logo" width="64" height="38" decoding="async">
+    </a>
+    <nav class="nav" aria-label="primary">
+      <ul class="nav__list">
+        <li><a href="/index.html">home</a></li>
+        <li><a href="/work.html">work</a></li>
+        <li><a href="/contact.html">contact</a></li>
+      </ul>
+    </nav>
+    <div class="header__actions">
+      <a class="btn-pixel btn-pixel--ghost" href="/work.html">← back to work</a>
+    </div>
+  </div>
+</header>
+
+<!-- Brand background layers -->
+<div class="iridescent-wave" aria-hidden="true"></div>
+<div class="bg-art" aria-hidden="true"><span class="lens-glass"></span><span class="lens-aura"></span></div>
+
+<main id="main" class="site-main" role="main">
+  <!-- Title -->
+  <section class="case-hero">
+    <div class="container" data-animate>
+      <h1 class="name-edge" data-text="refreshing checking">refreshing checking</h1>
+      <div class="subtitle">Free High-Interest Checking+</div>
+
+      <div class="meta">
+        <span class="chip">role · creative direction & design</span>
+        <span class="chip">channels · sem, display, ooh</span>
+        <span class="chip">partner · sem vendor</span>
+      </div>
+
+      <div class="top-actions">
+        <a class="btn-pixel" href="/contact.html">hire me</a>
+        <a class="btn-pixel btn-pixel--ghost" href="/work.html">more projects</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Media -->
+  <section class="section" aria-label="Campaign creative">
+    <div class="container">
+      <div class="media-grid">
+        <figure class="tile" data-animate>
+          <div class="tile-inner">
+            <img src="../assets/sem-campaign1.png" alt="SEM creative variant 1">
+          </div>
+        </figure>
+        <figure class="tile" data-animate style="--stagger:60ms">
+          <div class="tile-inner">
+            <img src="../assets/sem-campaign2.png" alt="SEM creative variant 2">
+          </div>
+        </figure>
+        <figure class="tile" data-animate style="--stagger:100ms">
+          <div class="tile-inner">
+            <img src="../assets/refreshing-checking-billboard2.png" alt="Refreshing Checking billboard execution">
+          </div>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- Campaign Story -->
+  <section class="section" aria-label="Campaign story">
+    <div class="container story" data-animate>
+      <h2>campaign story</h2>
+      <p>We reframed “free checking” into a more modern promise—<em>Free High-Interest Checking+</em>—and carried that through SEM and out-of-home. The line anchored both acquisition and brand search lifts.</p>
+      <p>With limited assets, we focused on message clarity, strong typography, and consistent handoff: ad → landing → app. A tightly managed SEM structure (exact + phrase cores, SKAGs where it mattered) let us keep CPCs efficient while pushing CTR north of category norms.</p>
+    </div>
+  </section>
+
+  <!-- Results -->
+  <section class="section" aria-label="Results">
+    <div class="container" data-animate>
+      <div class="metrics">
+        <div class="metric"><div class="num">1.2M</div><div class="label">impressions</div><small>search & display, flight total</small></div>
+        <div class="metric"><div class="num">4.2%</div><div class="label">ctr</div><small>search avg., top ad groups</small></div>
+        <div class="metric"><div class="num">$1.25</div><div class="label">avg. cpc</div><small>priority term coverage</small></div>
+        <div class="metric"><div class="num">1,130</div><div class="label">new accounts</div><small>tracked opens attributed</small></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mobile handoff (CUofGA UI) -->
+  <section class="section" aria-label="Mobile experience">
+    <div class="container spotlight">
+      <div data-animate>
+        <h2 class="name-edge" style="font-size: clamp(24px,5.2vw,40px); filter:none" data-text="mobile handoff">mobile handoff</h2>
+        <p class="lead" style="margin-top:6px">
+          SEM clicked through to streamlined account start flows and app onboarding. Keeping the value prop
+          (“free, high-interest checking”) consistent from ad → landing → app helped conversion hold.
+        </p>
+      </div>
+      <div class="phone-frame" data-animate style="--stagger:80ms">
+        <img src="../assets/cuofga-mobile-ui.png" alt="CU of GA mobile app login screen">
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section" aria-label="CTA">
+    <div class="container" data-animate>
+      <div class="top-actions" style="margin-top:2px">
+        <a class="btn-pixel" href="/contact.html">let’s build your next campaign</a>
+        <a class="btn-pixel btn-pixel--ghost" href="/work.html">see more work</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer" role="contentinfo">
+  <span class="dot" aria-hidden="true"></span>
+  <small>© <span id="year"></span> chrrybmb.com / denisajomo.com</small>
+</footer>
+
+<script>
+  // year
+  (function(){ const y=document.getElementById('year'); if(y) y.textContent=new Date().getFullYear(); })();
+
+  // reveal-on-scroll
+  (function(){
+    const els = document.querySelectorAll('[data-animate]');
+    if(!('IntersectionObserver' in window) || !els.length){ els.forEach(e=>e.classList.add('is-in')); return; }
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('is-in'); io.unobserve(e.target); } });
+    }, {threshold: .15});
+    els.forEach(el=>io.observe(el));
+  })();
+</script>
+
+<!-- keep your site-wide JS if needed -->
+<script type="module" src="/site.js" defer></script>
+</body>
+</html>
