@@ -416,25 +416,73 @@
   .scroll-cue a svg{ width: 12px; height: 12px; }
 }
 
-/* Scroll back-to-top cue */
-.backtop {
+ /* Back-to-top cue: desktop/tablet default (inline) */
+.backtop{
   display:flex; justify-content:center; align-items:center;
-  margin: 8px auto 2px;
+  margin: 12px auto 22px;
+}
+
+.backtop a{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:12px 14px; border-radius:999px; border:1px dashed #5a57ff;
+  background: linear-gradient(180deg,#fff,#f7f7ff);
+  font:700 12px/1 "Funnel Display", system-ui; letter-spacing:.12em; text-transform:uppercase;
+  color:#17182a; text-decoration:none;
+  box-shadow:0 6px 14px rgba(68,64,255,.10);
+  min-height:44px; /* ✅ good mobile tap target */
+  -webkit-tap-highlight-color: transparent; /* ✅ iOS tap flash */
+  touch-action: manipulation;               /* ✅ reduces 300ms delay */
+  outline: none;
   z-index: 5;
 }
 
-.backtop a {
-  display:inline-flex; align-items:center; gap:8px;
-  padding:10px 12px; border-radius:999px; border:1px dashed #5a57ff;
-  margin: 50px;
-  background: linear-gradient(180deg,#fff,#f7f7ff);
-  font:700 11px/1 "Funnel Display",system-ui; letter-spacing:.12em; text-transform:uppercase;
-  color:#17182a; text-decoration:none; box-shadow:0 6px 14px rgba(68,64,255,.10);
+.backtop a:focus-visible{
+  box-shadow:0 0 0 3px rgba(68,64,255,.25), 0 6px 14px rgba(68,64,255,.10);
 }
 
-.backtop a svg {
+.backtop a:active{
+  transform: translateY(1px);
+}
+
+.backtop a svg{
   width:14px; height:14px;
 }
+
+/* ✅ Mobile: float it bottom-right with safe-area padding, larger touch target */
+@media (max-width: 480px){
+  .backtop{
+    position: fixed;
+    right: 16px;
+    bottom: calc(16px + env(safe-area-inset-bottom));
+    left: auto; top: auto;
+    z-index: 50;
+    margin: 0; /* remove flow margins to prevent layout shifts */
+  }
+
+  .backtop a{
+    padding: 12px 16px;
+    font-size: 12px;
+    gap: 6px;
+    box-shadow: 0 8px 18px rgba(68,64,255,.16);
+  }
+
+  .backtop a svg{
+    width: 14px; height: 14px;
+  }
+}
+
+/* Optional: slightly smaller on very large screens to keep proportions tidy */
+@media (min-width: 1200px){
+  .backtop a{ font-size: 11px; padding: 11px 13px; }
+}
+
+/* Smooth scroll (kept), but respect reduced motion */
+html{ scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior: auto; }
+  .backtop a{ transition: none; }
+}
+
 
 /* Smooth scroll behavior */
 html {
