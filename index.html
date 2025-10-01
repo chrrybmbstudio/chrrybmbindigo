@@ -370,7 +370,7 @@
     }
     .quick-nav a{
       display:inline-flex; align-items:center; gap:8px; padding:10px 12px;
-      border-radius:12px; border:1px solid #5a57ff; background: transparent);
+      border-radius:12px; border:1px solid #5a57ff; background: transparent;
       font:700 12px/1 "Funnel Display",system-ui; letter-spacing:.12em; text-transform:uppercase;
       color:#17182a; text-decoration:none; box-shadow:0 8px 16px rgba(68,64,255,.12);
       transition: transform .12s ease, box-shadow .12s ease;
@@ -450,6 +450,20 @@
 .backtop a svg{
   width:14px; height:14px;
 }
+
+/* 1) Unify the blend backdrop across the whole page */
+body { isolation: isolate; }
+
+/* 2) Make sure the footer doesn’t paint a solid background that “breaks” the vibe */
+.site-footer {
+  background: transparent;
+  position: relative;   /* keeps it in normal flow */
+  z-index: 2;           /* above .bg-art (z:1); .iridescent-wave is below everything */
+}
+
+/* 3) iOS Safari quirk: avoid clipping/blend cutoff with contain: paint */
+.iridescent-wave { contain: none; }  /* was: contain: paint; */
+
 
 /* Hide back-to-top on mobile only */
 @media (max-width: 640px){
