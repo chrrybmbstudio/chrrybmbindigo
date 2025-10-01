@@ -307,7 +307,7 @@
     .scroll-cue a {
       display:inline-flex; align-items:center; gap:8px;
       padding:10px 12px; border-radius:999px; border:1px dashed #5a57ff;
-      margin: 50px;
+      margin: 16px;
       background: linear-gradient(180deg,#fff,#f7f7ff);
       font:700 11px/1 "Funnel Display",system-ui; letter-spacing:.12em; text-transform:uppercase;
       color:#17182a; text-decoration:none; box-shadow:0 6px 14px rgba(68,64,255,.10);
@@ -315,7 +315,7 @@
     .scroll-cue a svg { width:14px; height:14px; }
 
     /* Separator sheen (no big spacer) */
-    .splitter{ position: relative; height: 10vh; min-height:56px; z-index:1; }
+    .splitter{ position: relative; height: 7vh; min-height:42px; z-index:1; }
     .splitter::before{
       content:""; position:relative; inset:-20% -10%;
       background:
@@ -339,8 +339,9 @@
     }
 
     .brand-logo-wrap{
-      position:relative; margin-inline:auto; max-width:min(620px, 86vw);
-      aspect-ratio:1/1; /* keeps it tidy on mobile */
+      position:relative; margin-inline:auto; max-width:min(420px, 72vw);
+      aspect-ratio:1/1;
+      margin: 0 auto;
       filter: drop-shadow(0 18px 40px rgba(68,64,255,.14));
       isolation:isolate;
     }
@@ -420,19 +421,21 @@
 .backtop{
   display:flex; justify-content:center; align-items:center;
   margin: 12px auto 22px;
+  padding-bottom: 0;
 }
 
 .backtop a{
   display:inline-flex; align-items:center; gap:8px;
-  padding:12px 14px; border-radius:999px; border:1px dashed #5a57ff;
+  padding:10px 14px; border-radius:999px; border:1px dashed #5a57ff;
   background: linear-gradient(180deg,#fff,#f7f7ff);
   font:700 12px/1 "Funnel Display", system-ui; letter-spacing:.12em; text-transform:uppercase;
-  color:#17182a; text-decoration:none;
-  box-shadow:0 6px 14px rgba(68,64,255,.10);
-  min-height:44px; /* ✅ good mobile tap target */
-  -webkit-tap-highlight-color: transparent; /* ✅ iOS tap flash */
-  touch-action: manipulation;               /* ✅ reduces 300ms delay */
-  outline: none;
+  color:#17182a; text-decoration:none; box-shadow:0 6px 14px rgba(68,64,255,.10);
+  min-height:44px;
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+  outline:none;
+  transform: translateZ(0);           /* reduce paint jank on mobile */
+  will-change: transform, opacity;
   z-index: 1;
 }
 
@@ -448,6 +451,23 @@
   width:14px; height:14px;
 }
 
+/* mobile: fixed & CENTERED at bottom (not right-aligned), safe-area aware */
+@media (max-width: 640px){
+  .backtop{
+    position:relative;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: calc(16px + env(safe-area-inset-bottom));
+    z-index: 1;
+    margin: 0;                 /* nothing in flow = no footer push */
+    width: auto;
+  }
+  .backtop a{
+    padding: 12px 16px;
+    box-shadow:0 8px 18px rgba(68,64,255,.16);
+  }
+}
+
 /* Smooth scroll behavior */
 html {
   scroll-behavior: smooth;
@@ -459,7 +479,7 @@ html {
 
 <body class="density-xs">
 <!-- Header / Nav -->
-<header class="site-header" role="banner">
+<header class="site-header" role="banner" id="top">
   <div class="site-header__chrome" aria-hidden="true"></div>
   <div class="header__inner">
     <a class="brand" href="/" aria-label="chrrybmb home">
@@ -613,15 +633,13 @@ html {
   </div>
 
 <!-- NEW: tiny scroll up cue -->
+<!-- give the anchor an id to match the JS listener -->
 <div class="backtop" aria-hidden="false">
-  <a href="#top" aria-label="Scroll back to top">
+  <a id="backTop" href="#top" aria-label="Scroll back to top">
     top
-    <svg viewBox="0 0 16 16" aria-hidden="true">
-      <path d="M8 4l-4 5h8z" fill="currentColor"/>
-    </svg>
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 4l-4 5h8z" fill="currentColor"/></svg>
   </a>
 </div>
-</section>
 
 
   <!-- Single shared script -->
