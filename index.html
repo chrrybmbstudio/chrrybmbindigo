@@ -416,6 +416,38 @@
   .scroll-cue a svg{ width: 12px; height: 12px; }
 }
 
+/* Back to top */
+.backtop{
+  position: sticky;                /* sticks near the bottom of the viewport */
+  bottom: clamp(10px, 4vh, 24px);  /* how far off the bottom */
+  z-index: 10;
+  padding: 8px 0 2px;              /* tiny breathing room above footer */
+}
+
+.btn-top{
+  display:inline-flex; align-items:center; gap:8px;
+      padding:10px 12px; border-radius:999px; border:1px dashed #5a57ff;
+      margin: 50px;
+      background: linear-gradient(180deg,#fff,#f7f7ff);
+      font:700 11px/1 "Funnel Display",system-ui; letter-spacing:.12em; text-transform:uppercase;
+      color:#17182a; text-decoration:none; box-shadow:0 6px 14px rgba(68,64,255,.10);
+    }
+
+.btn-top:hover{ transform: translateY(-1px); box-shadow: 0 12px 22px rgba(68,64,255,.18); }
+.btn-top:active{ transform: translateY(0); }
+.btn-top:focus-visible{ outline:2px solid #5a57ff; outline-offset:2px; }
+
+.backtop .container{ display:flex; justify-content:center; }
+
+/* Optional: fade in only after some scroll */
+.backtop{ opacity:0; filter:saturate(.96); transition: opacity .2s ease, filter .2s ease; }
+.backtop.is-visible{ opacity:1; filter:none; }
+
+/* Mobile: make sure it fits nicely */
+@media (max-width:480px){
+  .btn-top{ padding:10px 12px; }
+}
+
 
   </style>
 </head>
@@ -611,5 +643,23 @@
       els.forEach(el=> io.observe(el));
     })();
   </script>
+
+<script>
+  // Smooth scroll to 0
+  document.getElementById('backTop')?.addEventListener('click', ()=>{
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+  });
+
+  // Reveal the button after a little scroll (keeps it subtle on short pages)
+  (function(){
+    const wrap = document.querySelector('.backtop');
+    if(!wrap) return;
+    const onScroll = () => wrap.classList.toggle('is-visible', window.scrollY > 400);
+    window.addEventListener('scroll', onScroll, { passive:true });
+    onScroll();
+  })();
+</script>
+
 </body>
 </html>
