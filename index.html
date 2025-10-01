@@ -9,49 +9,40 @@
   <meta name="description" content="chrrybmb" />
   <link rel="canonical" href="https://chrrybmb.com/" />
 
-
   <!-- Favicon -->
-<!-- Icons: SVG first, PNG fallbacks -->
-<link rel="icon" href="/assets/eye.svg?v=2" type="image/svg+xml">
-<link rel="icon" href="/assets/eye-32.png?v=2" sizes="32x32" type="image/png">
-<link rel="icon" href="/assets/eye-16.png?v=2" sizes="16x16" type="image/png">
+  <link rel="icon" href="/assets/eye.svg?v=2" type="image/svg+xml">
+  <link rel="icon" href="/assets/eye-32.png?v=2" sizes="32x32" type="image/png">
+  <link rel="icon" href="/assets/eye-16.png?v=2" sizes="16x16" type="image/png">
+  <link rel="apple-touch-icon" href="/assets/eye-180.png?v=2">
+  <link rel="mask-icon" href="/assets/eye-mask.svg?v=2" color="#4440ff">
+  <link rel="manifest" href="/site.webmanifest?v=2">
 
-<!-- iOS home screen (SVG not supported here) -->
-<link rel="apple-touch-icon" href="/assets/eye-180.png?v=2">
+  <!-- Browser chrome color (light/dark) -->
+  <meta name="theme-color" content="#ffffff">
+  <meta name="theme-color" content="#0e0f1a" media="(prefers-color-scheme: dark)">
+  <meta name="msapplication-TileColor" content="#4440ff">
 
-<!-- Safari pinned tab (monochrome mask SVG) -->
-<link rel="mask-icon" href="/assets/eye-mask.svg?v=2" color="#4440ff">
+  <!-- Social previews -->
+  <meta property="og:image" content="https://chrrybmb.com/assets/og-image.jpg?v=2">
+  <meta property="og:image:alt" content="chrrybmb — iridescent eye mark on prism glow">
+  <meta name="twitter:card" content="summary_large_image">
 
-<!-- PWA manifest (optional, nice to have) -->
-<link rel="manifest" href="/site.webmanifest?v=2">
+  <!-- Open Graph -->
+  <meta property="og:title" content="chrrybmb — denisa j. moraru">
+  <meta property="og:description" content="creative leadership for brand & web.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://chrrybmb.com/">
+  <meta property="og:image" content="https://chrrybmb.com/assets/og-image.jpg">
+  <meta property="og:image:alt" content="chrrybmb iridescent glow with eye mark">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="chrrybmb">
 
-<!-- Browser chrome color (light/dark) -->
-<meta name="theme-color" content="#ffffff">
-<meta name="theme-color" content="#0e0f1a" media="(prefers-color-scheme: dark)">
-<meta name="msapplication-TileColor" content="#4440ff">
-
-<!-- Social previews (refresh your image if you update the design) -->
-<meta property="og:image" content="https://chrrybmb.com/assets/og-image.jpg?v=2">
-<meta property="og:image:alt" content="chrrybmb — iridescent eye mark on prism glow">
-<meta name="twitter:card" content="summary_large_image">
-
-
-<!-- Open Graph -->
-<meta property="og:title" content="chrrybmb — denisa j. moraru">
-<meta property="og:description" content="creative leadership for brand & web.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://chrrybmb.com/">
-<meta property="og:image" content="https://chrrybmb.com/assets/og-image.jpg">
-<meta property="og:image:alt" content="chrrybmb iridescent glow with eye mark">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:site_name" content="chrrybmb">
-
-<!-- Twitter -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="chrrybmb — denisa jomo">
-<meta name="twitter:description" content="creative leadership for brand & web.">
-<meta name="twitter:image" content="https://chrrybmb.com/assets/og-image.jpg">
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="chrrybmb — denisa jomo">
+  <meta name="twitter:description" content="creative leadership for brand & web.">
+  <meta name="twitter:image" content="https://chrrybmb.com/assets/og-image.jpg">
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -61,21 +52,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@500;700;800&display=swap" rel="stylesheet">
 
   <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-2V368XS4ED"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-2V368XS4ED');
-</script>
-
-
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2V368XS4ED"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-2V368XS4ED');
+  </script>
 
   <!-- Base site CSS -->
   <link rel="stylesheet" href="/style.css?v=9">
   <link rel="stylesheet" href="/mobilestyle.css?v=1" media="(max-width: 640px)">
-
 
   <!-- Page-scoped helpers -->
   <style>
@@ -88,7 +75,6 @@
       /* pixel-mini vibe */
       --px-font:"Funnel Display", system-ui, sans-serif;
       --px-track:.12em;
-
 
       /* === Reveal system knobs === */
       --reveal-dur: .72s;
@@ -104,7 +90,6 @@
       -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
     }
 
-    /* Provide a robust “container” everywhere this page expects it */
     .container{
       width: min(1100px, 100%);
       margin-inline: auto;
@@ -112,7 +97,7 @@
       box-sizing: border-box;
     }
 
-    /* IRIDESCENT WAVE (full-page) — anti-seam overscan + GPU hinting */
+    /* IRIDESCENT WAVE */
     .iridescent-wave{ position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow:hidden; will-change: transform; transform: translateZ(0); backface-visibility: hidden; contain: paint; }
     .iridescent-wave::before{
       content:""; position:absolute; left:-25vw; right:-25vw; top:-200vh; bottom:-200vh;
@@ -133,7 +118,7 @@
     @keyframes waveSpin{ to { transform: rotate(1turn) } }
     @keyframes rippleDown{ 0%{transform:translate3d(0,-35%,0)} 100%{transform:translate3d(0,35%,0)} }
 
-    /* FULL-VIEW LENS (no clipping anywhere) */
+    /* FULL-VIEW LENS */
     .bg-art{ position: fixed; inset: 0; z-index: 1; pointer-events: none; overflow: visible; }
     .lens-glass{
       position:absolute; left: var(--lx, 72%); top: var(--ly, 68%);
@@ -156,22 +141,21 @@
       mix-blend-mode: screen; opacity:.55; filter: blur(7px);
     }
 
-
     /* Phone polish */
     @media (max-width:480px){
       .card-iris{width:min(94vw, 560px)}
       .btn-pixel{ --px: 10px; padding: 8px 10px; }
     }
 
-    /* ===== Home Density Adapter (clean) ===== */
+    /* Home Density */
     body.density-xs  { --ui: .86; }
     body.density-xxs { --ui: .66; }
 
-    /* === HERO (no bottom space) === */
+    /* HERO */
     .hero{
       margin: calc(var(--ui) * clamp(12px,3vw,28px)) auto;
       border-radius: calc(var(--ui) * clamp(16px, 2.4vw, 28px));
-      padding: 0; /* zero all padding */
+      padding: 0;
       width: min(1100px, 88vw);
       box-shadow: 0 18px 50px rgba(68,64,255,.10), 0 2px 10px rgba(0,0,0,.04);
       background:
@@ -185,7 +169,7 @@
 
     .hero-card{
       padding: calc(var(--ui) * clamp(20px, 4vw, 26px));
-      padding-bottom: 0; /* image flush */
+      padding-bottom: 0;
       border-radius: calc(var(--ui) * clamp(18px, 1.4vw, 28px));
     }
     .hero__grid{ display:grid; grid-template-columns:1fr; gap: calc(var(--ui) * min(32px, 3.5vw)); align-items:end; }
@@ -204,7 +188,6 @@
       .hero__cta .btn-pixel{ flex: 0 0 auto; }
     }
 
-    /* Headline & kicker scale */
     .name-edge{
       margin:0 0 calc(var(--ui) * 8px);
       font-weight:600; text-transform:lowercase; letter-spacing: var(--track, -0.06em);
@@ -213,7 +196,6 @@
     .hero__content h1{ font-size: calc(var(--ui) * clamp(32px, 3vw, 48px)); margin:0 0 calc(var(--ui) * 8px); }
     .kicker{ font-family:"Jacquarda Bastarda 9", serif; font-size:max(20px, calc(var(--ui) * 18px)); margin: calc(var(--ui) * 8px) 0 calc(var(--ui) * 10px); color:#2c3144; }
 
-    /* HERO media (Heather SVG) */
     .hero__media{ display:flex; justify-content:flex-end; align-items:flex-end; margin-bottom:0; padding-bottom:0; }
     .heather-svg{ display:block; width: min(calc(32vw * var(--ui)), calc(666px * var(--ui))); height:auto; filter: drop-shadow(0 16px 40px rgba(68,64,255,.10)); }
     @media (max-width:900px){
@@ -223,8 +205,7 @@
       .hero__content h1{ font-size: calc(var(--ui) * 60px); letter-spacing: calc(var(--ui) * -0.09em); margin: calc(var(--ui) * 22px) 0 calc(var(--ui) * 4px); }
     }
 
-    /* ===== Pixel-mini buttons (Funnel Display, ALL CAPS) ===== */
-    /* buttons — reuse “ghost” from checking/work page (dashed) */
+    /* Buttons */
     .btn-row{ display:flex; flex-wrap:wrap; gap:8px; margin-top:10px }
     .btn-pixel{
       --shadow: rgba(68,64,255,.12);
@@ -243,12 +224,10 @@
     .is-in[data-animate]{ opacity:1; transform:none }
     .hero__cta{ display:flex; gap: calc(var(--ui) * 12px); margin: 0 0 calc(var(--ui) * 8px); flex-wrap:wrap; }
 
-    /* ===== Features ===== */
+    /* Features */
     .features{
-  padding: calc(var(--ui) * clamp(22px, 5vw, 44px)) 0;
-}
-
-
+      padding: calc(var(--ui) * clamp(22px, 5vw, 44px)) 0;
+    }
     .features__grid{
       display:grid;
       grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
@@ -256,7 +235,6 @@
       padding-inline: var(--page-pad);
       box-sizing: border-box;
     }
-
     .card-iris{
       position: relative; border-radius: calc(var(--ui) * 18px);
       padding: 16px 18px;
@@ -286,7 +264,7 @@
     .feature-card h3, .feature-card .pxlh{ margin:0; font-size: calc(var(--ui) * 19px); line-height:1.1; letter-spacing:.02em; }
     .feature-card p{ margin: 0 0 auto; color:#2c3144; font-size: max(12px, calc(var(--ui)* 13.5px)); line-height:1.42; }
 
-    /* === Mini cards — tightened (from your last turn) === */
+    /* Tight mini-card helpers (as-before) */
     :root{ --card-pad-y: 12px; --card-pad-x: 14px; --card-gap: 8px; --card-btn-gap:6px; }
     .card-iris{ padding: var(--card-pad-y) var(--card-pad-x); }
     .feature-card{ gap: var(--card-gap); min-height: unset; }
@@ -295,9 +273,11 @@
     .feature-card .btn-pixel{ margin-top: var(--card-btn-gap); }
     @media (max-width: 520px){
       :root{ --card-pad-y:10px; --card-pad-x:12px; --card-gap:7px; --card-btn-gap:5px; }
+      .feature-card{ align-items: center; }
+      .feature-card .btn-pixel{ align-self: center; }
     }
 
-    /* === Reveal presets === */
+    /* Reveal presets */
     [data-animate]{
       opacity: 0;
       transform: translate3d(0, var(--reveal-ydist), 0) scale(.985);
@@ -318,20 +298,96 @@
       [data-animate]{ opacity:1 !important; transform:none !important; }
     }
 
-    @media (max-width: 520px){
-  .feature-card{ align-items: center; }
-  .feature-card .btn-pixel{ align-self: center; }
-}
+    /* =====================================================
+       NEW: bottom section additions (lightweight & responsive)
+       ===================================================== */
+
+    /* Smooth anchor scroll (robust without JS) */
+    html { scroll-behavior: smooth; }
+
+    /* Scroll cue (between Features and Brand panel) */
+    .scroll-cue {
+      display:flex; justify-content:center; align-items:center;
+      margin: 8px auto 2px; /* tiny footprint */
+    }
+    .scroll-cue a {
+      display:inline-flex; align-items:center; gap:8px;
+      padding:10px 12px; border-radius:999px; border:1px dashed #5a57ff;
+      background: linear-gradient(180deg,#fff,#f7f7ff);
+      font:700 11px/1 "Funnel Display",system-ui; letter-spacing:.12em; text-transform:uppercase;
+      color:#17182a; text-decoration:none; box-shadow:0 6px 14px rgba(68,64,255,.10);
+    }
+    .scroll-cue a svg { width:14px; height:14px; }
+
+    /* Separator sheen (no big spacer) */
+    .splitter{ position: relative; height: 10vh; min-height:56px; z-index:1; }
+    .splitter::before{
+      content:""; position:absolute; inset:-20% -10%;
+      background:
+        radial-gradient(60% 60% at 50% 10%, rgba(68,64,255,.18), transparent 60%),
+        conic-gradient(from 180deg at 50% 50%, rgba(127,240,255,.22), rgba(255,106,223,.18), rgba(127,240,255,.22));
+      filter: blur(28px) saturate(130%); opacity:.5; mix-blend-mode: plus-lighter; pointer-events:none;
+    }
+    .splitter .sheen{
+      position:sticky; top:0; height:2px; display:block;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.9), transparent);
+      filter: blur(1px); opacity:.5
+    }
+
+    /* Brand panel */
+    .brand-panel{ position:relative; z-index:2; padding: clamp(20px, 8vw, 80px) 0 clamp(28px, 10vw, 120px); }
+    .brand-panel .container{
+      display:grid; grid-template-columns:1fr; gap: clamp(12px, 3.5vw, 28px); align-items:center;
+    }
+    @media (min-width: 960px){
+      .brand-panel .container{ grid-template-columns: 1.1fr .9fr; }
+    }
+
+    .brand-logo-wrap{
+      position:relative; margin-inline:auto; max-width:min(620px, 86vw);
+      aspect-ratio:1/1; /* keeps it tidy on mobile */
+      filter: drop-shadow(0 18px 40px rgba(68,64,255,.14));
+      isolation:isolate;
+    }
+    .brand-logo-wrap img{ width:100%; height:100%; object-fit:contain; display:block; }
+
+    /* Iridescent shimmer overlay (perf-friendly) */
+    .logo-iris{
+      position:absolute; inset:-6%; border-radius:28px; pointer-events:none;
+      background: conic-gradient(from var(--iris-rot,0deg), #7ff0ff, rgba(255,106,223,.95), #7ff0ff);
+      mix-blend-mode: color-dodge; opacity: .15; filter: blur(16px) saturate(160%);
+      animation: irisSpin 18s linear infinite;
+    }
+    @keyframes irisSpin { to { --iris-rot: 360deg; } }
+    @media (prefers-reduced-motion: reduce){
+      .logo-iris{ animation:none; opacity:.10 }
+    }
+
+    .panel-copy{ max-width:720px; margin-inline:auto; }
+    .panel-copy h2{ font: 600 clamp(22px, 3.2vw, 36px)/1.06 "Funnel Display", system-ui, sans-serif; letter-spacing:-.02em; margin:0 0 8px; }
+    .panel-copy .pxlb{ display:block; font-family:"Jacquarda Bastarda 9", serif; font-size: clamp(20px, 5.6vw, 34px); line-height:1.05; margin: 0 0 8px; color:#2c3144 }
+    .panel-copy p{ margin:0 0 12px; font: 400 clamp(14px, 1.6vw, 18px)/1.45 "DM Sans", system-ui, sans-serif; color:#2c3144; }
+
+    .quick-nav{
+      display:flex; flex-wrap:wrap; gap:10px; justify-content:center;
+      margin-top: 6px;
+    }
+    .quick-nav a{
+      display:inline-flex; align-items:center; gap:8px; padding:10px 12px;
+      border-radius:12px; border:1px solid #5a57ff; background:linear-gradient(180deg,#fff,#f6f6ff);
+      font:700 12px/1 "Funnel Display",system-ui; letter-spacing:.12em; text-transform:uppercase;
+      color:#17182a; text-decoration:none; box-shadow:0 8px 16px rgba(68,64,255,.12);
+      transition: transform .12s ease, box-shadow .12s ease;
+    }
+    .quick-nav a:hover{ transform: translateY(-1px); box-shadow:0 12px 22px rgba(68,64,255,.18); }
 
   </style>
-
-
 </head>
 
 <body class="density-xs">
 <!-- Header / Nav -->
 <header class="site-header" role="banner">
-  <div class="site-header__chrome" aria-hidden="true"></div> <!-- subtle prism edge -->
+  <div class="site-header__chrome" aria-hidden="true"></div>
   <div class="header__inner">
     <a class="brand" href="/" aria-label="chrrybmb home">
       <img class="brand__logo-img" src="./assets/indigo_chrry_indypinky.svg" alt="chrrybmb logo" width="64" height="38" decoding="async">
@@ -345,10 +401,8 @@
       </ul>
     </nav>
 
-    <!-- actions: search -->
     <div class="header__actions">
       <button class="icon-btn" id="openSearch" aria-label="open search" title="search (⌘/Ctrl + K)">
-        <!-- tiny loupe -->
         <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M11.2 10.3l3.1 3.1-1 1-3.1-3.1a5 5 0 1 1 1-1zm-6.2.7a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" fill="currentColor"/></svg>
       </button>
     </div>
@@ -371,15 +425,11 @@
   <!-- Iridescent wave -->
   <div class="iridescent-wave" aria-hidden="true"></div>
 
-
-  <!-- FULL-VIEW lens layer (no images, no clipping) -->
+  <!-- FULL-VIEW lens layer -->
   <div class="bg-art" aria-hidden="true">
     <span class="lens-glass"></span>
     <span class="lens-aura"></span>
-  </div>  
-
-  
-
+  </div>
 
   <div class="site-shell">
     <main id="main" class="site-main" role="main">
@@ -401,7 +451,6 @@
               </div>
 
               <div class="hero__media" data-animate="fade-up" style="--stagger:240ms">
-                <!-- Heather PNG with prism edge glow -->
                 <svg class="heather-svg" viewBox="0 0 800 900" preserveAspectRatio="xMidYMax meet" role="img" aria-label="Heather">
                   <defs>
                     <filter id="prismEdgeGlowHero" x="-20%" y="-20%" width="140%" height="140%">
@@ -435,8 +484,6 @@
         </div>
       </section>
 
-
-
       <!-- FEATURES -->
       <section class="features" aria-label="Featured work">
         <div class="container features__grid">
@@ -457,13 +504,42 @@
           </article>
         </div>
       </section>
+
+      <!-- NEW: tiny scroll cue -->
+      <div class="scroll-cue" aria-hidden="false">
+        <a href="#brand" aria-label="Scroll to brand section">
+          scroll
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 12l-4-5h8z" fill="currentColor"/></svg>
+        </a>
+      </div>
+
+      <!-- NEW: subtle separator (no big spacer) -->
+      <div class="splitter" aria-hidden="true"><span class="sheen"></span></div>
+
+      <!-- NEW: Brand Panel -->
+      <section id="brand" class="brand-panel" aria-label="Brand navigation">
+        <div class="container">
+          <div class="brand-logo-wrap">
+            <span class="logo-iris" aria-hidden="true"></span>
+            <img src="./assets/indigo_chrry_pinky.svg" alt="chrrybmb mark" width="600" height="600" loading="lazy" decoding="async">
+          </div>
+
+          <div class="panel-copy" data-animate style="--stagger:120ms">
+            <h2>chrrybmb —</h2>
+            <span class="pxlb">modern × nostalgic</span>
+            <p>Transparent prism blurs, glowing light orbs, clean & responsive UI.</p>
+            <nav class="quick-nav" aria-label="site">
+              <a href="/index.html">home</a>
+              <a href="/about.html">about</a>
+              <a href="/contact.html">contact</a>
+            </nav>
+          </div>
+        </div>
+      </section>
     </main>
   </div>
 
-
-  
-
-  <!-- Shared wobble filter (if style.css uses it) -->
+  <!-- wobble filter -->
   <svg width="0" height="0" style="position:absolute">
     <filter id="softWobble" x="-50%" y="-50%" width="200%" height="200%">
       <feTurbulence type="fractalNoise" baseFrequency="0.008" numOctaves="1" seed="11" result="noise">
@@ -473,8 +549,6 @@
     </filter>
   </svg>
 
-  
-
   <!-- Single shared script -->
   <script type="module" src="./site.js" defer></script>
 
@@ -482,15 +556,23 @@
     <span class="dot" aria-hidden="true"></span>
     <small>© <span id="year"></span> chrrybmb.com / denisajomo.com</small>
   </footer>
-  
+
   <script>
     // year only
     (function(){
       const y = document.getElementById('year');
       if (y) y.textContent = new Date().getFullYear();
     })();
-  </script>
-  
 
+    // minimal reveal observer for your existing [data-animate] hooks
+    (function(){
+      const els = document.querySelectorAll('[data-animate]');
+      if(!('IntersectionObserver' in window) || !els.length) return;
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(e=> e.target.classList.toggle('is-in', e.isIntersecting));
+      }, {threshold:.15});
+      els.forEach(el=> io.observe(el));
+    })();
+  </script>
 </body>
 </html>
