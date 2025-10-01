@@ -3,33 +3,34 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>chrrybmb — work</title>
+  <meta name="description" content="Selected work: compact UX, brand systems, and search-forward growth." />
+  <link rel="canonical" href="https://chrrybmb.com/work.html" />
 
-  <title>Refreshing Checking — Free High-Interest Checking+ | chrrybmb</title>
-  <meta name="description" content="Case study: Refreshing Checking Campaign — Free High-Interest Checking+. SEM + OOH creative driving new account growth." />
-  <link rel="canonical" href="https://chrrybmb.com/work/refreshing-checking.html" />
-
-  <!-- Favicons -->
+  <!-- Favicon -->
   <link rel="icon" href="/assets/eye.svg?v=2" type="image/svg+xml">
   <link rel="icon" href="/assets/eye-32.png?v=2" sizes="32x32" type="image/png">
   <link rel="icon" href="/assets/eye-16.png?v=2" sizes="16x16" type="image/png">
   <link rel="apple-touch-icon" href="/assets/eye-180.png?v=2">
   <link rel="mask-icon" href="/assets/eye-mask.svg?v=2" color="#4440ff">
   <link rel="manifest" href="/site.webmanifest?v=2">
+
+  <!-- Browser chrome color (light/dark) -->
   <meta name="theme-color" content="#ffffff">
   <meta name="theme-color" content="#0e0f1a" media="(prefers-color-scheme: dark)">
   <meta name="msapplication-TileColor" content="#4440ff">
 
-  <!-- Social -->
-  <meta property="og:title" content="Refreshing Checking — Free High-Interest Checking+">
-  <meta property="og:description" content="SEM + OOH creative that lifted brand search and opened new accounts.">
+  <!-- Social previews -->
+  <meta property="og:title" content="chrrybmb — work">
+  <meta property="og:description" content="mini on purpose: UX flows that convert, accessible patterns, and calm visuals." />
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://chrrybmb.com/work/refreshing-checking.html">
+  <meta property="og:url" content="https://chrrybmb.com/work.html">
   <meta property="og:image" content="https://chrrybmb.com/assets/og-image.jpg">
-  <meta property="og:image:alt" content="Iridescent prism glow with chrrybmb mark">
-  <meta name="twitter:card" content="summary_large_image">
+  <meta property="og:image:alt" content="iridescent glow with eye mark">
 
   <!-- Base site CSS -->
   <link rel="stylesheet" href="/style.css?v=9">
+  <link rel="stylesheet" href="/mobilestyle.css?v=1" media="(max-width: 640px)">
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -38,313 +39,219 @@
   <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Jacquarda+Bastarda+9&display=swap" rel="stylesheet">
 
-  <!-- Page-scoped styles (wins after style.css) -->
-  <style>
-    html, body { max-width:100vw; overflow-x: clip; }
-    :root{
-      --indigo:#4440ff; --pink:#ffe9ff; --ink:#0e0f1a; --page-pad:16px;
-      --ui:.86; --reveal-dur:.6s; --reveal-ease:cubic-bezier(.16,.84,.44,1);
-      --tileR: 18px;
-    }
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2V368XS4ED"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);} 
+    gtag('js', new Date());
+    gtag('config', 'G-2V368XS4ED');
+  </script>
 
-    /* Brand background like home/contact */
-    body.case{
+  <style>
+    :root{ --indigo:#4440ff; --pink:#ffe9ff; --ink:#0e0f1a; --cardR: clamp(18px,1.6vw,26px); }
+
+    /* jank guard: no sideways scroll */
+    html, body { max-width: 100vw; overflow-x: clip; }
+
+    /* Page base (keeps your mouse-orb background via --orb-x/--orb-y) */
+    html, body { height: 100%; }
+    body.page-work{
+      display:flex; flex-direction:column; min-height: 100svh; --ui:.72;
       background:
         radial-gradient(60% 60% at var(--orb-x,72%) var(--orb-y,68%), rgba(68,64,255,.13), transparent 60%),
         linear-gradient(180deg, #ffffff, #faf9ff);
       color:var(--ink);
       -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
     }
-    .container{ width:min(1100px,100%); margin-inline:auto; padding-inline:var(--page-pad) }
+    main{ flex: 1 0 auto; padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px)); }
 
-    /* Iridescent wave + lens (lightweight) */
-    .iridescent-wave{ position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden }
-    .iridescent-wave::before{
-      content:""; position:absolute; left:-25vw; right:-25vw; top:-200vh; bottom:-200vh;
-      background: conic-gradient(from var(--wave-rot,0deg) at var(--orb-x,50%) var(--orb-y,20%), rgba(127,240,255,.25), rgba(255,106,223,.20), rgba(127,240,255,.25));
-      filter: blur(54px) saturate(150%); mix-blend-mode: color-dodge; opacity:.72; animation: waveSpin 22s linear infinite;
+    @media (max-width: 699.98px){
+      .page-work .site-footer{ position: static !important; inset: auto !important; transform: none !important; z-index: 0 !important; }
     }
-    .iridescent-wave::after{
-      content:""; position:absolute; left:-25vw; right:-25vw; top:-240vh; bottom:-240vh;
-      background: radial-gradient(80% 60% at 50% 30%, rgba(255,255,255,.55), rgba(255,255,255,0) 60%),
-                  linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.55) 35%, rgba(255,255,255,0) 70%);
-      filter: blur(18px); mix-blend-mode: soft-light; opacity:.35; animation: rippleDown 36s cubic-bezier(.42,0,.58,1) infinite;
-    }
-    @keyframes waveSpin{ to { transform: rotate(1turn) } }
-    @keyframes rippleDown{ 0%{transform:translate3d(0,-35%,0)} 100%{transform:translate3d(0,35%,0)} }
-    .bg-art{ position:fixed; inset:0; z-index:1; pointer-events:none }
-    .lens-glass{
-      position:absolute; left:72%; top:68%; width:280px; height:280px; transform:translate(-50%,-50%); border-radius:50%;
-      backdrop-filter: blur(10px) saturate(125%) contrast(105%); -webkit-backdrop-filter: blur(10px) saturate(125%) contrast(105%);
-      -webkit-mask-image: radial-gradient(circle 140px at 50% 50%, #000 60%, rgba(0,0,0,.7) 76%, transparent 90%);
-              mask-image: radial-gradient(circle 140px at 50% 50%, #000 60%, rgba(0,0,0,.7) 76%, transparent 90%);
-      background: radial-gradient(closest-side, rgba(68,64,255,.18), transparent 70%);
-    }
-    .lens-aura{ position:absolute; left:72%; top:68%; width:300px; height:300px; transform:translate(-50%,-50%); border-radius:50% }
 
-    /* Reveal */
-    [data-animate]{ opacity:0; transform: translateY(10px); transition: opacity var(--reveal-dur) var(--reveal-ease), transform var(--reveal-dur) var(--reveal-ease) }
-    .is-in[data-animate]{ opacity:1; transform:none }
-    @media (prefers-reduced-motion: reduce){ [data-animate]{ opacity:1 !important; transform:none !important; transition:none !important } }
+    /* hero (brand-consistent) */
+    .work-hero{ position:relative; padding: clamp(24px,7vw,64px) 20px 0; text-align:center; }
+    .work-hero .inner{ max-width:min(1100px,92vw); margin-inline:auto; position:relative; }
+    .work-hero .sub{ margin:6px 0 14px; font:400 calc(var(--ui) * clamp(16px,2.4vw,38px))/1.2 "Jacquarda Bastarda 9", serif; opacity:.85; }
 
-    /* Title (contact-style wobble/prism) */
-    .case-hero{ position:relative; padding: clamp(18px,6vw,42px) 0 12px; text-align:center }
-    .name-edge{
-      --text:#0e0f1a;
-      font-family:"Funnel Display",system-ui,sans-serif; font-weight:700;
-      font-size: clamp(34px, 7vw, 60px); letter-spacing:-.02em; line-height:.92;
-      margin:0 0 4px; text-transform:lowercase; color:var(--text); position:relative; display:inline-block;
-      filter:url(#softWobble);
-    }
-    .name-edge::after{
-      content:attr(data-text); position:absolute; inset:0; z-index:-1;
-      background: conic-gradient(from 0deg, var(--indigo), var(--pink) 40%, #8aaaff, var(--indigo));
-      -webkit-background-clip:text; background-clip:text; color:transparent;
-      transform: scale(1.04); filter: blur(6px) saturate(125%); opacity:.75; mix-blend-mode: plus-lighter;
-      pointer-events:none;
-    }
-    .subtitle{ font:400 clamp(18px,3.2vw,24px)/1.2 "Jacquarda Bastarda 9",serif; margin:6px 0 0; opacity:.85 }
+    /* H1 prism/warp */
+    .name-edge{ --text:#0e0f1a; font-family:"Funnel Display", system-ui, sans-serif; font-weight:600; font-size:calc(var(--ui) * clamp(42px,8vw,66px)); letter-spacing:-.02em; line-height:.92; margin:0 0 6px; text-transform:lowercase; position:relative; display:inline-block; color:var(--text); filter:url(#softWobble); isolation:isolate; overflow: clip; }
+    .name-edge::after{ content:attr(data-text); position:absolute; inset:0; z-index:-1; pointer-events:none; background: conic-gradient(from 0deg, var(--indigo), var(--pink) 40%, #8aaaff, var(--indigo)); -webkit-background-clip:text; background-clip:text; color:transparent; transform: scale(1.04); filter: blur(6px) saturate(125%); opacity:.75; mix-blend-mode: plus-lighter; }
+    .name-edge .warp,.name-edge .prism{ position:absolute; inset:0; display:inline-block; -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 35%, #000 65%, transparent 100%); mask-image: linear-gradient(90deg, transparent 0%, #000 35%, #000 65%, transparent 100%); -webkit-mask-size: 220% 100%; mask-size: 220% 100%; -webkit-mask-position: -60% 0; mask-position: -60% 0; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; will-change: -webkit-mask-position, mask-position; }
+    .name-edge .warp{ z-index:1; color:var(--text); -webkit-text-fill-color:currentColor; }
+    .name-edge .prism{ z-index:2; mix-blend-mode:screen; opacity:.55; filter: blur(.6px) saturate(120%); background: linear-gradient(90deg, #7ff0ff 0%, #ff6adf 50%, #7ff0ff 100%); -webkit-background-clip:text; background-clip:text; color:transparent; transform: translateX(.4px); }
+    @media (min-width:641px){ .name-edge .warp,.name-edge .prism{ animation: sweepBand 7s cubic-bezier(.45,.05,.36,1) infinite alternate; } }
+    @media (max-width:640px){ .name-edge .warp,.name-edge .prism{ animation: sweepBand 3.2s cubic-bezier(.5,.1,.2,1) 1 both; } }
+    @keyframes sweepBand{ from{ -webkit-mask-position:-60% 0; mask-position:-60% 0 } to{ -webkit-mask-position:160% 0; mask-position:160% 0 } }
 
-    /* Meta chips + back link */
-    .meta{ display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-top:12px }
-    .chip{
-      display:inline-flex; align-items:center; gap:8px; padding:8px 10px; border-radius:12px;
-      background:linear-gradient(180deg,#fff,#f6f6ff); border:1px solid #5a57ff;
-      font:700 11px/1 "Funnel Display",system-ui; letter-spacing:.12em; text-transform:uppercase; color:#17182a;
-      box-shadow:0 8px 16px rgba(68,64,255,.1)
-    }
-    .top-actions{ display:flex; justify-content:center; gap:8px; margin-top:12px }
-    .btn-pixel{
-      --shadow: rgba(68,64,255,.12);
-      display:inline-flex; align-items:center; gap:8px; padding:10px 12px; border-radius: 12px; border:1px solid #5a57ff;
-      background:linear-gradient(180deg,#fff,#f6f6ff); font:700 12px/1 "Funnel Display",system-ui;
-      letter-spacing:.12em; text-transform:uppercase; box-shadow: 0 8px 16px var(--shadow); text-decoration:none; color:#17182a;
-      transition: transform .12s ease, box-shadow .12s ease;
-    }
-    .btn-pixel:hover{ transform: translateY(-0.5px); box-shadow: 0 12px 22px rgba(68,64,255,.18) }
+    /* Sections & container */
+    .section{ padding: clamp(14px,5vw,18px) var(--page-pad, 16px); }
+    .container{ width: min(1100px, 100%); margin-inline:auto; }
+
+    /* ===== Duo layout for exactly-two case studies ===== */
+    .duo-grid{ display:grid; grid-template-columns: 1fr; gap: clamp(12px, 2vw, 20px); align-items: stretch; }
+    @media (min-width: 860px){ .duo-grid{ grid-template-columns: repeat(2, minmax(0,1fr)); } }
+
+    /* Modern, simple card tuned for case studies */
+    .cs-card{ position:relative; display:flex; flex-direction:column; padding: clamp(14px, 1.8vw, 18px); border-radius: var(--cardR); background: linear-gradient(180deg,#ffffff,#f6f6ff); border:1px solid rgba(68,64,255,.24); box-shadow: 0 0 0 1px rgba(68,64,255,.06) inset, 0 8px 22px rgba(68,64,255,.08); transition: transform .18s ease, box-shadow .18s ease; overflow:hidden; isolation:isolate; }
+    .cs-card:hover{ transform: translateY(-2px); box-shadow: 0 0 0 1px rgba(68,64,255,.06) inset, 0 14px 32px rgba(68,64,255,.14); }
+    .cs-eyebrow{ font:600 12px/1 "Funnel Display",system-ui; letter-spacing:.14em; text-transform:uppercase; margin-bottom:8px; opacity:.9 }
+    .cs-title{ margin:0 0 6px; font-size: clamp(18px, 2.2vw, 22px); letter-spacing:.01em; }
+    .cs-desc{ margin:0 0 10px; color:#2c3144; font-size: max(13px, 13.5px); line-height:1.45 }
+
+    /* Big, stable media with subtle overlay */
+    .cs-thumb{ aspect-ratio: 16/10; border-radius: 16px; background:#eef0ff; border:1px solid rgba(68,64,255,.25); margin:10px 0 12px; position:relative; overflow:hidden; display:block; }
+    .cs-thumb img{ width:100%; height:100%; object-fit:cover; display:block; transition: transform .35s ease; }
+    .cs-card:hover .cs-thumb img{ transform: scale(1.02); }
+    .cs-thumb::after{ content:""; position:absolute; inset:0; background: linear-gradient(180deg, rgba(255,255,255,.36), transparent 26%); pointer-events:none; mix-blend-mode: soft-light; }
+
+    .cs-meta{ display:flex; flex-wrap:wrap; gap:6px; margin-top:6px }
+    .tag{ display:inline-block; font:800 10px/1 "Funnel Display",system-ui,sans-serif; letter-spacing:.16em; text-transform:uppercase; padding:6px 8px; border-radius:10px; border:1px solid #5a57ff; background:linear-gradient(180deg,#fff,#f6f6ff); color:#17182a }
+
+    .btn-row{ display:flex; flex-wrap:wrap; gap:8px; margin-top:12px }
+    .btn-pixel{ --shadow: rgba(68,64,255,.12); display:inline-flex; align-items:center; gap:8px; padding:10px 12px; border-radius: 12px; border:1px solid #5a57ff; background:linear-gradient(180deg,#fff,#f6f6ff); font:700 12px/1 "Funnel Display",system-ui; letter-spacing:.12em; text-transform:uppercase; box-shadow: 0 8px 16px var(--shadow); text-decoration:none; color:#17182a }
     .btn-pixel--ghost{ background:#fff; border-style:dashed; opacity:.92 }
 
-    /* Section spacing */
-    .section{ padding: clamp(18px, 5vw, 40px) 0; position:relative; z-index:2 }
-
-    /* --- MEDIA GRID: small 1:1 tiles, indigo↔white duotone, subtle zoom --- */
-    .media-grid{
-      display:grid; gap:12px;
-      grid-template-columns: 1fr;
-    }
-    @media (min-width: 600px){
-      .media-grid{ grid-template-columns: repeat(2, 1fr); }
-    }
-    @media (min-width: 980px){
-      .media-grid{ grid-template-columns: repeat(3, 1fr); }
+    /* Scroll reveal hooks (kept) */
+    [data-animate]{ opacity:0; transform: translateY(8px); transition: opacity .6s ease, transform .6s ease; }
+    .is-in[data-animate]{ opacity:1; transform:none }
+    @media (prefers-reduced-motion: reduce){
+      [data-animate]{ opacity:1 !important; transform:none !important; transition:none !important }
+      .cs-card:hover{ transform:none; }
+      .cs-card:hover .cs-thumb img{ transform:none; }
     }
 
-    .tile{
-      position:relative; border-radius:18px; overflow:hidden; aspect-ratio:1/1; background:#fff;
-      box-shadow: 0 10px 40px rgba(68,64,255,.08), 0 1px 0 rgba(255,255,255,.6) inset;
-      isolation:isolate;
-    }
-    .tile-inner{ width:100%; height:100%; display:grid; place-items:center; transition: transform .35s cubic-bezier(.2,.8,.2,1) }
-    .tile img{
-      width:100%; height:100%; object-fit:contain; transform:scale(1);
-      transition: transform .35s cubic-bezier(.2,.8,.2,1), filter .35s;
-      /* normalize before colorization */
-      filter: saturate(0) brightness(1.05) contrast(1.05);
-    }
-    /* Indigo+white duotone mask (robust across PNGs) */
-    .tile::before{
-      content:""; position:absolute; inset:0; pointer-events:none;
-      background: linear-gradient(130deg, #4440ff 0%, #ffffff 100%);
-      mix-blend-mode: color; opacity:.7; transition: opacity .3s ease;
-    }
-    /* soft film grain to unify */
-    .tile::after{
-      content:""; position:absolute; inset:-20%; pointer-events:none; opacity:.06; mix-blend-mode: soft-light;
-      background:
-        repeating-linear-gradient(0deg, rgba(0,0,0,.2) 0 1px, rgba(0,0,0,0) 1px 2px),
-        repeating-linear-gradient(90deg, rgba(0,0,0,.12) 0 1px, rgba(0,0,0,0) 1px 2px);
-      filter: blur(.4px);
-    }
-    .tile:hover .tile-inner{ transform: scale(1.02) }
-    .tile:hover img{ transform: scale(1.05) }
-    .tile:hover::before{ opacity:.78 }
-    @media (hover:none){ .tile:hover .tile-inner, .tile:hover img{ transform:none } }
+    /* Asset note (unchanged, minor polish) */
+    .asset-note{ position: fixed; right: clamp(10px, 2.2vw, 18px); bottom: calc(env(safe-area-inset-bottom, 0px) + 12px); z-index: 60; width: min(420px, 92vw); pointer-events: none; }
+    .asset-note__card{ pointer-events: auto; display: grid; grid-template-columns: auto 1fr auto; align-items: start; gap: 10px; padding: 12px 12px 10px; border-radius: 14px; background: linear-gradient(180deg,#ffffff,#f6f6ff); border: 1px solid rgba(68,64,255,.28); box-shadow: 0 10px 28px rgba(68,64,255,.14), 0 1px 0 rgba(255,255,255,.7) inset; color: #1b1e35; transform: translateY(10px); opacity: 0; transition: opacity .28s ease, transform .28s ease; }
+    .asset-note.is-in .asset-note__card{ opacity:1; transform:none; }
+    .asset-note__icon{ width:16px; height:16px; margin-top:2px; flex: 0 0 16px; color:#1b1e35; opacity:.85; }
+    .asset-note__text{ font: 400 13px/1.35 "DM Sans", system-ui, -apple-system, sans-serif; }
+    .asset-note__title{ display:block; margin:0 0 4px; font: 800 10px/1 "Funnel Display", system-ui, sans-serif; text-transform: uppercase; letter-spacing:.16em; opacity:.9; }
+    .asset-note__actions{ display:flex; gap:8px; margin-left:6px; }
+    .asset-note__close{ --px: 10px; padding: 6px 8px; border-radius: 10px; font: 800 var(--px)/1 "Funnel Display",system-ui,sans-serif; text-transform: uppercase; letter-spacing:.16em; background: #fff; border: 1px solid #5a57ff; color:#17182a; box-shadow: 0 0 0 1px rgba(68,64,255,.06) inset; cursor: pointer; }
+    .asset-note__close:focus-visible{ outline:2px solid #5a57ff; outline-offset:2px; }
+    .asset-note__ghost{ background:#fff; border-style:dashed; opacity:.92; }
 
-    /* Campaign Story */
-    .story{ max-width: 72ch; margin: 0 auto; }
-    .story h2{ font:700 clamp(20px,3.6vw,28px)/1.06 "Funnel Display",system-ui; letter-spacing:-.01em; margin:0 0 8px }
-    .story p{ margin:0 0 10px; color:#2c3144; font:400 15.5px/1.55 "DM Sans",system-ui }
-
-    /* Metrics row (compact) */
-    .metrics{ display:grid; gap:10px; grid-template-columns: repeat(auto-fit, minmax(160px,1fr)); margin-top: 10px }
-    .metric{
-      border-radius:16px; padding:12px;
-      background: linear-gradient(180deg, rgba(255,255,255,.62), rgba(255,255,255,.42));
-      box-shadow: 0 10px 40px rgba(68,64,255,.08), 0 1px 0 rgba(255,255,255,.6) inset;
-      text-align:left;
-    }
-    .metric .num{ font:800 24px/1.05 "Funnel Display",system-ui; letter-spacing:-.01em; color:#0e0f1a }
-    .metric .label{ margin-top:4px; font:500 12px/1.2 "DM Sans",system-ui; color:#2c3144 }
-    .metric small{ display:block; margin-top:6px; font:400 11px/1.3 "DM Sans",system-ui; color:#556; opacity:.8 }
-
-    /* Bottom spotlight (CUofGA UI) — smaller, transparent, flush with copy on mobile */
-    .spotlight{
-      display:grid; gap:16px; align-items:end;
-      grid-template-columns: 1fr;
-      align-items: center;
-    }
-    @media (min-width: 880px){
-      .spotlight{ grid-template-columns: 1.1fr .9fr }
-    }
-    .phone-frame{
-      justify-self:center;
-      max-width:min(200px, 74vw);            /* smaller by default */
-      padding:0; border-radius:24px;
-      background: transparent;               /* no white slab behind transparent PNG */
-      border: 0; box-shadow: none;
-      transition: transform .35s cubic-bezier(.2,.8,.2,1);
-    }
-    .phone-frame img{
-      display:block; width:100%; height:auto; object-fit:contain; border-radius:24px;
-      image-rendering:auto;
-      filter: drop-shadow(0 8px 28px rgba(68,64,255,.18)); /* gentle lift only on the PNG itself */
-    }
-    .phone-frame:hover{ transform: scale(1.02) }
-    @media (hover:none){ .phone-frame:hover{ transform:none } }
-    @media (max-width: 540px){
-      .spotlight{ align-items:center }
-      .phone-frame{ justify-self:start; max-width: 220px; } /* flush with text column */
-    }
-
-    .lead{ max-width: 68ch; color:#2c3144; font:400 15.5px/1.55 "DM Sans",system-ui }
+    /* safety */
+    img, svg, canvas, video, object, iframe { max-width:100%; height:auto; }
   </style>
 </head>
 
-<body class="case density-xs">
-<!-- SVG defs for wobble -->
-<svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden">
-  <filter id="softWobble" x="-50%" y="-50%" width="200%" height="200%">
-    <feTurbulence type="fractalNoise" baseFrequency="0.008" numOctaves="1" seed="11" result="noise">
-      <animate attributeName="baseFrequency" dur="14s" values="0.008;0.010;0.008" repeatCount="indefinite" />
-    </feTurbulence>
-    <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G"/>
-  </filter>
-</svg>
-
-<!-- Header (unchanged) -->
+<body class="page-work density-xs">
 <header class="site-header" role="banner">
   <div class="site-header__chrome" aria-hidden="true"></div>
   <div class="header__inner">
     <a class="brand" href="/" aria-label="chrrybmb home">
-      <img class="brand__logo-img" src="../assets/indigo_chrry_indypinky.svg" alt="chrrybmb logo" width="64" height="38" decoding="async">
+      <img class="brand__logo-img" src="./assets/indigo_chrry_indypinky.svg" alt="chrrybmb logo" width="64" height="38" decoding="async">
     </a>
     <nav class="nav" aria-label="primary">
       <ul class="nav__list">
         <li><a href="/index.html">home</a></li>
-        <li><a href="/work.html">work</a></li>
+        <li><a href="/about.html">about</a></li>
         <li><a href="/contact.html">contact</a></li>
       </ul>
     </nav>
     <div class="header__actions">
-      <a class="btn-pixel btn-pixel--ghost" href="/work.html">← back to work</a>
+      <button class="icon-btn" id="openSearch" aria-label="open search" title="search (⌘/Ctrl + K)">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M11.2 10.3l3.1 3.1-1 1-3.1-3.1a5 5 0 1 1 1-1zm-6.2.7a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" fill="currentColor"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="search" id="search" role="dialog" aria-modal="true" aria-labelledby="searchLabel" hidden>
+    <div class="search__backdrop" data-close></div>
+    <div class="search__panel">
+      <div class="search__head">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M11.2 10.3l3.1 3.1-1 1-3.1-3.1a5 5 0 1 1 1-1zm-6.2.7a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" fill="currentColor"/></svg>
+        <input id="searchInput" type="search" placeholder="search the site…" autocomplete="off" aria-label="search">
+        <button class="kbd" type="button" data-close aria-label="Close search (Esc)">esc</button>
+      </div>
+      <ul id="searchResults" class="search__results" role="listbox" aria-live="polite"></ul>
     </div>
   </div>
 </header>
 
-<!-- Brand background layers -->
-<div class="iridescent-wave" aria-hidden="true"></div>
-<div class="bg-art" aria-hidden="true"><span class="lens-glass"></span><span class="lens-aura"></span></div>
-
-<main id="main" class="site-main" role="main">
-  <!-- Title -->
-  <section class="case-hero">
-    <div class="container" data-animate>
-      <h1 class="name-edge" data-text="refreshing checking">refreshing checking</h1>
-      <div class="subtitle">Free High-Interest Checking+</div>
-
-      <div class="meta">
-        <span class="chip">role · creative direction & design</span>
-        <span class="chip">channels · sem, display, ooh</span>
-        <span class="chip">partner · sem vendor</span>
-      </div>
-
-      <div class="top-actions">
-        <a class="btn-pixel" href="/contact.html">hire me</a>
-        <a class="btn-pixel btn-pixel--ghost" href="/work.html">more projects</a>
-      </div>
+<main id="main" tabindex="-1">
+  <!-- Hero -->
+  <section class="work-hero" aria-label="Intro">
+    <div class="inner" data-animate>
+      <h1 class="name-edge" data-text="work">
+        <span class="text">work</span>
+        <span class="warp" aria-hidden="true">work</span>
+        <span class="prism" aria-hidden="true">work</span>
+      </h1>
+      <p class="sub">UX systems, web growth, and marketing.</p>
     </div>
   </section>
 
-  <!-- Media -->
-  <section class="section" aria-label="Campaign creative">
-    <div class="container">
-      <div class="media-grid">
-        <figure class="tile" data-animate>
-          <div class="tile-inner">
-            <img src="../assets/sem-campaign1.png" alt="SEM creative variant 1">
-          </div>
-        </figure>
-        <figure class="tile" data-animate style="--stagger:60ms">
-          <div class="tile-inner">
-            <img src="../assets/sem-campaign2.png" alt="SEM creative variant 2">
-          </div>
-        </figure>
-        <figure class="tile" data-animate style="--stagger:100ms">
-          <div class="tile-inner">
-            <img src="../assets/refreshing-checking-billboard2.png" alt="Refreshing Checking billboard execution">
-          </div>
-        </figure>
-      </div>
-    </div>
-  </section>
+  <!-- Duo Case Studies -->
+  <section class="section" aria-label="Case studies">
+    <div class="container duo-grid">
 
-  <!-- Campaign Story -->
-  <section class="section" aria-label="Campaign story">
-    <div class="container story" data-animate>
-      <h2>campaign story</h2>
-      <p>We repositioned “free checking” into a sharper value prop—<em>Free High-Interest Checking+</em>—to highlight member value and acquisition potential. Messaging was carried across SEM, display, and out-of-home, creating a consistent narrative that boosted awareness and reinforced brand trust in-market.</p>
-      <p>Disciplined SEM builds (exact + phrase clusters, audience layering, negative sculpting) kept CPCs efficient while driving CTRs above benchmarks. Paired with OOH reach, the campaign delivered a clear, consistent handoff—impression → click → application—resulting in measurable lifts in account growth and product adoption.</p>
-    </div>
-  </section>
+      <!-- Case Study 1 -->
+      <article class="cs-card" data-animate id="proj-checking">
+        <span class="cs-eyebrow">credit union of georgia</span>
+        <h2 class="cs-title">Checking hub — redesigned for clarity & conversion</h2>
+        <p class="cs-desc">Cleaner IA, faster plan compare, and SEO hygiene that moved the needle.</p>
+        <a class="cs-thumb" href="./work/checking.html" aria-label="view case study: Checking hub">
+          <img src="./assets/checking-cuofga-2.png" alt="Checking hub redesign preview" loading="lazy" decoding="async">
+        </a>
+        <div class="cs-meta">
+          <span class="tag">ux</span><span class="tag">ia</span><span class="tag">seo</span><span class="tag">analytics</span>
+        </div>
+        <div class="btn-row">
+          <a class="btn-pixel" href="./work/checking.html">view case study</a>
+        </div>
+      </article>
 
-  <!-- Results -->
-  <section class="section" aria-label="Results">
-    <div class="container" data-animate>
-      <div class="metrics">
-        <div class="metric"><div class="num">1.2M</div><div class="label">impressions</div><small>search & display, flight total</small></div>
-        <div class="metric"><div class="num">4.2%</div><div class="label">ctr</div><small>search avg., top ad groups</small></div>
-        <div class="metric"><div class="num">$1.25</div><div class="label">avg. cpc</div><small>priority term coverage</small></div>
-        <div class="metric"><div class="num">1,130</div><div class="label">new accounts</div><small>tracked opens attributed</small></div>
-      </div>
-    </div>
-  </section>
+      <!-- Case Study 2 -->
+      <article class="cs-card" data-animate id="proj-refreshing-checking">
+        <span class="cs-eyebrow">campaign creative</span>
+        <h2 class="cs-title">Refreshing Checking Campaign — Free High-Interest Checking+</h2>
+        <p class="cs-desc">Concept, art direction, and execution across SEM ads, on-brand billboards, and landing cohesion with the redesigned hub.</p>
+        <a class="cs-thumb" href="./work/refreshing-checking.html#campaign" aria-label="view case study: Refreshing Checking Campaign">
+          <img src="./assets/refreshing-checking-billboard1.png" alt="Refreshing Checking campaign billboard preview" loading="lazy" decoding="async">
+        </a>
+        <div class="cs-meta">
+          <span class="tag">campaign</span><span class="tag">sem</span><span class="tag">ooh</span><span class="tag">art direction</span>
+        </div>
+        <div class="btn-row">
+          <a class="btn-pixel" href="./work/refreshing-checking.html#campaign">view case study</a>
+        </div>
+      </article>
 
-  <!-- Mobile handoff (CUofGA UI) -->
-  <section class="section" aria-label="Mobile experience">
-    <div class="container spotlight">
-      <div data-animate>
-        <h2 class="name-edge" style="font-size: clamp(24px,5.2vw,40px); filter:none" data-text="mobile handoff">mobile handoff</h2>
-        <p class="lead" style="margin-top:6px">
-          SEM clicked through to streamlined account start flows and app onboarding. Keeping the value prop
-          (“free, high-interest checking”) consistent from ad → landing → app helped conversion hold.
-        </p>
-      </div>
-      <div class="phone-frame" data-animate style="--stagger:80ms">
-        <img src="../assets/cuofga-mobile-ui.png" alt="CU of GA mobile app login screen">
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="section" aria-label="CTA">
-    <div class="container" data-animate>
-      <div class="top-actions" style="margin-top:2px">
-        <a class="btn-pixel" href="/contact.html">let’s build your next campaign</a>
-        <a class="btn-pixel btn-pixel--ghost" href="/work.html">see more work</a>
-      </div>
     </div>
   </section>
 </main>
+
+<!-- keep filters to satisfy name-edge -->
+<svg width="0" height="0" class="visually-hidden" aria-hidden="true">
+  <filter id="softWobble"><feGaussianBlur in="SourceGraphic" stdDeviation="0"/></filter>
+  <filter id="lensWarp"><feGaussianBlur in="SourceGraphic" stdDeviation="0"/></filter>
+</svg>
+
+<script type="module" src="./site.js" defer></script>
+
+<!-- Minimal, dismissible note about visuals -->
+<aside class="asset-note" role="dialog" aria-live="polite" aria-label="note about case study visuals" hidden>
+  <div class="asset-note__card">
+    <span class="asset-note__icon" aria-hidden="true">
+      <svg viewBox="0 0 16 16" fill="currentColor" width="16" height="16">
+        <circle cx="8" cy="8" r="7"></circle>
+        <rect x="7.3" y="7" width="1.4" height="5" fill="#fff"></rect>
+        <rect x="7.3" y="4.2" width="1.4" height="1.4" fill="#fff"></rect>
+      </svg>
+    </span>
+    <div class="asset-note__text">
+      <strong class="asset-note__title">about these visuals</strong>
+      Some case-study images are simplified recreations or public snapshots because a few original campaign files weren’t retained after handoff. The write-ups focus on process, decisions, and outcomes.
+    </div>
+    <div class="asset-note__actions">
+      <button class="asset-note__close asset-note__ghost" type="button" aria-label="Dismiss">got it</button>
+    </div>
+  </div>
+</aside>
 
 <footer class="site-footer" role="contentinfo">
   <span class="dot" aria-hidden="true"></span>
@@ -352,21 +259,22 @@
 </footer>
 
 <script>
-  // year
-  (function(){ const y=document.getElementById('year'); if(y) y.textContent=new Date().getFullYear(); })();
+  // year stamp
+  document.getElementById('year').textContent = new Date().getFullYear();
 
-  // reveal-on-scroll
+  // asset note one-time dismiss
   (function(){
-    const els = document.querySelectorAll('[data-animate]');
-    if(!('IntersectionObserver' in window) || !els.length){ els.forEach(e=>e.classList.add('is-in')); return; }
-    const io = new IntersectionObserver((entries)=>{
-      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('is-in'); io.unobserve(e.target); } });
-    }, {threshold: .15});
-    els.forEach(el=>io.observe(el));
+    const KEY = 'workAssetNoteDismissed:v1';
+    const note = document.querySelector('.asset-note');
+    const btn  = note?.querySelector('.asset-note__close');
+    if(!note) return;
+    const show = () => { note.hidden = false; requestAnimationFrame(()=> note.classList.add('is-in')); };
+    const hide = () => { note.classList.remove('is-in'); setTimeout(()=> note.hidden = true, 220); };
+    if (!localStorage.getItem(KEY)) setTimeout(show, 700);
+    btn?.addEventListener('click', () => { localStorage.setItem(KEY, '1'); hide(); });
+    document.addEventListener('keydown', (e)=>{ if (e.key === 'Escape' && !note.hidden) { localStorage.setItem(KEY, '1'); hide(); } });
   })();
 </script>
 
-<!-- keep your site-wide JS if needed -->
-<script type="module" src="/site.js" defer></script>
 </body>
 </html>
