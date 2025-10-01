@@ -381,6 +381,47 @@
     }
     .quick-nav a:hover{ transform: translateY(-1px); box-shadow:0 12px 22px rgba(68,64,255,.18); }
 
+    /* ===== mobile fix-ups: scroll targeting + brand panel sizing ===== */
+@media (max-width: 640px){
+  /* Make anchor jumps precise on small screens */
+  html { scroll-padding-top: 36px; }            /* global smooth-scroll offset */
+  #brand { scroll-margin-top: 36px; }           /* section-specific landing offset */
+
+  /* Brand panel spacing */
+  .brand-panel{ padding-top: 18px; padding-bottom: 56px; }
+  .brand-panel .container{ gap: 12px; }
+
+  /* Logo: smaller, crisper on mobile */
+  .brand-logo-wrap{
+    max-width: min(340px, 78vw);                /* was 620px desktop — tighten on phones */
+    margin-top: 2px;
+  }
+
+  /* Tone down shimmer on phones (keeps the vibe, avoids “wobble”) */
+  .logo-iris{
+    opacity: .10;
+    animation-duration: 24s;                    /* slower = calmer */
+    filter: blur(14px) saturate(150%);
+  }
+
+  /* Quick-nav spacing and touch targets */
+  .quick-nav{ margin-top: 10px; gap: 8px; }
+  .quick-nav a{ padding: 9px 11px; border-radius: 11px; font-size: 11px; }
+}
+
+/* If it’s a touch device of any size, keep shimmer subtle and avoid jank */
+@media (pointer: coarse){
+  .logo-iris{ opacity:.10; animation: none; }
+}
+
+/* Optional: make the scroll pill smaller on phones so it feels intentional */
+@media (max-width: 480px){
+  .scroll-cue{ margin: 4px auto 0; }
+  .scroll-cue a{ padding: 8px 10px; font-size: 10px; }
+  .scroll-cue a svg{ width: 12px; height: 12px; }
+}
+
+
   </style>
 </head>
 
