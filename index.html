@@ -177,7 +177,7 @@
       .hero__grid{ grid-template-columns: 1.1fr .9fr }
     }
     @media (max-width:900px){
-      .hero__content { text-align:center; }
+      .hero__content { text-align:center;}
       .hero__cta{
         justify-content: center;
         align-items: center;
@@ -313,6 +313,7 @@
     .scroll-cue a {
       display:inline-flex; align-items:center; gap:8px;
       padding:10px 12px; border-radius:999px; border:1px dashed #5a57ff;
+      margin: 50px;
       background: linear-gradient(180deg,#fff,#f7f7ff);
       font:700 11px/1 "Funnel Display",system-ui; letter-spacing:.12em; text-transform:uppercase;
       color:#17182a; text-decoration:none; box-shadow:0 6px 14px rgba(68,64,255,.10);
@@ -322,7 +323,7 @@
     /* Separator sheen (no big spacer) */
     .splitter{ position: relative; height: 10vh; min-height:56px; z-index:1; }
     .splitter::before{
-      content:""; position:absolute; inset:-20% -10%;
+      content:""; position:relative; inset:-20% -10%;
       background:
         radial-gradient(60% 60% at 50% 10%, rgba(68,64,255,.18), transparent 60%),
         conic-gradient(from 180deg at 50% 50%, rgba(127,240,255,.22), rgba(255,106,223,.18), rgba(127,240,255,.22));
@@ -562,7 +563,7 @@
         <div class="container">
           <div class="brand-logo-wrap">
             <span class="logo-iris" aria-hidden="true"></span>
-            <img src="./assets/indigo_chrry_pinky.svg" alt="chrrybmb mark" width="600" height="600" loading="lazy" decoding="async">
+            <img src="./assets/indigo_chrry_indy.svg" alt="chrrybmb mark" width="400" height="400" loading="lazy" decoding="async">
           </div>
 
           <div class="panel-copy" data-animate style="--stagger:120ms">
