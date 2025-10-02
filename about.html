@@ -206,13 +206,6 @@
   .about-copy ul{margin:0; padding-left:16px}
   .about-copy li{margin:3px 0; font-size: clamp(13.5px, 1.5vw, 14.5px); line-height:1.42;}
 
-  .pxlh{
-    font-family:"Jacquarda Bastarda 9", serif;
-    font-weight: 500;
-    font-size: clamp(17px, 2vw, 20px);
-    line-height: 1.15; letter-spacing:.25px; color:#17182a;
-  }
-
   :root{ --px-font: "Funnel Display", system-ui, sans-serif; }
   .btn-pixel{
     --px: 10.5px; --px-track: .16em;
@@ -307,6 +300,17 @@
   }
 
   .handle{font:600 14px/1.2 "DM Sans",system-ui,sans-serif; color:#1b1e35}
+
+  .pxlh{ 
+    font:700 12px/1 var(--px-font);
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    display:block;
+    margin: 10px 0;
+    color:#17182a; 
+  }
+
+  
 </style>
 <body class="page-about density-xs">
 
@@ -424,11 +428,11 @@
         </div>
 
         <div class="about-copy">
-          <h3>hi, i'm denisa.</h3>
+          <span class="pxlh">hi, i'm denisa</span>
           <p>I build crisp, scalable brand & web systems—end-to-end from strategy to shipped UI. Since 2007 I’ve worked across print, web, and marketing; these days I live mostly in design/dev and creative direction.</p>
         </div>
         <div class="about-copy">
-          <h3>a natural calling</h3>
+          <span class="pxlh">a natural calling</span>
           <ul>
             <li>Design systems, responsive UX, tidy front-end.</li>
             <li>Campaign & art direction with that prism-y glow.</li>
@@ -436,7 +440,7 @@
           </ul>
         </div>
         <div class="about-copy">
-          <h3>currently</h3>
+          <span class="pxlh">currently</span>
           <p>Senior brand & web design, marketing creative, and part-time at the studio. Open to roles where design and web meet growth.</p>
         </div>
 
