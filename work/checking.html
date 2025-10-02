@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 
   <title>Checking Page Redesign — Case Study • chrrybmb</title>
-  <meta name="description" content="How I rebuilt CUofGA’s Checking page: replaced BloomCU panels & busy PDFs with semantic content and a clean CSS compare table, improving UX, accessibility, and SEO. Includes SEMrush backlink audit and Google Search Console recognition." />
+  <meta name="description" content="How I rebuilt CUofGA’s Checking page" />
   <link rel="canonical" href="https://chrrybmb.com/work/checking.html" />
 
   <!-- Favicons / theme -->
@@ -174,9 +174,6 @@
     0 1px 0 rgba(255,255,255,.7) inset;
 }
 
-
-    /* a11y */
-    @media (prefers-reduced-motion:reduce){.name-edge .warp,.name-edge .prism{animation:none!important}.thumb img{transition:none}}
   </style>
 </head>
 
@@ -189,42 +186,27 @@
     </filter>
   </svg>
 
-<!-- Header / Nav -->
+<!-- Header (unchanged) -->
 <header class="site-header" role="banner">
   <div class="site-header__chrome" aria-hidden="true"></div>
   <div class="header__inner">
     <a class="brand" href="/" aria-label="chrrybmb home">
       <img class="brand__logo-img" src="../assets/indigo_chrry_indypinky.svg" alt="chrrybmb logo" width="64" height="38" decoding="async">
     </a>
-
     <nav class="nav" aria-label="primary">
       <ul class="nav__list">
         <li><a href="/index.html">home</a></li>
-        <li><a href="/about.html">about</a></li>
+        <li><a href="/work.html">work</a></li>
         <li><a href="/contact.html">contact</a></li>
       </ul>
     </nav>
-
     <div class="header__actions">
-      <button class="icon-btn" id="openSearch" aria-label="open search" title="search (⌘/Ctrl + K)">
-        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M11.2 10.3l3.1 3.1-1 1-3.1-3.1a5 5 0 1 1 1-1zm-6.2.7a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" fill="currentColor"/></svg>
-      </button>
-    </div>
-  </div>
-
-  <!-- search overlay -->
-  <div class="search" id="search" role="dialog" aria-modal="true" aria-labelledby="searchLabel" hidden>
-    <div class="search__backdrop" data-close></div>
-    <div class="search__panel">
-      <div class="search__head">
-        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M11.2 10.3l3.1 3.1-1 1-3.1-3.1a5 5 0 1 1 1-1zm-6.2.7a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" fill="currentColor"/></svg>
-        <input id="searchInput" type="search" placeholder="search the site…" autocomplete="off" aria-label="search">
-        <button class="kbd" type="button" data-close aria-label="Close search (Esc)">esc</button>
-      </div>
-      <ul id="searchResults" class="search__results" role="listbox" aria-live="polite"></ul>
+      <a class="btn-pixel btn-pixel--ghost" href="/work.html">← back to work</a>
     </div>
   </div>
 </header>
+
+
 
 
   <!-- Hero -->
@@ -248,7 +230,7 @@
       <div class="container grid grid--2">
         <article class="card">
           <h3>context</h3>
-          <p>Before I took over site management, the Checking page used a <strong>paneling system</strong> from BloomCU and pushed account details into a <strong>busy PDF</strong>. This hurt scannability, accessibility, and SEO.</p>
+          <p>Before I took over site management, the Checking page used a <strong>paneling system</strong> built by a former developer and pushed account details into a <strong>busy PDF</strong>. This hurt scannability, accessibility, and SEO.</p>
           <h3>what I changed</h3>
           <ul class="mini-list">
             <li>Replaced panels with a <strong>semantic, content-rich page</strong>.</li>
@@ -402,7 +384,8 @@
     </div>
   </section>
 
-
+    <!-- Single shared script -->
+    <script type="module" src="./site.js" defer></script>
 
   <!-- tiny helpers -->
   <script>
