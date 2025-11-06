@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>chrrybmb — Creative Design Works</title>
+  <meta name="description" content="From bespoke commissioned graphics to large format prints — a collection of past creative projects by Denisa Jomo." />
+  <link rel="canonical" href="https://chrrybmb.com/creative-works.html" />
+
+  <!-- Favicon / apple -->
+  <link rel="icon" href="./assets/eyefavi.png">
+  <link rel="apple-touch-icon" href="./assets/eyefavi.png">
+
+  <!-- Base site CSS (shared) -->
+  <link rel="stylesheet" href="/style.css?v=9">
+  <link rel="stylesheet" href="/mobilestyle.css?v=1" media="(max-width:640px)">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@500;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Jacquarda+Bastarda+9&display=swap" rel="stylesheet" />
+
+  <style>
+    /* Page-specific tweaks while staying fully consistent with brand-systems */
+    :root{ --page-ui: 0.66; }
+    html,body{ height:100%; max-width:100vw; overflow-x:clip; }
+    body.page-creative{ min-height:100svh; display:flex; flex-direction:column; --orb-x:72%; --orb-y:68%; --lx:72%; --ly:68%; --lr:140px; }
+
+    /* reuse iridescent + lens styles from brand-systems but scoped */
+    .iridescent-wave{ position: fixed; inset: 0; z-index: 0; pointer-events:none; overflow:hidden; transform: translateZ(0); contain:paint; backface-visibility:hidden; }
+    .iridescent-wave::before{
+      content:""; position:absolute; left:-25vw; right:-25vw; top:-200vh; bottom:-200vh;
+      background: conic-gradient(from var(--wave-rot,0deg) at var(--orb-x) var(--orb-y),
+        rgba(127,240,255,.25), rgba(255,106,223,.20), rgba(127,240,255,.25));
+      filter: blur(54px) saturate(150%); mix-blend-mode: color-dodge; opacity:.72; animation: waveSpin 22s linear infinite;
+    }
+    .iridescent-wave::after{
+      content:""; position:absolute; left:-25vw; right:-25vw; top:-240vh; bottom:-240vh;
+      background:
+        radial-gradient(80% 60% at 50% 30%, rgba(255,255,255,.55), rgba(255,255,255,0) 60%),
+        linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.55) 35%, rgba(255,255,255,0) 70%);
+      filter: blur(18px); mix-blend-mode: soft-light; opacity:.35; animation: rippleDown 36s cubic-bezier(.42,0,.58,1) infinite;
+    }
+    @keyframes waveSpin{ to{ transform: rotate(1turn) } }
+    @keyframes rippleDown{ 0%{transform:translate3d(0,-35%,0)} 100%{transform:translate3d(0,35%,0)} }
+    @media (prefers-reduced-motion: reduce){ .iridescent-wave::before, .iridescent-wave::after{ animation:none !important } }
+
+    .bg-art{ position: fixed; inset: 0; z-index: 0; pointer-events:none; overflow: visible; }
+    .lens-glass{
+      position:absolute; left:var(--lx); top:var(--ly);
+      width: calc(var(--lr)*2); height: calc(var(--lr)*2); transform: translate(-50%,-50%); border-radius:50%;
+      backdrop-filter: blur(4px) saturate(125%) contrast(105%); -webkit-backdrop-filter: blur(4px) saturate(125%) contrast(105%);
+      -webkit-mask-image: radial-gradient(circle var(--lr) at 50% 50%, #000 60%, rgba(0,0,0,.7) 76%, transparent 90%);
+              mask-image: radial-gradient(circle var(--lr) at 50% 50%, #000 60%, rgba(0,0,0,.7) 76%, transparent 90%);
+      background: radial-gradient(closest-side, rgba(68,64,255,.10), rgba(68,64,255,0) 68%);
+    }
+    .lens-aura{ position:absolute; left:var(--lx); top:var(--ly); width:calc(var(--lr)*2.1); height:calc(var(--lr)*2.1); transform:translate(-50%,-50%); border-radius:50%; filter: blur(.6px) saturate(120%); pointer-events:none; }
+
+    /* header (matches brand) */
+    .site-header{ position:relative; z-index:6; }
+    .header__inner{ display:flex; align-items:center; gap:12px; padding:12px 18px; max-width:1100px; margin:0 auto; }
+    .brand__logo-img{ display:block }
+
+    /* hero: minimal like brand-systems */
+    .creative-hero{ position:relative; padding: calc(var(--page-ui) * clamp(18px,4.6vw,56px)) 20px 6px; text-align:center; z-index:5; }
+    .hero-inner{ max-width:min(1100px,92vw); margin-inline:auto; }
+    .hero-title{
+      font-family: "Funnel Display", system-ui, sans-serif;
+      font-weight:700; font-size: calc(var(--page-ui) * clamp(30px,5.6vw,48px)); margin:0; text-transform:lowercase;
+      letter-spacing: -.02em; line-height:1;
+    }
+    .hero-sub{
+      margin-top:8px; font: 400 calc(var(--page-ui) * clamp(16px,2.4vw,20px))/1.2 "Jacquarda Bastarda 9", serif;
+      opacity:.88; max-width:820px; margin-left:auto; margin-right:auto;
+    }
+    .hero-cta{ display:flex; justify-content:center; gap:10px; margin-top:14px; }
+
+    /* grid: reuse brand-grid sizing */
+    .creative-grid{ width:100%; max-width:1100px; margin: 18px auto; padding: clamp(8px,2.6vw,16px); display:grid; grid-template-columns: repeat(auto-fit, minmax(min(280px,100%),1fr)); gap: clamp(12px,2.6vw,18px); z-index:5; }
+
+    /* card and photo chips (consistent with brand) */
+    .card-iris{ position:relative; border-radius: calc(var(--page-ui) * 18px); background: linear-gradient(180deg, rgba(255,255,255,.62), rgba(255,255,255,.42)); backdrop-filter: blur(10px) saturate(115%); padding: 12px; box-shadow: 0 10px 40px rgba(68,64,255,.08); overflow:hidden; display:flex; flex-direction:column; gap:10px; min-height:0; transition: transform .18s ease, box-shadow .18s ease; }
+    .card-iris:hover{ transform: translateY(-4px); box-shadow: 0 18px 60px rgba(68,64,255,.10); }
+
+    .photo-chip{ position:relative; border-radius:12px; overflow:hidden; border:1px solid rgba(68,64,255,.18); background: linear-gradient(180deg,#fff,#f6f6ff); box-shadow: 0 0 0 1px rgba(68,64,255,.04) inset, 0 8px 24px rgba(68,64,255,.06); }
+    .photo-chip .frame{ width:100%; height:240px; display:block; overflow:hidden; background:#eef0ff; }
+    .photo-chip img{ display:block; width:100%; height:100%; object-fit:cover; object-position:center; }
+    .photo-caption{ padding:10px 12px; font: 600 13px/1.35 "DM Sans", system-ui; color:#243; }
+
+    .photo-chip--natural .frame{ height:auto; }
+    .photo-chip .badge{ position:absolute; left:10px; top:10px; display:inline-block; font:700 10px/1 "Funnel Display", system-ui; letter-spacing:.12em; text-transform:uppercase; padding:6px 8px; border-radius:10px; background:linear-gradient(180deg,#fff,#f6f6ff); border:1px solid #5a57ff; color:#17182a; z-index:2; }
+
+    /* card meta */
+    .card-title{ font-family:"Funnel Display", system-ui, sans-serif; font-weight:700; font-size:16px; margin:0; letter-spacing:.01em; }
+    .card-text{ font: 600 13px/1.35 "DM Sans"; color:#2c3144; margin:0; }
+
+    /* light interactive shimmer on hover */
+    .card-iris::after{ content:""; position:absolute; inset:-20%; background: radial-gradient(260px 260px at var(--mx,50%) var(--my,50%), rgba(127,240,255,.22), rgba(255,106,223,.16) 35%, transparent 60%); mix-blend-mode: color-dodge; filter: blur(20px) saturate(140%); opacity:0; transition: opacity .18s ease; pointer-events:none; }
+    .card-iris.is-hot::after{ opacity:1; }
+
+    /* small responsive niceties */
+    @media (max-width: 720px){
+      .photo-chip .frame{ height:200px; }
+      .hero-sub{ padding-left:12px; padding-right:12px; }
+    }
+    @media (max-width:420px){
+      .photo-chip .frame{ height:160px; }
+    }
+
+    /* CTA buttons reuse .btn-pixel */
+    .btn-pixel{ --px:10.5px; display:inline-flex; align-items:center; justify-content:center; gap:.4ch; padding:8px 12px; border-radius:10px; font:800 var(--px)/1 "Funnel Display"; text-transform:uppercase; letter-spacing:.12em; background: linear-gradient(180deg,#ffffff,#f6f6ff); border:1px solid #1f22ff; color:#1a1a2b; text-decoration:none; box-shadow: 0 0 0 1px rgba(68,64,255,.08) inset, 0 6px 18px rgba(68,64,255,.12); transition: transform .12s ease, box-shadow .12s ease; }
+    .btn-pixel--ghost{ background:#fff; border-style:dashed; opacity:.94; }
+
+    /* reveal tokens */
+    [data-animate]{ opacity:0; transform: translateY(8px); transition: opacity .6s ease, transform .6s ease; }
+    .is-in[data-animate]{ opacity:1; transform:none }
+    @media (prefers-reduced-motion: reduce){ [data-animate]{ opacity:1 !important; transform:none !important; transition:none !important } }
+
+  </style>
+</head>
+<body class="page-creative density-xs">
+
+  <!-- Wave + lens -->
+  <div class="iridescent-wave" aria-hidden="true"></div>
+  <div class="bg-art" aria-hidden="true">
+    <span class="lens-glass"></span>
+    <span class="lens-aura"></span>
+  </div>
+
+  <!-- Header (simple / consistent) -->
+  <header class="site-header" role="banner" aria-hidden="false">
+    <div class="header__inner" style="max-width:1100px;margin:0 auto;">
+      <a class="brand" href="/"><img class="brand__logo-img" src="./assets/indigo_chrry_indypinky.svg" alt="chrrybmb logo" width="64" height="36" decoding="async"></a>
+      <nav class="nav" aria-label="Primary" style="margin-left:auto">
+        <ul class="nav__list" style="display:flex;gap:14px;align-items:center;margin:0;padding:0;list-style:none">
+          <li><a href="/index.html">home</a></li>
+          <li><a href="/about.html">about</a></li>
+          <li><a href="/contact.html">contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO (minimal) -->
+  <section class="creative-hero" aria-label="Intro">
+    <div class="hero-inner" data-animate>
+      <h1 class="hero-title" data-text="creative design works">Creative Design Works</h1>
+      <p class="hero-sub">From bespoke commissioned graphics to large format prints — here’s a collection of past creative projects.</p>
+      <div class="hero-cta" style="margin-top:14px">
+        <a class="btn-pixel" href="./work.html">work</a>
+        <a class="btn-pixel btn-pixel--ghost" href="./contact.html">contact</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Content grid -->
+  <main class="creative-grid" role="main">
+    <!-- Tradeshow / Large format -->
+    <article class="card-iris" data-animate>
+      <h3 class="card-title">Trade show + large format</h3>
+      <p class="card-text">Large SEG fabrics, hanging signs, and installation artwork.</p>
+
+      <div class="shot-stack" style="margin-top:8px">
+        <figure class="photo-chip shot" tabindex="0">
+          <span class="badge">delta booth</span>
+          <div class="frame"><img src="./assets/delta.jpg" alt="Delta trade show booth large fabric graphic" loading="lazy"></div>
+          <figcaption class="photo-caption">Delta trade show booth graphics — SEG fabric, vinyl accents and hang-signs.</figcaption>
+        </figure>
+
+        <figure class="photo-chip shot" tabindex="0">
+          <span class="badge">bcd travel</span>
+          <div class="frame"><img src="./assets/bcdtravel.jpg" alt="BCD Travel trade show graphics" loading="lazy"></div>
+          <figcaption class="photo-caption">Production-managed large-format prints and art direction.</figcaption>
+        </figure>
+      </div>
+    </article>
+
+    <!-- Branding / Identity -->
+    <article class="card-iris" data-animate>
+      <h3 class="card-title">Branding & identity</h3>
+      <p class="card-text">Logos, marks, and identity systems for print and web.</p>
+
+      <div class="shot-stack" style="margin-top:8px">
+        <figure class="photo-chip shot" tabindex="0">
+          <span class="badge">chrrybmb</span>
+          <div class="frame"><img src="./assets/jairom.png" alt="Jairo" loading="lazy"></div>
+          <figcaption class="photo-caption">Logo & identity variants for chrrybmb project usage.</figcaption>
+        </figure>
+
+        <figure class="photo-chip shot" tabindex="0">
+          <span class="badge">roda</span>
+          <div class="frame"><img src="./assets/roda-card-mock-up.png" alt="Roda Cosmetics brand identity" loading="lazy"></div>
+          <figcaption class="photo-caption">Branding suite and print-ready assets for a salon client.</figcaption>
+        </figure>
+      </div>
+    </article>
+
+    <!-- Campaign & Print -->
+    <article class="card-iris" data-animate>
+      <h3 class="card-title">Campaign & print</h3>
+      <p class="card-text">Posters, flyers, social creative and campaign art direction.</p>
+
+      <div class="shot-stack" style="margin-top:8px">
+        <figure class="photo-chip shot" tabindex="0">
+          <span class="badge">black friday</span>
+          <div class="frame"><img src="./assets/black-friday-poochface.png" alt="Black Friday campaign flyer" loading="lazy"></div>
+          <figcaption class="photo-caption">Black Friday campaign materials — digital + printed collateral.</figcaption>
+        </figure>
+
+        <figure class="photo-chip shot" tabindex="0">
+          <span class="badge">shopify ad</span>
+          <div class="frame"><img src="./assets/Shopify-Campaign.png" alt="Shopify campaign ad creative" loading="lazy"></div>
+          <figcaption class="photo-caption">Paid-ad creative for an e-commerce promotion.</figcaption>
+        </figure>
+      </div>
+    </article>
+
+    <!-- Arcade / novelty -->
+    <article class="card-iris" data-animate>
+      <h3 class="card-title">Arcade & novelty</h3>
+      <p class="card-text">Custom art for cabinets, merch and playful experiments.</p>
+
+      <div class="shot-stack" style="margin-top:8px">
+        <figure class="photo-chip shot" tabindex="0">
+          <span class="badge">custom arcade</span>
+          <div class="frame"><img src="./assets/street-fighter-arcade.png" alt="Custom arcade cabinet artwork" loading="lazy"></div>
+          <figcaption class="photo-caption">One-off cabinet skin concepts and mockups.</figcaption>
+        </figure>
+
+        <figure class="photo-chip shot" tabindex="0">
+          <span class="badge">custom arcade</span>
+          <div class="frame"><img src="./assets/a.png" alt="Custom arcade cabinet artwork" loading="lazy"></div>
+          <figcaption class="photo-caption">One-off cabinet skin concepts and mockups.</figcaption>
+        </figure>
+      </div>
+    </article>
+
+    
+
+    <!-- Misc / small works -->
+    <article class="card-iris" data-animate>
+      <h3 class="card-title">Misc / experiments</h3>
+      <p class="card-text">A mix of small projects, t-shirts, PFPs, and playful edits.</p>
+
+      <div class="shot-stack" style="margin-top:8px">
+        <figure class="photo-chip shot" tabindex="0">
+          <span class="badge">pfp</span>
+          <div class="frame"><img src="assets/growth-marketing-mockup.png" alt="Profile pic art sample" loading="lazy"></div>
+          <figcaption class="photo-caption">Profile image series for social channels.</figcaption>
+        </figure>
+
+        <figure class="photo-chip shot" tabindex="0">
+          <span class="badge">tee</span>
+          <div class="frame"><img src="./assets/simple-t-shirt-mockup.png" alt="T-shirt art mockup" loading="lazy"></div>
+          <figcaption class="photo-caption">Apparel graphic mockups and print files.</figcaption>
+        </figure>
+      </div>
+    </article>
+
+  </main>
+
+  <!-- CTA -->
+  <section style="text-align:center; margin: 18px auto 36px;">
+    <a class="btn-pixel" href="./contact.html">Get in touch</a>
+    <a class="btn-pixel btn-pixel--ghost" href="./resume.html">Resume</a>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer" role="contentinfo" style="text-align:center;padding:20px 12px;">
+    <span class="dot" aria-hidden="true"></span>
+    <small>© <span id="year"></span> chrrybmb.com / denisajomo.com</small>
+  </footer>
+
+  <!-- Shared soft wobble filter -->
+  <svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden">
+    <filter id="softWobble" x="-50%" y="-50%" width="200%" height="200%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.008" numOctaves="1" seed="11" result="noise">
+        <animate attributeName="baseFrequency" dur="14s" values="0.008;0.010;0.008" repeatCount="indefinite" />
+      </feTurbulence>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </svg>
+
+  <!-- Tiny client-side behaviour: pointer-driven orb/lens vars + reveal + sheen follow -->
+  <script>
+    // Set year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // pointer variables drive --orb-x/--orb-y and --lx/--ly
+    (function(){
+      const host = document.querySelector('.page-creative') || document.body;
+      host.style.setProperty('--orb-x','72%'); host.style.setProperty('--orb-y','68%');
+      host.style.setProperty('--lx','72%'); host.style.setProperty('--ly','68%');
+      let raf = 0;
+      function onPoint(e){
+        const t = e.touches ? e.touches[0] : e;
+        const x = (t.clientX / innerWidth) * 100;
+        const y = (t.clientY / innerHeight) * 100;
+        if (raf) cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(()=>{
+          const xs = x.toFixed(2) + '%', ys = y.toFixed(2) + '%';
+          host.style.setProperty('--orb-x', xs); host.style.setProperty('--orb-y', ys);
+          host.style.setProperty('--lx', xs);    host.style.setProperty('--ly', ys);
+        });
+      }
+      addEventListener('pointermove', onPoint, { passive:true });
+      addEventListener('touchmove',   onPoint, { passive:true });
+    })();
+
+    // intersection reveal
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){ e.target.classList.add('is-in'); io.unobserve(e.target) }
+      });
+    },{ threshold: .12 });
+    document.querySelectorAll('[data-animate]').forEach(el=>io.observe(el));
+
+    // card pointer sheen + tilt (follow pointer inside each .card-iris)
+    document.querySelectorAll('.card-iris').forEach(card=>{
+      card.addEventListener('pointermove', (ev)=>{
+        const r = card.getBoundingClientRect();
+        const px = (ev.clientX - r.left) / r.width;
+        const py = (ev.clientY - r.top) / r.height;
+        card.style.setProperty('--mx', Math.round(px * 100) + '%');
+        card.style.setProperty('--my', Math.round(py * 100) + '%');
+        // small rotation for depth
+        const ry = (px - .5) * 8; // deg
+        const rx = (py - .5) * -6;
+        card.style.setProperty('--ry', ry + 'deg');
+        card.style.setProperty('--rx', rx + 'deg');
+        card.classList.add('is-hot');
+      }, {passive:true});
+      card.addEventListener('pointerleave', ()=>{ card.classList.remove('is-hot'); card.style.removeProperty('--mx'); card.style.removeProperty('--my'); card.style.removeProperty('--ry'); card.style.removeProperty('--rx'); });
+    });
+
+    // small keyboard focus visual: add sheen when focused
+    document.querySelectorAll('.shot, .photo-chip').forEach(el=>{
+      el.addEventListener('focus',(e)=> e.currentTarget.classList.add('is-hot'));
+      el.addEventListener('blur', (e)=> e.currentTarget.classList.remove('is-hot'));
+    });
+  </script>
+
+  <!-- shared site interactions -->
+  <script type="module" src="./site.js" defer></script>
+</body>
+</html>
