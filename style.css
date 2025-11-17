@@ -553,63 +553,6 @@ img, svg, canvas, video, object, iframe { max-width: 100%; height: auto; }
 }
 
 
-    /* Buttons (keep your styles) */
-    .btn-pixel{
-      --px: 10.5px; --px-track: .16em;
-      display:inline-flex; align-items:center; justify-content:center; gap:.5ch;
-      padding: 8px 12px; border-radius: 10px;
-      font: 800 var(--px)/1 var(--px-font); text-transform: uppercase; letter-spacing: var(--px-track);
-      background: linear-gradient(180deg, #ffffff, #f6f6ff);
-      border: 1px solid #1f22ff; color:#17182a;
-      box-shadow: 0 0 0 1px rgba(68,64,255,.08) inset, 0 6px 18px rgba(68,64,255,.12);
-      transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
-      text-decoration:none; cursor:pointer; user-select:none;
-    }
-    .btn-pixel:hover{ transform: translateY(-0.5px); box-shadow: 0 0 0 1px rgba(68,64,255,.10) inset, 0 10px 22px rgba(68,64,255,.18); }
-    .btn-pixel:active{ transform: translateY(0); filter: saturate(105%); }
-    .btn-pixel--ghost{ background:#fff; border-style:dashed; opacity:.92 }
-    .btn-pixel:focus-visible{ outline:2px solid #5a57ff; outline-offset:2px; }
-
-
-    /* Back to top */
-.backtop{
-  position: sticky;                /* sticks near the bottom of the viewport */
-  bottom: clamp(10px, 4vh, 24px);  /* how far off the bottom */
-  z-index: 10;
-  padding: 8px 0 2px;              /* tiny breathing room above footer */
-}
-
-.btn-top{
-  --indigo: var(--indigo, #4440ff);
-  display:inline-flex; align-items:center; gap:8px;
-  padding:10px 14px;
-  border-radius:12px;
-  border:1px solid #5a57ff;
-  background: linear-gradient(180deg,#fff,#f6f6ff);
-  color:#17182a;
-  font: 800 12px/1 "Funnel Display", system-ui, sans-serif;
-  letter-spacing:.12em; text-transform:uppercase;
-  box-shadow: 0 8px 16px rgba(68,64,255,.12);
-  cursor:pointer;
-  transition: transform .12s ease, box-shadow .12s ease, opacity .2s ease, filter .2s ease;
-}
-
-.btn-top:hover{ transform: translateY(-1px); box-shadow: 0 12px 22px rgba(68,64,255,.18); }
-.btn-top:active{ transform: translateY(0); }
-.btn-top:focus-visible{ outline:2px solid #5a57ff; outline-offset:2px; }
-
-.backtop .container{ display:flex; justify-content:center; }
-
-/* Optional: fade in only after some scroll */
-.backtop{ opacity:0; filter:saturate(.96); transition: opacity .2s ease, filter .2s ease; }
-.backtop.is-visible{ opacity:1; filter:none; }
-
-/* Mobile: make sure it fits nicely */
-@media (max-width:480px){
-  .btn-top{ padding:10px 12px; }
-}
-
-
 
 .hero__actions{
   display: flex;
@@ -663,11 +606,11 @@ img, svg, canvas, video, object, iframe { max-width: 100%; height: auto; }
   position: relative;
   margin: 0 0 10px;
   font-weight: 600;
-  text-transform: lowercase;
+  text-transform: uppercase;
   letter-spacing: var(--track, -0.06em);
   line-height: .77;
   color: #000;                       
-  font-size: 4rem;
+  font-size: 2.8rem;
   -webkit-font-smoothing: antialiased;
   font-feature-settings: "kern" 1, "liga" 1;
 }
@@ -1515,3 +1458,6 @@ animation: beamsSpin 28s linear infinite;
   font-weight: 900 !important;
   font-family: "Jacquarda Bastarda 9", serif;
  }
+
+
+ 
