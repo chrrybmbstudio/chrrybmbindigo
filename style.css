@@ -549,6 +549,10 @@ img, svg, canvas, video, object, iframe { max-width: 100%; height: auto; }
   margin-bottom: 10px;
 }
 
+.mb20 {
+  margin-bottom: 20px;
+}
+
 .mb50 {
   margin-bottom: 50px;
 }
