@@ -86,6 +86,15 @@ a:hover{ text-decoration:underline }
   margin: 0;
 }
 
+.pxls{
+  font-family: "Funnel Display", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  font-weight:600; /* your note */
+  font-size: calc(var(--ui) * 1.5em);
+  line-height: calc(var(--ui) * 20px);
+  text-transform: uppercase;
+  margin: 15px;
+}
+
 
  .navcontainer {
   max-width: 700px;
